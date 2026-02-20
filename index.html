@@ -15,47 +15,7 @@ background-size:cover;
 margin:0;
 padding:20px;
 }
-.taskIcon{
-width:22px;
-height:22px;
-background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%23007aff' viewBox='0 0 24 24'><path d='M3 5h18v14H3z'/></svg>");
-background-size:contain;
-background-repeat:no-repeat;
-}
 
-.titleRow{
-display:flex;
-align-items:center;
-gap:8px;
-}
-
-.taskIcon{
-width:22px;
-height:22px;
-flex-shrink:0;
-background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23007aff' viewBox='0 0 24 24'%3E%3Cpath d='M4 4h16v16H4zM7 7h10v2H7zm0 4h10v2H7zm0 4h6v2H7z'/%3E%3C/svg%3E");
-background-size:contain;
-background-repeat:no-repeat;
-background-position:center;
-}
-  
-h3{
-margin:0;
-}
-  
-
-
-.titleRow span{
-line-height:1;
-}
-
-h3{
-margin:0;
-}
-
-.titleRow span{
-line-height:1;
-}
 .card{
 background:rgba(255,255,255,0.7);
 backdrop-filter:blur(20px);
@@ -85,6 +45,7 @@ margin-top:8px;
 .task{
 display:flex;
 justify-content:space-between;
+align-items:center;
 padding:8px 0;
 }
 </style>
@@ -292,11 +253,3 @@ loadTasks();
 
 </body>
 </html>
-
-
-
-
-
-
-
-
