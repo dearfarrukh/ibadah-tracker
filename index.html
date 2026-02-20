@@ -124,10 +124,9 @@ updateMonthlyReport();
 }
 
 function toggleTask(task,status){
-let date=getSelectedDate();
-let saved=JSON.parse(localStorage.getItem(date))||{};
+let saved=JSON.parse(localStorage.getItem(getSelectedDate()))||{};
 saved[task]=status;
-localStorage.setItem(date,JSON.stringify(saved));
+localStorage.setItem(getSelectedDate(),JSON.stringify(saved));
 updateStreak();
 updateMonthlyReport();
 }
@@ -138,7 +137,7 @@ let area=document.getElementById("actionArea");
 area.innerHTML="";
 
 if(action==="add"){
-area.innerHTML=`<input type="text" id="newTaskName">
+area.innerHTML=`<input type="text" id="newTaskName" placeholder="Task name">
 <button onclick="confirmAdd()">Add</button>`;
 }
 
@@ -146,6 +145,13 @@ if(action==="delete"){
 let options=taskList.map(t=>`<option value="${t}">${t}</option>`).join("");
 area.innerHTML=`<select id="deleteTaskSelect">${options}</select>
 <button onclick="confirmDelete()">Delete</button>`;
+}
+
+if(action==="rename"){
+let options=taskList.map(t=>`<option value="${t}">${t}</option>`).join("");
+area.innerHTML=`<select id="renameSelect">${options}</select>
+<input type="text" id="renameInput" placeholder="New name">
+<button onclick="confirmRename()">Rename</button>`;
 }
 }
 
@@ -163,6 +169,53 @@ let task=document.getElementById("deleteTaskSelect").value;
 taskList=taskList.filter(t=>t!==task);
 localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
+}
+
+function confirmRename(){
+let oldName=document.getElementById("renameSelect").value;
+let newName=document.getElementById("renameInput").value.trim();
+if(newName){
+taskList=taskList.map(t=>t===oldName?newName:t);
+localStorage.setItem("taskList",JSON.stringify(taskList));
+loadTasks();
+}
+}
+
+function updateStreak(){
+let streak=0;
+let today=new Date();
+
+for(let i=0;i<365;i++){
+let date=new Date();
+date.setDate(today.getDate()-i);
+let key=date.toISOString().split("T")[0];
+let saved=JSON.parse(localStorage.getItem(key));
+if(saved && Object.values(saved).every(v=>v===true)){
+streak++;
+}else break;
+}
+
+document.getElementById("streakCount").innerText=streak+" Days";
+}
+
+function updateMonthlyReport(){
+let today=new Date();
+let month=today.getMonth();
+let year=today.getFullYear();
+let completed=0;
+
+for(let i=1;i<=31;i++){
+let date=new Date(year,month,i);
+if(date.getMonth()!==month) break;
+let key=date.toISOString().split("T")[0];
+let saved=JSON.parse(localStorage.getItem(key));
+if(saved && Object.values(saved).every(v=>v===true)){
+completed++;
+}
+}
+
+document.getElementById("monthlyReport").innerText=
+"Perfect Days This Month: "+completed;
 }
 
 function exportBackup(){
@@ -193,9 +246,7 @@ location.reload();
 reader.readAsText(file);
 }
 
-if ('serviceWorker' in navigator) {
-navigator.serviceWorker.register('service-worker.js');
-}
+loadTasks();
 
 </script>
 
