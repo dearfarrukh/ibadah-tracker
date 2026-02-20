@@ -272,10 +272,21 @@ location.reload();
 reader.readAsText(file);
 }
 
+  setInterval(()=>{
+let today=new Date().toISOString().split("T")[0];
+let picker=document.getElementById("datePicker");
+
+if(picker.value!==today){
+picker.value=today;
+loadTasks();
+}
+},60000);
+  
 loadTasks();
 
 </script>
 
 </body>
 </html>
+
 
