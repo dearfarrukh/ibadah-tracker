@@ -36,10 +36,6 @@ margin-bottom:20px;
 transition:all 0.3s ease;
 }
 
-.card:hover{
-transform:translateY(-3px);
-}
-
 button{
 background:linear-gradient(135deg,#007aff,#0051ff);
 color:white;
@@ -49,11 +45,6 @@ border-radius:16px;
 margin-top:10px;
 width:100%;
 font-weight:600;
-transition:all 0.2s ease;
-}
-
-button:active{
-transform:scale(0.96);
 }
 
 input,select{
@@ -63,13 +54,6 @@ border-radius:16px;
 border:none;
 margin-top:8px;
 background:rgba(255,255,255,0.7);
-box-shadow:inset 0 2px 6px rgba(0,0,0,0.05);
-transition:all 0.2s ease;
-}
-
-input:focus,select:focus{
-outline:none;
-box-shadow:0 0 0 2px #007aff;
 }
 
 .task{
@@ -77,71 +61,32 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 padding:8px 0;
-animation:slideUp 0.4s ease;
-}
-
-@keyframes slideUp{
-from{opacity:0; transform:translateY(8px);}
-to{opacity:1; transform:translateY(0);}
 }
 
 input[type="checkbox"]{
 width:22px;
 height:22px;
 accent-color:#007aff;
-transition:all 0.2s ease;
-}
-
-#lockScreen{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:linear-gradient(135deg,#e0e7ff,#f8fafc);
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-animation:fadeIn 0.4s ease;
 }
 </style>
 
 <body>
 
-<!-- LOCK SCREEN -->
-<div id="lockScreen">
-<h2>🔒 Enter PIN</h2>
-<input type="password" id="pinInput" placeholder="Enter PIN">
-<button onclick="unlock()">Unlock</button>
-<p>Default PIN: 1234</p>
-</div>
-
-<div id="app" style="display:none">
-
 <h1>📿 Ibadah Tracker</h1>
 
-<!-- DATE PICKER -->
 <div class="card">
 <h3>📅 Select Date</h3>
 <input type="date" id="datePicker" onchange="loadTasks()">
 </div>
 
-<!-- TASK LIST -->
 <div class="card">
 <h3>📝 Daily Tasks</h3>
 <div id="taskContainer"></div>
 </div>
 
-<!-- TASK SETTINGS DROPDOWN -->
 <div class="card">
 <h3>⚙️ Task Settings</h3>
 
-  <h4>☁️ iCloud Backup</h4>
-<button onclick="exportBackup()">Export to iCloud</button>
-<input type="file" id="restoreFile" onchange="importBackup()" style="display:none;">
-<button onclick="document.getElementById('restoreFile').click()">Restore from iCloud</button>
-  
 <select id="actionSelect" onchange="handleAction()">
 <option value="">Select Action</option>
 <option value="add">➕ Add Task</option>
@@ -150,20 +95,22 @@ animation:fadeIn 0.4s ease;
 </select>
 
 <div id="actionArea"></div>
+
+<h4>☁️ iCloud Backup</h4>
+<button onclick="exportBackup()">Export to iCloud</button>
+<input type="file" id="restoreFile" onchange="importBackup()" style="display:none;">
+<button onclick="document.getElementById('restoreFile').click()">Restore from iCloud</button>
+
 </div>
 
-<!-- STREAK -->
 <div class="card">
 <h3>🔥 Streak</h3>
 <p id="streakCount">0 Days</p>
 </div>
 
-<!-- MONTHLY REPORT -->
 <div class="card">
 <h3>📊 Monthly Report</h3>
 <p id="monthlyReport"></p>
-</div>
-
 </div>
 
 <script>
@@ -176,38 +123,22 @@ let taskList = JSON.parse(localStorage.getItem("taskList")) || [
 
 document.getElementById("datePicker").valueAsDate = new Date();
 
-function unlock(){
-let pin = document.getElementById("pinInput").value;
-if(pin==="1234"){
-document.getElementById("lockScreen").style.display="none";
-document.getElementById("app").style.display="block";
-loadTasks();
-}
-else{
-alert("Wrong PIN");
-}
-}
-
 function getSelectedDate(){
 return document.getElementById("datePicker").value;
 }
 
 function loadTasks(){
-let container = document.getElementById("taskContainer");
+let container=document.getElementById("taskContainer");
 container.innerHTML="";
-let date = getSelectedDate();
-let saved = JSON.parse(localStorage.getItem(date)) || {};
+let date=getSelectedDate();
+let saved=JSON.parse(localStorage.getItem(date))||{};
 
 taskList.forEach(task=>{
 let div=document.createElement("div");
 div.className="task";
-
-div.innerHTML=`
-<label>${task}</label>
+div.innerHTML=`<label>${task}</label>
 <input type="checkbox" ${saved[task]?"checked":""}
-onchange="toggleTask('${task}',this.checked)">
-`;
-
+onchange="toggleTask('${task}',this.checked)">`;
 container.appendChild(div);
 });
 
@@ -216,10 +147,9 @@ updateMonthlyReport();
 }
 
 function toggleTask(task,status){
-let date=getSelectedDate();
-let saved=JSON.parse(localStorage.getItem(date))||{};
+let saved=JSON.parse(localStorage.getItem(getSelectedDate()))||{};
 saved[task]=status;
-localStorage.setItem(date,JSON.stringify(saved));
+localStorage.setItem(getSelectedDate(),JSON.stringify(saved));
 updateStreak();
 updateMonthlyReport();
 }
@@ -230,22 +160,19 @@ let area=document.getElementById("actionArea");
 area.innerHTML="";
 
 if(action==="add"){
-area.innerHTML=`
-<input type="text" id="newTaskName" placeholder="Enter task name">
+area.innerHTML=`<input type="text" id="newTaskName" placeholder="Enter task name">
 <button onclick="confirmAdd()">Add</button>`;
 }
 
 if(action==="delete"){
 let options=taskList.map(t=>`<option value="${t}">${t}</option>`).join("");
-area.innerHTML=`
-<select id="deleteTaskSelect">${options}</select>
+area.innerHTML=`<select id="deleteTaskSelect">${options}</select>
 <button onclick="confirmDelete()">Delete</button>`;
 }
 
 if(action==="rename"){
 let options=taskList.map(t=>`<option value="${t}">${t}</option>`).join("");
-area.innerHTML=`
-<select id="renameSelect">${options}</select>
+area.innerHTML=`<select id="renameSelect">${options}</select>
 <input type="text" id="renameInput" placeholder="New name">
 <button onclick="confirmRename()">Rename</button>`;
 }
@@ -257,7 +184,6 @@ if(name && !taskList.includes(name)){
 taskList.push(name);
 localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
-alert("Task Added");
 }
 }
 
@@ -266,7 +192,6 @@ let task=document.getElementById("deleteTaskSelect").value;
 taskList=taskList.filter(t=>t!==task);
 localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
-alert("Task Deleted");
 }
 
 function confirmRename(){
@@ -276,7 +201,6 @@ if(newName){
 taskList=taskList.map(t=>t===oldName?newName:t);
 localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
-alert("Task Renamed");
 }
 }
 
@@ -291,10 +215,7 @@ let key=date.toISOString().split("T")[0];
 let saved=JSON.parse(localStorage.getItem(key));
 if(saved && Object.values(saved).every(v=>v===true)){
 streak++;
-}
-else{
-break;
-}
+}else break;
 }
 
 document.getElementById("streakCount").innerText=streak+" Days";
@@ -320,18 +241,14 @@ document.getElementById("monthlyReport").innerText=
 "Perfect Days This Month: "+completed;
 }
 
-</script>
 function exportBackup(){
 let data={taskList:taskList,storage:{}};
-
 for(let i=0;i<localStorage.length;i++){
 let key=localStorage.key(i);
 data.storage[key]=localStorage.getItem(key);
 }
-
 let blob=new Blob([JSON.stringify(data)],{type:"application/json"});
 let url=URL.createObjectURL(blob);
-
 let a=document.createElement("a");
 a.href=url;
 a.download="ibadah-backup.json";
@@ -341,20 +258,20 @@ a.click();
 function importBackup(){
 let file=document.getElementById("restoreFile").files[0];
 let reader=new FileReader();
-
 reader.onload=function(e){
 let data=JSON.parse(e.target.result);
 localStorage.clear();
-
 for(let key in data.storage){
 localStorage.setItem(key,data.storage[key]);
 }
-
 location.reload();
 };
-
 reader.readAsText(file);
 }
+
+loadTasks();
+
+</script>
+
 </body>
 </html>
-
