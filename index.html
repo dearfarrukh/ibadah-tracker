@@ -91,9 +91,33 @@ height:22px;
 accent-color:#007aff;
 transition:all 0.2s ease;
 }
+
+#lockScreen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:linear-gradient(135deg,#e0e7ff,#f8fafc);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+animation:fadeIn 0.4s ease;
+}
 </style>
 
 <body>
+
+<!-- LOCK SCREEN -->
+<div id="lockScreen">
+<h2>🔒 Enter PIN</h2>
+<input type="password" id="pinInput" placeholder="Enter PIN">
+<button onclick="unlock()">Unlock</button>
+<p>Default PIN: 1234</p>
+</div>
+
+<div id="app" style="display:none">
 
 <h1>📿 Ibadah Tracker</h1>
 
@@ -109,7 +133,7 @@ transition:all 0.2s ease;
 <div id="taskContainer"></div>
 </div>
 
-<!-- TASK SETTINGS -->
+<!-- TASK SETTINGS DROPDOWN -->
 <div class="card">
 <h3>⚙️ Task Settings</h3>
 
@@ -135,6 +159,8 @@ transition:all 0.2s ease;
 <p id="monthlyReport"></p>
 </div>
 
+</div>
+
 <script>
 
 let taskList = JSON.parse(localStorage.getItem("taskList")) || [
@@ -144,6 +170,18 @@ let taskList = JSON.parse(localStorage.getItem("taskList")) || [
 ];
 
 document.getElementById("datePicker").valueAsDate = new Date();
+
+function unlock(){
+let pin = document.getElementById("pinInput").value;
+if(pin==="1234"){
+document.getElementById("lockScreen").style.display="none";
+document.getElementById("app").style.display="block";
+loadTasks();
+}
+else{
+alert("Wrong PIN");
+}
+}
 
 function getSelectedDate(){
 return document.getElementById("datePicker").value;
@@ -214,6 +252,7 @@ if(name && !taskList.includes(name)){
 taskList.push(name);
 localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
+alert("Task Added");
 }
 }
 
@@ -222,6 +261,7 @@ let task=document.getElementById("deleteTaskSelect").value;
 taskList=taskList.filter(t=>t!==task);
 localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
+alert("Task Deleted");
 }
 
 function confirmRename(){
@@ -231,6 +271,7 @@ if(newName){
 taskList=taskList.map(t=>t===oldName?newName:t);
 localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
+alert("Task Renamed");
 }
 }
 
@@ -273,8 +314,6 @@ completed++;
 document.getElementById("monthlyReport").innerText=
 "Perfect Days This Month: "+completed;
 }
-
-loadTasks();
 
 </script>
 
