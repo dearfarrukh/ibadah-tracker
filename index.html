@@ -137,6 +137,11 @@ animation:fadeIn 0.4s ease;
 <div class="card">
 <h3>⚙️ Task Settings</h3>
 
+  <h4>☁️ iCloud Backup</h4>
+<button onclick="exportBackup()">Export to iCloud</button>
+<input type="file" id="restoreFile" onchange="importBackup()" style="display:none;">
+<button onclick="document.getElementById('restoreFile').click()">Restore from iCloud</button>
+  
 <select id="actionSelect" onchange="handleAction()">
 <option value="">Select Action</option>
 <option value="add">➕ Add Task</option>
@@ -316,6 +321,40 @@ document.getElementById("monthlyReport").innerText=
 }
 
 </script>
+function exportBackup(){
+let data={taskList:taskList,storage:{}};
 
+for(let i=0;i<localStorage.length;i++){
+let key=localStorage.key(i);
+data.storage[key]=localStorage.getItem(key);
+}
+
+let blob=new Blob([JSON.stringify(data)],{type:"application/json"});
+let url=URL.createObjectURL(blob);
+
+let a=document.createElement("a");
+a.href=url;
+a.download="ibadah-backup.json";
+a.click();
+}
+
+function importBackup(){
+let file=document.getElementById("restoreFile").files[0];
+let reader=new FileReader();
+
+reader.onload=function(e){
+let data=JSON.parse(e.target.result);
+localStorage.clear();
+
+for(let key in data.storage){
+localStorage.setItem(key,data.storage[key]);
+}
+
+location.reload();
+};
+
+reader.readAsText(file);
+}
 </body>
 </html>
+
