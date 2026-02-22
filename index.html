@@ -292,21 +292,22 @@ function nextDay(){
     picker.value = date.toISOString().split("T")[0]; // Ensure the format is correct
     loadTasks();
 }
-setInterval(() => {
-    let now = new Date();
-    let currentHour = now.getHours();
-    let currentMinute = now.getMinutes();
+let now = new Date();
+let today = new Date();
 
-    // Change date when it's exactly 2 AM
-    if (currentHour === 2 && currentMinute === 0) { 
-        let picker = document.getElementById("datePicker");
-        let currentDate = new Date(picker.value);
-        currentDate.setDate(currentDate.getDate() + 1);  // Move to the next day
-        picker.value = currentDate.toISOString().split("T")[0];  // Update the date picker
-        loadTasks();  // Reload tasks for the new day
-    }
-}, 60000);  // Check every minute
+// If it's before 2 AM, show the previous day
+if(now.getHours() < 2){
+    today.setDate(today.getDate() - 1);  // Set to previous day
+}
+
+// If it's after 2 AM, show the current day or the next day
+else {
+    today.setDate(today.getDate() + 1);  // Set to next day after 2 AM
+}
+
+document.getElementById("datePicker").value = today.toISOString().split("T")[0];
 </script>
+
 
 
 
