@@ -2,10 +2,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Ibadah Tracker Pro</title>
+<title>Ibadah Tracker</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="apple-touch-icon" href="icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 
 <style>
 
@@ -28,19 +30,20 @@ border-radius:22px;
 margin-bottom:20px;
 }
 
-button{
-background:#007aff;
-color:white;
-border:none;
-padding:12px;
-border-radius:16px;
-width:100%;
-}
+h1{text-align:center;}
 
 .task{
 display:flex;
 justify-content:space-between;
 padding:8px 0;
+}
+
+button{
+background:#007aff;
+color:white;
+border:none;
+padding:10px;
+border-radius:12px;
 }
 
 input[type="checkbox"]{
@@ -54,23 +57,15 @@ accent-color:#007aff;
 
 <body>
 
-<h1 style="text-align:center;">📿 Ibadah Tracker</h1>
+<h1>📿 Ibadah Tracker</h1>
 
 <div class="card">
 <h3>📅 Select Date</h3>
-
 <div style="display:flex;align-items:center;gap:10px;">
-
-<button onclick="prevDay()" style="width:60px;">⬅️</button>
-
+<button onclick="prevDay()">⬅️</button>
 <input type="date" id="datePicker" style="display:none;">
-
-<div id="displayDate"
-style="flex:1;text-align:center;font-weight:600;font-size:18px;">
-</div>
-
-<button onclick="nextDay()" style="width:60px;">➡️</button>
-
+<div id="displayDate" style="flex:1;text-align:center;font-weight:600;"></div>
+<button onclick="nextDay()">➡️</button>
 </div>
 </div>
 
@@ -86,162 +81,119 @@ style="flex:1;text-align:center;font-weight:600;font-size:18px;">
 
 <script>
 
-let taskList = JSON.parse(localStorage.getItem("taskList")) || [
+// 🔴 STOP UTC BUG (IMPORTANT)
+function formatLocalDate(date){
+let y=date.getFullYear();
+let m=(date.getMonth()+1).toString().padStart(2,"0");
+let d=date.getDate().toString().padStart(2,"0");
+return `${y}-${m}-${d}`;
+}
+
+// 🌙 Islamic Day Logic
+function getIslamicDay(){
+let now=new Date();
+let today=new Date();
+if(now.getHours()<2){
+today.setDate(today.getDate()-1);
+}
+return today;
+}
+
+// 📅 Show Day Name
+function updateDisplayDate(){
+let picker=document.getElementById("datePicker");
+let d=new Date(picker.value+"T00:00");
+let day=d.toLocaleDateString('en-US',{weekday:'long'});
+let date=d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+document.getElementById("displayDate").innerText=date+" — "+day;
+}
+
+let taskList=JSON.parse(localStorage.getItem("taskList"))||[
 "Fajr","Dhuhur","Asr","Maghrib","Isha",
 "Surah Mulk","Surah Sajdah","Surah Yaseen",
 "Surah Rehman","Surah Taghabun","Surah Waqiya"
 ];
 
-function getIslamicDay(){
-
-let now = new Date();
-let today = new Date();
-
-if(now.getHours() < 2){
-today.setDate(today.getDate() - 1);
-}
-
-today.setHours(0,0,0,0);
-return today;
-
-}
-
-function updateDisplayDate(){
-
-let picker=document.getElementById("datePicker");
-let date=new Date(picker.value);
-
-let options={
-weekday:'long',
-year:'numeric',
-month:'short',
-day:'numeric'
-};
-
-document.getElementById("displayDate").innerText=
-date.toLocaleDateString('en-US',options);
-
+function getSelectedDate(){
+return document.getElementById("datePicker").value;
 }
 
 function loadTasks(){
-
 let container=document.getElementById("taskContainer");
 container.innerHTML="";
-
-let date=document.getElementById("datePicker").value;
+let date=getSelectedDate();
 let saved=JSON.parse(localStorage.getItem(date))||{};
 
 taskList.forEach(task=>{
-
 let div=document.createElement("div");
 div.className="task";
-
-div.innerHTML=
-`<label>${task}</label>
-<input type="checkbox"
-${saved[task]?"checked":""}
+div.innerHTML=`<label>${task}</label>
+<input type="checkbox" ${saved[task]?"checked":""}
 onchange="toggleTask('${task}',this.checked)">`;
-
 container.appendChild(div);
-
 });
 
 updateStreak();
-
+updateDisplayDate();
 }
 
 function toggleTask(task,status){
-
-let date=document.getElementById("datePicker").value;
-let saved=JSON.parse(localStorage.getItem(date))||{};
-
+let saved=JSON.parse(localStorage.getItem(getSelectedDate()))||{};
 saved[task]=status;
-
-localStorage.setItem(date,JSON.stringify(saved));
-
+localStorage.setItem(getSelectedDate(),JSON.stringify(saved));
 updateStreak();
-
 }
 
 function prevDay(){
-
 let picker=document.getElementById("datePicker");
-let date=new Date(picker.value);
-
+let date=new Date(picker.value+"T00:00");
 date.setDate(date.getDate()-1);
-
-picker.value=date.toISOString().split("T")[0];
-
-updateDisplayDate();
+picker.value=formatLocalDate(date);
 loadTasks();
-
 }
 
 function nextDay(){
-
 let picker=document.getElementById("datePicker");
-let date=new Date(picker.value);
-
+let date=new Date(picker.value+"T00:00");
 date.setDate(date.getDate()+1);
-
-picker.value=date.toISOString().split("T")[0];
-
-updateDisplayDate();
+picker.value=formatLocalDate(date);
 loadTasks();
-
 }
 
 function updateStreak(){
-
 let streak=0;
 let today=getIslamicDay();
 
 for(let i=0;i<365;i++){
-
 let d=new Date(today);
 d.setDate(today.getDate()-i);
-
-let key=d.toISOString().split("T")[0];
+let key=formatLocalDate(d);
 let saved=JSON.parse(localStorage.getItem(key));
-
 if(saved && Object.values(saved).every(v=>v===true)){
 streak++;
 }else break;
-
 }
 
-document.getElementById("streakCount").innerText=
-streak+" Days";
-
+document.getElementById("streakCount").innerText=streak+" Days";
 }
 
-function setCorrectIslamicDay(){
-
-let today=getIslamicDay();
-
-let picker=document.getElementById("datePicker");
-
-let selected=new Date(picker.value || today);
-selected.setHours(0,0,0,0);
-
-if(selected.getTime()!==today.getTime()){
-
-picker.value=today.toISOString().split("T")[0];
-
-updateDisplayDate();
+// 🟢 Initial Set
+let islamicToday=getIslamicDay();
+document.getElementById("datePicker").value=formatLocalDate(islamicToday);
 loadTasks();
 
+// 🔄 Auto Change After 2AM if app stays open
+setInterval(()=>{
+let now=getIslamicDay();
+let picker=document.getElementById("datePicker").value;
+if(picker!==formatLocalDate(now)){
+document.getElementById("datePicker").value=formatLocalDate(now);
+loadTasks();
 }
-
-}
-
-// Run when open
-setCorrectIslamicDay();
-
-// Check every minute (for 2AM auto change)
-setInterval(setCorrectIslamicDay,60000);
+},60000);
 
 </script>
 
 </body>
 </html>
+
