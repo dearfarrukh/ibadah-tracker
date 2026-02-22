@@ -276,19 +276,6 @@ location.reload();
 reader.readAsText(file);
 }
 
-  setInterval(() => {
-let now = new Date();
-let hour = now.getHours();
-let minute = now.getMinutes();
-
-if(hour === 2 && minute === 0){
-let picker = document.getElementById("datePicker");
-let today = new Date(picker.value);
-today.setDate(today.getDate()+1);
-picker.value = today.toISOString().split("T")[0];
-loadTasks();
-}
-},60000);
 loadTasks();
 function prevDay(){
     let picker = document.getElementById("datePicker");
@@ -305,8 +292,22 @@ function nextDay(){
     picker.value = date.toISOString().split("T")[0]; // Ensure the format is correct
     loadTasks();
 }
+setInterval(() => {
+    let now = new Date();
+    let currentHour = now.getHours();
+    let currentMinute = now.getMinutes();
 
+    // Change date when it's exactly 2 AM
+    if (currentHour === 2 && currentMinute === 0) { 
+        let picker = document.getElementById("datePicker");
+        let currentDate = new Date(picker.value);
+        currentDate.setDate(currentDate.getDate() + 1);  // Move to the next day
+        picker.value = currentDate.toISOString().split("T")[0];  // Update the date picker
+        loadTasks();  // Reload tasks for the new day
+    }
+}, 60000);  // Check every minute
 </script>
+
 
 
 
