@@ -585,17 +585,13 @@ function nextDay(){
 let now = new Date();
 let today = new Date();
 
-// If it's before 2 AM, show the previous day
 if(now.getHours() < 2){
-    today.setDate(today.getDate() - 1);  // Set to previous day
+    today.setDate(today.getDate() - 1);
 }
 
-// If it's after 2 AM, show the current day or the next day
-else {
-    today.setDate(today.getDate() + 1);  // Set to next day after 2 AM
-}
+document.getElementById("datePicker").value =
+today.toISOString().split("T")[0];
 
-document.getElementById("datePicker").value = today.toISOString().split("T")[0];
 loadTasks();
 </script>
 
@@ -611,5 +607,6 @@ loadTasks();
 
 </body>
 </html>
+
 
 
