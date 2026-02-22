@@ -79,7 +79,11 @@ accent-color:#007aff;
 
 <div class="card">
 <h3>📅 Select Date</h3>
+<div style="display:flex;align-items:center;gap:10px;">
+<button onclick="prevDay()" style="width:60px;">⬅️</button>
 <input type="date" id="datePicker" onchange="loadTasks()">
+<button onclick="nextDay()" style="width:60px;">➡️</button>
+</div>
 </div>
 
 <div class="card">
@@ -285,8 +289,23 @@ loadTasks();
 loadTasks();
 
 </script>
+function prevDay(){
+let picker=document.getElementById("datePicker");
+let d=new Date(picker.value);
+d.setDate(d.getDate()-1);
+picker.value=d.toISOString().split("T")[0];
+loadTasks();
+}
 
+function nextDay(){
+let picker=document.getElementById("datePicker");
+let d=new Date(picker.value);
+d.setDate(d.getDate()+1);
+picker.value=d.toISOString().split("T")[0];
+loadTasks();
+}
 </body>
 </html>
+
 
 
