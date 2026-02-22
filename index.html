@@ -1,335 +1,247 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Ibadah Tracker Pro</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="apple-touch-icon" href="icon.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="icon.png">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont;
-      background-image: url("wallpaper.jpg");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      margin: 0;
-      padding: 20px;
-      animation: fadeIn 0.6s ease-in-out;
-    }
+<meta charset="UTF-8">
+<title>Ibadah Tracker Pro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="apple-touch-icon" href="icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
+<style>
 
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+body{
+font-family:-apple-system,BlinkMacSystemFont;
+background-image:url("wallpaper.jpg");
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+background-attachment:fixed;
+margin:0;
+padding:20px;
+}
 
-    h1 {
-      text-align: center;
-      font-weight: 600;
-      margin-bottom: 25px;
-    }
+.card{
+background:rgba(255,255,255,0.6);
+backdrop-filter:blur(20px);
+padding:18px;
+border-radius:22px;
+margin-bottom:20px;
+}
 
-    .card {
-      background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      padding: 18px;
-      border-radius: 22px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      margin-bottom: 20px;
-      transition: all 0.3s ease;
-    }
+button{
+background:#007aff;
+color:white;
+border:none;
+padding:12px;
+border-radius:16px;
+width:100%;
+}
 
-    button {
-      background: linear-gradient(135deg, #007aff, #0051ff);
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 16px;
-      margin-top: 10px;
-      width: 100%;
-      font-weight: 600;
-    }
+.task{
+display:flex;
+justify-content:space-between;
+padding:8px 0;
+}
 
-    input,
-    select {
-      width: 100%;
-      padding: 12px;
-      border-radius: 16px;
-      border: none;
-      margin-top: 8px;
-      background: rgba(255, 255, 255, 0.7);
-    }
+input[type="checkbox"]{
+width:22px;
+height:22px;
+accent-color:#007aff;
+}
 
-    .task {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 0;
-    }
-
-    input[type="checkbox"] {
-      width: 22px;
-      height: 22px;
-      accent-color: #007aff;
-    }
-  </style>
+</style>
 </head>
 
 <body>
-  <h1>📿 Ibadah Tracker</h1>
 
-  <div class="card">
-    <h3>📅 Select Date</h3>
-    <div style="display: flex; align-items: center; gap: 10px;">
-      <button onclick="prevDay()" style="width: 60px;">⬅️</button>
-      <input type="date" id="datePicker" onchange="loadTasks()" style="display:none;">
-      <div id="displayDate" style="flex:1;text-align:center;font-weight:600;"></div>
-      <button onclick="nextDay()" style="width: 60px;">➡️</button>
-    </div>
-  </div>
+<h1 style="text-align:center;">📿 Ibadah Tracker</h1>
 
-  <div class="card">
-    <h3>📝 Daily Tasks</h3>
-    <div id="taskContainer"></div>
-  </div>
+<div class="card">
+<h3>📅 Select Date</h3>
 
-  <div class="card">
-    <h3>⚙️ Task Settings</h3>
+<div style="display:flex;align-items:center;gap:10px;">
 
-    <select id="actionSelect" onchange="handleAction()">
-      <option value="">Select Action</option>
-      <option value="add">➕ Add Task</option>
-      <option value="delete">🗑 Delete Task</option>
-      <option value="rename">✏️ Rename Task</option>
-    </select>
+<button onclick="prevDay()" style="width:60px;">⬅️</button>
 
-    <div id="actionArea"></div>
+<input type="date" id="datePicker" style="display:none;">
 
-    <h4>☁️ iCloud Backup</h4>
-    <button onclick="exportBackup()">Export to iCloud</button>
-    <input type="file" id="restoreFile" onchange="importBackup()" style="display: none;">
-    <button onclick="document.getElementById('restoreFile').click()">Restore from iCloud</button>
+<div id="displayDate"
+style="flex:1;text-align:center;font-weight:600;font-size:18px;">
+</div>
 
-  </div>
+<button onclick="nextDay()" style="width:60px;">➡️</button>
 
-  <div class="card">
-    <h3>🔥 Streak</h3>
-    <p id="streakCount">0 Days</p>
-  </div>
+</div>
+</div>
 
-  <div class="card">
-    <h3>📊 Monthly Report</h3>
-    <p id="monthlyReport"></p>
-  </div>
+<div class="card">
+<h3>📝 Daily Tasks</h3>
+<div id="taskContainer"></div>
+</div>
 
-  <script>
-    let taskList = JSON.parse(localStorage.getItem("taskList")) || [
-      "Fajr", "Dhuhur", "Asr", "Maghrib", "Isha",
-      "Surah Mulk", "Surah Sajdah", "Surah Yaseen",
-      "Surah Rehman", "Surah Taghabun", "Surah Waqiya"
-    ];
+<div class="card">
+<h3>🔥 Streak</h3>
+<p id="streakCount">0 Days</p>
+</div>
 
-    function getSelectedDate() {
-      return document.getElementById("datePicker").value;
-    }
+<script>
 
-    function loadTasks() {
-      let container = document.getElementById("taskContainer");
-      container.innerHTML = "";
-      let date = getSelectedDate();
-      let saved = JSON.parse(localStorage.getItem(date)) || {};
+let taskList = JSON.parse(localStorage.getItem("taskList")) || [
+"Fajr","Dhuhur","Asr","Maghrib","Isha",
+"Surah Mulk","Surah Sajdah","Surah Yaseen",
+"Surah Rehman","Surah Taghabun","Surah Waqiya"
+];
 
-      taskList.forEach(task => {
-        let div = document.createElement("div");
-        div.className = "task";
-        div.innerHTML = `<label>${task}</label>
-        <input type="checkbox" ${saved[task] ? "checked" : ""}
-        onchange="toggleTask('${task}',this.checked)">`;
-        container.appendChild(div);
-      });
+function getIslamicDay(){
 
-      updateStreak();
-      updateMonthlyReport();
-      updateDisplayDate();  // Add this line to update the display date
-    }
+let now = new Date();
+let today = new Date();
 
-    function toggleTask(task, status) {
-      let saved = JSON.parse(localStorage.getItem(getSelectedDate())) || {};
-      saved[task] = status;
-      localStorage.setItem(getSelectedDate(), JSON.stringify(saved));
-      updateStreak();
-      updateMonthlyReport();
-    }
+if(now.getHours() < 2){
+today.setDate(today.getDate() - 1);
+}
 
-    function handleAction() {
-      let action = document.getElementById("actionSelect").value;
-      let area = document.getElementById("actionArea");
-      area.innerHTML = "";
+today.setHours(0,0,0,0);
+return today;
 
-      if (action === "add") {
-        area.innerHTML = `<input type="text" id="newTaskName" placeholder="Enter task name">
-        <button onclick="confirmAdd()">Add</button>`;
-      }
+}
 
-      if (action === "delete") {
-        let options = taskList.map(t => `<option value="${t}">${t}</option>`).join("");
-        area.innerHTML = `<select id="deleteTaskSelect">${options}</select>
-        <button onclick="confirmDelete()">Delete</button>`;
-      }
+function updateDisplayDate(){
 
-      if (action === "rename") {
-        let options = taskList.map(t => `<option value="${t}">${t}</option>`).join("");
-        area.innerHTML = `<select id="renameSelect">${options}</select>
-        <input type="text" id="renameInput" placeholder="New name">
-        <button onclick="confirmRename()">Rename</button>`;
-      }
-    }
+let picker=document.getElementById("datePicker");
+let date=new Date(picker.value);
 
-    function confirmAdd() {
-      let name = document.getElementById("newTaskName").value.trim();
-      if (name && !taskList.includes(name)) {
-        taskList.push(name);
-        localStorage.setItem("taskList", JSON.stringify(taskList));
-        loadTasks();
-      }
-    }
+let options={
+weekday:'long',
+year:'numeric',
+month:'short',
+day:'numeric'
+};
 
-    function confirmDelete() {
-      let task = document.getElementById("deleteTaskSelect").value;
-      taskList = taskList.filter(t => t !== task);
-      localStorage.setItem("taskList", JSON.stringify(taskList));
-      loadTasks();
-    }
+document.getElementById("displayDate").innerText=
+date.toLocaleDateString('en-US',options);
 
-    function confirmRename() {
-      let oldName = document.getElementById("renameSelect").value;
-      let newName = document.getElementById("renameInput").value.trim();
-      if (newName) {
-        taskList = taskList.map(t => t === oldName ? newName : t);
-        localStorage.setItem("taskList", JSON.stringify(taskList));
-        loadTasks();
-      }
-    }
+}
 
-    function updateStreak() {
-      let streak = 0;
-      let today = new Date();
+function loadTasks(){
 
-      for (let i = 0; i < 365; i++) {
-        let date = new Date();
-        date.setDate(today.getDate() - i);
-        let key = date.toISOString().split("T")[0];
-        let saved = JSON.parse(localStorage.getItem(key));
-        if (saved && Object.values(saved).every(v => v === true)) {
-          streak++;
-        } else break;
-      }
+let container=document.getElementById("taskContainer");
+container.innerHTML="";
 
-      document.getElementById("streakCount").innerText = streak + " Days";
-    }
+let date=document.getElementById("datePicker").value;
+let saved=JSON.parse(localStorage.getItem(date))||{};
 
-    function updateMonthlyReport() {
-      let today = new Date();
-      let month = today.getMonth();
-      let year = today.getFullYear();
-      let completed = 0;
+taskList.forEach(task=>{
 
-      for (let i = 1; i <= 31; i++) {
-        let date = new Date(year, month, i);
-        if (date.getMonth() !== month) break;
-        let key = date.toISOString().split("T")[0];
-        let saved = JSON.parse(localStorage.getItem(key));
-        if (saved && Object.values(saved).every(v => v === true)) {
-          completed++;
-        }
-      }
+let div=document.createElement("div");
+div.className="task";
 
-      document.getElementById("monthlyReport").innerText =
-        "Perfect Days This Month: " + completed;
-    }
+div.innerHTML=
+`<label>${task}</label>
+<input type="checkbox"
+${saved[task]?"checked":""}
+onchange="toggleTask('${task}',this.checked)">`;
 
-    function exportBackup() {
-      let data = { taskList: taskList, storage: {} };
-      for (let i = 0; i < localStorage.length; i++) {
-        let key = localStorage.key(i);
-        data.storage[key] = localStorage.getItem(key);
-      }
-      let blob = new Blob([JSON.stringify(data)], { type: "application/json" });
-      let url = URL.createObjectURL(blob);
-      let a = document.createElement("a");
-      a.href = url;
-      a.download = "ibadah-backup.json";
-      a.click();
-    }
+container.appendChild(div);
 
-    function importBackup() {
-      let file = document.getElementById("restoreFile").files[0];
-      let reader = new FileReader();
-      reader.onload = function (e) {
-        let data = JSON.parse(e.target.result);
-        localStorage.clear();
-        for (let key in data.storage) {
-          localStorage.setItem(key, data.storage[key]);
-        }
-        location.reload();
-      };
-      reader.readAsText(file);
-    }
+});
 
-    function prevDay() {
-      let picker = document.getElementById("datePicker");
-      let date = new Date(picker.value);
-      date.setDate(date.getDate() - 1);
-      picker.value = date.toISOString().split("T")[0]; // Ensure the format is correct
-      loadTasks();
-    }
+updateStreak();
 
-    function nextDay() {
-      let picker = document.getElementById("datePicker");
-      let date = new Date(picker.value);
-      date.setDate(date.getDate() + 1);
-      picker.value = date.toISOString().split("T")[0]; // Ensure the format is correct
-      loadTasks();
-    }
+}
 
-    function updateDisplayDate() {
-      let picker = document.getElementById("datePicker").value;
-      let date = new Date(picker);
+function toggleTask(task,status){
 
-      let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+let date=document.getElementById("datePicker").value;
+let saved=JSON.parse(localStorage.getItem(date))||{};
 
-      let dayName = days[date.getDay()];
-      let formatted = months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + " — " + dayName;
+saved[task]=status;
 
-      document.getElementById("displayDate").innerText = formatted;
-    }
+localStorage.setItem(date,JSON.stringify(saved));
 
-    // Set the date to previous day if it's before 2 AM
-    let now = new Date();
-    let today = new Date();
+updateStreak();
 
-    if (now.getHours() < 2) {
-      today.setDate(today.getDate() - 1); // Set to previous day
-    }
+}
 
-    // Set correct date
-    document.getElementById("datePicker").value = today.toISOString().split("T")[0];
+function prevDay(){
 
-    loadTasks();
-    updateDisplayDate(); // Initial call to show date
-  </script>
+let picker=document.getElementById("datePicker");
+let date=new Date(picker.value);
+
+date.setDate(date.getDate()-1);
+
+picker.value=date.toISOString().split("T")[0];
+
+updateDisplayDate();
+loadTasks();
+
+}
+
+function nextDay(){
+
+let picker=document.getElementById("datePicker");
+let date=new Date(picker.value);
+
+date.setDate(date.getDate()+1);
+
+picker.value=date.toISOString().split("T")[0];
+
+updateDisplayDate();
+loadTasks();
+
+}
+
+function updateStreak(){
+
+let streak=0;
+let today=getIslamicDay();
+
+for(let i=0;i<365;i++){
+
+let d=new Date(today);
+d.setDate(today.getDate()-i);
+
+let key=d.toISOString().split("T")[0];
+let saved=JSON.parse(localStorage.getItem(key));
+
+if(saved && Object.values(saved).every(v=>v===true)){
+streak++;
+}else break;
+
+}
+
+document.getElementById("streakCount").innerText=
+streak+" Days";
+
+}
+
+function setCorrectIslamicDay(){
+
+let today=getIslamicDay();
+
+let picker=document.getElementById("datePicker");
+
+let selected=new Date(picker.value || today);
+selected.setHours(0,0,0,0);
+
+if(selected.getTime()!==today.getTime()){
+
+picker.value=today.toISOString().split("T")[0];
+
+updateDisplayDate();
+loadTasks();
+
+}
+
+}
+
+// Run when open
+setCorrectIslamicDay();
+
+// Check every minute (for 2AM auto change)
+setInterval(setCorrectIslamicDay,60000);
+
+</script>
 
 </body>
 </html>
