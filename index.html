@@ -290,22 +290,21 @@ loadTasks();
 
 </script>
 function prevDay(){
-let picker=document.getElementById("datePicker");
-let d=new Date(picker.value);
-d.setDate(d.getDate()-1);
-picker.value=d.toISOString().split("T")[0];
-loadTasks();
+    let picker = document.getElementById("datePicker");
+    let date = new Date(picker.value);
+    date.setDate(date.getDate() - 1);
+    picker.value = date.toISOString().split("T")[0]; // Ensure the format is correct
+    loadTasks();
 }
 
 function nextDay(){
-let picker=document.getElementById("datePicker");
-let d=new Date(picker.value);
-d.setDate(d.getDate()+1);
-picker.value=d.toISOString().split("T")[0];
-loadTasks();
+    let picker = document.getElementById("datePicker");
+    let date = new Date(picker.value);
+    date.setDate(date.getDate() + 1);
+    picker.value = date.toISOString().split("T")[0]; // Ensure the format is correct
+    loadTasks();
 }
-</body>
-</html>
+
 
 
 
