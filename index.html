@@ -302,7 +302,20 @@ function nextDay(){
     picker.value = date.toISOString().split("T")[0]; // Ensure the format is correct
     loadTasks();
 }
+setInterval(() => {
+    let now = new Date();
+    let hours = now.getHours();
+
+    if (hours === 2) {  // Check if it is 2 AM
+        let picker = document.getElementById("datePicker");
+        let currentDate = new Date(picker.value);
+        currentDate.setDate(currentDate.getDate() + 1);  // Move to the next day
+        picker.value = currentDate.toISOString().split("T")[0];  // Update date
+        loadTasks();  // Reload tasks for the new day
+    }
+}, 60000);  // Check every minute
 </script>
+
 
 
 
