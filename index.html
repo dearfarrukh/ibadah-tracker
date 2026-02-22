@@ -2,15 +2,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Ibadah Tracker</title>
+<title>Ibadah Tracker Pro</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link rel="apple-touch-icon" href="icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
 
 <style>
-
 body{
 font-family:-apple-system,BlinkMacSystemFont;
 background-image:url("wallpaper.jpg");
@@ -30,7 +27,15 @@ border-radius:22px;
 margin-bottom:20px;
 }
 
-h1{text-align:center;}
+button{
+background:#007aff;
+color:white;
+border:none;
+padding:12px;
+border-radius:16px;
+margin-top:10px;
+width:100%;
+}
 
 .task{
 display:flex;
@@ -38,34 +43,28 @@ justify-content:space-between;
 padding:8px 0;
 }
 
-button{
-background:#007aff;
-color:white;
-border:none;
-padding:10px;
-border-radius:12px;
-}
-
 input[type="checkbox"]{
 width:22px;
 height:22px;
-accent-color:#007aff;
 }
-
 </style>
 </head>
 
 <body>
 
-<h1>📿 Ibadah Tracker</h1>
+<h1 style="text-align:center;">📿 Ibadah Tracker</h1>
 
 <div class="card">
 <h3>📅 Select Date</h3>
+
 <div style="display:flex;align-items:center;gap:10px;">
-<button onclick="prevDay()">⬅️</button>
+<button onclick="prevDay()" style="width:60px;">⬅️</button>
+
 <input type="date" id="datePicker" style="display:none;">
+
 <div id="displayDate" style="flex:1;text-align:center;font-weight:600;"></div>
-<button onclick="nextDay()">➡️</button>
+
+<button onclick="nextDay()" style="width:60px;">➡️</button>
 </div>
 </div>
 
@@ -75,99 +74,200 @@ accent-color:#007aff;
 </div>
 
 <div class="card">
+<h3>⚙️ Task Settings</h3>
+
+<select id="actionSelect" onchange="handleAction()">
+<option value="">Select Action</option>
+<option value="add">➕ Add Task</option>
+<option value="delete">🗑 Delete Task</option>
+<option value="rename">✏️ Rename Task</option>
+</select>
+
+<div id="actionArea"></div>
+
+<h4>☁️ iCloud Backup</h4>
+<button onclick="exportBackup()">Export to iCloud</button>
+<input type="file" id="restoreFile" onchange="importBackup()" style="display:none;">
+<button onclick="document.getElementById('restoreFile').click()">Restore from iCloud</button>
+
+</div>
+
+<div class="card">
 <h3>🔥 Streak</h3>
 <p id="streakCount">0 Days</p>
 </div>
 
 <script>
 
-// 🔴 STOP UTC BUG (IMPORTANT)
-function formatLocalDate(date){
-let y=date.getFullYear();
-let m=(date.getMonth()+1).toString().padStart(2,"0");
-let d=date.getDate().toString().padStart(2,"0");
-return `${y}-${m}-${d}`;
-}
-
-// 🌙 Islamic Day Logic
-function getIslamicDay(){
-let now=new Date();
-let today=new Date();
-if(now.getHours()<2){
-today.setDate(today.getDate()-1);
-}
-return today;
-}
-
-// 📅 Show Day Name
-function updateDisplayDate(){
-let picker=document.getElementById("datePicker");
-let d=new Date(picker.value+"T00:00");
-let day=d.toLocaleDateString('en-US',{weekday:'long'});
-let date=d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-document.getElementById("displayDate").innerText=date+" — "+day;
-}
-
-let taskList=JSON.parse(localStorage.getItem("taskList"))||[
+let taskList = JSON.parse(localStorage.getItem("taskList")) || [
 "Fajr","Dhuhur","Asr","Maghrib","Isha",
 "Surah Mulk","Surah Sajdah","Surah Yaseen",
 "Surah Rehman","Surah Taghabun","Surah Waqiya"
 ];
 
-function getSelectedDate(){
-return document.getElementById("datePicker").value;
+function islamicToday(){
+
+let now=new Date();
+
+let local=new Date(
+now.getFullYear(),
+now.getMonth(),
+now.getDate()
+);
+
+if(now.getHours()<2){
+local.setDate(local.getDate()-1);
+}
+
+return local;
+}
+
+function setDate(date){
+
+let picker=document.getElementById("datePicker");
+picker.value=date.toISOString().split("T")[0];
+
+let display=date.toLocaleDateString(
+'en-US',
+{weekday:'long',year:'numeric',month:'short',day:'numeric'}
+);
+
+document.getElementById("displayDate").innerText=display;
+
+loadTasks();
 }
 
 function loadTasks(){
+
 let container=document.getElementById("taskContainer");
 container.innerHTML="";
-let date=getSelectedDate();
+
+let date=document.getElementById("datePicker").value;
 let saved=JSON.parse(localStorage.getItem(date))||{};
 
 taskList.forEach(task=>{
 let div=document.createElement("div");
 div.className="task";
-div.innerHTML=`<label>${task}</label>
-<input type="checkbox" ${saved[task]?"checked":""}
-onchange="toggleTask('${task}',this.checked)">`;
+div.innerHTML=`
+<label>${task}</label>
+<input type="checkbox"
+${saved[task]?"checked":""}
+onchange="toggleTask('${task}',this.checked)">
+`;
 container.appendChild(div);
 });
 
 updateStreak();
-updateDisplayDate();
 }
 
 function toggleTask(task,status){
-let saved=JSON.parse(localStorage.getItem(getSelectedDate()))||{};
+
+let date=document.getElementById("datePicker").value;
+let saved=JSON.parse(localStorage.getItem(date))||{};
 saved[task]=status;
-localStorage.setItem(getSelectedDate(),JSON.stringify(saved));
+localStorage.setItem(date,JSON.stringify(saved));
+
 updateStreak();
 }
 
 function prevDay(){
-let picker=document.getElementById("datePicker");
-let date=new Date(picker.value+"T00:00");
-date.setDate(date.getDate()-1);
-picker.value=formatLocalDate(date);
-loadTasks();
+let d=new Date(document.getElementById("datePicker").value);
+d.setDate(d.getDate()-1);
+setDate(d);
 }
 
 function nextDay(){
-let picker=document.getElementById("datePicker");
-let date=new Date(picker.value+"T00:00");
-date.setDate(date.getDate()+1);
-picker.value=formatLocalDate(date);
+let d=new Date(document.getElementById("datePicker").value);
+d.setDate(d.getDate()+1);
+setDate(d);
+}
+
+function handleAction(){
+let action=document.getElementById("actionSelect").value;
+let area=document.getElementById("actionArea");
+area.innerHTML="";
+
+if(action==="add"){
+area.innerHTML=`<input type="text" id="newTaskName">
+<button onclick="confirmAdd()">Add</button>`;
+}
+
+if(action==="delete"){
+let options=taskList.map(t=>`<option>${t}</option>`).join("");
+area.innerHTML=`<select id="deleteTaskSelect">${options}</select>
+<button onclick="confirmDelete()">Delete</button>`;
+}
+
+if(action==="rename"){
+let options=taskList.map(t=>`<option>${t}</option>`).join("");
+area.innerHTML=`<select id="renameSelect">${options}</select>
+<input type="text" id="renameInput">
+<button onclick="confirmRename()">Rename</button>`;
+}
+}
+
+function confirmAdd(){
+let name=document.getElementById("newTaskName").value.trim();
+if(name){
+taskList.push(name);
+localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
+}
+}
+
+function confirmDelete(){
+let task=document.getElementById("deleteTaskSelect").value;
+taskList=taskList.filter(t=>t!==task);
+localStorage.setItem("taskList",JSON.stringify(taskList));
+loadTasks();
+}
+
+function confirmRename(){
+let old=document.getElementById("renameSelect").value;
+let nw=document.getElementById("renameInput").value.trim();
+if(nw){
+taskList=taskList.map(t=>t===old?nw:t);
+localStorage.setItem("taskList",JSON.stringify(taskList));
+loadTasks();
+}
+}
+
+function exportBackup(){
+let data={taskList,storage:{}};
+for(let i=0;i<localStorage.length;i++){
+let key=localStorage.key(i);
+data.storage[key]=localStorage.getItem(key);
+}
+let blob=new Blob([JSON.stringify(data)]);
+let url=URL.createObjectURL(blob);
+let a=document.createElement("a");
+a.href=url;
+a.download="ibadah-backup.json";
+a.click();
+}
+
+function importBackup(){
+let file=document.getElementById("restoreFile").files[0];
+let reader=new FileReader();
+reader.onload=function(e){
+let data=JSON.parse(e.target.result);
+localStorage.clear();
+for(let key in data.storage){
+localStorage.setItem(key,data.storage[key]);
+}
+location.reload();
+};
+reader.readAsText(file);
 }
 
 function updateStreak(){
 let streak=0;
-let today=getIslamicDay();
+let today=islamicToday();
 
 for(let i=0;i<365;i++){
 let d=new Date(today);
 d.setDate(today.getDate()-i);
-let key=formatLocalDate(d);
+let key=d.toISOString().split("T")[0];
 let saved=JSON.parse(localStorage.getItem(key));
 if(saved && Object.values(saved).every(v=>v===true)){
 streak++;
@@ -177,23 +277,9 @@ streak++;
 document.getElementById("streakCount").innerText=streak+" Days";
 }
 
-// 🟢 Initial Set
-let islamicToday=getIslamicDay();
-document.getElementById("datePicker").value=formatLocalDate(islamicToday);
-loadTasks();
-
-// 🔄 Auto Change After 2AM if app stays open
-setInterval(()=>{
-let now=getIslamicDay();
-let picker=document.getElementById("datePicker").value;
-if(picker!==formatLocalDate(now)){
-document.getElementById("datePicker").value=formatLocalDate(now);
-loadTasks();
-}
-},60000);
+setDate(islamicToday());
 
 </script>
 
 </body>
 </html>
-
