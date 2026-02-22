@@ -287,8 +287,6 @@ loadTasks();
 },60000);
   
 loadTasks();
-
-</script>
 function prevDay(){
     let picker = document.getElementById("datePicker");
     let date = new Date(picker.value);
@@ -304,6 +302,9 @@ function nextDay(){
     picker.value = date.toISOString().split("T")[0]; // Ensure the format is correct
     loadTasks();
 }
+</script>
+
+
 
 
 
