@@ -11,11 +11,11 @@
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont;
-     background-image: url("wallpaper.jpg");
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-background-attachment: fixed;
+      background-image: url("wallpaper.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
       margin: 0;
       padding: 20px;
       animation: fadeIn 0.6s ease-in-out;
@@ -93,7 +93,8 @@ background-attachment: fixed;
     <h3>📅 Select Date</h3>
     <div style="display: flex; align-items: center; gap: 10px;">
       <button onclick="prevDay()" style="width: 60px;">⬅️</button>
-      <input type="date" id="datePicker" onchange="loadTasks()">
+      <input type="date" id="datePicker" onchange="loadTasks()" style="display:none;">
+      <div id="displayDate" style="flex:1;text-align:center;font-weight:600;"></div>
       <button onclick="nextDay()" style="width: 60px;">➡️</button>
     </div>
   </div>
@@ -160,6 +161,7 @@ background-attachment: fixed;
 
       updateStreak();
       updateMonthlyReport();
+      updateDisplayDate();  // Add this line to update the display date
     }
 
     function toggleTask(task, status) {
@@ -301,6 +303,19 @@ background-attachment: fixed;
       loadTasks();
     }
 
+    function updateDisplayDate() {
+      let picker = document.getElementById("datePicker").value;
+      let date = new Date(picker);
+
+      let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+      let dayName = days[date.getDay()];
+      let formatted = months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear() + " — " + dayName;
+
+      document.getElementById("displayDate").innerText = formatted;
+    }
+
     // Set the date to previous day if it's before 2 AM
     let now = new Date();
     let today = new Date();
@@ -313,7 +328,8 @@ background-attachment: fixed;
     document.getElementById("datePicker").value = today.toISOString().split("T")[0];
 
     loadTasks();
+    updateDisplayDate(); // Initial call to show date
   </script>
+
 </body>
 </html>
-
