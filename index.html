@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Ibadah Tracker Pro</title>
+<title>Ibadah Tracker</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="apple-touch-icon" href="icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -105,11 +105,9 @@ let taskList = JSON.parse(localStorage.getItem("taskList")) || [
 "Surah Rehman","Surah Taghabun","Surah Waqiya"
 ];
 
-function localKey(date){
-let y=date.getFullYear();
-let m=(date.getMonth()+1).toString().padStart(2,'0');
-let d=date.getDate().toString().padStart(2,'0');
-return `${y}-${m}-${d}`;
+function parseLocal(dateString){
+let parts=dateString.split("-");
+return new Date(parts[0],parts[1]-1,parts[2]);
 }
 
 function islamicToday(){
@@ -123,7 +121,7 @@ return local;
 
 function setDate(date){
 let picker=document.getElementById("datePicker");
-picker.value=localKey(date);
+picker.value=date.toISOString().split("T")[0];
 
 let display=date.toLocaleDateString(
 'en-US',
@@ -165,13 +163,15 @@ updateStreak();
 }
 
 function prevDay(){
-let d=new Date(document.getElementById("datePicker").value);
+let picker=document.getElementById("datePicker");
+let d=parseLocal(picker.value);
 d.setDate(d.getDate()-1);
 setDate(d);
 }
 
 function nextDay(){
-let d=new Date(document.getElementById("datePicker").value);
+let picker=document.getElementById("datePicker");
+let d=parseLocal(picker.value);
 d.setDate(d.getDate()+1);
 setDate(d);
 }
@@ -261,7 +261,7 @@ let today=islamicToday();
 for(let i=0;i<365;i++){
 let d=new Date(today);
 d.setDate(today.getDate()-i);
-let key=localKey(d);
+let key=d.toISOString().split("T")[0];
 let saved=JSON.parse(localStorage.getItem(key));
 if(saved && Object.values(saved).every(v=>v===true)){
 streak++;
