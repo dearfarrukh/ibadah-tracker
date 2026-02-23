@@ -228,7 +228,7 @@ let nw=document.getElementById("renameInput").value.trim();
 if(nw){
 taskList=taskList.map(t=>t===old?nw:t);
 localStorage.setItem("taskList",JSON.stringify(taskList));
-loadTasks();
+
 }
 }
 
@@ -277,9 +277,14 @@ streak++;
 document.getElementById("streakCount").innerText=streak+" Days";
 }
 
-setDate(islamicToday());
+window.onload = function(){
+    setTimeout(()=>{
+        setDate(islamicToday());
+    },200);
+}
 
 </script>
 
 </body>
 </html>
+
