@@ -105,27 +105,25 @@ let taskList = JSON.parse(localStorage.getItem("taskList")) || [
 "Surah Rehman","Surah Taghabun","Surah Waqiya"
 ];
 
+function localKey(date){
+let y=date.getFullYear();
+let m=(date.getMonth()+1).toString().padStart(2,'0');
+let d=date.getDate().toString().padStart(2,'0');
+return `${y}-${m}-${d}`;
+}
+
 function islamicToday(){
-
 let now=new Date();
-
-let local=new Date(
-now.getFullYear(),
-now.getMonth(),
-now.getDate()
-);
-
+let local=new Date(now.getFullYear(),now.getMonth(),now.getDate());
 if(now.getHours()<2){
 local.setDate(local.getDate()-1);
 }
-
 return local;
 }
 
 function setDate(date){
-
 let picker=document.getElementById("datePicker");
-picker.value=date.toISOString().split("T")[0];
+picker.value=localKey(date);
 
 let display=date.toLocaleDateString(
 'en-US',
@@ -138,10 +136,8 @@ loadTasks();
 }
 
 function loadTasks(){
-
 let container=document.getElementById("taskContainer");
 container.innerHTML="";
-
 let date=document.getElementById("datePicker").value;
 let saved=JSON.parse(localStorage.getItem(date))||{};
 
@@ -161,12 +157,10 @@ updateStreak();
 }
 
 function toggleTask(task,status){
-
 let date=document.getElementById("datePicker").value;
 let saved=JSON.parse(localStorage.getItem(date))||{};
 saved[task]=status;
 localStorage.setItem(date,JSON.stringify(saved));
-
 updateStreak();
 }
 
@@ -228,7 +222,7 @@ let nw=document.getElementById("renameInput").value.trim();
 if(nw){
 taskList=taskList.map(t=>t===old?nw:t);
 localStorage.setItem("taskList",JSON.stringify(taskList));
-
+loadTasks();
 }
 }
 
@@ -267,7 +261,7 @@ let today=islamicToday();
 for(let i=0;i<365;i++){
 let d=new Date(today);
 d.setDate(today.getDate()-i);
-let key=d.toISOString().split("T")[0];
+let key=localKey(d);
 let saved=JSON.parse(localStorage.getItem(key));
 if(saved && Object.values(saved).every(v=>v===true)){
 streak++;
@@ -277,14 +271,11 @@ streak++;
 document.getElementById("streakCount").innerText=streak+" Days";
 }
 
-window.onload = function(){
-    setTimeout(()=>{
-        setDate(islamicToday());
-    },200);
+window.onload=function(){
+setDate(islamicToday());
 }
 
 </script>
 
 </body>
 </html>
-
