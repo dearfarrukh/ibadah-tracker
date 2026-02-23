@@ -65,7 +65,7 @@ height:22px;
 
 <input type="date" id="datePicker"
 onchange="manualPickDate(this.value)"
-style="width:40px;">
+style="width:120px;">
 
 <div id="displayDate"
 style="flex:1;text-align:center;font-weight:600;">
@@ -121,40 +121,43 @@ let taskList=JSON.parse(localStorage.getItem("taskList"))||[
 ];
 
 function islamicToday(){
-
 let now=new Date();
 let d=new Date(
 now.getFullYear(),
 now.getMonth(),
 now.getDate()
 );
-
 if(now.getHours()<2){
 d.setDate(d.getDate()-1);
 }
-
 return d;
 }
 
 function getLocalDate(){
-
 let v=document.getElementById("datePicker").value;
 let p=v.split("-");
-return new Date(p[0],p[1]-1,p[2]);
+return new Date(
+parseInt(p[0]),
+parseInt(p[1])-1,
+parseInt(p[2])
+);
 }
 
 function setDate(date){
 
 let picker=document.getElementById("datePicker");
 
-let key=date.getFullYear()+"-"+
-String(date.getMonth()+1).padStart(2,"0")+"-"+
-String(date.getDate()).padStart(2,"0");
+let y=date.getFullYear();
+let m=String(date.getMonth()+1).padStart(2,"0");
+let d=String(date.getDate()).padStart(2,"0");
+
+let key=y+"-"+m+"-"+d;
 
 picker.value=key;
+picker.setAttribute("value",key);
 
 document.getElementById("displayDate").innerText=
-date.toLocaleDateString(
+new Date(y,m-1,d).toLocaleDateString(
 'en-US',
 {weekday:'long',year:'numeric',month:'short',day:'numeric'}
 );
