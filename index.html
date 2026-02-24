@@ -51,7 +51,11 @@ color:black;
 }
 
 #datePicker{
-display:none;
+position:absolute;
+opacity:0;
+width:1px;
+height:1px;
+left:-1000px;
 }
 </style>
 </head>
@@ -163,16 +167,7 @@ loadTasks();
 }
 
 function openCalendar(){
-
-let picker=document.getElementById("datePicker");
-
-picker.style.opacity="0";
-picker.style.position="absolute";
-picker.style.left="-9999px";
-
-picker.focus();
-picker.click();
-
+document.getElementById("datePicker").showPicker();
 }
 function prevDay(){
 currentDate.setDate(currentDate.getDate()-1);
