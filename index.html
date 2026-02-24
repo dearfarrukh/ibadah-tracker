@@ -80,7 +80,8 @@ Select Date
 
 </div>
 
-<input type="date" id="datePicker" onchange="manualPick(this.value)">
+<input type="date" id="datePicker"
+onchange="calendarPicked(this.value)">
 
 </div>
 
@@ -162,16 +163,17 @@ loadTasks();
 }
 
 function openCalendar(){
+
 let picker=document.getElementById("datePicker");
-picker.style.display="block";
+
+picker.style.opacity="0";
+picker.style.position="absolute";
+picker.style.left="-9999px";
+
 picker.focus();
 picker.click();
 
-setTimeout(()=>{
-picker.style.display="none";
-},300);
 }
-
 function prevDay(){
 currentDate.setDate(currentDate.getDate()-1);
 setDate(new Date(currentDate));
@@ -305,7 +307,14 @@ r.readAsText(file);
 window.onload=function(){
 setDate(islamicToday());
 }
+function calendarPicked(value){
 
+let p=value.split("-");
+let d=new Date(p[0],p[1]-1,p[2]);
+
+setDate(d);
+
+}
 </script>
 
 </body>
