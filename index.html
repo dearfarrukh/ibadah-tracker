@@ -30,6 +30,7 @@ border:none;
 padding:12px;
 border-radius:16px;
 width:60px;
+min-width:60px;
 }
 
 .task{
@@ -51,8 +52,6 @@ height:22px;
 
 <!-- DATE CARD -->
 <div class="card">
-
-<h3>Select Date</h3>
 
 <div style="display:flex;align-items:center;gap:10px;">
 
@@ -157,7 +156,7 @@ month:'long',
 year:'numeric'
 }).format(currentDate);
 
-document.getElementById("hijriDate").innerText=hijri+" AH";
+document.getElementById("hijriDate").innerText=hijri;
 
 document.getElementById("datePicker").value=formatKey(currentDate);
 
