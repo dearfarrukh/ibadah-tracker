@@ -49,33 +49,44 @@ height:22px;
 
 <h1 style="text-align:center;">📿 Ibadah Tracker</h1>
 
-<!-- DATE CARD -->
 <div class="card">
-
 <h3>Select Date</h3>
 
 <div style="display:flex;align-items:center;gap:10px;">
 
 <button onclick="prevDay()">⬅️</button>
 
-<div style="flex:1;text-align:center;cursor:pointer;" onclick="openCalendar()">
+<div style="flex:1;text-align:center;position:relative;">
+
 <div id="displayDate" style="font-weight:600;"></div>
 <div id="hijriDate" style="font-size:14px;color:gray;"></div>
+
+<input type="date"
+id="datePicker"
+onchange="manualPick(this.value)"
+style="
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+opacity:0;
+z-index:2;
+cursor:pointer;
+">
+
 </div>
 
 <button onclick="nextDay()">➡️</button>
 
 </div>
-
 </div>
 
-<!-- TASKS -->
 <div class="card">
 <h3>📝 Daily Tasks</h3>
 <div id="taskContainer"></div>
 </div>
 
-<!-- SETTINGS -->
 <div class="card">
 <h3>⚙️ Task Settings</h3>
 
@@ -101,11 +112,6 @@ height:22px;
 <h3>🔥 Streak</h3>
 <p id="streakCount">0 Days</p>
 </div>
-
-<!-- ONLY ONE DATE PICKER -->
-<input type="date" id="datePicker"
-onchange="manualPick(this.value)"
-style="position:fixed;top:-100px;left:-100px;opacity:0;">
 
 <script>
 
@@ -147,7 +153,9 @@ new Intl.DateTimeFormat('en-TN-u-ca-islamic',{
 day:'numeric',
 month:'long',
 year:'numeric'
-}).format(currentDate)+" AH";
+}).format(currentDate);
+
+document.getElementById("datePicker").value=formatKey(currentDate);
 
 loadTasks();
 }
@@ -155,10 +163,6 @@ loadTasks();
 function manualPick(value){
 let p=value.split("-");
 setDate(new Date(p[0],p[1]-1,p[2]));
-}
-
-function openCalendar(){
-document.getElementById("datePicker").click();
 }
 
 function loadTasks(){
@@ -180,6 +184,7 @@ onchange="toggleTask('${task}',this.checked)">
 `;
 container.appendChild(div);
 });
+
 updateStreak();
 }
 
@@ -192,13 +197,15 @@ updateStreak();
 }
 
 function prevDay(){
-currentDate.setDate(currentDate.getDate()-1);
-setDate(currentDate);
+let d=new Date(currentDate);
+d.setDate(d.getDate()-1);
+setDate(d);
 }
 
 function nextDay(){
-currentDate.setDate(currentDate.getDate()+1);
-setDate(currentDate);
+let d=new Date(currentDate);
+d.setDate(d.getDate()+1);
+setDate(d);
 }
 
 function updateStreak(){
@@ -209,8 +216,9 @@ let d=new Date(today);
 d.setDate(today.getDate()-i);
 let key=formatKey(d);
 let saved=JSON.parse(localStorage.getItem(key));
-if(saved && Object.values(saved).every(v=>v===true)){streak++;}
-else break;
+if(saved && Object.values(saved).every(v=>v===true)){
+streak++;
+}else break;
 }
 document.getElementById("streakCount").innerText=streak+" Days";
 }
@@ -287,8 +295,9 @@ r.readAsText(file);
 }
 
 document.addEventListener("DOMContentLoaded",()=>{
-setTimeout(()=>{setDate(islamicToday());},300);
+setDate(islamicToday());
 });
+
 </script>
 </body>
 </html>
