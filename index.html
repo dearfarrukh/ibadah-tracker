@@ -102,7 +102,7 @@ Select Date
 <div id="actionArea"></div>
 
 <h4>☁️ iCloud Backup</h4>
-<button onclick="exportBackup()" style="width:100%">Export</button>
+<button onclick="exportBackup()" style="width:100%;margin-bottom:10px;">Export</button>
 
 <input type="file" id="restoreFile" onchange="importBackup()" style="display:none;">
 <button onclick="document.getElementById('restoreFile').click()" style="width:100%">Restore</button>
@@ -162,7 +162,14 @@ loadTasks();
 }
 
 function openCalendar(){
-document.getElementById("datePicker").showPicker();
+let picker=document.getElementById("datePicker");
+picker.style.display="block";
+picker.focus();
+picker.click();
+
+setTimeout(()=>{
+picker.style.display="none";
+},300);
 }
 
 function prevDay(){
