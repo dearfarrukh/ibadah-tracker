@@ -8,14 +8,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 <style>
-
 body{
 font-family:-apple-system,BlinkMacSystemFont;
-background-image:url("wallpaper.jpg");
-background-size:cover;
-background-position:center;
-background-repeat:no-repeat;
-background-attachment:fixed;
+background:url("wallpaper.jpg") center/cover no-repeat fixed;
 margin:0;
 padding:20px;
 }
@@ -34,8 +29,7 @@ color:white;
 border:none;
 padding:12px;
 border-radius:16px;
-margin-top:10px;
-width:100%;
+width:60px;
 }
 
 .task{
@@ -49,6 +43,16 @@ width:22px;
 height:22px;
 }
 
+#calendarBtn{
+font-size:22px;
+background:none;
+width:auto;
+color:black;
+}
+
+#datePicker{
+display:none;
+}
 </style>
 </head>
 
@@ -57,24 +61,27 @@ height:22px;
 <h1 style="text-align:center;">📿 Ibadah Tracker</h1>
 
 <div class="card">
-<h3>📅 Select Date</h3>
+
+<h3>
+<button id="calendarBtn" onclick="openCalendar()">📅</button>
+Select Date
+</h3>
 
 <div style="display:flex;align-items:center;gap:10px;">
 
-<button onclick="prevDay()" style="width:60px;">⬅️</button>
-
-<input type="date" id="datePicker"
-onchange="manualPickDate(this.value)"
-style="width:40px;">
+<button onclick="prevDay()">⬅️</button>
 
 <div style="flex:1;text-align:center;">
 <div id="displayDate" style="font-weight:600;"></div>
-<div id="hijriDate" style="font-size:14px;color:#555;"></div>
+<div id="hijriDate" style="font-size:14px;color:gray;"></div>
 </div>
 
-<button onclick="nextDay()" style="width:60px;">➡️</button>
+<button onclick="nextDay()">➡️</button>
 
 </div>
+
+<input type="date" id="datePicker" onchange="manualPick(this.value)">
+
 </div>
 
 <div class="card">
@@ -95,16 +102,10 @@ style="width:40px;">
 <div id="actionArea"></div>
 
 <h4>☁️ iCloud Backup</h4>
+<button onclick="exportBackup()" style="width:100%">Export</button>
 
-<button onclick="exportBackup()">Export to iCloud</button>
-
-<input type="file" id="restoreFile"
-onchange="importBackup()"
-style="display:none;">
-
-<button onclick="document.getElementById('restoreFile').click()">
-Restore from iCloud
-</button>
+<input type="file" id="restoreFile" onchange="importBackup()" style="display:none;">
+<button onclick="document.getElementById('restoreFile').click()" style="width:100%">Restore</button>
 
 </div>
 
@@ -115,22 +116,22 @@ Restore from iCloud
 
 <script>
 
-let taskList = JSON.parse(localStorage.getItem("taskList")) || [
+let currentDate;
+
+let taskList=JSON.parse(localStorage.getItem("taskList"))||[
 "Fajr","Dhuhur","Asr","Maghrib","Isha",
 "Surah Mulk","Surah Sajdah","Surah Yaseen",
 "Surah Rehman","Surah Taghabun","Surah Waqiya"
 ];
 
-let currentDate;
-
 function islamicToday(){
-let now = new Date();
-let d = new Date(now.getFullYear(),now.getMonth(),now.getDate());
-if(now.getHours()<2){ d.setDate(d.getDate()-1); }
+let now=new Date();
+let d=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+if(now.getHours()<2){d.setDate(d.getDate()-1);}
 return d;
 }
 
-function getKey(d){
+function formatKey(d){
 return d.getFullYear()+"-"+
 String(d.getMonth()+1).padStart(2,"0")+"-"+
 String(d.getDate()).padStart(2,"0");
@@ -138,26 +139,51 @@ String(d.getDate()).padStart(2,"0");
 
 function setDate(d){
 
-currentDate = new Date(d);
+currentDate=d;
 
-document.getElementById("datePicker").value = getKey(currentDate);
+document.getElementById("displayDate").innerText=
+d.toLocaleDateString('en-US',{
+weekday:'long',
+year:'numeric',
+month:'short',
+day:'numeric'
+});
 
-document.getElementById("displayDate").innerText =
-currentDate.toLocaleDateString('en-US',
-{weekday:'long',month:'short',day:'numeric',year:'numeric'});
-
-document.getElementById("hijriDate").innerText =
+document.getElementById("hijriDate").innerText=
 new Intl.DateTimeFormat('en-TN-u-ca-islamic',{
-day:'numeric',month:'long',year:'numeric'
-}).format(currentDate)+" AH";
+day:'numeric',
+month:'long',
+year:'numeric'
+}).format(d)+" AH";
+
+document.getElementById("datePicker").value=formatKey(d);
 
 loadTasks();
 }
 
+function openCalendar(){
+document.getElementById("datePicker").showPicker();
+}
+
+function prevDay(){
+currentDate.setDate(currentDate.getDate()-1);
+setDate(new Date(currentDate));
+}
+
+function nextDay(){
+currentDate.setDate(currentDate.getDate()+1);
+setDate(new Date(currentDate));
+}
+
+function manualPick(v){
+let p=v.split("-");
+setDate(new Date(p[0],p[1]-1,p[2]));
+}
+
 function loadTasks(){
 
-let key = getKey(currentDate);
-let saved = JSON.parse(localStorage.getItem(key))||{};
+let key=formatKey(currentDate);
+let saved=JSON.parse(localStorage.getItem(key))||{};
 
 let container=document.getElementById("taskContainer");
 container.innerHTML="";
@@ -173,82 +199,69 @@ onchange="toggleTask('${task}',this.checked)">
 `;
 container.appendChild(div);
 });
-
 updateStreak();
 }
 
 function toggleTask(task,status){
-let key=getKey(currentDate);
+let key=formatKey(currentDate);
 let saved=JSON.parse(localStorage.getItem(key))||{};
 saved[task]=status;
 localStorage.setItem(key,JSON.stringify(saved));
 updateStreak();
 }
 
-function prevDay(){
-currentDate.setDate(currentDate.getDate()-1);
-setDate(currentDate);
+function updateStreak(){
+let streak=0;
+let today=islamicToday();
+for(let i=0;i<365;i++){
+let d=new Date(today);
+d.setDate(today.getDate()-i);
+let key=formatKey(d);
+let saved=JSON.parse(localStorage.getItem(key));
+if(saved && Object.values(saved).every(v=>v===true)){streak++;}
+else break;
 }
-
-function nextDay(){
-currentDate.setDate(currentDate.getDate()+1);
-setDate(currentDate);
-}
-
-function manualPickDate(value){
-let p=value.split("-");
-setDate(new Date(p[0],p[1]-1,p[2]));
+document.getElementById("streakCount").innerText=streak+" Days";
 }
 
 function handleAction(){
-
 let action=document.getElementById("actionSelect").value;
 let area=document.getElementById("actionArea");
 area.innerHTML="";
-
 if(action==="add"){
-area.innerHTML=`
-<input type="text" id="newTaskName">
-<button onclick="confirmAdd()">Add</button>`;
+area.innerHTML=`<input id="newTaskName"><button onclick="confirmAdd()">Add</button>`;
 }
-
 if(action==="delete"){
-let options=taskList.map(t=>`<option>${t}</option>`).join("");
-area.innerHTML=`
-<select id="deleteTaskSelect">${options}</select>
-<button onclick="confirmDelete()">Delete</button>`;
+let opt=taskList.map(t=>`<option>${t}</option>`).join("");
+area.innerHTML=`<select id="deleteTaskSelect">${opt}</select><button onclick="confirmDelete()">Delete</button>`;
 }
-
 if(action==="rename"){
-let options=taskList.map(t=>`<option>${t}</option>`).join("");
-area.innerHTML=`
-<select id="renameSelect">${options}</select>
-<input type="text" id="renameInput">
-<button onclick="confirmRename()">Rename</button>`;
+let opt=taskList.map(t=>`<option>${t}</option>`).join("");
+area.innerHTML=`<select id="renameSelect">${opt}</select><input id="renameInput"><button onclick="confirmRename()">Rename</button>`;
 }
 }
 
 function confirmAdd(){
-let name=document.getElementById("newTaskName").value.trim();
-if(name){
-taskList.push(name);
+let n=document.getElementById("newTaskName").value.trim();
+if(n){
+taskList.push(n);
 localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
 }
 }
 
 function confirmDelete(){
-let task=document.getElementById("deleteTaskSelect").value;
-taskList=taskList.filter(t=>t!==task);
+let t=document.getElementById("deleteTaskSelect").value;
+taskList=taskList.filter(x=>x!==t);
 localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
 }
 
 function confirmRename(){
-let old=document.getElementById("renameSelect").value;
-let nw=document.getElementById("renameInput").value.trim();
-if(nw){
-taskList=taskList.map(t=>t===old?nw:t);
+let o=document.getElementById("renameSelect").value;
+let n=document.getElementById("renameInput").value.trim();
+if(n){
+taskList=taskList.map(t=>t===o?n:t);
 localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
 }
@@ -264,43 +277,22 @@ let blob=new Blob([JSON.stringify(data)]);
 let url=URL.createObjectURL(blob);
 let a=document.createElement("a");
 a.href=url;
-a.download="ibadah-backup.json";
+a.download="backup.json";
 a.click();
 }
 
 function importBackup(){
 let file=document.getElementById("restoreFile").files[0];
-let reader=new FileReader();
-reader.onload=function(e){
+let r=new FileReader();
+r.onload=e=>{
 let data=JSON.parse(e.target.result);
 localStorage.clear();
-for(let key in data.storage){
-localStorage.setItem(key,data.storage[key]);
+for(let k in data.storage){
+localStorage.setItem(k,data.storage[k]);
 }
 location.reload();
 };
-reader.readAsText(file);
-}
-
-function updateStreak(){
-
-let streak=0;
-let today=islamicToday();
-
-for(let i=0;i<365;i++){
-let d=new Date(today);
-d.setDate(today.getDate()-i);
-
-let key=getKey(d);
-let saved=JSON.parse(localStorage.getItem(key));
-
-if(saved && Object.values(saved).every(v=>v===true)){
-streak++;
-}else break;
-}
-
-document.getElementById("streakCount").innerText=
-streak+" Days";
+r.readAsText(file);
 }
 
 window.onload=function(){
@@ -308,5 +300,6 @@ setDate(islamicToday());
 }
 
 </script>
+
 </body>
 </html>
