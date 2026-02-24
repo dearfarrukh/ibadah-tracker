@@ -2,35 +2,29 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Ibadah Tracker</title>
+<title>Ibadah Tracker Pro</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="apple-touch-icon" href="icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 <style>
 body{
-font-family:-apple-system;
-background:url("wallpaper.jpg") center/cover no-repeat fixed;
+font-family:-apple-system,BlinkMacSystemFont;
+background-image:url("wallpaper.jpg");
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+background-attachment:fixed;
 margin:0;
 padding:20px;
-transition:0.4s;
-}
-
-.dark{
-background:#111;
-color:white;
 }
 
 .card{
-background:rgba(255,255,255,0.65);
+background:rgba(255,255,255,0.6);
 backdrop-filter:blur(20px);
 padding:18px;
 border-radius:22px;
 margin-bottom:20px;
-}
-
-.dark .card{
-background:rgba(0,0,0,0.5);
 }
 
 button{
@@ -39,170 +33,225 @@ color:white;
 border:none;
 padding:12px;
 border-radius:16px;
-width:60px;
+margin-top:10px;
+width:100%;
 }
 
 .task{
 display:flex;
 justify-content:space-between;
-padding:6px 0;
+padding:8px 0;
 }
-
-.progress{
-height:10px;
-background:#ddd;
-border-radius:20px;
-overflow:hidden;
-margin-top:10px;
-}
-
-.progressFill{
-height:100%;
-background:#007aff;
-width:0%;
-}
-
 </style>
 </head>
 
 <body>
 
-<h2 style="text-align:center;">📿 Ibadah Tracker</h2>
+<h1 style="text-align:center;">📿 Ibadah Tracker</h1>
 
 <div class="card">
+<h3>📅 Select Date</h3>
 
-<div style="display:flex;align-items:center;gap:10px;">
+<div style="display:flex;align-items:center;gap:10px;justify-content:center;position:relative;">
 
-<button onclick="prevDay()">⬅️</button>
+<button onclick="prevDay()" style="width:60px;">⬅️</button>
 
-<div style="flex:1;text-align:center;position:relative;">
-
-<div id="displayDate" style="font-weight:600;"></div>
-<div id="hijriDate" style="font-size:13px;color:gray;"></div>
-
-<input type="date" id="datePicker"
-onchange="manualPick(this.value)"
-style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;">
-
+<div style="position:relative;width:40px;height:40px;">
+📅
+<input type="date"
+id="datePicker"
+onchange="manualPickDate(this.value)"
+style="
+position:absolute;
+opacity:0;
+top:0;
+left:0;
+width:40px;
+height:40px;
+z-index:5;
+">
 </div>
 
-<button onclick="nextDay()">➡️</button>
+<div id="displayDate" style="flex:1;text-align:center;font-weight:600;"></div>
+
+<button onclick="nextDay()" style="width:60px;">➡️</button>
 
 </div>
-
-<div class="progress">
-<div id="progressFill" class="progressFill"></div>
-</div>
-
 </div>
 
 <div class="card">
+<h3>📝 Daily Tasks</h3>
 <div id="taskContainer"></div>
 </div>
 
 <div class="card">
-<h4>Monthly Completion</h4>
-<p id="monthPercent"></p>
-</div>
+<h3>⚙️ Task Settings</h3>
 
-<div class="card">
-<h4>Prayer Streak</h4>
-<p id="fajrStreak"></p>
-<p id="asrStreak"></p>
-<p id="ishaStreak"></p>
-</div>
+<select id="actionSelect" onchange="handleAction()">
+<option value="">Select Action</option>
+<option value="add">➕ Add Task</option>
+<option value="delete">🗑 Delete Task</option>
+<option value="rename">✏️ Rename Task</option>
+</select>
 
-<div class="card">
-<button onclick="exportBackup()" style="width:100%;margin-bottom:10px;">Export</button>
+<div id="actionArea"></div>
+
+<h4>☁️ iCloud Backup</h4>
+<button onclick="exportBackup()">Export to iCloud</button>
 <input type="file" id="restoreFile" onchange="importBackup()" style="display:none;">
-<button onclick="document.getElementById('restoreFile').click()" style="width:100%">Restore</button>
+<button onclick="document.getElementById('restoreFile').click()">Restore from iCloud</button>
+
+</div>
+
+<div class="card">
+<h3>🔥 Streak</h3>
+<p id="streakCount">0 Days</p>
 </div>
 
 <script>
 
-let currentDate;
-let taskList=JSON.parse(localStorage.getItem("taskList"))||[
-"Fajr","Dhuhur","Asr","Maghrib","Isha"
+let taskList = JSON.parse(localStorage.getItem("taskList")) || [
+"Fajr","Dhuhur","Asr","Maghrib","Isha",
+"Surah Mulk","Surah Sajdah","Surah Yaseen",
+"Surah Rehman","Surah Taghabun","Surah Waqiya"
 ];
 
 function islamicToday(){
+
 let now=new Date();
-let d=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-if(now.getHours()<2){d.setDate(d.getDate()-1);}
-return d;
+
+let local=new Date(
+now.getFullYear(),
+now.getMonth(),
+now.getDate()
+);
+
+if(now.getHours()<2){
+local.setDate(local.getDate()-1);
 }
 
-function formatKey(d){
-return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+return local;
 }
 
-function setDate(d){
+function setDate(date){
 
-currentDate=new Date(d);
+let picker=document.getElementById("datePicker");
 
-document.getElementById("displayDate").innerText=
-currentDate.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'short',day:'numeric'});
+picker.value=date.getFullYear()+"-"+
+String(date.getMonth()+1).padStart(2,"0")+"-"+
+String(date.getDate()).padStart(2,"0");
 
-document.getElementById("hijriDate").innerText=
-new Intl.DateTimeFormat('en-TN-u-ca-islamic',{day:'numeric',month:'long',year:'numeric'}).format(currentDate);
+let display=date.toLocaleDateString(
+'en-US',
+{weekday:'long',year:'numeric',month:'short',day:'numeric'}
+);
+
+document.getElementById("displayDate").innerText=display;
 
 loadTasks();
 }
 
-function manualPick(v){
-let p=v.split("-");
-setDate(new Date(p[0],p[1]-1,p[2]));
-}
+function manualPickDate(value){
 
-function prevDay(){currentDate.setDate(currentDate.getDate()-1);setDate(currentDate);}
-function nextDay(){currentDate.setDate(currentDate.getDate()+1);setDate(currentDate);}
+let parts=value.split("-");
+let date=new Date(parts[0],parts[1]-1,parts[2]);
+
+setDate(date);
+}
 
 function loadTasks(){
 
-let key=formatKey(currentDate);
-let saved=JSON.parse(localStorage.getItem(key))||{};
 let container=document.getElementById("taskContainer");
 container.innerHTML="";
-let done=0;
+
+let date=document.getElementById("datePicker").value;
+let saved=JSON.parse(localStorage.getItem(date))||{};
 
 taskList.forEach(task=>{
-let checked=saved[task]||false;
-if(checked)done++;
 let div=document.createElement("div");
 div.className="task";
-div.innerHTML=`<label>${task}</label>
-<input type="checkbox" ${checked?"checked":""}
-onchange="toggleTask('${task}',this.checked)">`;
+div.innerHTML=`
+<label>${task}</label>
+<input type="checkbox"
+${saved[task]?"checked":""}
+onchange="toggleTask('${task}',this.checked)">
+`;
 container.appendChild(div);
 });
 
-let percent=Math.round(done/taskList.length*100);
-document.getElementById("progressFill").style.width=percent+"%";
-monthReport();
+updateStreak();
 }
 
 function toggleTask(task,status){
-let key=formatKey(currentDate);
-let saved=JSON.parse(localStorage.getItem(key))||{};
+
+let date=document.getElementById("datePicker").value;
+let saved=JSON.parse(localStorage.getItem(date))||{};
 saved[task]=status;
-localStorage.setItem(key,JSON.stringify(saved));
+localStorage.setItem(date,JSON.stringify(saved));
+
+updateStreak();
+}
+
+function prevDay(){
+let d=new Date(document.getElementById("datePicker").value);
+d.setDate(d.getDate()-1);
+setDate(d);
+}
+
+function nextDay(){
+let d=new Date(document.getElementById("datePicker").value);
+d.setDate(d.getDate()+1);
+setDate(d);
+}
+
+function handleAction(){
+let action=document.getElementById("actionSelect").value;
+let area=document.getElementById("actionArea");
+area.innerHTML="";
+
+if(action==="add"){
+area.innerHTML=`<input type="text" id="newTaskName">
+<button onclick="confirmAdd()">Add</button>`;
+}
+
+if(action==="delete"){
+let options=taskList.map(t=>`<option>${t}</option>`).join("");
+area.innerHTML=`<select id="deleteTaskSelect">${options}</select>
+<button onclick="confirmDelete()">Delete</button>`;
+}
+
+if(action==="rename"){
+let options=taskList.map(t=>`<option>${t}</option>`).join("");
+area.innerHTML=`<select id="renameSelect">${options}</select>
+<input type="text" id="renameInput">
+<button onclick="confirmRename()">Rename</button>`;
+}
+}
+
+function confirmAdd(){
+let name=document.getElementById("newTaskName").value.trim();
+if(name){
+taskList.push(name);
+localStorage.setItem("taskList",JSON.stringify(taskList));
+loadTasks();
+}
+}
+
+function confirmDelete(){
+let task=document.getElementById("deleteTaskSelect").value;
+taskList=taskList.filter(t=>t!==task);
+localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
 }
 
-function monthReport(){
-let month=currentDate.getMonth();
-let year=currentDate.getFullYear();
-let total=0;
-let full=0;
-for(let i=1;i<=31;i++){
-let d=new Date(year,month,i);
-if(d.getMonth()!=month)break;
-total++;
-let saved=JSON.parse(localStorage.getItem(formatKey(d)));
-if(saved && Object.values(saved).every(v=>v))full++;
+function confirmRename(){
+let old=document.getElementById("renameSelect").value;
+let nw=document.getElementById("renameInput").value.trim();
+if(nw){
+taskList=taskList.map(t=>t===old?nw:t);
+localStorage.setItem("taskList",JSON.stringify(taskList));
+loadTasks();
 }
-document.getElementById("monthPercent").innerText=
-Math.round(full/total*100)+"% Completed";
 }
 
 function exportBackup(){
@@ -212,36 +261,51 @@ let key=localStorage.key(i);
 data.storage[key]=localStorage.getItem(key);
 }
 let blob=new Blob([JSON.stringify(data)]);
+let url=URL.createObjectURL(blob);
 let a=document.createElement("a");
-a.href=URL.createObjectURL(blob);
-a.download="backup.json";
+a.href=url;
+a.download="ibadah-backup.json";
 a.click();
 }
 
 function importBackup(){
 let file=document.getElementById("restoreFile").files[0];
-let r=new FileReader();
-r.onload=e=>{
+let reader=new FileReader();
+reader.onload=function(e){
 let data=JSON.parse(e.target.result);
 localStorage.clear();
-for(let k in data.storage)localStorage.setItem(k,data.storage[k]);
+for(let key in data.storage){
+localStorage.setItem(key,data.storage[key]);
+}
 location.reload();
 };
-r.readAsText(file);
+reader.readAsText(file);
 }
 
-setInterval(()=>{
-let newDay=islamicToday();
-if(formatKey(newDay)!=formatKey(currentDate)){
-setDate(newDay);
+function updateStreak(){
+let streak=0;
+let today=islamicToday();
+
+for(let i=0;i<365;i++){
+let d=new Date(today);
+d.setDate(today.getDate()-i);
+let key=d.getFullYear()+"-"+
+String(d.getMonth()+1).padStart(2,"0")+"-"+
+String(d.getDate()).padStart(2,"0");
+
+let saved=JSON.parse(localStorage.getItem(key));
+if(saved && Object.values(saved).every(v=>v===true)){
+streak++;
+}else break;
 }
-},60000);
 
-if(new Date().getHours()>19){document.body.classList.add("dark");}
+document.getElementById("streakCount").innerText=streak+" Days";
+}
 
-document.addEventListener("DOMContentLoaded",()=>{
+window.onload=function(){
 setDate(islamicToday());
-});
+}
+
 </script>
 
 </body>
