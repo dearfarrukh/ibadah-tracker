@@ -42,21 +42,6 @@ input[type="checkbox"]{
 width:22px;
 height:22px;
 }
-
-#calendarBtn{
-font-size:22px;
-background:none;
-width:auto;
-color:black;
-}
-
-#datePicker{
-position:absolute;
-opacity:0;
-width:1px;
-height:1px;
-left:-1000px;
-}
 </style>
 </head>
 
@@ -66,27 +51,46 @@ left:-1000px;
 
 <div class="card">
 
-<h3>
-<button id="calendarBtn" onclick="openCalendar()">📅</button>
-Select Date
-</h3>
+<h3>Select Date</h3>
 
-<div style="display:flex;align-items:center;gap:10px;">
+<div style="position:relative;display:flex;align-items:center;gap:10px;">
 
 <button onclick="prevDay()">⬅️</button>
 
-<div style="flex:1;text-align:center;">
+<div style="flex:1;text-align:center;position:relative;">
+
 <div id="displayDate" style="font-weight:600;"></div>
 <div id="hijriDate" style="font-size:14px;color:gray;"></div>
+
+<input type="date"
+id="datePicker"
+onchange="manualPick(this.value)"
+style="
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+opacity:0;
+z-index:2;
+">
+
+<div style="
+position:absolute;
+right:0;
+top:0;
+font-size:22px;
+z-index:1;
+pointer-events:none;
+">
+📅
+</div>
+
 </div>
 
 <button onclick="nextDay()">➡️</button>
 
 </div>
-
-<input type="date" id="datePicker"
-onchange="calendarPicked(this.value)">
-
 </div>
 
 <div class="card">
@@ -107,6 +111,7 @@ onchange="calendarPicked(this.value)">
 <div id="actionArea"></div>
 
 <h4>☁️ iCloud Backup</h4>
+
 <button onclick="exportBackup()" style="width:100%;margin-bottom:10px;">Export</button>
 
 <input type="file" id="restoreFile" onchange="importBackup()" style="display:none;">
@@ -130,9 +135,19 @@ let taskList=JSON.parse(localStorage.getItem("taskList"))||[
 ];
 
 function islamicToday(){
+
 let now=new Date();
-let d=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-if(now.getHours()<2){d.setDate(d.getDate()-1);}
+
+let d=new Date(
+now.getFullYear(),
+now.getMonth(),
+now.getDate()
+);
+
+if(now.getHours()<2){
+d.setDate(d.getDate()-1);
+}
+
 return d;
 }
 
@@ -144,10 +159,10 @@ String(d.getDate()).padStart(2,"0");
 
 function setDate(d){
 
-currentDate=d;
+currentDate=new Date(d);
 
 document.getElementById("displayDate").innerText=
-d.toLocaleDateString('en-US',{
+currentDate.toLocaleDateString('en-US',{
 weekday:'long',
 year:'numeric',
 month:'short',
@@ -159,28 +174,13 @@ new Intl.DateTimeFormat('en-TN-u-ca-islamic',{
 day:'numeric',
 month:'long',
 year:'numeric'
-}).format(d)+" AH";
-
-document.getElementById("datePicker").value=formatKey(d);
+}).format(currentDate);
 
 loadTasks();
 }
 
-function openCalendar(){
-document.getElementById("datePicker").showPicker();
-}
-function prevDay(){
-currentDate.setDate(currentDate.getDate()-1);
-setDate(new Date(currentDate));
-}
-
-function nextDay(){
-currentDate.setDate(currentDate.getDate()+1);
-setDate(new Date(currentDate));
-}
-
-function manualPick(v){
-let p=v.split("-");
+function manualPick(value){
+let p=value.split("-");
 setDate(new Date(p[0],p[1]-1,p[2]));
 }
 
@@ -203,6 +203,7 @@ onchange="toggleTask('${task}',this.checked)">
 `;
 container.appendChild(div);
 });
+
 updateStreak();
 }
 
@@ -214,6 +215,16 @@ localStorage.setItem(key,JSON.stringify(saved));
 updateStreak();
 }
 
+function prevDay(){
+currentDate.setDate(currentDate.getDate()-1);
+setDate(currentDate);
+}
+
+function nextDay(){
+currentDate.setDate(currentDate.getDate()+1);
+setDate(currentDate);
+}
+
 function updateStreak(){
 let streak=0;
 let today=islamicToday();
@@ -222,8 +233,9 @@ let d=new Date(today);
 d.setDate(today.getDate()-i);
 let key=formatKey(d);
 let saved=JSON.parse(localStorage.getItem(key));
-if(saved && Object.values(saved).every(v=>v===true)){streak++;}
-else break;
+if(saved && Object.values(saved).every(v=>v===true)){
+streak++;
+}else break;
 }
 document.getElementById("streakCount").innerText=streak+" Days";
 }
@@ -299,17 +311,12 @@ location.reload();
 r.readAsText(file);
 }
 
-window.onload=function(){
+document.addEventListener("DOMContentLoaded",()=>{
+setTimeout(()=>{
 setDate(islamicToday());
-}
-function calendarPicked(value){
+},300);
+});
 
-let p=value.split("-");
-let d=new Date(p[0],p[1]-1,p[2]);
-
-setDate(d);
-
-}
 </script>
 
 </body>
