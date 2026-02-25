@@ -121,7 +121,30 @@ z-index:5;
 
 let currentDate;
 
-let taskList = JSON.parse(localStorage.getItem("taskList")) || [
+let rawTasks = JSON.parse(localStorage.getItem("taskList"));
+
+let taskList;
+
+if(rawTasks && typeof rawTasks[0]==="string"){
+
+taskList = rawTasks.map(t=>({
+name:t,
+created:"2000-01-01"
+}));
+
+localStorage.setItem("taskList",JSON.stringify(taskList));
+
+}else{
+
+taskList = rawTasks || [
+{ name:"Fajr", created:"2000-01-01" },
+{ name:"Dhuhur", created:"2000-01-01" },
+{ name:"Asr", created:"2000-01-01" },
+{ name:"Maghrib", created:"2000-01-01" },
+{ name:"Isha", created:"2000-01-01" }
+];
+
+}
 { name:"Fajr", created: formatKey(islamicToday()) },
 { name:"Dhuhur", created: formatKey(islamicToday()) },
 { name:"Asr", created: formatKey(islamicToday()) },
