@@ -121,10 +121,12 @@ z-index:5;
 
 let currentDate;
 
-let taskList=JSON.parse(localStorage.getItem("taskList"))||[
-"Fajr","Dhuhur","Asr","Maghrib","Isha",
-"Surah Mulk","Surah Sajdah","Surah Yaseen",
-"Surah Rehman","Surah Taghabun","Surah Waqiya"
+let taskList = JSON.parse(localStorage.getItem("taskList")) || [
+{ name:"Fajr", created: formatKey(islamicToday()) },
+{ name:"Dhuhur", created: formatKey(islamicToday()) },
+{ name:"Asr", created: formatKey(islamicToday()) },
+{ name:"Maghrib", created: formatKey(islamicToday()) },
+{ name:"Isha", created: formatKey(islamicToday()) }
 ];
 
 function islamicToday(){
@@ -168,24 +170,24 @@ let p=value.split("-");
 setDate(new Date(p[0],p[1]-1,p[2]));
 }
 
-function loadTasks(){
-
-let key=formatKey(currentDate);
-let saved=JSON.parse(localStorage.getItem(key))||{};
-
-let container=document.getElementById("taskContainer");
-container.innerHTML="";
-
 taskList.forEach(task=>{
+
+// 🔴 VERY IMPORTANT LINE
+if(formatKey(currentDate) < task.created) return;
+
 let div=document.createElement("div");
+
 div.className="task";
+
 div.innerHTML=`
-<label>${task}</label>
+<label>${task.name}</label>
 <input type="checkbox"
-${saved[task]?"checked":""}
-onchange="toggleTask('${task}',this.checked)">
+${saved[task.name]?"checked":""}
+onchange="toggleTask('${task.name}',this.checked)">
 `;
+
 container.appendChild(div);
+
 });
 
 updateStreak();
@@ -209,19 +211,6 @@ currentDate.setDate(currentDate.getDate()+1);
 setDate(currentDate);
 }
 
-function updateStreak(){
-let streak=0;
-let today=islamicToday();
-for(let i=0;i<365;i++){
-let d=new Date(today);
-d.setDate(today.getDate()-i);
-let key=formatKey(d);
-let saved=JSON.parse(localStorage.getItem(key));
-if(saved && Object.values(saved).every(v=>v===true)){streak++;}
-else break;
-}
-document.getElementById("streakCount").innerText=streak+" Days";
-}
 
 function handleAction(){
 let action=document.getElementById("actionSelect").value;
@@ -241,12 +230,22 @@ area.innerHTML=`<select id="renameSelect">${opt}</select><input id="renameInput"
 }
 
 function confirmAdd(){
-let n=document.getElementById("newTaskName").value.trim();
+
+let n = document.getElementById("newTaskName").value.trim();
+
 if(n){
-taskList.push(n);
+
+taskList.push({
+name:n,
+created:formatKey(currentDate)
+});
+
 localStorage.setItem("taskList",JSON.stringify(taskList));
+
 loadTasks();
+
 }
+
 }
 
 function confirmDelete(){
