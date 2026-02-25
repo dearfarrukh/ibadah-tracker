@@ -300,7 +300,11 @@ area.innerHTML=`<input id="newTaskName"><button onclick="confirmAdd()">Add</butt
 }
 
 if(action==="delete"){
-let opt=taskList.map(t=>`<option>${t.name}</option>`).join("");
+let today=formatKey(currentDate);
+
+let activeTasks=taskList.filter(t=> today>=t.created && (!t.ended || today<=t.ended));
+
+let opt=activeTasks.map(t=>`<option>${t.name}</option>`).join("");
 area.innerHTML=`<select id="deleteTaskSelect">${opt}</select><button onclick="confirmDelete()">Delete</button>`;
 }
 
