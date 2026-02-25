@@ -214,6 +214,7 @@ container.innerHTML="";
 taskList.forEach(task=>{
 
 if(key < task.created) return;
+if(task.ended && key > task.ended) return;
 
 let div=document.createElement("div");
 div.className="task";
@@ -271,7 +272,7 @@ d.setDate(today.getDate()-i);
 let key=formatKey(d);
 
 let saved=JSON.parse(localStorage.getItem(key))||{};
-let validTasks=taskList.filter(t=>key>=t.created);
+let validTasks=taskList.filter(t=>key>=t.created && (!t.ended || key<=t.ended));
 
 if(validTasks.length===0) continue;
 
@@ -331,7 +332,14 @@ loadTasks();
 function confirmDelete(){
 
 let t=document.getElementById("deleteTaskSelect").value;
-taskList=taskList.filter(x=>x.name!==t);
+
+taskList = taskList.map(task=>{
+if(task.name===t){
+return {...task, ended:formatKey(currentDate)};
+}
+return task;
+});
+
 localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
 
