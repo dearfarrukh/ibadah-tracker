@@ -1,103 +1,64 @@
 <!DOCTYPE html>
-
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Ibadah Tracker</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="apple-touch-icon" href="icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 <style>
-
 body{
-font-family:-apple-system,BlinkMacSystemFont,"San Francisco",system-ui;
+font-family:-apple-system,BlinkMacSystemFont;
 background:url("wallpaper.jpg") center/cover no-repeat fixed;
 margin:0;
-padding:
-env(safe-area-inset-top)
-16px
-calc(env(safe-area-inset-bottom)+20px)
-16px;
-}
-
-h1{
-text-align:center;
-font-size:34px;
-font-weight:700;
-margin-bottom:10px;
+padding:20px;
 }
 
 .card{
-background:rgba(255,255,255,0.7);
-backdrop-filter:blur(25px);
--webkit-backdrop-filter:blur(25px);
+background:rgba(255,255,255,0.6);
+backdrop-filter:blur(20px);
 padding:18px;
-border-radius:24px;
-margin-bottom:16px;
-box-shadow:0 8px 30px rgba(0,0,0,0.05);
+border-radius:22px;
+margin-bottom:20px;
 }
 
 button{
 background:#007aff;
 color:white;
 border:none;
-padding:12px 16px;
-border-radius:18px;
+padding:12px;
+border-radius:16px;
+width:60px;
 min-width:60px;
-font-weight:600;
 }
 
 .task{
 display:flex;
 justify-content:space-between;
-align-items:center;
-padding:10px 0;
-font-size:17px;
+padding:8px 0;
 }
 
 input[type="checkbox"]{
-appearance:none;
-width:52px;
-height:32px;
-background:#e5e5ea;
-border-radius:20px;
-position:relative;
-transition:.3s;
+width:22px;
+height:22px;
 }
-
-input[type="checkbox"]:checked{
-background:#34c759;
-}
-
-input[type="checkbox"]::after{
-content:"";
-width:28px;
-height:28px;
-background:white;
-position:absolute;
-top:2px;
-left:2px;
-border-radius:50%;
-transition:.3s;
-}
-
-input[type="checkbox"]:checked::after{
-transform:translateX(20px);
-}
-
 </style>
-
 </head>
 
 <body>
 
-<h1>Ibadah Tracker</h1>
+<h1 style="text-align:center;">📿 Ibadah Tracker</h1>
 
+<!-- DATE CARD -->
 <div class="card">
+
 <div style="display:flex;align-items:center;gap:10px;">
+
 <button onclick="prevDay()">⬅️</button>
+
 <div style="flex:1;text-align:center;position:relative;">
+
 <div id="displayDate" style="font-weight:600;"></div>
 <div id="hijriDate" style="font-size:14px;color:gray;"></div>
 
@@ -116,15 +77,19 @@ z-index:5;
 ">
 
 </div>
+
 <button onclick="nextDay()">➡️</button>
+
 </div>
 </div>
 
+<!-- TASKS -->
 <div class="card">
 <h3>📝 Daily Tasks</h3>
 <div id="taskContainer"></div>
 </div>
 
+<!-- SETTINGS -->
 <div class="card">
 <h3>⚙️ Task Settings</h3>
 
@@ -146,6 +111,7 @@ z-index:5;
 
 </div>
 
+<!-- STREAK -->
 <div class="card">
 <h3>🔥 Prayer Streak</h3>
 <p id="streakCount">0 Days</p>
@@ -173,7 +139,9 @@ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.g
 }
 
 function setDate(d){
+
 currentDate=new Date(d);
+
 document.getElementById("displayDate").innerText=
 currentDate.toLocaleDateString('en-US',{
 weekday:'long',
@@ -189,7 +157,9 @@ year:'numeric'
 }).format(currentDate);
 
 document.getElementById("hijriDate").innerText=hijri;
+
 document.getElementById("datePicker").value=formatKey(currentDate);
+
 loadTasks();
 }
 
@@ -199,13 +169,134 @@ setDate(new Date(p[0],p[1]-1,p[2]));
 }
 
 function loadTasks(){
+
 let key=formatKey(currentDate);
 let saved=JSON.parse(localStorage.getItem(key))||{};
+
 let container=document.getElementById("taskContainer");
 container.innerHTML="";
+
 taskList.forEach(task=>{
 let div=document.createElement("div");
 div.className="task";
 div.innerHTML=`
 <label>${task}</label>
-<input type="ch
+<input type="checkbox"
+${saved[task]?"checked":""}
+onchange="toggleTask('${task}',this.checked)">
+`;
+container.appendChild(div);
+});
+
+updateStreak();
+}
+
+function toggleTask(task,status){
+let key=formatKey(currentDate);
+let saved=JSON.parse(localStorage.getItem(key))||{};
+saved[task]=status;
+localStorage.setItem(key,JSON.stringify(saved));
+updateStreak();
+}
+
+function prevDay(){
+currentDate.setDate(currentDate.getDate()-1);
+setDate(currentDate);
+}
+
+function nextDay(){
+currentDate.setDate(currentDate.getDate()+1);
+setDate(currentDate);
+}
+
+function updateStreak(){
+let streak=0;
+let today=islamicToday();
+for(let i=0;i<365;i++){
+let d=new Date(today);
+d.setDate(today.getDate()-i);
+let key=formatKey(d);
+let saved=JSON.parse(localStorage.getItem(key));
+if(saved && Object.values(saved).every(v=>v===true)){streak++;}
+else break;
+}
+document.getElementById("streakCount").innerText=streak+" Days";
+}
+
+function handleAction(){
+let action=document.getElementById("actionSelect").value;
+let area=document.getElementById("actionArea");
+area.innerHTML="";
+if(action==="add"){
+area.innerHTML=`<input id="newTaskName"><button onclick="confirmAdd()">Add</button>`;
+}
+if(action==="delete"){
+let opt=taskList.map(t=>`<option>${t}</option>`).join("");
+area.innerHTML=`<select id="deleteTaskSelect">${opt}</select><button onclick="confirmDelete()">Delete</button>`;
+}
+if(action==="rename"){
+let opt=taskList.map(t=>`<option>${t}</option>`).join("");
+area.innerHTML=`<select id="renameSelect">${opt}</select><input id="renameInput"><button onclick="confirmRename()">Rename</button>`;
+}
+}
+
+function confirmAdd(){
+let n=document.getElementById("newTaskName").value.trim();
+if(n){
+taskList.push(n);
+localStorage.setItem("taskList",JSON.stringify(taskList));
+loadTasks();
+}
+}
+
+function confirmDelete(){
+let t=document.getElementById("deleteTaskSelect").value;
+taskList=taskList.filter(x=>x!==t);
+localStorage.setItem("taskList",JSON.stringify(taskList));
+loadTasks();
+}
+
+function confirmRename(){
+let o=document.getElementById("renameSelect").value;
+let n=document.getElementById("renameInput").value.trim();
+if(n){
+taskList=taskList.map(t=>t===o?n:t);
+localStorage.setItem("taskList",JSON.stringify(taskList));
+loadTasks();
+}
+}
+
+function exportBackup(){
+let data={taskList,storage:{}};
+for(let i=0;i<localStorage.length;i++){
+let key=localStorage.key(i);
+data.storage[key]=localStorage.getItem(key);
+}
+let blob=new Blob([JSON.stringify(data)]);
+let url=URL.createObjectURL(blob);
+let a=document.createElement("a");
+a.href=url;
+a.download="backup.json";
+a.click();
+}
+
+function importBackup(){
+let file=document.getElementById("restoreFile").files[0];
+let r=new FileReader();
+r.onload=e=>{
+let data=JSON.parse(e.target.result);
+localStorage.clear();
+for(let k in data.storage){
+localStorage.setItem(k,data.storage[k]);
+}
+location.reload();
+};
+r.readAsText(file);
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+setDate(islamicToday());
+});
+</script>
+</body>
+</html>
