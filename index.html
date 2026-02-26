@@ -402,12 +402,10 @@ function openPDF(file){
 document.getElementById("pdfPopup").style.display="block";
 
 setTimeout(()=>{
-document.getElementById("pdfFrame").src =
-file + "#zoom=page-width&toolbar=0&navpanes=0&scrollbar=0";
+document.getElementById("pdfFrame").src = file;
 },100);
 
 }
-
 function closePDF(){
 document.getElementById("pdfFrame").src="";
 document.getElementById("pdfPopup").style.display="none";
@@ -461,9 +459,14 @@ overflow:auto;
 ">
 
 <iframe id="pdfFrame" style="
-width:100%;
-height:100%;
+position:absolute;
+top:-80px;
+left:-50px;
+width:120vw;
+height:130vh;
 border:none;
+transform:scale(0.9);
+transform-origin:top left;
 "></iframe>
 
 </div>
