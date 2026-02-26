@@ -211,10 +211,21 @@ let saved=JSON.parse(localStorage.getItem(key))||{};
 let container=document.getElementById("taskContainer");
 container.innerHTML="";
 
+let tasksToShow={};
+
 taskList.forEach(task=>{
 
 if(key < task.created) return;
 if(task.ended && key > task.ended) return;
+
+// show only latest season
+if(!tasksToShow[task.name] || task.created > tasksToShow[task.name].created){
+tasksToShow[task.name]=task;
+}
+
+});
+
+Object.values(tasksToShow).forEach(task=>{
 
 let div=document.createElement("div");
 div.className="task";
