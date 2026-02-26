@@ -318,35 +318,30 @@ area.innerHTML=`<select id="renameSelect">${opt}</select><input id="renameInput"
 function confirmAdd(){
 
 let n=document.getElementById("newTaskName").value.trim();
-
 if(!n) return;
 
 let today=formatKey(currentDate);
 
-// 🔎 Check if task already exists but ended
-let existing=taskList.find(t=>t.name===n);
+// 🔎 Find active task today
+let active=taskList.find(t=>t.name===n && today>=t.created && (!t.ended || today<=t.ended));
 
-if(existing){
+if(active){
+alert("Task already active");
+return;
+}
 
-// If it was ended → reactivate
-if(existing.ended){
+// 🔎 Find ended version
+let ended=taskList.find(t=>t.name===n && t.ended);
 
-existing.created=today;
-delete existing.ended;
-
+if(ended){
+ended.created=today;
+delete ended.ended;
 localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
 return;
-
 }
 
-// If already active → do nothing
-alert("Task already exists");
-return;
-
-}
-
-// If brand new task
+// 🟢 Brand new
 taskList.push({
 name:n,
 created:today
