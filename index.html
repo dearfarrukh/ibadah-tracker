@@ -378,13 +378,21 @@ function confirmRename(){
 let o=document.getElementById("renameSelect").value;
 let n=document.getElementById("renameInput").value.trim();
 
-if(n){
+if(!n) return;
 
-taskList=taskList.map(t=>t.name===o?{name:n,created:t.created}:t);
+taskList=taskList.map(t=>{
+if(t.name===o){
+return {
+name:n,
+created:t.created,
+ended:t.ended
+};
+}
+return t;
+});
+
 localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
-
-}
 
 }
 
