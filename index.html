@@ -121,117 +121,53 @@ z-index:5;
 
 let currentDate;
 
-// 🟢 STEP 1: LOAD & MIGRATE TASKS
+function todayKey(d){
+let x=new Date(d);
+x.setHours(0,0,0,0);
+return x.getTime();
+}
 
-let rawTasks = JSON.parse(localStorage.getItem("taskList"));
-
-let taskList;
-
-if(rawTasks && typeof rawTasks[0] === "string"){
-
-taskList = rawTasks.map(t => ({
-name: t,
-created: "2000-01-01"
-}));
-
-localStorage.setItem("taskList", JSON.stringify(taskList));
-
-}else{
-
-taskList = rawTasks || [
-{ name:"Fajr", created:"2000-01-01" },
-{ name:"Dhuhur", created:"2000-01-01" },
-{ name:"Asr", created:"2000-01-01" },
-{ name:"Maghrib", created:"2000-01-01" },
-{ name:"Isha", created:"2000-01-01" },
-{ name:"Surah Mulk", created:"2000-01-01" },
-{ name:"Surah Sajdah", created:"2000-01-01" },
-{ name:"Surah Yaseen", created:"2000-01-01" },
-{ name:"Surah Rehman", created:"2000-01-01" },
-{ name:"Surah Taghabun", created:"2000-01-01" },
-{ name:"Surah Waqiya", created:"2000-01-01" }
+let taskList=JSON.parse(localStorage.getItem("taskList"))||[
+{id:1,name:"Fajr",start:0,end:null},
+{id:2,name:"Dhuhur",start:0,end:null},
+{id:3,name:"Asr",start:0,end:null},
+{id:4,name:"Maghrib",start:0,end:null},
+{id:5,name:"Isha",start:0,end:null}
 ];
 
+function saveTasks(){
+localStorage.setItem("taskList",JSON.stringify(taskList));
 }
-
-// 🟢 DATE HELPERS
-
-function islamicToday(){
-let now=new Date();
-let d=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-if(now.getHours()<2){d.setDate(d.getDate()-1);}
-return d;
-}
-
-function formatKey(d){
-return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-}
-
-// 🟢 SET DATE
 
 function setDate(d){
 
 currentDate=new Date(d);
 
 document.getElementById("displayDate").innerText=
-currentDate.toLocaleDateString('en-US',{
-weekday:'long',
-year:'numeric',
-month:'short',
-day:'numeric'
-});
+currentDate.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'short',day:'numeric'});
 
-let hijri=new Intl.DateTimeFormat('en-TN-u-ca-islamic',{
-day:'numeric',
-month:'long',
-year:'numeric'
-}).format(currentDate);
-
-document.getElementById("hijriDate").innerText=hijri;
-
-document.getElementById("datePicker").value=formatKey(currentDate);
+document.getElementById("datePicker").value=
+currentDate.toISOString().split("T")[0];
 
 loadTasks();
 
 }
 
-// 🟢 DATE PICKER
-
 function manualPick(value){
-let p=value.split("-");
-setDate(new Date(p[0],p[1]-1,p[2]));
+setDate(new Date(value));
 }
-
-// 🟢 LOAD TASKS (TIME AWARE)
 
 function loadTasks(){
 
-let key=formatKey(currentDate);
+let key=todayKey(currentDate);
 let saved=JSON.parse(localStorage.getItem(key))||{};
 let container=document.getElementById("taskContainer");
 container.innerHTML="";
 
-let tasksToShow={};
-
 taskList.forEach(task=>{
 
-let current=new Date(key);
-let created=new Date(task.created);
-let ended=task.ended?new Date(task.ended):null;
-
-if(current < created) return;
-if(ended && current > ended) return;
-
-// show only latest season (REAL DATE compare)
-if(
-!tasksToShow[task.name] ||
-new Date(task.created) > new Date(tasksToShow[task.name].created)
-){
-tasksToShow[task.name]=task;
-}
-});
-
-Object.values(tasksToShow).forEach(task=>{
+if(key<task.start) return;
+if(task.end && key>task.end) return;
 
 let div=document.createElement("div");
 div.className="task";
@@ -239,8 +175,8 @@ div.className="task";
 div.innerHTML=`
 <label>${task.name}</label>
 <input type="checkbox"
-${saved[task.name]?"checked":""}
-onchange="toggleTask('${task.name}',this.checked)">
+${saved[task.id]?"checked":""}
+onchange="toggleTask(${task.id},this.checked)">
 `;
 
 container.appendChild(div);
@@ -251,19 +187,15 @@ updateStreak();
 
 }
 
-// 🟢 TOGGLE
+function toggleTask(id,status){
 
-function toggleTask(taskName,status){
-
-let key=formatKey(currentDate);
+let key=todayKey(currentDate);
 let saved=JSON.parse(localStorage.getItem(key))||{};
-saved[taskName]=status;
+saved[id]=status;
 localStorage.setItem(key,JSON.stringify(saved));
 updateStreak();
 
 }
-
-// 🟢 NAV
 
 function prevDay(){
 currentDate.setDate(currentDate.getDate()-1);
@@ -275,45 +207,43 @@ currentDate.setDate(currentDate.getDate()+1);
 setDate(currentDate);
 }
 
-// 🟢 STREAK (TIME AWARE)
+function confirmAdd(){
 
-function updateStreak(){
+let n=document.getElementById("newTaskName").value.trim();
+if(!n) return;
 
-let streak=0;
-let today=islamicToday();
+let id=Date.now();
 
-for(let i=0;i<365;i++){
-
-let d=new Date(today);
-d.setDate(today.getDate()-i);
-let key=formatKey(d);
-
-let saved=JSON.parse(localStorage.getItem(key))||{};
-let current=new Date(key);
-
-let validTasks=taskList.filter(t=>{
-
-let created=new Date(t.created);
-let ended=t.ended?new Date(t.ended):null;
-
-return current>=created && (!ended || current<=ended);
-
+taskList.push({
+id:id,
+name:n,
+start:todayKey(currentDate),
+end:null
 });
 
-if(validTasks.length===0) continue;
-
-let allDone=validTasks.every(t=>saved[t.name]===true);
-
-if(allDone) streak++;
-else break;
+saveTasks();
+loadTasks();
 
 }
 
-document.getElementById("streakCount").innerText=streak+" Days";
+function confirmDelete(){
+
+let t=document.getElementById("deleteTaskSelect").value;
+
+let y=new Date(currentDate);
+y.setDate(y.getDate()-1);
+
+taskList=taskList.map(task=>{
+if(task.id==t){
+return {...task,end:todayKey(y)};
+}
+return task;
+});
+
+saveTasks();
+loadTasks();
 
 }
-
-// 🟢 SETTINGS
 
 function handleAction(){
 
@@ -326,135 +256,43 @@ area.innerHTML=`<input id="newTaskName"><button onclick="confirmAdd()">Add</butt
 }
 
 if(action==="delete"){
-let today=formatKey(currentDate);
-
-let activeTasks=taskList.filter(t=> today>=t.created && (!t.ended || today<=t.ended));
-
-let opt=activeTasks.map(t=>`<option>${t.name}</option>`).join("");
+let key=todayKey(currentDate);
+let active=taskList.filter(t=>key>=t.start && (!t.end||key<=t.end));
+let opt=active.map(t=>`<option value="${t.id}">${t.name}</option>`).join("");
 area.innerHTML=`<select id="deleteTaskSelect">${opt}</select><button onclick="confirmDelete()">Delete</button>`;
 }
 
-if(action==="rename"){
-let opt=taskList.map(t=>`<option>${t.name}</option>`).join("");
-area.innerHTML=`<select id="renameSelect">${opt}</select><input id="renameInput"><button onclick="confirmRename()">Rename</button>`;
 }
 
-}
+function updateStreak(){
 
-function confirmAdd(){
+let streak=0;
+let today=new Date();
+today.setHours(0,0,0,0);
 
-let n=document.getElementById("newTaskName").value.trim();
-if(!n) return;
+for(let i=0;i<365;i++){
 
-let today=formatKey(currentDate);
+let d=new Date(today);
+d.setDate(today.getDate()-i);
+let key=todayKey(d);
 
-// 🔎 check active today
-let active=taskList.find(t=>t.name===n && today>=t.created && (!t.ended || today<=t.ended));
+let saved=JSON.parse(localStorage.getItem(key))||{};
+let valid=taskList.filter(t=>key>=t.start && (!t.end||key<=t.end));
 
-if(active){
-alert("Task already active");
-return;
-}
+if(valid.length===0) continue;
 
-// 🔎 check if old ended exists
-let oldEnded=taskList.find(t=>t.name===n && t.ended);
-
-if(oldEnded){
-// 🟢 create NEW season instead of editing history
-taskList.push({
-name:n,
-created:today
-});
-}else{
-// 🟢 brand new
-taskList.push({
-name:n,
-created:today
-});
-}
-
-localStorage.setItem("taskList",JSON.stringify(taskList));
-loadTasks();
-
-}
-  
-function confirmDelete(){
-
-let t=document.getElementById("deleteTaskSelect").value;
-
-// 🔥 go 1 day back
-let y=new Date(currentDate);
-y.setDate(y.getDate()-1);
-
-taskList = taskList.map(task=>{
-if(task.name===t){
-return {...task, ended:formatKey(y)};
-}
-return task;
-});
-
-localStorage.setItem("taskList",JSON.stringify(taskList));
-loadTasks();
+let done=valid.every(t=>saved[t.id]);
+if(done) streak++;
+else break;
 
 }
 
-function confirmRename(){
-
-let o=document.getElementById("renameSelect").value;
-let n=document.getElementById("renameInput").value.trim();
-
-if(!n) return;
-
-taskList=taskList.map(t=>{
-if(t.name===o){
-return {
-name:n,
-created:t.created,
-ended:t.ended
-};
-}
-return t;
-});
-
-localStorage.setItem("taskList",JSON.stringify(taskList));
-loadTasks();
+document.getElementById("streakCount").innerText=streak+" Days";
 
 }
-
-// 🟢 BACKUP
-
-function exportBackup(){
-let data={taskList,storage:{}};
-for(let i=0;i<localStorage.length;i++){
-let key=localStorage.key(i);
-data.storage[key]=localStorage.getItem(key);
-}
-let blob=new Blob([JSON.stringify(data)]);
-let url=URL.createObjectURL(blob);
-let a=document.createElement("a");
-a.href=url;
-a.download="backup.json";
-a.click();
-}
-
-function importBackup(){
-let file=document.getElementById("restoreFile").files[0];
-let r=new FileReader();
-r.onload=e=>{
-let data=JSON.parse(e.target.result);
-localStorage.clear();
-for(let k in data.storage){
-localStorage.setItem(k,data.storage[k]);
-}
-location.reload();
-};
-r.readAsText(file);
-}
-
-// 🟢 INIT
 
 document.addEventListener("DOMContentLoaded",()=>{
-setDate(islamicToday());
+setDate(new Date());
 });
 
 </script>
