@@ -372,27 +372,27 @@ setDate(islamicToday());
 function handleTaskClick(name){
 
 if(name==="Surah Mulk"){
-openPDF("Surah-Mulk.pdf");
+openPDF("web/Surah-Mulk.pdf");
 }
 
 else if(name==="Surah Sajdah"){
-openPDF("Surah-Sajdah.pdf");
+openPDF("web/Surah-Sajdah.pdf");
 }
 
 else if(name==="Surah Yaseen"){
-openPDF("Surah-Yaseen.pdf");
+openPDF("web/Surah-Yaseen.pdf");
 }
 
 else if(name==="Surah Rehman"){
-openPDF("Surah-Rehman.pdf");
+openPDF("web/Surah-Rehman.pdf");
 }
 
 else if(name==="Surah Taghabun"){
-openPDF("Surah-Taghabun.pdf");
+openPDF("web/Surah-Taghabun.pdf");
 }
 
 else if(name==="Surah Waqiya"){
-openPDF("Surah-Waqiya.pdf");
+openPDF("web/Surah-Waqiya.pdf");
 }
 
 }
@@ -401,10 +401,8 @@ function openPDF(file){
 
 document.getElementById("pdfPopup").style.display="block";
 
-let fullPath = window.location.origin + "/" + file;
-
 document.getElementById("pdfFrame").src =
-"web/viewer.html?file=" + encodeURIComponent(fullPath);
+"web/viewer.html?file=" + encodeURIComponent(file);
 
 }
 function closePDF(){
