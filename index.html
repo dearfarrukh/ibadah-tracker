@@ -356,9 +356,13 @@ function confirmDelete(){
 
 let t=document.getElementById("deleteTaskSelect").value;
 
+// 🔥 go 1 day back
+let y=new Date(currentDate);
+y.setDate(y.getDate()-1);
+
 taskList = taskList.map(task=>{
 if(task.name===t){
-return {...task, ended:formatKey(currentDate)};
+return {...task, ended:formatKey(y)};
 }
 return task;
 });
