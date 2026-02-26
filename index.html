@@ -401,9 +401,8 @@ function openPDF(file){
 
 document.getElementById("pdfPopup").style.display="block";
 
-setTimeout(()=>{
-document.getElementById("pdfFrame").src = file;
-},100);
+document.getElementById("pdfFrame").src =
+"web/viewer.html?file=" + encodeURIComponent(file);
 
 }
 function closePDF(){
