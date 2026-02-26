@@ -283,17 +283,10 @@ if(!n) return;
 
 let today=new Date(currentDate).setHours(0,0,0,0);
 
-// 🟢 close existing active one
-taskList=taskList.map(task=>{
-if(task.name===n && (!task.end || today<=task.end)){
-let y=new Date(today);
-y.setDate(y.getDate()-1);
-return {...task,end:new Date(y).setHours(0,0,0,0)};
-}
-return task;
-});
+// 🔥 remove all old versions of same task
+taskList=taskList.filter(task=>task.name!==n);
 
-// 🟢 start fresh one
+// 🟢 create fresh single timeline
 taskList.push({
 name:n,
 start:today,
