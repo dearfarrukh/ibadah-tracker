@@ -215,8 +215,12 @@ let tasksToShow={};
 
 taskList.forEach(task=>{
 
-if(key < task.created) return;
-if(task.ended && key > task.ended) return;
+let current=new Date(key);
+let created=new Date(task.created);
+let ended=task.ended?new Date(task.ended):null;
+
+if(current < created) return;
+if(ended && current > ended) return;
 
 // show only latest season
 if(!tasksToShow[task.name] || task.created > tasksToShow[task.name].created){
@@ -283,7 +287,16 @@ d.setDate(today.getDate()-i);
 let key=formatKey(d);
 
 let saved=JSON.parse(localStorage.getItem(key))||{};
-let validTasks=taskList.filter(t=>key>=t.created && (!t.ended || key<=t.ended));
+let current=new Date(key);
+
+let validTasks=taskList.filter(t=>{
+
+let created=new Date(t.created);
+let ended=t.ended?new Date(t.ended):null;
+
+return current>=created && (!ended || current<=ended);
+
+});
 
 if(validTasks.length===0) continue;
 
