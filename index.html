@@ -222,11 +222,13 @@ let ended=task.ended?new Date(task.ended):null;
 if(current < created) return;
 if(ended && current > ended) return;
 
-// show only latest season
-if(!tasksToShow[task.name] || task.created > tasksToShow[task.name].created){
+// show only latest season (REAL DATE compare)
+if(
+!tasksToShow[task.name] ||
+new Date(task.created) > new Date(tasksToShow[task.name].created)
+){
 tasksToShow[task.name]=task;
 }
-
 });
 
 Object.values(tasksToShow).forEach(task=>{
