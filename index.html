@@ -401,8 +401,10 @@ function openPDF(file){
 
 document.getElementById("pdfPopup").style.display="block";
 
+let fullPath = window.location.origin + "/" + file;
+
 document.getElementById("pdfFrame").src =
-"web/viewer.html?file=" + encodeURIComponent(file);
+"web/viewer.html?file=" + encodeURIComponent(fullPath);
 
 }
 function closePDF(){
