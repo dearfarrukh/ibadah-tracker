@@ -391,8 +391,15 @@ openPDF("Surah-Waqiya.pdf");
 }
   
 function openPDF(file){
-document.getElementById("pdfFrame").src = file;
-document.getElementById("pdfPopup").style.display = "block";
+
+if(/iPhone|iPad|iPod/.test(navigator.userAgent)){
+window.open(file,"_blank");
+}
+else{
+document.getElementById("pdfFrame").src=file;
+document.getElementById("pdfPopup").style.display="block";
+}
+
 }
 
 function closePDF(){
