@@ -121,11 +121,37 @@ z-index:5;
 
 let currentDate;
 
-let taskList=JSON.parse(localStorage.getItem("taskList"))||[
-"Fajr","Dhuhur","Asr","Maghrib","Isha",
-"Surah Mulk","Surah Sajdah","Surah Yaseen",
-"Surah Rehman","Surah Taghabun","Surah Waqiya"
+let rawTasks=JSON.parse(localStorage.getItem("taskList"));
+
+let taskList;
+
+if(rawTasks && typeof rawTasks[0]==="string"){
+
+taskList=rawTasks.map(t=>({
+name:t,
+start:0,
+end:null
+}));
+
+localStorage.setItem("taskList",JSON.stringify(taskList));
+
+}else{
+
+taskList=rawTasks||[
+{name:"Fajr",start:0,end:null},
+{name:"Dhuhur",start:0,end:null},
+{name:"Asr",start:0,end:null},
+{name:"Maghrib",start:0,end:null},
+{name:"Isha",start:0,end:null},
+{name:"Surah Mulk",start:0,end:null},
+{name:"Surah Sajdah",start:0,end:null},
+{name:"Surah Yaseen",start:0,end:null},
+{name:"Surah Rehman",start:0,end:null},
+{name:"Surah Taghabun",start:0,end:null},
+{name:"Surah Waqiya",start:0,end:null}
 ];
+
+}
 
 function islamicToday(){
 let now=new Date();
@@ -176,16 +202,25 @@ let saved=JSON.parse(localStorage.getItem(key))||{};
 let container=document.getElementById("taskContainer");
 container.innerHTML="";
 
+let key=new Date(currentDate).setHours(0,0,0,0);
+
 taskList.forEach(task=>{
+
+if(key<task.start) return;
+if(task.end && key>task.end) return;
+
 let div=document.createElement("div");
 div.className="task";
+
 div.innerHTML=`
-<label>${task}</label>
+<label>${task.name}</label>
 <input type="checkbox"
-${saved[task]?"checked":""}
-onchange="toggleTask('${task}',this.checked)">
+${saved[task.name]?"checked":""}
+onchange="toggleTask('${task.name}',this.checked)">
 `;
+
 container.appendChild(div);
+
 });
 
 updateStreak();
@@ -241,19 +276,38 @@ area.innerHTML=`<select id="renameSelect">${opt}</select><input id="renameInput"
 }
 
 function confirmAdd(){
+
 let n=document.getElementById("newTaskName").value.trim();
-if(n){
-taskList.push(n);
+if(!n) return;
+
+taskList.push({
+name:n,
+start:new Date(currentDate).setHours(0,0,0,0),
+end:null
+});
+
 localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
-}
+
 }
 
 function confirmDelete(){
+
 let t=document.getElementById("deleteTaskSelect").value;
-taskList=taskList.filter(x=>x!==t);
+
+let y=new Date(currentDate);
+y.setDate(y.getDate()-1);
+
+taskList=taskList.map(task=>{
+if(task.name===t){
+return {...task,end:new Date(y).setHours(0,0,0,0)};
+}
+return task;
+});
+
 localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
+
 }
 
 function confirmRename(){
