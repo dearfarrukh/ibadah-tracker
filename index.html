@@ -269,10 +269,6 @@ if(action==="delete"){
 let opt=taskList.map(t=>`<option>${t}</option>`).join("");
 area.innerHTML=`<select id="deleteTaskSelect">${opt}</select><button onclick="confirmDelete()">Delete</button>`;
 }
-if(action==="rename"){
-let opt=taskList.map(t=>`<option>${t}</option>`).join("");
-area.innerHTML=`<select id="renameSelect">${opt}</select><input id="renameInput"><button onclick="confirmRename()">Rename</button>`;
-}
 }
 
 function confirmAdd(){
