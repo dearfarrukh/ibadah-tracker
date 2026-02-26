@@ -322,7 +322,7 @@ if(!n) return;
 
 let today=formatKey(currentDate);
 
-// 🔎 Find active task today
+// 🔎 check active today
 let active=taskList.find(t=>t.name===n && today>=t.created && (!t.ended || today<=t.ended));
 
 if(active){
@@ -330,28 +330,28 @@ alert("Task already active");
 return;
 }
 
-// 🔎 Find ended version
-let ended=taskList.find(t=>t.name===n && t.ended);
+// 🔎 check if old ended exists
+let oldEnded=taskList.find(t=>t.name===n && t.ended);
 
-if(ended){
-ended.created=today;
-delete ended.ended;
-localStorage.setItem("taskList",JSON.stringify(taskList));
-loadTasks();
-return;
-}
-
-// 🟢 Brand new
+if(oldEnded){
+// 🟢 create NEW season instead of editing history
 taskList.push({
 name:n,
 created:today
 });
+}else{
+// 🟢 brand new
+taskList.push({
+name:n,
+created:today
+});
+}
 
 localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
 
 }
-
+  
 function confirmDelete(){
 
 let t=document.getElementById("deleteTaskSelect").value;
