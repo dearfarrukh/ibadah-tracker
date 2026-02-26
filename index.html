@@ -206,8 +206,15 @@ let div=document.createElement("div");
 div.className="task";
 
 div.innerHTML=`
-<label onclick="handleTaskClick('${task.name}')" style="flex:1;cursor:pointer;">
-${task.name}
+<label onclick="handleTaskClick('${task.name}')" 
+style="flex:1;cursor:pointer;display:flex;justify-content:space-between;align-items:center;">
+
+<span>${task.name}</span>
+
+${isSurah(task.name)?
+'<span style="background:#007aff;color:white;padding:2px 6px;border-radius:6px;font-size:10px;margin-left:6px;">PDF</span>'
+:''}
+
 </label>
 
 <input type="checkbox"
@@ -406,7 +413,10 @@ function closePDF(){
 document.getElementById("pdfFrame").src = "";
 document.getElementById("pdfPopup").style.display = "none";
 }
-
+function isSurah(name){
+return name.includes("Surah");
+}
+  
   
 </script>
 
