@@ -206,7 +206,10 @@ let div=document.createElement("div");
 div.className="task";
 
 div.innerHTML=`
-<label>${task.name}</label>
+<label onclick="handleTaskClick('${task.name}')" style="flex:1;cursor:pointer;">
+${task.name}
+</label>
+
 <input type="checkbox"
 ${saved[task.name]?"checked":""}
 onchange="toggleTask('${task.name}',this.checked)">
@@ -358,6 +361,75 @@ r.readAsText(file);
 document.addEventListener("DOMContentLoaded",()=>{
 setDate(islamicToday());
 });
+
+function handleTaskClick(name){
+
+if(name==="Surah Mulk"){
+openPDF("Surah-Mulk.pdf");
+}
+
+else if(name==="Surah Sajdah"){
+openPDF("Surah-Sajdah.pdf");
+}
+
+else if(name==="Surah Yaseen"){
+openPDF("Surah-Yaseen.pdf");
+}
+
+else if(name==="Surah Rehman"){
+openPDF("Surah-Rehman.pdf");
+}
+
+else if(name==="Surah Taghabun"){
+openPDF("Surah-Taghabun.pdf");
+}
+
+else if(name==="Surah Waqiya"){
+openPDF("Surah-Waqiya.pdf");
+}
+
+}
+  
+function openPDF(file){
+document.getElementById("pdfFrame").src = file;
+document.getElementById("pdfPopup").style.display = "block";
+}
+
+function closePDF(){
+document.getElementById("pdfFrame").src = "";
+document.getElementById("pdfPopup").style.display = "none";
+}
+
+  
 </script>
+
+  
+<div id="pdfPopup" style="
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000000ee;
+display:none;
+z-index:9999;
+">
+
+<button onclick="closePDF()" style="
+position:absolute;
+top:10px;
+right:10px;
+padding:10px;
+font-size:16px;
+z-index:10000;
+">Close</button>
+
+<iframe id="pdfFrame" style="
+width:100%;
+height:100%;
+border:none;
+"></iframe>
+
+</div>
 </body>
 </html>
