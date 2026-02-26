@@ -399,19 +399,18 @@ openPDF("Surah-Waqiya.pdf");
   
 function openPDF(file){
 
-if(/iPhone|iPad|iPod/.test(navigator.userAgent)){
-window.open(file,"_blank");
-}
-else{
-document.getElementById("pdfFrame").src=file;
 document.getElementById("pdfPopup").style.display="block";
-}
+
+setTimeout(()=>{
+document.getElementById("pdfFrame").src =
+file + "#zoom=page-width&toolbar=0&navpanes=0&scrollbar=0";
+},100);
 
 }
 
 function closePDF(){
-document.getElementById("pdfFrame").src = "";
-document.getElementById("pdfPopup").style.display = "none";
+document.getElementById("pdfFrame").src="";
+document.getElementById("pdfPopup").style.display="none";
 }
 function isSurah(name){
 return name.includes("Surah");
@@ -425,38 +424,49 @@ return name.includes("Surah");
 position:fixed;
 top:0;
 left:0;
-width:100%;
-height:100%;
-background:#000000ee;
+width:100vw;
+height:100vh;
+background:white;
 display:none;
 z-index:9999;
 ">
 
-<button onclick="closePDF()" style="
+<div onclick="closePDF()" style="
 position:fixed;
-top:15px;
-right:15px;
-width:40px;
-height:40px;
-border-radius:50%;
+top:20px;
+right:20px;
+width:45px;
+height:45px;
 background:black;
 color:white;
-font-size:20px;
-z-index:99999;
+border-radius:50%;
 display:flex;
 align-items:center;
 justify-content:center;
-">✖</button>
-  
-<iframe id="pdfFrame" style="
+font-size:22px;
+z-index:100000;
+cursor:pointer;
+">
+✖
+</div>
+
+<div style="
 position:absolute;
 top:0;
 left:0;
-width:100vw;
-height:100vh;
-border:none;
+width:100%;
+height:100%;
 z-index:1;
+overflow:auto;
+">
+
+<iframe id="pdfFrame" style="
+width:100%;
+height:100%;
+border:none;
 "></iframe>
+
+</div>
 
 </div>
 </body>
