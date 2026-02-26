@@ -120,6 +120,8 @@ z-index:5;
 <script>
 
 let currentDate;
+  // 🔥 ONE TIME RESET (remove after it runs once)
+localStorage.removeItem("taskList");
 
 let rawTasks=JSON.parse(localStorage.getItem("taskList"));
 
