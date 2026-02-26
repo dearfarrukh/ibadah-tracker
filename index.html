@@ -123,23 +123,11 @@ let currentDate;
   // 🔥 ONE TIME RESET (remove after it runs once)
 localStorage.removeItem("taskList");
 
-let rawTasks=JSON.parse(localStorage.getItem("taskList"));
+let taskList=JSON.parse(localStorage.getItem("taskList"));
 
-let taskList;
+if(!taskList){
 
-if(rawTasks && typeof rawTasks[0]==="string"){
-
-taskList=rawTasks.map(t=>({
-name:t,
-start:0,
-end:null
-}));
-
-localStorage.setItem("taskList",JSON.stringify(taskList));
-
-}else{
-
-taskList=rawTasks||[
+taskList=[
 {name:"Fajr",start:0,end:null},
 {name:"Dhuhur",start:0,end:null},
 {name:"Asr",start:0,end:null},
@@ -153,6 +141,9 @@ taskList=rawTasks||[
 {name:"Surah Waqiya",start:0,end:null}
 ];
 
+localStorage.setItem("taskList",JSON.stringify(taskList));
+
+}
 }
 
 function islamicToday(){
