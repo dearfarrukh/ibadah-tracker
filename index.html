@@ -319,17 +319,41 @@ function confirmAdd(){
 
 let n=document.getElementById("newTaskName").value.trim();
 
-if(n){
+if(!n) return;
 
+let today=formatKey(currentDate);
+
+// 🔎 Check if task already exists but ended
+let existing=taskList.find(t=>t.name===n);
+
+if(existing){
+
+// If it was ended → reactivate
+if(existing.ended){
+
+existing.created=today;
+delete existing.ended;
+
+localStorage.setItem("taskList",JSON.stringify(taskList));
+loadTasks();
+return;
+
+}
+
+// If already active → do nothing
+alert("Task already exists");
+return;
+
+}
+
+// If brand new task
 taskList.push({
 name:n,
-created:formatKey(currentDate)
+created:today
 });
 
 localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
-
-}
 
 }
 
