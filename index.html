@@ -188,11 +188,13 @@ setDate(new Date(p[0],p[1]-1,p[2]));
 
 function loadTasks(){
 
-let key=formatKey(currentDate);
-let saved=JSON.parse(localStorage.getItem(key))||{};
+let dateKey=formatKey(currentDate);
+let saved=JSON.parse(localStorage.getItem(dateKey))||{};
+
 
 let container=document.getElementById("taskContainer");
 container.innerHTML="";
+  
 
 let key=new Date(currentDate).setHours(0,0,0,0);
 
@@ -258,8 +260,20 @@ if(action==="add"){
 area.innerHTML=`<input id="newTaskName"><button onclick="confirmAdd()">Add</button>`;
 }
 if(action==="delete"){
-let opt=taskList.map(t=>`<option>${t}</option>`).join("");
-area.innerHTML=`<select id="deleteTaskSelect">${opt}</select><button onclick="confirmDelete()">Delete</button>`;
+
+let key=new Date(currentDate).setHours(0,0,0,0);
+
+let activeTasks=taskList.filter(task=>{
+return key>=task.start && (!task.end || key<=task.end);
+});
+
+let opt=activeTasks.map(t=>`<option>${t.name}</option>`).join("");
+
+area.innerHTML=`
+<select id="deleteTaskSelect">${opt}</select>
+<button onclick="confirmDelete()">Delete</button>
+`;
+
 }
 }
 
