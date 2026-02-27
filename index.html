@@ -202,7 +202,8 @@ container.innerHTML="";
 let key=new Date(currentDate).setHours(0,0,0,0);
 
 taskList.forEach(task=>{
-
+if(key < task.start) return;
+if(task.end && key > task.end) return;
 
 
 let div=document.createElement("div");
