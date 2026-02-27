@@ -124,6 +124,7 @@ let currentDate;
 
 
 let taskList = JSON.parse(localStorage.getItem("taskList"));
+  console.log("INITIAL taskList:", taskList);
 
 if(!Array.isArray(taskList) || taskList.length === 0){
 
@@ -191,7 +192,7 @@ setDate(new Date(p[0],p[1]-1,p[2]));
 }
 
 function loadTasks(){
-
+console.log("LOAD TASKS taskList:", taskList);
 let dateKey=formatKey(currentDate);
 let saved=JSON.parse(localStorage.getItem(dateKey))||{};
 
