@@ -402,7 +402,9 @@ r.readAsText(file);
 document.addEventListener("DOMContentLoaded",()=>{
 setDate(islamicToday());
 });
-
+function isSurah(name){
+    return name.includes("Surah");
+}
 function handleTaskClick(name){
 
 // Special file
