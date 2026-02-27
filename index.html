@@ -123,11 +123,11 @@ let currentDate;
   // 🔥 ONE TIME RESET (remove after it runs once)
 
 
-  let taskList=JSON.parse(localStorage.getItem("taskList"));
+let taskList = JSON.parse(localStorage.getItem("taskList"));
 
-if(!taskList){
+if(!Array.isArray(taskList) || taskList.length === 0){
 
-taskList=[
+taskList = [
 {name:"Fajr",start:0,end:null},
 {name:"Dhuhur",start:0,end:null},
 {name:"Asr",start:0,end:null},
@@ -144,7 +144,7 @@ taskList=[
 {name:"Surah Ad Duha to Surah Al Nas",start:0,end:null}
 ];
 
-localStorage.setItem("taskList",JSON.stringify(taskList));
+localStorage.setItem("taskList", JSON.stringify(taskList));
 
 }
 
