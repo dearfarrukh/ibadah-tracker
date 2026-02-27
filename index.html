@@ -33,7 +33,13 @@ padding:18px;
 border-radius:22px;
 margin-bottom:20px;
 }
-
+.task{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:10px 0;
+}
+  
 </style>
 </head>
 
@@ -205,9 +211,11 @@ div.className="task";
 div.innerHTML=`
 
 <div onclick="handleTaskClick('${task.name}')" 
-style="flex:1;display:flex;align-items:center;cursor:pointer;">
+style="flex:1;display:flex;align-items:center;gap:8px;cursor:pointer;min-width:0;"
 
-<span>${task.name}</span>
+<span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+${task.name}
+</span>
 
 ${isSurah(task.name)?
 '<span style="background:#007aff;color:white;padding:2px 6px;border-radius:6px;font-size:10px;margin-left:8px;">PDF</span>'
