@@ -119,7 +119,7 @@ z-index:5;
 
 let currentDate;
   // 🔥 ONE TIME RESET (remove after it runs once)
-
+localStorage.removeItem("taskList");
 
 let taskList = JSON.parse(localStorage.getItem("taskList"));
   console.log("INITIAL taskList:", taskList);
@@ -127,20 +127,20 @@ let taskList = JSON.parse(localStorage.getItem("taskList"));
 if(!Array.isArray(taskList) || taskList.length === 0){
 
 taskList = [
-{name:"Fajr",start:new Date().setHours(0,0,0,0),end:null},
-{name:"Dhuhur",start:new Date().setHours(0,0,0,0),end:null},
-{name:"Asr",start:new Date().setHours(0,0,0,0),end:null},
-{name:"Maghrib",start:new Date().setHours(0,0,0,0),end:null},
-{name:"Isha",start:new Date().setHours(0,0,0,0),end:null},
+{name:"Fajr",start:0,end:null},
+{name:"Dhuhur",start:0,end:null},
+{name:"Asr",start:0,end:null},
+{name:"Maghrib",start:0,end:null},
+{name:"Isha",start:0,end:null},
 
-{name:"Surah Mulk",start:new Date().setHours(0,0,0,0),end:null},
-{name:"Surah Sajdah",start:new Date().setHours(0,0,0,0),end:null},
-{name:"Surah Yaseen",start:new Date().setHours(0,0,0,0),end:null},
-{name:"Surah Rehman",start:new Date().setHours(0,0,0,0),end:null},
-{name:"Surah Taghabun",start:new Date().setHours(0,0,0,0),end:null},
-{name:"Surah Waqiya",start:new Date().setHours(0,0,0,0),end:null},
-{name:"Surah Ikhlas",start:new Date().setHours(0,0,0,0),end:null},
-{name:"Surah Ad Duha to Surah Al Nas",start:new Date().setHours(0,0,0,0),end:null}
+{name:"Surah Mulk",start:0,end:null},
+{name:"Surah Sajdah",start:0,end:null},
+{name:"Surah Yaseen",start:0,end:null},
+{name:"Surah Rehman",start:0,end:null},
+{name:"Surah Taghabun",start:0,end:null},
+{name:"Surah Waqiya",start:0,end:null},
+{name:"Surah Ikhlas",start:0,end:null},
+{name:"Surah Ad Duha to Surah Al Nas",start:0,end:null}
 ];
 
 localStorage.setItem("taskList", JSON.stringify(taskList));
