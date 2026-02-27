@@ -122,7 +122,7 @@ z-index:5;
 let currentDate;
   // 🔥 ONE TIME RESET (remove after it runs once)
 
-localStorage.removeItem("taskList");
+
   let taskList=JSON.parse(localStorage.getItem("taskList"));
 
 if(!taskList){
@@ -266,20 +266,38 @@ document.getElementById("streakCount").innerText=streak+" Days";
 }
 
 function handleAction(){
+
 let action=document.getElementById("actionSelect").value;
 let area=document.getElementById("actionArea");
 area.innerHTML="";
+
+// ADD
 if(action==="add"){
-area.innerHTML=`<input id="newTaskName"><button onclick="confirmAdd()">Add</button>`;
+area.innerHTML=`
+<input id="newTaskName" placeholder="Task Name">
+<button onclick="confirmAdd()">Add</button>
+`;
 }
-if(action==="delete"){
+
+// DELETE
+else if(action==="delete"){
 
 let key=new Date(currentDate).setHours(0,0,0,0);
 
 let activeTasks=taskList.filter(task=>{
 return key>=task.start && (!task.end || key<=task.end);
 });
-if(action==="rename"){
+
+let opt=activeTasks.map(t=>`<option>${t.name}</option>`).join("");
+
+area.innerHTML=`
+<select id="deleteTaskSelect">${opt}</select>
+<button onclick="confirmDelete()">Delete</button>
+`;
+}
+
+// RENAME
+else if(action==="rename"){
 
 let opt=taskList.map(t=>`<option>${t.name}</option>`).join("");
 
@@ -288,16 +306,8 @@ area.innerHTML=`
 <input id="renameInput" placeholder="New Name">
 <button onclick="confirmRename()">Rename</button>
 `;
-
 }
-let opt=activeTasks.map(t=>`<option>${t.name}</option>`).join("");
 
-area.innerHTML=`
-<select id="deleteTaskSelect">${opt}</select>
-<button onclick="confirmDelete()">Delete</button>
-`;
-
-}
 }
 
 function confirmAdd(){
@@ -404,8 +414,11 @@ return;
 if(isSurah(name)){
 let file=name.replaceAll(" ","-") + ".pdf";
 openPDF(file);
+  
 }
-
+function openPDF(file){
+window.location.assign(file);
+}
 }
   
 </script>
