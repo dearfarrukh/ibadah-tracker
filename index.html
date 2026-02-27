@@ -122,7 +122,8 @@ z-index:5;
 let currentDate;
   // 🔥 ONE TIME RESET (remove after it runs once)
 
-let taskList=JSON.parse(localStorage.getItem("taskList"));
+localStorage.removeItem("taskList");
+  let taskList=JSON.parse(localStorage.getItem("taskList"));
 
 if(!taskList){
 
@@ -132,12 +133,15 @@ taskList=[
 {name:"Asr",start:0,end:null},
 {name:"Maghrib",start:0,end:null},
 {name:"Isha",start:0,end:null},
+
 {name:"Surah Mulk",start:0,end:null},
 {name:"Surah Sajdah",start:0,end:null},
 {name:"Surah Yaseen",start:0,end:null},
 {name:"Surah Rehman",start:0,end:null},
 {name:"Surah Taghabun",start:0,end:null},
-{name:"Surah Waqiya",start:0,end:null}
+{name:"Surah Waqiya",start:0,end:null},
+{name:"Surah Ikhlas",start:0,end:null},
+{name:"Surah Ad Duha to Surah Al Nas",start:0,end:null}
 ];
 
 localStorage.setItem("taskList",JSON.stringify(taskList));
@@ -275,7 +279,17 @@ let key=new Date(currentDate).setHours(0,0,0,0);
 let activeTasks=taskList.filter(task=>{
 return key>=task.start && (!task.end || key<=task.end);
 });
+if(action==="rename"){
 
+let opt=taskList.map(t=>`<option>${t.name}</option>`).join("");
+
+area.innerHTML=`
+<select id="renameSelect">${opt}</select>
+<input id="renameInput" placeholder="New Name">
+<button onclick="confirmRename()">Rename</button>
+`;
+
+}
 let opt=activeTasks.map(t=>`<option>${t.name}</option>`).join("");
 
 area.innerHTML=`
@@ -328,13 +342,22 @@ loadTasks();
 }
 
 function confirmRename(){
-let o=document.getElementById("renameSelect").value;
-let n=document.getElementById("renameInput").value.trim();
-if(n){
-taskList=taskList.map(t=>t===o?n:t);
+
+let oldName=document.getElementById("renameSelect").value;
+let newName=document.getElementById("renameInput").value.trim();
+
+if(!newName) return;
+
+taskList=taskList.map(task=>{
+if(task.name===oldName){
+return {...task,name:newName};
+}
+return task;
+});
+
 localStorage.setItem("taskList",JSON.stringify(taskList));
 loadTasks();
-}
+
 }
 
 function exportBackup(){
@@ -371,39 +394,19 @@ setDate(islamicToday());
 
 function handleTaskClick(name){
 
-if(name==="Surah Mulk"){
-openPDF("Surah-Mulk.pdf");
+// Special file
+if(name==="Surah Ad Duha to Surah Al Nas"){
+openPDF("Last 22 Surah.pdf");
+return;
 }
 
-else if(name==="Surah Sajdah"){
-openPDF("Surah-Sajdah.pdf");
+// Automatic for all other Surahs
+if(isSurah(name)){
+let file=name.replaceAll(" ","-") + ".pdf";
+openPDF(file);
 }
 
-else if(name==="Surah Yaseen"){
-openPDF("Surah-Yaseen.pdf");
 }
-
-else if(name==="Surah Rehman"){
-openPDF("Surah-Rehman.pdf");
-}
-
-else if(name==="Surah Taghabun"){
-openPDF("Surah-Taghabun.pdf");
-}
-
-else if(name==="Surah Waqiya"){
-openPDF("Surah-Waqiya.pdf");
-}
-}
-  
-function openPDF(file){
-window.location.assign(file);
-}
-
-function isSurah(name){
-return name.includes("Surah");
-}
-  
   
 </script>
 
