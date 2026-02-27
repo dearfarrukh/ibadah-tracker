@@ -397,7 +397,7 @@ openPDF("Surah-Waqiya.pdf");
 }
   
 function openPDF(file){
-window.open(file, "_blank");
+window.location.href = "viewer.html?file=" + file;
 }
 
 function isSurah(name){
