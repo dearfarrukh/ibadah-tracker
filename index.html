@@ -125,6 +125,8 @@ let currentDate;
 
 let taskList = JSON.parse(localStorage.getItem("taskList"));
 
+if(!Array.isArray(taskList) || taskList.length === 0){
+
 taskList = [
 {name:"Fajr",start:new Date().setHours(0,0,0,0),end:null},
 {name:"Dhuhur",start:new Date().setHours(0,0,0,0),end:null},
@@ -145,6 +147,7 @@ taskList = [
 localStorage.setItem("taskList", JSON.stringify(taskList));
 
 }
+
 
 function islamicToday(){
 let now=new Date();
