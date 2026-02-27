@@ -397,12 +397,9 @@ openPDF("Surah-Waqiya.pdf");
 }
   
 function openPDF(file){
-window.location.href = file;
+window.open(file, "_blank");
 }
-function closePDF(){
-document.getElementById("pdfFrame").src="";
-document.getElementById("pdfPopup").style.display="none";
-}
+
 function isSurah(name){
 return name.includes("Surah");
 }
@@ -412,29 +409,6 @@ return name.includes("Surah");
 
   
 
-<div style="
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index:1;
-overflow:auto;
-">
 
-<iframe id="pdfFrame" style="
-position:absolute;
-top:-80px;
-left:-50px;
-width:120vw;
-height:130vh;
-border:none;
-transform:scale(0.9);
-transform-origin:top left;
-"></iframe>
-
-</div>
-
-</div>
 </body>
 </html>
