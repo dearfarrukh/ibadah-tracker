@@ -149,6 +149,18 @@ z-index:5;
 onclick="increaseTasbih()"
 style="text-align:center;cursor:pointer;user-select:none;position:relative;">
 
+<h3 style="margin-top:10px;">📿 Tasbih</h3>
+
+<div id="tasbihCount"
+style="font-size:80px;font-weight:600;margin:25px 0;">
+0
+</div>
+
+<div style="color:gray;">
+Target: <span id="tasbihTargetLabel">33</span>
+</div>
+
+</div>
 
 
 <!-- 33 / 100 Toggle BELOW Card -->
@@ -263,6 +275,33 @@ localStorage.setItem("taskList", JSON.stringify(taskList));
 
 }
 
+  function increaseTasbih(){
+
+let key = getTasbihKey();
+let target = parseInt(localStorage.getItem(getTargetKey()) || 33);
+let count = parseInt(localStorage.getItem(key) || 0);
+
+if(count === target){
+    count = 0;
+} else {
+    count++;
+}
+
+localStorage.setItem(key,count);
+
+let counter = document.getElementById("tasbihCount");
+counter.innerText = count;
+
+counter.classList.remove("glow");
+void counter.offsetWidth;
+counter.classList.add("glow");
+
+if(count === target){
+counter.classList.remove("completeFlash");
+void counter.offsetWidth;
+counter.classList.add("completeFlash");
+}
+}
 
 function islamicToday(){
 let now=new Date();
@@ -271,20 +310,7 @@ if(now.getHours()<2){d.setDate(d.getDate()-1);}
 return d;
 }
 
-  function toggleShake(){
-let enabled = document.getElementById("shakeToggle").checked;
-localStorage.setItem("tasbih-shake", enabled);
-}
-
-function isShakeEnabled(){
-return localStorage.getItem("tasbih-shake") === "true";
-}
-
-  
-function formatKey(d){
-return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-}
-
+ 
 function setDate(d){
 
 currentDate=new Date(d);
