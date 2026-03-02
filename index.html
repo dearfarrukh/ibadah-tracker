@@ -99,6 +99,35 @@ z-index:5;
 </select>
 
 <div id="actionArea"></div>
+  <!-- TASBIH -->
+<div class="card" style="text-align:center;">
+
+<h3>📿 Tasbih Counter</h3>
+
+<div id="tasbihCount"
+style="font-size:60px;font-weight:600;margin:15px 0;">
+0
+</div>
+
+<div style="color:gray;margin-bottom:10px;">
+Target: <span id="tasbihTargetLabel">33</span>
+</div>
+
+<div style="display:flex;gap:10px;margin-bottom:10px;">
+<button onclick="increaseTasbih()" style="flex:1;font-size:18px;">+1</button>
+<button onclick="resetTasbih()" style="flex:1;background:#ff3b30;color:white;">
+Reset
+</button>
+</div>
+
+<select id="tasbihTarget"
+onchange="changeTarget()"
+style="width:100%;">
+<option value="33">33 Times</option>
+<option value="100">100 Times</option>
+</select>
+
+</div>
 
 <h4>☁️ iCloud Backup</h4>
 
@@ -109,11 +138,6 @@ z-index:5;
 
 </div>
 
-<!-- STREAK -->
-<div class="card">
-<h3>🔥 Prayer Streak</h3>
-<p id="streakCount">0 Days</p>
-</div>
 
 <script>
 
@@ -182,6 +206,7 @@ document.getElementById("hijriDate").innerText=hijri;
 document.getElementById("datePicker").value=formatKey(currentDate);
 
 loadTasks();
+  loadTasbih();
 }
 
 function manualPick(value){
@@ -399,7 +424,62 @@ location.reload();
 };
 r.readAsText(file);
 }
+// ===== TASBIH SYSTEM =====
 
+function getTasbihKey(){
+let dateKey=formatKey(currentDate);
+return "tasbih-"+dateKey;
+}
+
+function getTargetKey(){
+let dateKey=formatKey(currentDate);
+return "tasbih-target-"+dateKey;
+}
+
+function loadTasbih(){
+
+let target = localStorage.getItem(getTargetKey()) || 33;
+document.getElementById("tasbihTarget").value = target;
+document.getElementById("tasbihTargetLabel").innerText = target;
+
+let count = parseInt(localStorage.getItem(getTasbihKey()) || 0);
+document.getElementById("tasbihCount").innerText = count;
+}
+
+function increaseTasbih(){
+
+let key = getTasbihKey();
+let target = parseInt(document.getElementById("tasbihTarget").value);
+let count = parseInt(localStorage.getItem(key) || 0);
+
+count++;
+
+if(count >= target){
+count = 0;
+if(navigator.vibrate){
+navigator.vibrate([100,50,100]);
+}
+}else{
+if(navigator.vibrate){
+navigator.vibrate(40);
+}
+}
+
+localStorage.setItem(key,count);
+document.getElementById("tasbihCount").innerText = count;
+}
+
+function resetTasbih(){
+localStorage.setItem(getTasbihKey(),0);
+document.getElementById("tasbihCount").innerText = 0;
+}
+
+function changeTarget(){
+let target=document.getElementById("tasbihTarget").value;
+localStorage.setItem(getTargetKey(),target);
+document.getElementById("tasbihTargetLabel").innerText=target;
+}
+  
 document.addEventListener("DOMContentLoaded",()=>{
 setDate(islamicToday());
 });
