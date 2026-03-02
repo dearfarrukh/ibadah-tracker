@@ -87,19 +87,7 @@ z-index:5;
 <div id="taskContainer"></div>
 </div>
 
-<!-- SETTINGS -->
-<div class="card">
-<h3>⚙️ Task Settings</h3>
-
-<select id="actionSelect" onchange="handleAction()">
-<option value="">Select Action</option>
-<option value="add">➕ Add Task</option>
-<option value="delete">🗑 Delete Task</option>
-<option value="rename">✏️ Rename Task</option>
-</select>
-
-<div id="actionArea"></div>
-  <!-- TASBIH -->
+<!-- 📿 TASBIH -->
 <div class="card" style="text-align:center;">
 
 <h3>📿 Tasbih Counter</h3>
@@ -129,15 +117,41 @@ style="width:100%;">
 
 </div>
 
-<h4>☁️ iCloud Backup</h4>
 
-<button onclick="exportBackup()" style="width:100%;margin-bottom:10px;">Export</button>
+<!-- ☁️ ICLOUD -->
+<div class="card">
+<h3>☁️ iCloud Backup</h3>
 
-<input type="file" id="restoreFile" onchange="importBackup()" style="display:none;">
-<button onclick="document.getElementById('restoreFile').click()" style="width:100%">Restore</button>
+<button onclick="exportBackup()" style="width:100%;margin-bottom:10px;">
+Export
+</button>
+
+<input type="file" id="restoreFile"
+onchange="importBackup()"
+style="display:none;">
+
+<button onclick="document.getElementById('restoreFile').click()"
+style="width:100%">
+Restore
+</button>
 
 </div>
 
+
+<!-- ⚙️ TASK SETTINGS -->
+<div class="card">
+<h3>⚙️ Task Settings</h3>
+
+<select id="actionSelect" onchange="handleAction()">
+<option value="">Select Action</option>
+<option value="add">➕ Add Task</option>
+<option value="delete">🗑 Delete Task</option>
+<option value="rename">✏️ Rename Task</option>
+</select>
+
+<div id="actionArea"></div>
+
+</div>
 
 <script>
 
@@ -257,7 +271,7 @@ container.appendChild(div);
 
 });
 
-updateStreak();
+
 }
 
 function toggleTask(task,status){
