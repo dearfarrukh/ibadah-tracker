@@ -152,21 +152,52 @@ style="text-align:center;cursor:pointer;user-select:none;position:relative;">
 <h3 style="margin-top:10px;">📿 Tasbih</h3>
 
 <div id="tasbihCount"
-style="font-size:80px;font-weight:600;margin:25px 0;">
+style="font-size:80px;font-weight:600;margin:25px 0;transition:0.1s;">
 0
 </div>
 
-<div style="color:gray;">
+<div style="color:gray;margin-bottom:15px;">
 Target: <span id="tasbihTargetLabel">33</span>
 </div>
 
-</div>
-
-
-<!-- 33 / 100 Toggle BELOW Card -->
-<div style="display:flex;justify-content:center;align-items:center;gap:12px;margin-top:10px;">
+<!-- 33 / 100 Toggle -->
+<div onclick="event.stopPropagation();"
+style="display:flex;justify-content:center;align-items:center;gap:12px;margin-bottom:15px;">
 
 <span>33</span>
+
+<label style="position:relative;display:inline-block;width:50px;height:26px;">
+<input type="checkbox" id="tasbihToggle"
+onchange="changeTarget()"
+style="opacity:0;width:0;height:0;">
+<span style="
+position:absolute;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:#ccc;
+border-radius:26px;"></span>
+</label>
+
+<span>100</span>
+
+</div>
+
+<!-- Reset Button -->
+<button onclick="resetTasbih();event.stopPropagation();"
+style="
+padding:10px 25px;
+border-radius:12px;
+border:none;
+background:#ff3b30;
+color:white;
+font-weight:600;">
+Reset
+</button>
+
+</div>
+
 
 <label style="position:relative;display:inline-block;width:50px;height:26px;">
 <input type="checkbox" id="tasbihToggle"
