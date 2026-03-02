@@ -519,13 +519,11 @@ let key = getTasbihKey();
 let target = parseInt(localStorage.getItem(getTargetKey()) || 33);
 let count = parseInt(localStorage.getItem(key) || 0);
 
-// If already at target, reset first
 if(count === target){
-count = 0;
+    count = 0;
+} else {
+    count++;
 }
-
-// Increase
-count++;
 
 localStorage.setItem(key,count);
 
@@ -539,11 +537,11 @@ counter.classList.add("glow");
 
 // Vibration
 if(navigator.vibrate){
-if(count === target){
-navigator.vibrate([120,60,120]);
-}else{
-navigator.vibrate(40);
-}
+    if(count === target){
+        navigator.vibrate([120,60,120]);
+    } else {
+        navigator.vibrate(40);
+    }
 }
 }
 
