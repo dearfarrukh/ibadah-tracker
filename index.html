@@ -82,6 +82,20 @@ animation: completeEffect 0.4s ease;
 }
   
 
+  /* Tiny shake animation */
+.shake {
+animation: tinyShake 0.18s ease;
+}
+
+@keyframes tinyShake {
+0% { transform: translateX(0); }
+25% { transform: translateX(-2px); }
+50% { transform: translateX(2px); }
+75% { transform: translateX(-2px); }
+100% { transform: translateX(0); }
+}
+
+  
 </style>
 </head>
 
@@ -129,6 +143,7 @@ z-index:5;
 <div id="taskContainer"></div>
 </div>
 
+  
 <!-- 📿 TASBIH -->
 <div class="card"
 onclick="increaseTasbih()"
@@ -144,7 +159,29 @@ style="font-size:70px;font-weight:600;margin:20px 0;">
 <div style="color:gray;margin-bottom:10px;">
 Target: <span id="tasbihTargetLabel">33</span>
 </div>
+<!-- Shake Toggle -->
+<div onclick="event.stopPropagation();"
+style="display:flex;justify-content:center;align-items:center;gap:10px;margin-top:12px;">
 
+<span>Shake</span>
+
+<label style="position:relative;display:inline-block;width:50px;height:26px;">
+<input type="checkbox" id="shakeToggle"
+onchange="toggleShake()"
+style="opacity:0;width:0;height:0;">
+<span style="
+position:absolute;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:#ccc;
+border-radius:34px;"></span>
+</label>
+
+</div>
+
+  
 <!-- TOGGLE -->
 <div onclick="event.stopPropagation();"
 style="display:flex;justify-content:center;align-items:center;gap:10px;margin-top:10px;">
@@ -215,7 +252,8 @@ Restore
 
 <script>
 
-let currentDate;
+
+  let currentDate;
   // 🔥 ONE TIME RESET (remove after it runs once)
 
 
@@ -253,6 +291,16 @@ if(now.getHours()<2){d.setDate(d.getDate()-1);}
 return d;
 }
 
+  function toggleShake(){
+let enabled = document.getElementById("shakeToggle").checked;
+localStorage.setItem("tasbih-shake", enabled);
+}
+
+function isShakeEnabled(){
+return localStorage.getItem("tasbih-shake") === "true";
+}
+
+  
 function formatKey(d){
 return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 }
@@ -523,7 +571,11 @@ toggle.checked = (target === 100);
 let count = parseInt(localStorage.getItem(getTasbihKey()) || 0);
 document.getElementById("tasbihCount").innerText = count;
 }
-
+let shakeToggle = document.getElementById("shakeToggle");
+if(shakeToggle){
+shakeToggle.checked = isShakeEnabled();
+}
+  
 function increaseTasbih(){
 
 let key = getTasbihKey();
@@ -559,6 +611,12 @@ navigator.vibrate([200,100,200]);
 
 }else{
 
+  // Tiny shake (if enabled)
+if(isShakeEnabled()){
+counter.classList.remove("shake");
+void counter.offsetWidth;
+counter.classList.add("shake");
+}
 if(navigator.vibrate){
 navigator.vibrate(40);
 }
