@@ -149,40 +149,7 @@ z-index:5;
 onclick="increaseTasbih()"
 style="text-align:center;cursor:pointer;user-select:none;position:relative;">
 
-<!-- Vibration Toggle (Top Right) -->
-<div onclick="event.stopPropagation();"
-style="position:absolute;top:15px;right:18px;display:flex;align-items:center;gap:6px;font-size:12px;">
 
-<span>📳</span>
-
-<label style="position:relative;display:inline-block;width:40px;height:22px;">
-<input type="checkbox" id="vibrationToggle"
-onchange="toggleVibration()"
-style="opacity:0;width:0;height:0;">
-<span style="
-position:absolute;
-top:0;
-left:0;
-right:0;
-bottom:0;
-background:#ccc;
-border-radius:22px;"></span>
-</label>
-
-</div>
-
-<h3 style="margin-top:10px;">📿 Tasbih</h3>
-
-<div id="tasbihCount"
-style="font-size:80px;font-weight:600;margin:25px 0;">
-0
-</div>
-
-<div style="color:gray;">
-Target: <span id="tasbihTargetLabel">33</span>
-</div>
-
-</div>
 
 <!-- 33 / 100 Toggle BELOW Card -->
 <div style="display:flex;justify-content:center;align-items:center;gap:12px;margin-top:10px;">
@@ -220,58 +187,10 @@ font-weight:600;">
 Reset
 </button>
 </div>
+
   
-<!-- Vibration Toggle -->
-<div onclick="event.stopPropagation();"
-style="display:flex;justify-content:center;align-items:center;gap:10px;margin-top:12px;">
-
-<span>Vibration</span>
-
-<label style="position:relative;display:inline-block;width:50px;height:26px;">
-<input type="checkbox" id="vibrationToggle"
-onchange="toggleVibration()"
-style="opacity:0;width:0;height:0;">
-<span style="
-position:absolute;
-top:0;
-left:0;
-right:0;
-bottom:0;
-background:#ccc;
-border-radius:34px;"></span>
-</label>
-
-</div>
-  
-<!-- TOGGLE -->
-<div onclick="event.stopPropagation();"
-style="display:flex;justify-content:center;align-items:center;gap:10px;margin-top:10px;">
-
-<span>33</span>
-
-<label style="position:relative;display:inline-block;width:50px;height:26px;">
-<input type="checkbox" id="tasbihToggle"
-onchange="changeTarget()"
-style="opacity:0;width:0;height:0;">
-<span style="
-position:absolute;
-top:0;
-left:0;
-right:0;
-bottom:0;
-background:#ccc;
-border-radius:34px;"></span>
-</label>
-
-<span>100</span>
-
-</div>
 
 
-<button onclick="resetTasbih();event.stopPropagation();"
-style="width:100%;margin-top:15px;background:#ff3b30;color:white;">
-Reset
-</button>
 
 </div>
 
@@ -397,52 +316,35 @@ let p=value.split("-");
 setDate(new Date(p[0],p[1]-1,p[2]));
 }
 
-function loadTasks(){
-console.log("LOAD TASKS taskList:", taskList);
-let dateKey=formatKey(currentDate);
-let saved=JSON.parse(localStorage.getItem(dateKey))||{};
+function loadTasbih(){
 
+let target = parseInt(localStorage.getItem(getTargetKey()) || 33);
 
-let container=document.getElementById("taskContainer");
-container.innerHTML="";
-  
-
-let key=new Date(currentDate).setHours(0,0,0,0);
-
-taskList.forEach(task=>{
-if(key < task.start) return;
-if(task.end && key > task.end) return;
-
-
-let div=document.createElement("div");
-div.className="task";
-
-div.innerHTML=`
-
-<div onclick="handleTaskClick('${task.name}')" 
-style="flex:1;display:flex;align-items:center;gap:8px;cursor:pointer;min-width:0;"
-
-<span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-${task.name}
-</span>
-
-${isSurah(task.name)?
-'<span style="background:#007aff;color:white;padding:2px 6px;border-radius:6px;font-size:10px;margin-left:8px;">PDF</span>'
-:''}
-
-</div>
-
-<input type="checkbox"
-${saved[task.name]?"checked":""}
-onchange="toggleTask('${task.name}',this.checked)">
-`;
-container.appendChild(div);
-
-});
-
-
+let label = document.getElementById("tasbihTargetLabel");
+if(label){
+label.innerText = target;
 }
 
+let toggle = document.getElementById("tasbihToggle");
+if(toggle){
+toggle.checked = (target === 100);
+}
+
+let vibrationToggle = document.getElementById("vibrationToggle");
+if(vibrationToggle){
+vibrationToggle.checked = isVibrationEnabled();
+}
+
+let count = parseInt(localStorage.getItem(getTasbihKey()) || 0);
+
+let counter = document.getElementById("tasbihCount");
+if(counter){
+counter.innerText = count;
+}
+}
+
+
+  
 function toggleTask(task,status){
 let key=formatKey(currentDate);
 let saved=JSON.parse(localStorage.getItem(key))||{};
@@ -621,63 +523,25 @@ return "tasbih-target-"+dateKey;
 
 function loadTasbih(){
 
-let target = localStorage.getItem(getTargetKey()) || 33;
-target = parseInt(target);
-
+let target = parseInt(localStorage.getItem(getTargetKey()) || 33);
 document.getElementById("tasbihTargetLabel").innerText = target;
 
 let toggle = document.getElementById("tasbihToggle");
+if(toggle){
 toggle.checked = (target === 100);
+}
+
+let vibrationToggle = document.getElementById("vibrationToggle");
+if(vibrationToggle){
+vibrationToggle.checked = isVibrationEnabled();
+}
 
 let count = parseInt(localStorage.getItem(getTasbihKey()) || 0);
 document.getElementById("tasbihCount").innerText = count;
 }
-let shakeToggle = document.getElementById("shakeToggle");
-if(shakeToggle){
-shakeToggle.checked = isShakeEnabled();
-}
-  let vibrationToggle = document.getElementById("vibrationToggle");
-if(vibrationToggle){
-vibrationToggle.checked = isVibrationEnabled();
-}
-function increaseTasbih(){
 
-let key = getTasbihKey();
-let target = parseInt(localStorage.getItem(getTargetKey()) || 33);
-let count = parseInt(localStorage.getItem(key) || 0);
 
-if(count === target){
-    count = 0;
-} else {
-    count++;
-}
-
-localStorage.setItem(key,count);
-
-let counter = document.getElementById("tasbihCount");
-counter.innerText = count;
-
-// Normal glow pop
-counter.classList.remove("glow");
-void counter.offsetWidth;
-counter.classList.add("glow");
-
-// Strong glow at completion
-if(count === target){
-    counter.classList.remove("completeGlow");
-    void counter.offsetWidth;
-    counter.classList.add("completeGlow");
-}
-
-// Optional vibration
-if(isVibrationEnabled() && navigator.vibrate){
-    if(count === target){
-        navigator.vibrate([200,100,200]);
-    } else {
-        navigator.vibrate(30);
-    }
-}
-}
+  
 function resetTasbih(){
 localStorage.setItem(getTasbihKey(),0);
 document.getElementById("tasbihCount").innerText = 0;
