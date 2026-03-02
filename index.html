@@ -147,27 +147,15 @@ z-index:5;
 <!-- 📿 TASBIH -->
 <div class="card"
 onclick="increaseTasbih()"
-style="text-align:center;cursor:pointer;user-select:none;">
+style="text-align:center;cursor:pointer;user-select:none;position:relative;">
 
-<h3>📿 Tasbih</h3>
-
-<div id="tasbihCount"
-style="font-size:70px;font-weight:600;margin:20px 0;">
-0
-</div>
-
-<div style="color:gray;margin-bottom:10px;">
-Target: <span id="tasbihTargetLabel">33</span>
-</div>
-<!-- Shake Toggle -->
+<!-- Vibration Toggle Top Right -->
 <div onclick="event.stopPropagation();"
-style="display:flex;justify-content:center;align-items:center;gap:10px;margin-top:12px;">
+style="position:absolute;top:12px;right:15px;display:flex;align-items:center;gap:6px;">
 
-<span>Shake</span>
-
-<label style="position:relative;display:inline-block;width:50px;height:26px;">
-<input type="checkbox" id="shakeToggle"
-onchange="toggleShake()"
+<label style="position:relative;display:inline-block;width:40px;height:22px;">
+<input type="checkbox" id="vibrationToggle"
+onchange="toggleVibration()"
 style="opacity:0;width:0;height:0;">
 <span style="
 position:absolute;
@@ -176,10 +164,25 @@ left:0;
 right:0;
 bottom:0;
 background:#ccc;
-border-radius:34px;"></span>
+border-radius:22px;"></span>
 </label>
 
 </div>
+
+<h3>📿 Tasbih</h3>
+
+<div id="tasbihCount"
+style="font-size:70px;font-weight:600;margin:25px 0;">
+0
+</div>
+
+<div style="color:gray;margin-bottom:10px;">
+Target: <span id="tasbihTargetLabel">33</span>
+</div>
+
+</div>
+
+  
 <!-- Vibration Toggle -->
 <div onclick="event.stopPropagation();"
 style="display:flex;justify-content:center;align-items:center;gap:10px;margin-top:12px;">
@@ -610,6 +613,25 @@ if(count === target){
 } else {
     count++;
 }
+
+localStorage.setItem(key,count);
+
+let counter = document.getElementById("tasbihCount");
+counter.innerText = count;
+
+// Normal glow pop
+counter.classList.remove("glow");
+void counter.offsetWidth;
+counter.classList.add("glow");
+
+// Strong glow at completion
+if(count === target){
+    counter.classList.remove("completeGlow");
+    void counter.offsetWidth;
+    counter.classList.add("completeGlow");
+}
+
+// Optional vibration
 if(isVibrationEnabled() && navigator.vibrate){
     if(count === target){
         navigator.vibrate([200,100,200]);
@@ -617,41 +639,7 @@ if(isVibrationEnabled() && navigator.vibrate){
         navigator.vibrate(30);
     }
 }
-localStorage.setItem(key,count);
-
-let counter = document.getElementById("tasbihCount");
-counter.innerText = count;
-
-// Glow animation every tap
-counter.classList.remove("glow");
-void counter.offsetWidth;
-counter.classList.add("glow");
-
-// 🎉 Completion flash
-if(count === target){
-
-counter.classList.remove("completeFlash");
-void counter.offsetWidth;
-counter.classList.add("completeFlash");
-
-if(navigator.vibrate){
-navigator.vibrate([200,100,200]);
 }
-
-}else{
-
-  // Tiny shake (if enabled)
-if(isShakeEnabled()){
-counter.classList.remove("shake");
-void counter.offsetWidth;
-counter.classList.add("shake");
-}
-if(navigator.vibrate){
-navigator.vibrate(40);
-}
-}
-}
-
 function resetTasbih(){
 localStorage.setItem(getTasbihKey(),0);
 document.getElementById("tasbihCount").innerText = 0;
