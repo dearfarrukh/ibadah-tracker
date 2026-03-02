@@ -58,6 +58,19 @@ background:white;
 border-radius:50%;
 transition:0.3s;
 }
+
+  /* Glow animation */
+.glow {
+animation: glowPulse 0.25s ease;
+}
+
+@keyframes glowPulse {
+0%   { transform: scale(1); text-shadow: none; }
+50%  { transform: scale(1.15); text-shadow: 0 0 15px #007aff; }
+100% { transform: scale(1); text-shadow: none; }
+}
+
+
 </style>
 </head>
 
@@ -506,21 +519,32 @@ let key = getTasbihKey();
 let target = parseInt(localStorage.getItem(getTargetKey()) || 33);
 let count = parseInt(localStorage.getItem(key) || 0);
 
+// If already at target, reset first
+if(count === target){
+count = 0;
+}
+
+// Increase
 count++;
 
-if(count >= target){
-count = 0;
+localStorage.setItem(key,count);
+
+let counter = document.getElementById("tasbihCount");
+counter.innerText = count;
+
+// Glow animation
+counter.classList.remove("glow");
+void counter.offsetWidth;
+counter.classList.add("glow");
+
+// Vibration
 if(navigator.vibrate){
-navigator.vibrate([100,50,100]);
-}
+if(count === target){
+navigator.vibrate([120,60,120]);
 }else{
-if(navigator.vibrate){
 navigator.vibrate(40);
 }
 }
-
-localStorage.setItem(key,count);
-document.getElementById("tasbihCount").innerText = count;
 }
 
 function resetTasbih(){
