@@ -70,6 +70,17 @@ animation: glowPulse 0.25s ease;
 100% { transform: scale(1); text-shadow: none; }
 }
 
+  /* Green completion flash */
+.completeFlash {
+animation: completeEffect 0.4s ease;
+}
+
+@keyframes completeEffect {
+0%   { transform: scale(1); background: transparent; }
+40%  { transform: scale(1.2); background: rgba(0,255,0,0.2); }
+100% { transform: scale(1); background: transparent; }
+}
+  
 
 </style>
 </head>
@@ -530,18 +541,27 @@ localStorage.setItem(key,count);
 let counter = document.getElementById("tasbihCount");
 counter.innerText = count;
 
-// Glow animation
+// Glow animation every tap
 counter.classList.remove("glow");
 void counter.offsetWidth;
 counter.classList.add("glow");
 
-// Vibration
+// 🎉 Completion flash
+if(count === target){
+
+counter.classList.remove("completeFlash");
+void counter.offsetWidth;
+counter.classList.add("completeFlash");
+
 if(navigator.vibrate){
-    if(count === target){
-        navigator.vibrate([120,60,120]);
-    } else {
-        navigator.vibrate(40);
-    }
+navigator.vibrate([200,100,200]);
+}
+
+}else{
+
+if(navigator.vibrate){
+navigator.vibrate(40);
+}
 }
 }
 
