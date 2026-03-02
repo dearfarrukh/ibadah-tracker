@@ -310,7 +310,10 @@ if(now.getHours()<2){d.setDate(d.getDate()-1);}
 return d;
 }
 
- 
+ function formatKey(d){
+return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+  
 function setDate(d){
 
 currentDate=new Date(d);
@@ -342,34 +345,50 @@ let p=value.split("-");
 setDate(new Date(p[0],p[1]-1,p[2]));
 }
 
-function loadTasbih(){
 
-let target = parseInt(localStorage.getItem(getTargetKey()) || 33);
+function loadTasks(){
 
-let label = document.getElementById("tasbihTargetLabel");
-if(label){
-label.innerText = target;
+let dateKey = formatKey(currentDate);
+let saved = JSON.parse(localStorage.getItem(dateKey)) || {};
+
+let container = document.getElementById("taskContainer");
+container.innerHTML = "";
+
+let key = new Date(currentDate).setHours(0,0,0,0);
+
+taskList.forEach(task=>{
+
+if(key < task.start) return;
+if(task.end && key > task.end) return;
+
+let div = document.createElement("div");
+div.className = "task";
+
+div.innerHTML = `
+<div onclick="handleTaskClick('${task.name}')" 
+style="flex:1;display:flex;align-items:center;gap:8px;cursor:pointer;min-width:0;">
+
+<span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+${task.name}
+</span>
+
+${isSurah(task.name)?
+'<span style="background:#007aff;color:white;padding:2px 6px;border-radius:6px;font-size:10px;margin-left:8px;">PDF</span>'
+:''}
+
+</div>
+
+<input type="checkbox"
+${saved[task.name]?"checked":""}
+onchange="toggleTask('${task.name}',this.checked)">
+`;
+
+container.appendChild(div);
+
+});
+
 }
-
-let toggle = document.getElementById("tasbihToggle");
-if(toggle){
-toggle.checked = (target === 100);
-}
-
-let vibrationToggle = document.getElementById("vibrationToggle");
-if(vibrationToggle){
-vibrationToggle.checked = isVibrationEnabled();
-}
-
-let count = parseInt(localStorage.getItem(getTasbihKey()) || 0);
-
-let counter = document.getElementById("tasbihCount");
-if(counter){
-counter.innerText = count;
-}
-}
-
-
+  
   
 function toggleTask(task,status){
 let key=formatKey(currentDate);
