@@ -180,7 +180,27 @@ border-radius:34px;"></span>
 </label>
 
 </div>
+<!-- Vibration Toggle -->
+<div onclick="event.stopPropagation();"
+style="display:flex;justify-content:center;align-items:center;gap:10px;margin-top:12px;">
 
+<span>Vibration</span>
+
+<label style="position:relative;display:inline-block;width:50px;height:26px;">
+<input type="checkbox" id="vibrationToggle"
+onchange="toggleVibration()"
+style="opacity:0;width:0;height:0;">
+<span style="
+position:absolute;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:#ccc;
+border-radius:34px;"></span>
+</label>
+
+</div>
   
 <!-- TOGGLE -->
 <div onclick="event.stopPropagation();"
@@ -575,7 +595,10 @@ let shakeToggle = document.getElementById("shakeToggle");
 if(shakeToggle){
 shakeToggle.checked = isShakeEnabled();
 }
-  
+  let vibrationToggle = document.getElementById("vibrationToggle");
+if(vibrationToggle){
+vibrationToggle.checked = isVibrationEnabled();
+}
 function increaseTasbih(){
 
 let key = getTasbihKey();
@@ -587,7 +610,13 @@ if(count === target){
 } else {
     count++;
 }
-
+if(isVibrationEnabled() && navigator.vibrate){
+    if(count === target){
+        navigator.vibrate([200,100,200]);
+    } else {
+        navigator.vibrate(30);
+    }
+}
 localStorage.setItem(key,count);
 
 let counter = document.getElementById("tasbihCount");
@@ -661,6 +690,15 @@ openPDF(file);
 
 function openPDF(file){
 window.location.assign(file);
+}
+
+  function toggleVibration(){
+let enabled = document.getElementById("vibrationToggle").checked;
+localStorage.setItem("tasbih-vibration", enabled);
+}
+
+function isVibrationEnabled(){
+return localStorage.getItem("tasbih-vibration") === "true";
 }
 
 </script>
