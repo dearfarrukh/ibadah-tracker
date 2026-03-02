@@ -121,8 +121,8 @@ style="font-size:70px;font-weight:600;margin:20px 0;">
 Target: <span id="tasbihTargetLabel">33</span>
 </div>
 
-<!-- TOGGLE BUTTON -->
-<div onclick="event.stopPropagation();" 
+<!-- TOGGLE -->
+<div onclick="event.stopPropagation();"
 style="display:flex;justify-content:center;align-items:center;gap:10px;margin-top:10px;">
 
 <span>33</span>
@@ -133,17 +133,22 @@ onchange="changeTarget()"
 style="opacity:0;width:0;height:0;">
 <span style="
 position:absolute;
-cursor:pointer;
 top:0;
 left:0;
 right:0;
 bottom:0;
 background:#ccc;
-border-radius:34px;
-transition:0.3s;"></span>
+border-radius:34px;"></span>
 </label>
 
 <span>100</span>
+
+</div>
+
+<button onclick="resetTasbih();event.stopPropagation();"
+style="width:100%;margin-top:15px;background:#ff3b30;color:white;">
+Reset
+</button>
 
 </div>
 
