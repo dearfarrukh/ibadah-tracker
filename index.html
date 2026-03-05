@@ -248,21 +248,52 @@ min-width:130px;
   
 </div>
 
-<h3 style="margin:0;">📿 Tasbih</h3>
+<div style="margin-bottom:12px;">
 
+<h2 style="margin:0;font-size:22px;font-weight:700;">
+📿 Tasbih
+</h2>
+
+<div style="
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-top:8px;
+">
+
+<!-- segmented control -->
+<div id="tasbihModes"
+onclick="event.stopPropagation();"
+style="
+display:flex;
+background:rgba(0,0,0,0.08);
+border-radius:14px;
+overflow:hidden;
+height:36px;
+">
+
+<button class="modeBtn" onclick="setTasbihMode(33)">33</button>
+<button class="modeBtn" onclick="setTasbihMode(100)">100</button>
+<button class="modeBtn" onclick="setTasbihMode('inf')">∞</button>
+
+</div>
+
+<!-- sound toggle -->
 <div style="display:flex;align-items:center;gap:6px;">
+
 <span>🔕</span>
 
 <label class="switch" onclick="event.stopPropagation();">
 <input type="checkbox" id="vibrationToggle" onchange="toggleVibration();">
 <span class="slider"></span>
 </label>
-  
+
 <span>🔔</span>
-</div>
 
 </div>
 
+</div>
+</div>
 <!-- COUNTER -->
 <div id="tasbihCount"
 style="font-size:80px;font-weight:600;margin:25px 0;transition:0.1s;">
