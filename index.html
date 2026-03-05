@@ -290,7 +290,7 @@ Restore
 
 <script>
 
-
+let clickSound = new Audio("click.mp3");
   let currentDate;
   // 🔥 ONE TIME RESET (remove after it runs once)
 
@@ -323,7 +323,11 @@ localStorage.setItem("taskList", JSON.stringify(taskList));
 
   function increaseTasbih(){
 
-let key = getTasbihKey();
+if(isVibrationEnabled()){
+clickSound.currentTime = 0;
+clickSound.play();
+}
+    let key = getTasbihKey();
 let target = parseInt(localStorage.getItem(getTargetKey()) || 33);
 let count = parseInt(localStorage.getItem(key) || 0);
 
@@ -331,6 +335,9 @@ if(count === target){
     count = 0;
 } else {
     count++;
+  if(isVibrationEnabled() && navigator.vibrate){
+navigator.vibrate(20);
+}
 }
 
 localStorage.setItem(key,count);
@@ -346,6 +353,7 @@ if(count === target){
 counter.classList.remove("completeFlash");
 void counter.offsetWidth;
 counter.classList.add("completeFlash");
+  
 }
 }
 
