@@ -665,18 +665,46 @@ a.click();
 }
 
 function importBackup(){
+
 let file=document.getElementById("restoreFile").files[0];
 let r=new FileReader();
+
 r.onload=e=>{
+
 let data=JSON.parse(e.target.result);
+
 localStorage.clear();
+
 for(let k in data.storage){
+
 localStorage.setItem(k,data.storage[k]);
+
+// convert old daily task prayer data → salah system
+if(/^\d{4}-\d{2}-\d{2}$/.test(k)){
+
+let old = JSON.parse(data.storage[k]);
+let salah = {};
+
+["Fajr","Dhuhur","Asr","Maghrib","Isha"].forEach(p=>{
+if(old[p] !== undefined){
+salah[p] = old[p];
 }
+});
+
+localStorage.setItem("salah-"+k, JSON.stringify(salah));
+
+}
+
+}
+
 location.reload();
+
 };
+
 r.readAsText(file);
+
 }
+  
 // ===== TASBIH SYSTEM =====
 
 function getTasbihKey(){
