@@ -353,8 +353,10 @@ counter.classList.remove("glow");
 void counter.offsetWidth;
 counter.classList.add("glow");
 
+if(isVibrationEnabled()){
 clickSound.currentTime = 0;
 clickSound.play().catch(()=>{});
+}
 
 if(isVibrationEnabled() && count === target){
 if(navigator.vibrate){
