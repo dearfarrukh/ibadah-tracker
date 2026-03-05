@@ -790,23 +790,31 @@ return "tasbih-target-"+dateKey;
 
 function loadTasbih(){
 
-let target = parseInt(localStorage.getItem(getTargetKey()) || 33);
-document.getElementById("tasbihTargetLabel").innerText = target;
+let target = localStorage.getItem(getTargetKey()) || 33;
 
-let toggle = document.getElementById("tasbihToggle");
-if(toggle){
-toggle.checked = (target === 100);
-}
+document.getElementById("tasbihTargetLabel").innerText =
+target === "inf" ? "∞" : target;
 
+// highlight selected mode
+document.querySelectorAll(".modeBtn").forEach(b=>{
+b.classList.remove("active");
+});
+
+if(target == 33) document.querySelectorAll(".modeBtn")[0].classList.add("active");
+if(target == 100) document.querySelectorAll(".modeBtn")[1].classList.add("active");
+if(target == "inf") document.querySelectorAll(".modeBtn")[2].classList.add("active");
+
+// vibration toggle
 let vibrationToggle = document.getElementById("vibrationToggle");
 if(vibrationToggle){
 vibrationToggle.checked = isVibrationEnabled();
 }
 
+// load count
 let count = parseInt(localStorage.getItem(getTasbihKey()) || 0);
 document.getElementById("tasbihCount").innerText = count;
-}
 
+}
 
   
 function resetTasbih(){
