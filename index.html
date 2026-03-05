@@ -194,6 +194,7 @@ z-index:5;
 
   
 <div class="card"
+onclick="increaseTasbih()"
 style="text-align:center;cursor:pointer;user-select:none;position:relative;">
 
 <!-- HEADER -->
@@ -202,7 +203,7 @@ style="text-align:center;cursor:pointer;user-select:none;position:relative;">
 <div style="display:flex;align-items:center;gap:6px;">
 <span>33</span>
 
-<label class="switch">
+<label class="switch" onclick="event.stopPropagation();">
 <input type="checkbox" id="tasbihToggle" onchange="changeTarget();">
 <span class="slider"></span>
 </label>
@@ -215,7 +216,7 @@ style="text-align:center;cursor:pointer;user-select:none;position:relative;">
 <div style="display:flex;align-items:center;gap:6px;">
 <span>🔕</span>
 
-<label class="switch">
+<label class="switch" onclick="event.stopPropagation();">
 <input type="checkbox" id="vibrationToggle" onchange="toggleVibration();">
 <span class="slider"></span>
 </label>
@@ -227,8 +228,7 @@ style="text-align:center;cursor:pointer;user-select:none;position:relative;">
 
 <!-- COUNTER -->
 <div id="tasbihCount"
-onclick="increaseTasbih(event)"
-style="font-size:80px;font-weight:600;margin:25px 0;transition:0.1s;cursor:pointer;">
+style="font-size:80px;font-weight:600;margin:25px 0;transition:0.1s;">
 0
 </div>
 <div style="color:gray;margin-bottom:15px;">
