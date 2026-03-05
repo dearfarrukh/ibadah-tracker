@@ -289,29 +289,14 @@ Restore
 </div>
 
 <script>
-
+let clickSound = new Audio("click.mp3");
+clickSound.preload = "auto";
+  
 let audioCtx = null;
 
 
   
-function playClick(){
-try{
-let ctx = new (window.AudioContext || window.webkitAudioContext)();
-let osc = ctx.createOscillator();
-let gain = ctx.createGain();
 
-osc.type = "square";
-osc.frequency.value = 1200;
-
-gain.gain.value = 0.05;
-
-osc.connect(gain);
-gain.connect(ctx.destination);
-
-osc.start();
-osc.stop(ctx.currentTime + 0.03);
-}catch(e){}
-}
   
   let currentDate;
   // 🔥 ONE TIME RESET (remove after it runs once)
@@ -357,8 +342,8 @@ if(count === target){
     if(isVibrationEnabled()){
 
         // sound (works on iPhone)
-        playClick();
-
+       clickSound.currentTime = 0;
+clickSound.play().catch(()=>{});
         // vibration (works on Android)
         if(navigator.vibrate){
             navigator.vibrate(20);
