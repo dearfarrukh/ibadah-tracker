@@ -304,7 +304,8 @@ let audioCtx = null;
   let currentDate;
   // 🔥 ONE TIME RESET (remove after it runs once)
 
-
+let tasbihLock = false;
+  
 let taskList = JSON.parse(localStorage.getItem("taskList"));
   console.log("INITIAL taskList:", taskList);
 
@@ -331,12 +332,9 @@ localStorage.setItem("taskList", JSON.stringify(taskList));
 
 }
 
-function increaseTasbih(e){
+function increaseTasbih(){
 
-// ignore clicks coming from switches
-if(e && (e.target.id === "tasbihToggle" || e.target.id === "vibrationToggle")){
-return;
-}
+if(tasbihLock) return;
 
 let key = getTasbihKey();
 let target = parseInt(localStorage.getItem(getTargetKey()) || 33);
@@ -666,16 +664,23 @@ document.getElementById("tasbihCount").innerText = 0;
 
 function changeTarget(){
 
+tasbihLock = true;
+
 let toggle = document.getElementById("tasbihToggle").checked;
 let target = toggle ? 100 : 33;
 
 localStorage.setItem(getTargetKey(), target);
 document.getElementById("tasbihTargetLabel").innerText = target;
 
-// ALWAYS reset counter when switching
+// reset counter
 let key = getTasbihKey();
 localStorage.setItem(key,0);
 document.getElementById("tasbihCount").innerText = 0;
+
+// unlock after toggle finishes
+setTimeout(()=>{
+tasbihLock = false;
+},150);
 
 }
 
