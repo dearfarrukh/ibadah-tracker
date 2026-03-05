@@ -143,6 +143,19 @@ animation: tinyShake 0.18s ease;
 100% { transform: translateX(0); }
 }
 
+  .modeBtn{
+flex:1;
+border:none;
+background:transparent;
+padding:6px 10px;
+font-weight:600;
+cursor:pointer;
+}
+
+.modeBtn.active{
+background:#34c759;
+color:white;
+}
   
 </style>
 </head>
@@ -214,14 +227,22 @@ style="text-align:center;cursor:pointer;user-select:none;position:relative;">
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
 
 <div style="display:flex;align-items:center;gap:6px;">
-<span>33</span>
 
-<label class="switch" onclick="event.stopPropagation();">
-<input type="checkbox" id="tasbihToggle" onchange="changeTarget();">
-<span class="slider"></span>
-</label>
+<div id="tasbihModes"
+onclick="event.stopPropagation();"
+style="
+display:flex;
+background:rgba(0,0,0,0.08);
+border-radius:12px;
+overflow:hidden;
+">
 
-<span>100</span>
+<button class="modeBtn" onclick="setTasbihMode(33)">33</button>
+<button class="modeBtn" onclick="setTasbihMode(100)">100</button>
+<button class="modeBtn" onclick="setTasbihMode('inf')">∞</button>
+
+</div>
+  
 </div>
 
 <h3 style="margin:0;">📿 Tasbih</h3>
@@ -302,6 +323,33 @@ Restore
 
 <script>
 
+
+  
+function setTasbihMode(mode){
+
+tasbihLock = true;
+
+localStorage.setItem(getTargetKey(), mode);
+
+document.getElementById("tasbihTargetLabel").innerText =
+mode === "inf" ? "∞" : mode;
+
+// reset counter
+localStorage.setItem(getTasbihKey(),0);
+document.getElementById("tasbihCount").innerText = 0;
+
+// highlight selected button
+document.querySelectorAll(".modeBtn").forEach(b=>{
+b.classList.remove("active");
+});
+
+if(mode===33) document.querySelectorAll(".modeBtn")[0].classList.add("active");
+if(mode===100) document.querySelectorAll(".modeBtn")[1].classList.add("active");
+if(mode==="inf") document.querySelectorAll(".modeBtn")[2].classList.add("active");
+
+setTimeout(()=>{ tasbihLock=false; },150);
+
+}
   
 let clickSound = new Audio("click.mp3");
 clickSound.preload = "auto";
@@ -389,13 +437,17 @@ function increaseTasbih(){
 if(tasbihLock) return;
 
 let key = getTasbihKey();
-let target = parseInt(localStorage.getItem(getTargetKey()) || 33);
+let target = localStorage.getItem(getTargetKey()) || 33;
 let count = parseInt(localStorage.getItem(key) || 0);
 
+if(target === "inf"){
+count++;
+}else{
 if(count >= target){
 count = 0;
 }else{
 count++;
+}
 }
 
 localStorage.setItem(key,count);
