@@ -233,9 +233,13 @@ style="text-align:center;cursor:pointer;user-select:none;position:relative;">
   
 </div>
 
-<div style="margin-bottom:12px;">
+<!-- HEADER -->
+<div style="margin-bottom:15px;">
 
-<h2 style="margin:0;font-size:22px;font-weight:700;">
+<!-- HEADER -->
+<div style="margin-bottom:15px;">
+
+<h2 style="margin:0;font-size:22px;font-weight:700;text-align:center;">
 📿 Tasbih
 </h2>
 
@@ -243,7 +247,7 @@ style="text-align:center;cursor:pointer;user-select:none;position:relative;">
 display:flex;
 align-items:center;
 justify-content:space-between;
-margin-top:8px;
+margin-top:10px;
 ">
 
 <!-- segmented control -->
@@ -274,6 +278,52 @@ height:36px;
 </label>
 
 <span>🔔</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div style="
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-top:10px;
+">
+
+<!-- segmented control -->
+<div id="tasbihModes"
+onclick="event.stopPropagation();"
+style="
+display:flex;
+background:rgba(0,0,0,0.08);
+border-radius:14px;
+overflow:hidden;
+height:36px;
+">
+
+<button class="modeBtn" onclick="setTasbihMode(33)">33</button>
+<button class="modeBtn" onclick="setTasbihMode(100)">100</button>
+<button class="modeBtn" onclick="setTasbihMode('inf')">∞</button>
+
+</div>
+
+<!-- sound toggle -->
+<div style="display:flex;align-items:center;gap:6px;">
+
+<span>🔕</span>
+
+<label class="switch" onclick="event.stopPropagation();">
+<input type="checkbox" id="vibrationToggle" onchange="toggleVibration();">
+<span class="slider"></span>
+</label>
+
+<span>🔔</span>
+
+</div>
+
+</div>
 
 </div>
 
