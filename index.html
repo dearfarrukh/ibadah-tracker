@@ -206,8 +206,8 @@ style="text-align:center;cursor:pointer;user-select:none;position:relative;">
 <div style="display:flex;align-items:center;gap:6px;">
 <span>33</span>
 
-<label class="switch">
-<input type="checkbox" id="tasbihToggle" onchange="changeTarget();event.stopPropagation();">
+<label class="switch" onclick="event.stopPropagation();">
+<input type="checkbox" id="tasbihToggle" onchange="changeTarget();">
 <span class="slider"></span>
 </label>
 
@@ -219,11 +219,11 @@ style="text-align:center;cursor:pointer;user-select:none;position:relative;">
 <div style="display:flex;align-items:center;gap:6px;">
 <span>🔕</span>
 
-<label class="switch">
-<input type="checkbox" id="vibrationToggle" onchange="toggleVibration();event.stopPropagation();">
+<label class="switch" onclick="event.stopPropagation();">
+<input type="checkbox" id="vibrationToggle" onchange="toggleVibration();">
 <span class="slider"></span>
 </label>
-
+  
 <span>🔔</span>
 </div>
 
@@ -339,22 +339,20 @@ let key = getTasbihKey();
 let target = parseInt(localStorage.getItem(getTargetKey()) || 33);
 let count = parseInt(localStorage.getItem(key) || 0);
 
-if(count === target){
+if(count >= target){
     count = 0;
 } else {
     count++;
+}
 
-    if(isVibrationEnabled()){
-
-        // sound (works on iPhone)
-       clickSound.currentTime = 0;
+   clickSound.currentTime = 0;
 clickSound.play().catch(()=>{});
-        // vibration (works on Android)
-        if(navigator.vibrate){
-            navigator.vibrate(20);
-        }
 
-    }
+if(isVibrationEnabled() && count === target){
+if(navigator.vibrate){
+navigator.vibrate(60);
+}
+}
 }
 
 localStorage.setItem(key,count);
@@ -666,11 +664,24 @@ document.getElementById("tasbihCount").innerText = 0;
 
 function changeTarget(){
 
+function changeTarget(){
+
 let toggle = document.getElementById("tasbihToggle").checked;
 let target = toggle ? 100 : 33;
 
 localStorage.setItem(getTargetKey(), target);
 document.getElementById("tasbihTargetLabel").innerText = target;
+
+// reset counter if it is bigger than new target
+let key = getTasbihKey();
+let count = parseInt(localStorage.getItem(key) || 0);
+
+if(count > target){
+count = 0;
+localStorage.setItem(key,count);
+document.getElementById("tasbihCount").innerText = count;
+}
+
 }
   
 document.addEventListener("DOMContentLoaded",()=>{
