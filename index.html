@@ -151,9 +151,7 @@ animation: tinyShake 0.18s ease;
 <div id="bg"></div>
   
 <h1 style="text-align:center;">📿 Ibadah Tracker</h1>
-  <button onclick="clickSound.play()" style="margin:10px auto;display:block;">
-TEST SOUND
-</button>
+ 
 
 <!-- DATE CARD -->
 <div class="card">
@@ -716,7 +714,9 @@ localStorage.setItem("tasbih-vibration", enabled);
 function isVibrationEnabled(){
 return localStorage.getItem("tasbih-vibration") === "true";
 }
-
+document.addEventListener("DOMContentLoaded",()=>{
+setDate(islamicToday());
+});
 </script>
 
   
