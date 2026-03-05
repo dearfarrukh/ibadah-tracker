@@ -149,8 +149,34 @@ z-index:5;
 onclick="increaseTasbih()"
 style="text-align:center;cursor:pointer;user-select:none;position:relative;">
 
-<h3 style="margin-top:10px;">📿 Tasbih</h3>
+<!-- HEADER -->
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
 
+<!-- LEFT : 33 / 100 -->
+<div onclick="event.stopPropagation();">
+<label style="display:flex;align-items:center;gap:6px;font-size:14px;">
+33
+<input type="checkbox" id="tasbihToggle" onchange="changeTarget()">
+<span></span>
+100
+</label>
+</div>
+
+<!-- CENTER : TITLE -->
+<h3 style="margin:0;">📿 Tasbih</h3>
+
+<!-- RIGHT : VIBRATION -->
+<div onclick="event.stopPropagation();">
+<label style="display:flex;align-items:center;gap:6px;font-size:14px;">
+🔔
+<input type="checkbox" id="vibrationToggle" onchange="toggleVibration()">
+<span></span>
+</label>
+</div>
+
+</div>
+
+<!-- COUNTER -->
 <div id="tasbihCount"
 style="font-size:80px;font-weight:600;margin:25px 0;transition:0.1s;">
 0
@@ -160,17 +186,7 @@ style="font-size:80px;font-weight:600;margin:25px 0;transition:0.1s;">
 Target: <span id="tasbihTargetLabel">33</span>
 </div>
 
-<!-- 33 / 100 Toggle -->
-<div onclick="event.stopPropagation();"
-style="display:flex;justify-content:center;align-items:center;gap:12px;margin-bottom:15px;">
-
-<span>33</span>
-
-<span>100</span>
-
-</div>
-
-<!-- Reset Button -->
+<!-- RESET -->
 <button onclick="resetTasbih();event.stopPropagation();"
 style="
 padding:10px 25px;
@@ -183,8 +199,6 @@ Reset
 </button>
 
 </div>
-
-
 
 
 
