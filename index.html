@@ -290,6 +290,32 @@ Restore
 
 <script>
 
+let audioCtx = null;
+
+function playClick(){
+try{
+
+if(!audioCtx){
+audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+}
+
+let osc = audioCtx.createOscillator();
+let gain = audioCtx.createGain();
+
+osc.type = "square";
+osc.frequency.value = 1000;
+
+gain.gain.value = 0.05;
+
+osc.connect(gain);
+gain.connect(audioCtx.destination);
+
+osc.start();
+osc.stop(audioCtx.currentTime + 0.03);
+
+}catch(e){}
+}
+  
 function playClick(){
 try{
 let ctx = new (window.AudioContext || window.webkitAudioContext)();
