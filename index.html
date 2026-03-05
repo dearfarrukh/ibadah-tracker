@@ -151,6 +151,9 @@ animation: tinyShake 0.18s ease;
 <div id="bg"></div>
   
 <h1 style="text-align:center;">📿 Ibadah Tracker</h1>
+  <button onclick="clickSound.play()" style="margin:10px auto;display:block;">
+TEST SOUND
+</button>
 
 <!-- DATE CARD -->
 <div class="card">
@@ -289,6 +292,8 @@ Restore
 </div>
 
 <script>
+
+  
 let clickSound = new Audio("click.mp3");
 clickSound.preload = "auto";
   
