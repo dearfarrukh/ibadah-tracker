@@ -186,6 +186,19 @@ z-index:5;
 </div>
 </div>
 
+<!-- SALAH -->
+<div class="card">
+<h3>🕌 Daily Salah</h3>
+
+<div id="salahContainer"
+style="display:flex;justify-content:space-between;text-align:center;">
+</div>
+
+</div>
+
+  
+
+  
 <!-- TASKS -->
 <div class="card">
 <h3>📝 Daily Tasks</h3>
@@ -295,7 +308,44 @@ clickSound.preload = "auto";
   
 let audioCtx = null;
 
+function loadSalah(){
 
+let prayers = ["Fajr","Dhuhur","Asr","Maghrib","Isha"];
+
+let key = "salah-"+formatKey(currentDate);
+let saved = JSON.parse(localStorage.getItem(key)) || {};
+
+let container = document.getElementById("salahContainer");
+container.innerHTML = "";
+
+prayers.forEach(p=>{
+
+let div = document.createElement("div");
+
+div.innerHTML = `
+<div style="font-size:13px;margin-bottom:4px;">${p}</div>
+<input type="checkbox"
+${saved[p]?"checked":""}
+onchange="toggleSalah('${p}',this.checked)">
+`;
+
+container.appendChild(div);
+
+});
+
+}
+
+  
+  function toggleSalah(prayer,status){
+
+let key = "salah-"+formatKey(currentDate);
+let saved = JSON.parse(localStorage.getItem(key)) || {};
+
+saved[prayer] = status;
+
+localStorage.setItem(key,JSON.stringify(saved));
+
+}
   
 
   
@@ -404,8 +454,9 @@ document.getElementById("hijriDate").innerText=hijri;
 
 document.getElementById("datePicker").value=formatKey(currentDate);
 
+loadSalah();
 loadTasks();
-  loadTasbih();
+loadTasbih();
 }
 
 function manualPick(value){
