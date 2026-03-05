@@ -338,12 +338,21 @@ let target = parseInt(localStorage.getItem(getTargetKey()) || 33);
 let count = parseInt(localStorage.getItem(key) || 0);
 
 if(count >= target){
-    count = 0;
-} else {
-    count++;
+count = 0;
+}else{
+count++;
 }
 
-   clickSound.currentTime = 0;
+localStorage.setItem(key,count);
+
+let counter = document.getElementById("tasbihCount");
+counter.innerText = count;
+
+counter.classList.remove("glow");
+void counter.offsetWidth;
+counter.classList.add("glow");
+
+clickSound.currentTime = 0;
 clickSound.play().catch(()=>{});
 
 if(isVibrationEnabled() && count === target){
@@ -351,9 +360,14 @@ if(navigator.vibrate){
 navigator.vibrate(60);
 }
 }
+
+if(count === target){
+counter.classList.remove("completeFlash");
+void counter.offsetWidth;
+counter.classList.add("completeFlash");
 }
 
-localStorage.setItem(key,count);
+}
 
 let counter = document.getElementById("tasbihCount");
 counter.innerText = count;
