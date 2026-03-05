@@ -192,40 +192,7 @@ z-index:5;
 </div>
 
   
-<!-- 📿 TASBIH -->
-<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
 
-<!-- 33 / 100 -->
-<div onclick="event.stopPropagation();" style="display:flex;align-items:center;gap:6px;">
-
-<span>33</span>
-
-<label class="switch">
-<input type="checkbox" id="tasbihToggle" onchange="changeTarget()">
-<span class="slider"></span>
-</label>
-
-<span>100</span>
-
-</div>
-
-<h3 style="margin:0;">📿 Tasbih</h3>
-
-<!-- Vibration -->
-<div onclick="event.stopPropagation();" style="display:flex;align-items:center;gap:6px;">
-
-<span>🔕</span>
-
-<label class="switch">
-<input type="checkbox" id="vibrationToggle" onchange="toggleVibration()">
-<span class="slider"></span>
-</label>
-
-<span>🔔</span>
-
-</div>
-
-</div>
   <div class="card"
 onclick="increaseTasbih()"
 style="text-align:center;cursor:pointer;user-select:none;position:relative;">
@@ -233,26 +200,28 @@ style="text-align:center;cursor:pointer;user-select:none;position:relative;">
 <!-- HEADER -->
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
 
-<!-- LEFT : 33 / 100 -->
-<div onclick="event.stopPropagation();">
-<label style="display:flex;align-items:center;gap:6px;font-size:14px;">
-33
-<input type="checkbox" id="tasbihToggle" onchange="changeTarget()">
-<span></span>
-100
+<div style="display:flex;align-items:center;gap:6px;">
+<span>33</span>
+
+<label class="switch">
+<input type="checkbox" id="tasbihToggle" onchange="changeTarget();event.stopPropagation();">
+<span class="slider"></span>
 </label>
+
+<span>100</span>
 </div>
 
-<!-- CENTER : TITLE -->
 <h3 style="margin:0;">📿 Tasbih</h3>
 
-<!-- RIGHT : VIBRATION -->
-<div onclick="event.stopPropagation();">
-<label style="display:flex;align-items:center;gap:6px;font-size:14px;">
-🔔
-<input type="checkbox" id="vibrationToggle" onchange="toggleVibration()">
-<span></span>
+<div style="display:flex;align-items:center;gap:6px;">
+<span>🔕</span>
+
+<label class="switch">
+<input type="checkbox" id="vibrationToggle" onchange="toggleVibration();event.stopPropagation();">
+<span class="slider"></span>
 </label>
+
+<span>🔔</span>
 </div>
 
 </div>
