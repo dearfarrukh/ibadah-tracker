@@ -331,7 +331,12 @@ localStorage.setItem("taskList", JSON.stringify(taskList));
 
 }
 
-function increaseTasbih(){
+function increaseTasbih(e){
+
+// ignore clicks coming from switches
+if(e && (e.target.id === "tasbihToggle" || e.target.id === "vibrationToggle")){
+return;
+}
 
 let key = getTasbihKey();
 let target = parseInt(localStorage.getItem(getTargetKey()) || 33);
@@ -366,24 +371,7 @@ counter.classList.remove("completeFlash");
 void counter.offsetWidth;
 counter.classList.add("completeFlash");
 }
-
 }
-
-let counter = document.getElementById("tasbihCount");
-counter.innerText = count;
-
-counter.classList.remove("glow");
-void counter.offsetWidth;
-counter.classList.add("glow");
-
-if(count === target){
-counter.classList.remove("completeFlash");
-void counter.offsetWidth;
-counter.classList.add("completeFlash");
-}
-
-}
-
   
 function islamicToday(){
 let now=new Date();
