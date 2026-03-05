@@ -290,7 +290,25 @@ Restore
 
 <script>
 
-let clickSound = new Audio("click.mp3");
+function playClick(){
+try{
+let ctx = new (window.AudioContext || window.webkitAudioContext)();
+let osc = ctx.createOscillator();
+let gain = ctx.createGain();
+
+osc.type = "square";
+osc.frequency.value = 1200;
+
+gain.gain.value = 0.05;
+
+osc.connect(gain);
+gain.connect(ctx.destination);
+
+osc.start();
+osc.stop(ctx.currentTime + 0.03);
+}catch(e){}
+}
+  
   let currentDate;
   // 🔥 ONE TIME RESET (remove after it runs once)
 
@@ -321,13 +339,9 @@ localStorage.setItem("taskList", JSON.stringify(taskList));
 
 }
 
-  function increaseTasbih(){
+function increaseTasbih(){
 
-if(isVibrationEnabled()){
-clickSound.currentTime = 0;
-clickSound.play();
-}
-    let key = getTasbihKey();
+let key = getTasbihKey();
 let target = parseInt(localStorage.getItem(getTargetKey()) || 33);
 let count = parseInt(localStorage.getItem(key) || 0);
 
@@ -335,9 +349,18 @@ if(count === target){
     count = 0;
 } else {
     count++;
-  if(isVibrationEnabled() && navigator.vibrate){
-navigator.vibrate(20);
-}
+
+    if(isVibrationEnabled()){
+
+        // sound (works on iPhone)
+        playClick();
+
+        // vibration (works on Android)
+        if(navigator.vibrate){
+            navigator.vibrate(20);
+        }
+
+    }
 }
 
 localStorage.setItem(key,count);
@@ -353,10 +376,11 @@ if(count === target){
 counter.classList.remove("completeFlash");
 void counter.offsetWidth;
 counter.classList.add("completeFlash");
-  
-}
 }
 
+}
+
+  
 function islamicToday(){
 let now=new Date();
 let d=new Date(now.getFullYear(),now.getMonth(),now.getDate());
