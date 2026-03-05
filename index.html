@@ -355,17 +355,19 @@ localStorage.setItem(key,JSON.stringify(saved));
 let tasbihLock = false;
   
 let taskList = JSON.parse(localStorage.getItem("taskList"));
+
+  if(Array.isArray(taskList)){
+taskList = taskList.filter(t =>
+!["Fajr","Dhuhur","Asr","Maghrib","Isha"].includes(t.name)
+);
+localStorage.setItem("taskList", JSON.stringify(taskList));
+}
+  
   console.log("INITIAL taskList:", taskList);
 
 if(!Array.isArray(taskList) || taskList.length === 0){
 
 taskList = [
-{name:"Fajr",start:0,end:null},
-{name:"Dhuhur",start:0,end:null},
-{name:"Asr",start:0,end:null},
-{name:"Maghrib",start:0,end:null},
-{name:"Isha",start:0,end:null},
-
 {name:"Surah Mulk",start:0,end:null},
 {name:"Surah Sajdah",start:0,end:null},
 {name:"Surah Yaseen",start:0,end:null},
@@ -375,6 +377,8 @@ taskList = [
 {name:"Surah Ikhlas",start:0,end:null},
 {name:"Surah Ad Duha to Surah Al Nas",start:0,end:null}
 ];
+
+  
 
 localStorage.setItem("taskList", JSON.stringify(taskList));
 
