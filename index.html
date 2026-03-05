@@ -195,9 +195,7 @@ z-index:5;
 </div>
 
   
-
-  <div class="card"
-onclick="increaseTasbih()"
+<div class="card"
 style="text-align:center;cursor:pointer;user-select:none;position:relative;">
 
 <!-- HEADER -->
@@ -231,10 +229,10 @@ style="text-align:center;cursor:pointer;user-select:none;position:relative;">
 
 <!-- COUNTER -->
 <div id="tasbihCount"
-style="font-size:80px;font-weight:600;margin:25px 0;transition:0.1s;">
+onclick="increaseTasbih()"
+style="font-size:80px;font-weight:600;margin:25px 0;transition:0.1s;cursor:pointer;">
 0
 </div>
-
 <div style="color:gray;margin-bottom:15px;">
 Target: <span id="tasbihTargetLabel">33</span>
 </div>
