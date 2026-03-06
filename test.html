@@ -1,1 +1,888 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ibadah Tracker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="apple-touch-icon" href="icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<style>
+
+body{
+font-family:-apple-system,BlinkMacSystemFont;
+margin:0;
+padding:20px;
+background:none;
+}
+
+#bg{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:url("wallpaper.jpg") center/cover no-repeat;
+z-index:-1;
+}
+
+
+  /* iOS Toggle */
+.switch{
+position:relative;
+display:inline-block;
+width:46px;
+height:26px;
+}
+
+.switch input{
+opacity:0;
+width:0;
+height:0;
+}
+
+.slider{
+position:absolute;
+cursor:pointer;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:#ccc;
+transition:.3s;
+border-radius:34px;
+}
+
+.slider:before{
+position:absolute;
+content:"";
+height:20px;
+width:20px;
+left:3px;
+bottom:3px;
+background:white;
+transition:.3s;
+border-radius:50%;
+}
+
+input:checked + .slider{
+background:#34c759;
+}
+
+input:checked + .slider:before{
+transform:translateX(20px);
+}
+
+  
+.card{
+background:rgba(255,255,255,0.6);
+backdrop-filter:blur(20px);
+padding:18px;
+border-radius:22px;
+margin-bottom:20px;
+}
+.task{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:10px 0;
+}
+  input:checked + span {
+background:#007aff;
+}
+
+input:checked + span:before {
+transform:translateX(24px);
+}
+
+label span:before {
+position:absolute;
+content:"";
+height:20px;
+width:20px;
+left:3px;
+bottom:3px;
+background:white;
+border-radius:50%;
+transition:0.3s;
+}
+
+  /* Glow animation */
+.glow {
+animation: tapPop 0.18s ease;
+}
+
+@keyframes tapPop {
+0%   { transform: scale(1); }
+50%  { transform: scale(1.28); }
+100% { transform: scale(1); }
+}
+
+  /* Green completion flash */
+.completeFlash {
+animation: completeEffect 0.4s ease;
+}
+
+@keyframes completeEffect {
+0%   { transform: scale(1); background: transparent; }
+40%  { transform: scale(1.2); background: rgba(0,255,0,0.2); }
+100% { transform: scale(1); background: transparent; }
+}
+  
+
+  /* Tiny shake animation */
+.shake {
+animation: tinyShake 0.18s ease;
+}
+
+@keyframes tinyShake {
+0% { transform: translateX(0); }
+25% { transform: translateX(-2px); }
+50% { transform: translateX(2px); }
+75% { transform: translateX(-2px); }
+100% { transform: translateX(0); }
+}
+
+.modeBtn{
+flex:1;
+border:none;
+background:transparent;
+padding:10px 16px;
+font-size:17px;
+font-weight:700;
+cursor:pointer;
+}
+
+.modeBtn.active{
+background:#34c759;
+color:white;
+}
+
+  
+</style>
+</head>
+
+<body>
+<div id="bg"></div>
+  
+<h1 style="text-align:center;">📿 Ibadah Tracker</h1>
+ 
+
+<!-- DATE CARD -->
+<div class="card">
+
+<div style="display:flex;align-items:center;gap:10px;">
+
+<button onclick="prevDay()">⬅️</button>
+
+<div style="flex:1;text-align:center;position:relative;">
+
+<div id="displayDate" style="font-weight:600;"></div>
+<div id="hijriDate" style="font-size:14px;color:gray;"></div>
+
+<input type="date"
+id="datePicker"
+onchange="manualPick(this.value)"
+style="
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+opacity:0;
+cursor:pointer;
+z-index:5;
+">
+
+</div>
+
+<button onclick="nextDay()">➡️</button>
+
+</div>
+</div>
+
+<!-- SALAH -->
+<div class="card">
+<h3>🕌 Daily Salah</h3>
+
+<div id="salahContainer"
+style="display:flex;justify-content:space-between;text-align:center;">
+</div>
+
+</div>
+
+  
+
+  
+<!-- TASKS -->
+<div class="card">
+<h3>📝 Daily Tasks</h3>
+<div id="taskContainer"></div>
+</div>
+
+  
+<div class="card"
+onclick="increaseTasbih()"
+style="text-align:center;cursor:pointer;user-select:none;position:relative;">
+
+  
+<!-- TASBIH HEADER -->
+<div style="margin-bottom:15px;">
+
+<h2 style="margin:0;font-size:26px;font-weight:800;text-align:center;">
+📿 Tasbih
+</h2>
+
+<div style="
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-top:10px;
+">
+
+<!-- segmented control -->
+<div id="tasbihModes"
+onclick="event.stopPropagation();"
+style="
+display:flex;
+background:rgba(0,0,0,0.08);
+border-radius:14px;
+overflow:hidden;
+height:36px;
+">
+
+<button class="modeBtn" onclick="setTasbihMode(33)">33</button>
+<button class="modeBtn" onclick="setTasbihMode(100)">100</button>
+<button class="modeBtn" onclick="setTasbihMode('inf')">∞</button>
+
+</div>
+
+<!-- sound toggle -->
+<div style="display:flex;align-items:center;gap:6px;">
+
+<span>🔕</span>
+
+<label class="switch" onclick="event.stopPropagation();">
+<input type="checkbox" id="vibrationToggle" onchange="toggleVibration();">
+<span class="slider"></span>
+</label>
+
+<span>🔔</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- COUNTER -->
+<div id="tasbihCount"
+style="font-size:90px;font-weight:700;margin:25px 0;text-align:center;letter-spacing:2px;">
+0
+</div>
+
+<div style="color:gray;margin-bottom:15px;">
+Target: <span id="tasbihTargetLabel">33</span>
+</div>
+
+<!-- RESET -->
+<button onclick="resetTasbih();event.stopPropagation();"
+style="
+background:#ff3b30;
+padding:12px 30px;
+border-radius:16px;
+border:none;
+color:white;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+">
+Reset
+</button>
+
+</div>
+
+<!-- ☁️ ICLOUD -->
+<div class="card">
+<h3>☁️ iCloud Backup</h3>
+
+<button onclick="exportBackup()" style="width:100%;margin-bottom:10px;">
+Export
+</button>
+
+<input type="file" id="restoreFile"
+onchange="importBackup()"
+style="display:none;">
+
+<button onclick="document.getElementById('restoreFile').click()"
+style="width:100%">
+Restore
+</button>
+
+</div>
+
+
+<!-- ⚙️ TASK SETTINGS -->
+<div class="card">
+<h3>⚙️ Task Settings</h3>
+
+<select id="actionSelect" onchange="handleAction()">
+<option value="">Select Action</option>
+<option value="add">➕ Add Task</option>
+<option value="delete">🗑 Delete Task</option>
+<option value="rename">✏️ Rename Task</option>
+</select>
+
+<div id="actionArea"></div>
+
+</div>
+
+<script>
+
+
+  
+function setTasbihMode(mode){
+
+tasbihLock = true;
+
+localStorage.setItem(getTargetKey(), mode);
+
+document.getElementById("tasbihTargetLabel").innerText =
+mode === "inf" ? "∞" : mode;
+
+// reset counter
+localStorage.setItem(getTasbihKey(),0);
+document.getElementById("tasbihCount").innerText = 0;
+
+// highlight selected button
+document.querySelectorAll(".modeBtn").forEach(b=>{
+b.classList.remove("active");
+});
+
+if(mode===33) document.querySelectorAll(".modeBtn")[0].classList.add("active");
+if(mode===100) document.querySelectorAll(".modeBtn")[1].classList.add("active");
+if(mode==="inf") document.querySelectorAll(".modeBtn")[2].classList.add("active");
+
+setTimeout(()=>{ tasbihLock=false; },150);
+
+}
+  
+let clickSound = new Audio("click.mp3");
+clickSound.preload = "auto";
+  
+let audioCtx = null;
+
+function loadSalah(){
+
+let prayers = ["Fajr","Dhuhur","Asr","Maghrib","Isha"];
+
+let key = "salah-"+formatKey(currentDate);
+let saved = JSON.parse(localStorage.getItem(key)) || {};
+
+let container = document.getElementById("salahContainer");
+container.innerHTML = "";
+
+prayers.forEach(p=>{
+
+let div = document.createElement("div");
+
+div.innerHTML = `
+<div style="font-size:13px;margin-bottom:4px;">${p}</div>
+<input type="checkbox"
+${saved[p]?"checked":""}
+onchange="toggleSalah('${p}',this.checked)">
+`;
+
+container.appendChild(div);
+
+});
+
+}
+
+  
+  function toggleSalah(prayer,status){
+
+let key = "salah-"+formatKey(currentDate);
+let saved = JSON.parse(localStorage.getItem(key)) || {};
+
+saved[prayer] = status;
+
+localStorage.setItem(key,JSON.stringify(saved));
+
+}
+  
+
+  
+  let currentDate;
+  // 🔥 ONE TIME RESET (remove after it runs once)
+
+let tasbihLock = false;
+  
+let taskList = JSON.parse(localStorage.getItem("taskList"));
+
+  if(Array.isArray(taskList)){
+taskList = taskList.filter(t =>
+!["Fajr","Dhuhur","Asr","Maghrib","Isha"].includes(t.name)
+);
+localStorage.setItem("taskList", JSON.stringify(taskList));
+}
+  
+  console.log("INITIAL taskList:", taskList);
+
+if(!Array.isArray(taskList) || taskList.length === 0){
+
+taskList = [
+{name:"Surah Mulk",start:0,end:null},
+{name:"Surah Sajdah",start:0,end:null},
+{name:"Surah Yaseen",start:0,end:null},
+{name:"Surah Rehman",start:0,end:null},
+{name:"Surah Taghabun",start:0,end:null},
+{name:"Surah Waqiya",start:0,end:null},
+{name:"Surah Ikhlas",start:0,end:null},
+{name:"Surah Ad Duha to Surah Al Nas",start:0,end:null}
+];
+
+  
+
+localStorage.setItem("taskList", JSON.stringify(taskList));
+
+}
+
+function increaseTasbih(){
+
+if(tasbihLock) return;
+
+let key = getTasbihKey();
+let target = localStorage.getItem(getTargetKey()) || 33;
+let count = parseInt(localStorage.getItem(key) || 0);
+
+if(target === "inf"){
+count++;
+}else{
+if(count >= target){
+count = 0;
+}else{
+count++;
+}
+}
+
+localStorage.setItem(key,count);
+
+let counter = document.getElementById("tasbihCount");
+counter.innerText = count;
+
+counter.classList.remove("glow");
+void counter.offsetWidth;
+counter.classList.add("glow");
+
+if(isVibrationEnabled()){
+clickSound.currentTime = 0;
+clickSound.play().catch(()=>{});
+}
+
+if(isVibrationEnabled() && count === target){
+if(navigator.vibrate){
+navigator.vibrate(60);
+}
+}
+
+if(count === target){
+counter.classList.remove("completeFlash");
+void counter.offsetWidth;
+counter.classList.add("completeFlash");
+}
+}
+  
+function islamicToday(){
+let now=new Date();
+let d=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+if(now.getHours()<2){d.setDate(d.getDate()-1);}
+return d;
+}
+
+ function formatKey(d){
+return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+  
+function setDate(d){
+
+currentDate=new Date(d);
+
+document.getElementById("displayDate").innerText=
+currentDate.toLocaleDateString('en-US',{
+weekday:'long',
+year:'numeric',
+month:'short',
+day:'numeric'
+});
+
+let hijri=new Intl.DateTimeFormat('en-TN-u-ca-islamic',{
+day:'numeric',
+month:'long',
+year:'numeric'
+}).format(currentDate);
+
+document.getElementById("hijriDate").innerText=hijri;
+
+document.getElementById("datePicker").value=formatKey(currentDate);
+
+loadSalah();
+loadTasks();
+loadTasbih();
+}
+
+function manualPick(value){
+let p=value.split("-");
+setDate(new Date(p[0],p[1]-1,p[2]));
+}
+
+
+function loadTasks(){
+
+let dateKey = formatKey(currentDate);
+let saved = JSON.parse(localStorage.getItem(dateKey)) || {};
+
+let container = document.getElementById("taskContainer");
+container.innerHTML = "";
+
+let key = new Date(currentDate).setHours(0,0,0,0);
+
+taskList.forEach(task=>{
+
+if(key < task.start) return;
+if(task.end && key > task.end) return;
+
+let div = document.createElement("div");
+div.className = "task";
+
+div.innerHTML = `
+<div onclick="handleTaskClick('${task.name}')" 
+style="flex:1;display:flex;align-items:center;gap:8px;cursor:pointer;min-width:0;">
+
+<span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+${task.name}
+</span>
+
+${isSurah(task.name)?
+'<span style="background:#007aff;color:white;padding:2px 6px;border-radius:6px;font-size:10px;margin-left:8px;">PDF</span>'
+:''}
+
+</div>
+
+<input type="checkbox"
+${saved[task.name]?"checked":""}
+onchange="toggleTask('${task.name}',this.checked)">
+`;
+
+container.appendChild(div);
+
+});
+
+}
+  
+  
+function toggleTask(task,status){
+let key=formatKey(currentDate);
+let saved=JSON.parse(localStorage.getItem(key))||{};
+saved[task]=status;
+localStorage.setItem(key,JSON.stringify(saved));
+updateStreak();
+}
+
+function prevDay(){
+currentDate.setDate(currentDate.getDate()-1);
+setDate(currentDate);
+}
+
+function nextDay(){
+currentDate.setDate(currentDate.getDate()+1);
+setDate(currentDate);
+}
+
+function updateStreak(){
+let streak=0;
+let today=islamicToday();
+for(let i=0;i<365;i++){
+let d=new Date(today);
+d.setDate(today.getDate()-i);
+let key=formatKey(d);
+let saved=JSON.parse(localStorage.getItem(key));
+if(saved && Object.values(saved).every(v=>v===true)){streak++;}
+else break;
+}
+document.getElementById("streakCount").innerText=streak+" Days";
+}
+
+function handleAction(){
+
+let action=document.getElementById("actionSelect").value;
+let area=document.getElementById("actionArea");
+area.innerHTML="";
+
+// ADD
+if(action==="add"){
+area.innerHTML=`
+<input id="newTaskName" placeholder="Task Name">
+<button onclick="confirmAdd()">Add</button>
+`;
+}
+
+// DELETE
+else if(action==="delete"){
+
+let key=new Date(currentDate).setHours(0,0,0,0);
+
+let activeTasks=taskList.filter(task=>{
+return key>=task.start && (!task.end || key<=task.end);
+});
+
+let opt=activeTasks.map(t=>`<option>${t.name}</option>`).join("");
+
+area.innerHTML=`
+<select id="deleteTaskSelect">${opt}</select>
+<button onclick="confirmDelete()">Delete</button>
+`;
+}
+
+// RENAME
+else if(action==="rename"){
+
+let opt=taskList.map(t=>`<option>${t.name}</option>`).join("");
+
+area.innerHTML=`
+<select id="renameSelect">${opt}</select>
+<input id="renameInput" placeholder="New Name">
+<button onclick="confirmRename()">Rename</button>
+`;
+}
+
+}
+
+function confirmAdd(){
+
+let n=document.getElementById("newTaskName").value.trim();
+if(!n) return;
+
+let today=new Date(currentDate).setHours(0,0,0,0);
+
+// 🔥 remove all old versions of same task
+taskList=taskList.filter(task=>task.name!==n);
+
+// 🟢 create fresh single timeline
+taskList.push({
+name:n,
+start:today,
+end:null
+});
+
+localStorage.setItem("taskList",JSON.stringify(taskList));
+loadTasks();
+
+}
+
+function confirmDelete(){
+
+let t=document.getElementById("deleteTaskSelect").value;
+
+let y=new Date(currentDate);
+y.setDate(y.getDate()-1);
+
+taskList=taskList.map(task=>{
+if(task.name===t){
+return {...task,end:new Date(y).setHours(0,0,0,0)};
+}
+return task;
+});
+
+localStorage.setItem("taskList",JSON.stringify(taskList));
+loadTasks();
+
+}
+
+function confirmRename(){
+
+let oldName=document.getElementById("renameSelect").value;
+let newName=document.getElementById("renameInput").value.trim();
+
+if(!newName) return;
+
+taskList=taskList.map(task=>{
+if(task.name===oldName){
+return {...task,name:newName};
+}
+return task;
+});
+
+localStorage.setItem("taskList",JSON.stringify(taskList));
+loadTasks();
+
+}
+
+function exportBackup(){
+let data={taskList,storage:{}};
+for(let i=0;i<localStorage.length;i++){
+let key=localStorage.key(i);
+data.storage[key]=localStorage.getItem(key);
+}
+let blob=new Blob([JSON.stringify(data)]);
+let url=URL.createObjectURL(blob);
+let a=document.createElement("a");
+a.href=url;
+a.download="backup.json";
+a.click();
+}
+
+function importBackup(){
+
+let file=document.getElementById("restoreFile").files[0];
+let r=new FileReader();
+
+r.onload=e=>{
+
+let data=JSON.parse(e.target.result);
+
+localStorage.clear();
+
+for(let k in data.storage){
+
+localStorage.setItem(k,data.storage[k]);
+
+// convert old daily task prayer data → salah system
+if(/^\d{4}-\d{2}-\d{2}$/.test(k)){
+
+let old = JSON.parse(data.storage[k]);
+let salah = {};
+
+["Fajr","Dhuhur","Asr","Maghrib","Isha"].forEach(p=>{
+if(old[p] !== undefined){
+salah[p] = old[p];
+}
+});
+
+localStorage.setItem("salah-"+k, JSON.stringify(salah));
+
+}
+
+}
+
+location.reload();
+
+};
+
+r.readAsText(file);
+
+}
+  
+// ===== TASBIH SYSTEM =====
+
+function getTasbihKey(){
+let dateKey=formatKey(currentDate);
+return "tasbih-"+dateKey;
+}
+
+function getTargetKey(){
+let dateKey=formatKey(currentDate);
+return "tasbih-target-"+dateKey;
+}
+
+function loadTasbih(){
+
+let target = localStorage.getItem(getTargetKey()) || 33;
+
+document.getElementById("tasbihTargetLabel").innerText =
+target === "inf" ? "∞" : target;
+
+// highlight selected mode
+document.querySelectorAll(".modeBtn").forEach(b=>{
+b.classList.remove("active");
+});
+
+if(target == 33) document.querySelectorAll(".modeBtn")[0].classList.add("active");
+if(target == 100) document.querySelectorAll(".modeBtn")[1].classList.add("active");
+if(target == "inf") document.querySelectorAll(".modeBtn")[2].classList.add("active");
+
+// vibration toggle
+let vibrationToggle = document.getElementById("vibrationToggle");
+if(vibrationToggle){
+vibrationToggle.checked = isVibrationEnabled();
+}
+
+// load count
+let count = parseInt(localStorage.getItem(getTasbihKey()) || 0);
+document.getElementById("tasbihCount").innerText = count;
+
+}
+
+  
+function resetTasbih(){
+localStorage.setItem(getTasbihKey(),0);
+document.getElementById("tasbihCount").innerText = 0;
+}
+
+
+
+function changeTarget(){
+
+tasbihLock = true;
+
+let toggle = document.getElementById("tasbihToggle").checked;
+let target = toggle ? 100 : 33;
+
+localStorage.setItem(getTargetKey(), target);
+document.getElementById("tasbihTargetLabel").innerText = target;
+
+// reset counter
+let key = getTasbihKey();
+localStorage.setItem(key,0);
+document.getElementById("tasbihCount").innerText = 0;
+
+// unlock after toggle finishes
+setTimeout(()=>{
+tasbihLock = false;
+},150);
+
+}
+
+  
+function isSurah(name){
+    return name.includes("Surah");
+}
+function handleTaskClick(name){
+
+// Special file
+if(name==="Surah Ad Duha to Surah Al Nas"){
+openPDF("Last 22 Surah.pdf");
+return;
+}
+
+// Automatic for all other Surahs
+if(isSurah(name)){
+let file=name.replaceAll(" ","-") + ".pdf";
+openPDF(file);
+}
+
+}
+
+function openPDF(file){
+window.location.assign(file);
+}
+
+  function toggleVibration(){
+let enabled = document.getElementById("vibrationToggle").checked;
+localStorage.setItem("tasbih-vibration", enabled);
+}
+
+function isVibrationEnabled(){
+return localStorage.getItem("tasbih-vibration") === "true";
+}
+document.addEventListener("DOMContentLoaded",()=>{
+setDate(islamicToday());
+});
+</script>
+
+  
+
+
+</body>
+</html>
 
