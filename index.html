@@ -158,7 +158,12 @@ background:#34c759;
 color:white;
 }
 
-  
+
+  #taskMenu button{
+font-size:18px;
+font-weight:600;
+border-radius:12px;
+}
 </style>
 </head>
 
@@ -217,7 +222,23 @@ style="display:flex;justify-content:space-between;text-align:center;">
 <!-- TASKS -->
 <div class="card">
 <h3>📝 Daily Tasks</h3>
+
 <div id="taskContainer"></div>
+
+<div style="margin-top:15px;text-align:center;">
+<button onclick="manageTasks()" style="
+padding:12px 30px;
+border-radius:16px;
+border:none;
+background:#007aff;
+color:white;
+font-weight:700;
+cursor:pointer;
+">
+Manage Tasks
+</button>
+</div>
+
 </div>
 
   
@@ -321,21 +342,9 @@ Restore
 
 </div>
 
+ 
 
-<!-- ⚙️ TASK SETTINGS -->
-<div class="card">
-<h3>⚙️ Task Settings</h3>
 
-<select id="actionSelect" onchange="handleAction()">
-<option value="">Select Action</option>
-<option value="add">➕ Add Task</option>
-<option value="delete">🗑 Delete Task</option>
-<option value="rename">✏️ Rename Task</option>
-</select>
-
-<div id="actionArea"></div>
-
-</div>
 
 <script>
 
@@ -442,12 +451,173 @@ taskList = [
 {name:"Surah Ad Duha to Surah Al Nas",start:0,end:null}
 ];
 
-  
 
 localStorage.setItem("taskList", JSON.stringify(taskList));
 
 }
 
+
+function manageTasks(){
+
+let area = document.getElementById("taskMenuContent");
+
+area.innerHTML = `
+
+<button onclick="showAddTask()" style="width:100%;padding:12px;margin-bottom:10px;">
+Add Task
+</button>
+
+<button onclick="showRenameTask()" style="width:100%;padding:12px;margin-bottom:10px;">
+Rename Task
+</button>
+
+<button onclick="showRemoveTask()" style="width:100%;padding:12px;margin-bottom:10px;">
+Remove Task
+</button>
+
+<button onclick="closeTaskMenu()" style="width:100%;padding:12px;background:#eee;">
+Cancel
+</button>
+
+`;
+
+document.getElementById("taskMenu").style.display = "block";
+
+}
+
+  function closeTaskMenu(){
+document.getElementById("taskMenu").style.display = "none";
+}
+
+
+function addTaskFlow(){
+
+closeTaskMenu();
+
+let name = prompt("Task Name");
+if(!name) return;
+
+let type = prompt(
+"Select Type:\n\n1 - Date Range\n2 - Start Today\n3 - Specific Days"
+);
+
+let today = new Date(currentDate).setHours(0,0,0,0);
+
+let task = {name:name};
+
+if(type=="1"){
+
+let start = prompt("Start Date YYYY-MM-DD");
+let end = prompt("End Date YYYY-MM-DD");
+
+task.start = new Date(start).setHours(0,0,0,0);
+task.end = new Date(end).setHours(0,0,0,0);
+
+}
+
+else if(type=="2"){
+
+task.start = today;
+task.end = null;
+
+}
+
+else if(type=="3"){
+
+let days = prompt("Days (Mon,Tue,Wed)");
+
+task.days = days.split(",");
+task.start = today;
+task.end = null;
+
+}
+
+taskList.push(task);
+
+localStorage.setItem("taskList", JSON.stringify(taskList));
+
+loadTasks();
+
+}
+
+
+  function showTaskOptions(){
+
+let type = document.getElementById("taskTypeSelect").value;
+let area = document.getElementById("taskExtra");
+
+if(type === "range"){
+area.innerHTML = `
+Start: <input type="date" id="taskStart"><br><br>
+End: <input type="date" id="taskEnd">
+`;
+}
+
+else if(type === "days"){
+area.innerHTML = `
+<label><input type="checkbox" value="Mon"> Mon</label>
+<label><input type="checkbox" value="Tue"> Tue</label>
+<label><input type="checkbox" value="Wed"> Wed</label>
+<label><input type="checkbox" value="Thu"> Thu</label>
+<label><input type="checkbox" value="Fri"> Fri</label>
+<label><input type="checkbox" value="Sat"> Sat</label>
+<label><input type="checkbox" value="Sun"> Sun</label>
+`;
+}
+
+else{
+area.innerHTML = "";
+}
+
+}
+
+
+  function saveNewTask(){
+
+let name = document.getElementById("taskNameInput").value.trim();
+let type = document.getElementById("taskTypeSelect").value;
+
+if(!name) return;
+
+let task = {name:name};
+
+if(type === "range"){
+
+task.start = new Date(document.getElementById("taskStart").value).setHours(0,0,0,0);
+task.end = new Date(document.getElementById("taskEnd").value).setHours(0,0,0,0);
+
+}
+
+else if(type === "today"){
+
+task.start = new Date(currentDate).setHours(0,0,0,0);
+task.end = null;
+
+}
+
+else if(type === "days"){
+
+let days = [...document.querySelectorAll("#taskExtra input:checked")]
+.map(d=>d.value);
+
+task.days = days;
+task.start = new Date(currentDate).setHours(0,0,0,0);
+task.end = null;
+
+}
+
+taskList.push(task);
+
+localStorage.setItem("taskList", JSON.stringify(taskList));
+
+document.getElementById("actionArea").innerHTML = "";
+
+loadTasks();
+
+}
+
+  
+  
 function increaseTasbih(){
 
 if(tasbihLock) return;
@@ -549,8 +719,19 @@ let key = new Date(currentDate).setHours(0,0,0,0);
 
 taskList.forEach(task=>{
 
+// start / end range check
 if(key < task.start) return;
 if(task.end && key > task.end) return;
+
+// specific day check
+if(task.days){
+
+let dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+let todayName = dayNames[new Date(currentDate).getDay()];
+
+if(!task.days.includes(todayName)) return;
+
+}
 
 let div = document.createElement("div");
 div.className = "task";
@@ -878,10 +1059,350 @@ return localStorage.getItem("tasbih-vibration") === "true";
 document.addEventListener("DOMContentLoaded",()=>{
 setDate(islamicToday());
 });
-</script>
+
+ 
+
+function showRemoveTask(){
+
+
+
+let options = taskList.map(t=>`<option>${t.name}</option>`).join("");
+
+document.getElementById("taskMenuContent").innerHTML = `
+<select id="deleteSelect" style="width:100%;margin-bottom:10px;padding:8px;">
+${options}
+</select>
+
+<button onclick="openDeletePopup()" style="width:100%;padding:10px;background:#ff3b30;color:white;margin-bottom:10px;">
+Delete Task
+</button>
+
+<button onclick="manageTasks()" style="width:100%;padding:10px;">
+Back
+</button>
+`;
+
+}
+  
+function renameTaskFlow(){
+
+
+
+let area = document.getElementById("actionArea");
+
+let options = taskList.map(t=>`<option>${t.name}</option>`).join("");
+
+area.innerHTML = `
+<select id="renameSelect" style="width:100%;margin-bottom:10px;">
+${options}
+</select>
+
+<input id="renameInput" placeholder="New Name" style="width:100%;margin-bottom:10px;">
+
+<button onclick="confirmRename()" style="width:100%;">
+Rename
+</button>
+`;
+
+}
 
   
 
+ function confirmDeleteTask(){
+
+let name = document.getElementById("deleteSelect").value;
+
+let choice = prompt(
+"Delete Task:\n\n1 - Delete From Beginning\n2 - Delete From Today"
+);
+
+let today = new Date(currentDate).setHours(0,0,0,0);
+
+if(choice == "1"){
+
+// remove completely
+taskList = taskList.filter(t => t.name !== name);
+
+}
+
+else if(choice == "2"){
+
+// stop task from today forward
+let yesterday = new Date(today);
+yesterday.setDate(yesterday.getDate()-1);
+
+taskList = taskList.map(t=>{
+if(t.name === name){
+return {...t, end:yesterday.setHours(0,0,0,0)};
+}
+return t;
+});
+
+}
+
+localStorage.setItem("taskList", JSON.stringify(taskList));
+
+loadTasks();
+manageTasks();
+
+}
+  
+  function showAddTask(){
+
+let area = document.getElementById("taskMenuContent");
+
+area.innerHTML = `
+<input id="taskNameInput" placeholder="Task Name" style="width:100%;margin-bottom:10px;padding:8px;">
+
+<select id="taskTypeSelect" style="width:100%;margin-bottom:10px;padding:8px;">
+<option value="">Select Type</option>
+<option value="range">Date Range</option>
+<option value="today">Start Today</option>
+<option value="days">Specific Days</option>
+</select>
+
+<div id="taskExtra"></div>
+
+<button onclick="createTask()" style="width:100%;margin-bottom:10px;">Save</button>
+<button onclick="manageTasks()" style="width:100%;">Back</button>
+`;
+
+document.getElementById("taskTypeSelect").onchange = showTaskOptions;
+
+}
+
+  function createTask(){
+
+let name = document.getElementById("taskNameInput").value.trim();
+let type = document.getElementById("taskTypeSelect").value;
+
+if(!name) return;
+
+let task = {name:name};
+
+let today = new Date(currentDate).setHours(0,0,0,0);
+
+if(type==="range"){
+
+let s = document.getElementById("taskStart").value.split("-");
+let e = document.getElementById("taskEnd").value.split("-");
+
+task.start = new Date(s[0], s[1]-1, s[2]).setHours(0,0,0,0);
+task.end = new Date(e[0], e[1]-1, e[2]).setHours(0,0,0,0);
+}
+
+else if(type==="today"){
+
+task.start = today;
+task.end = null;
+
+}
+
+else if(type==="days"){
+
+let days=[...document.querySelectorAll("#taskExtra input:checked")].map(d=>d.value);
+task.days = days;
+task.start = today;
+task.end = null;
+
+}
+
+taskList.push(task);
+
+localStorage.setItem("taskList",JSON.stringify(taskList));
+
+manageTasks();
+loadTasks();
+
+}
+
+function showRenameTask(){
+
+
+
+let options = taskList.map(t=>`<option>${t.name}</option>`).join("");
+
+document.getElementById("taskMenuContent").innerHTML = `
+<select id="renameSelect" style="width:100%;margin-bottom:10px;padding:8px;">
+${options}
+</select>
+
+<input id="renameInput" placeholder="New Name" style="width:100%;margin-bottom:10px;padding:8px;">
+
+<button onclick="confirmRenameTask()" style="width:100%;padding:10px;margin-bottom:10px;">
+Rename
+</button>
+
+<button onclick="manageTasks()" style="width:100%;padding:10px;">
+Back
+</button>
+`;
+
+}
+
+function confirmRenameTask(){
+
+let oldName = document.getElementById("renameSelect").value;
+let newName = document.getElementById("renameInput").value.trim();
+
+if(!newName) return;
+
+taskList = taskList.map(t=>{
+if(t.name === oldName){
+return {...t, name:newName};
+}
+return t;
+});
+
+localStorage.setItem("taskList", JSON.stringify(taskList));
+
+closeTaskMenu();
+loadTasks();
+
+}
+
+let deleteTargetTask = null;
+
+function openDeletePopup(){
+
+deleteTargetTask = document.getElementById("deleteSelect").value;
+
+document.getElementById("deleteChoicePopup").style.display = "block";
+
+}
+
+function closeDeletePopup(){
+
+document.getElementById("deleteChoicePopup").style.display = "none";
+
+}
+
+function deleteFromBeginning(){
+
+taskList = taskList.filter(t => t.name !== deleteTargetTask);
+
+localStorage.setItem("taskList", JSON.stringify(taskList));
+
+closeDeletePopup();
+loadTasks();
+manageTasks();
+
+}
+
+function deleteFromToday(){
+
+let today = new Date(currentDate).setHours(0,0,0,0);
+
+let yesterday = new Date(today);
+yesterday.setDate(yesterday.getDate()-1);
+
+taskList = taskList.map(t=>{
+if(t.name === deleteTargetTask){
+return {...t, end:yesterday.setHours(0,0,0,0)};
+}
+return t;
+});
+
+localStorage.setItem("taskList", JSON.stringify(taskList));
+
+closeDeletePopup();
+loadTasks();
+manageTasks();
+
+}
+
+  
+</script>
+
+ <div id="taskMenu" style="
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+border-radius:20px;
+padding:20px;
+box-shadow:0 10px 40px rgba(0,0,0,0.3);
+display:none;
+z-index:1000;
+text-align:center;
+width:280px;
+">
+
+<div id="taskMenuContent">
+
+<button onclick="showAddTask()" style="width:100%;padding:12px;margin-bottom:10px;font-size:18px;font-weight:600;">
+Add Task
+</button>
+
+<button onclick="showRenameTask()" style="width:100%;padding:12px;margin-bottom:10px;font-size:18px;font-weight:600;">
+Rename Task
+</button>
+
+<button onclick="showRemoveTask()" style="width:100%;padding:12px;margin-bottom:10px;font-size:18px;font-weight:600;">
+Remove Task
+</button>
+
+<button onclick="closeTaskMenu()" style="width:100%;padding:12px;background:#eee;font-size:18px;font-weight:600;">
+Close
+</button>
+
+</div>
+
+</div>
+
+  <div id="deleteChoicePopup" style="
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+border-radius:20px;
+padding:20px;
+box-shadow:0 10px 40px rgba(0,0,0,0.3);
+display:none;
+z-index:2000;
+text-align:center;
+width:260px;
+">
+
+<h3 style="margin-bottom:15px;">Delete Task</h3>
+
+<button onclick="deleteFromBeginning()" style="
+width:100%;
+padding:12px;
+margin-bottom:10px;
+background:#ff3b30;
+color:white;
+border:none;
+border-radius:12px;
+">
+Delete From Beginning
+</button>
+
+<button onclick="deleteFromToday()" style="
+width:100%;
+padding:12px;
+margin-bottom:10px;
+background:#ff9500;
+color:white;
+border:none;
+border-radius:12px;
+">
+Delete From Today
+</button>
+
+<button onclick="closeDeletePopup()" style="
+width:100%;
+padding:12px;
+background:#eee;
+border:none;
+border-radius:12px;
+">
+Cancel
+</button>
+
+</div>
 
 </body>
 </html>
