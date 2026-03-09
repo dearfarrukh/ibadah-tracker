@@ -263,7 +263,25 @@ Manage Tasks
 </div>
 
 </div>
+<div class="card" onclick="openDuaPage()" style="
+cursor:pointer;
+display:flex;
+justify-content:space-between;
+align-items:center;
+">
 
+<div style="font-weight:600;font-size:17px;">
+🤲 Masnoon Duas
+</div>
+
+<div style="
+font-size:24px;
+opacity:0.5;
+">
+›
+</div>
+
+</div>
   
 <div class="card"
 onclick="increaseTasbih()"
@@ -365,7 +383,40 @@ Restore
 
 </div>
 
- 
+ <div id="duaPage" style="display:none;">
+
+<div class="card" onclick="closeDuaPage()" style="cursor:pointer;">
+⬅️ Back
+</div>
+
+<div class="card" style="text-align:center;padding:30px;">
+
+<div style="font-size:60px;">🤲</div>
+
+<div style="
+font-size:32px;
+font-weight:700;
+margin-top:10px;
+">
+مسنون دعائیں
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Masnoon Duas</h3>
+
+<p>Before Eating</p>
+<p>After Eating</p>
+<p>Before Sleeping</p>
+<p>After Waking Up</p>
+<p>Entering Home</p>
+<p>Leaving Home</p>
+
+</div>
+
+</div>
 
 
 
@@ -1336,6 +1387,25 @@ manageTasks();
 
 }
 
+  function openDuaPage(){
+
+document.getElementById("duaPage").style.display="block";
+
+document.querySelectorAll("body > div").forEach(el=>{
+if(el.id !== "duaPage"){
+el.style.display="none";
+}
+});
+
+}
+
+function closeDuaPage(){
+
+location.reload();
+
+}
+
+  
   
 </script>
 
