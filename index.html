@@ -12,7 +12,7 @@
 body{
 font-family:-apple-system,BlinkMacSystemFont;
 margin:0;
-padding:70px 20px 40px 20px;
+padding:70px 20px 100px 20px;
 background:none;
 }
 
@@ -73,6 +73,9 @@ input:checked + .slider:before{
 transform:translateX(20px);
 }
 
+  #bottomNav{
+box-shadow:0 -2px 10px rgba(0,0,0,0.05);
+}
   
 .card{
 background:rgba(255,255,255,0.6);
@@ -181,8 +184,94 @@ background:rgba(255,255,255,0.15);
 backdrop-filter:blur(10px);
 box-shadow:0 6px 20px rgba(0,0,0,0.15);
 }
+
+/* Bottom App Navigation */
+
+#bottomNav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+height:80px;
+padding-bottom:12px;
+background:white;
+border-top:1px solid #ddd;
+display:flex;
+justify-content:space-around;
+align-items:center;
+font-size:13px;
+font-weight:600;
+z-index:999;
+box-shadow:0 -2px 10px rgba(0,0,0,0.05);
+}
+
+.navItem{
+text-align:center;
+cursor:pointer;
+flex:1;
+font-size:16px;
+}
+
+.navItem:active{
+transform:scale(0.9);
+}
+
+#menuOverlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.3);
+display:none;
+z-index:900;
+}
+
+.duaCard{
+background:#ffffff;
+border-radius:20px;
+padding:20px;
+margin:20px 0;
+box-shadow:0 6px 18px rgba(0,0,0,0.15);
+}
+
+.duaHadith{
+font-size:17px;
+line-height:1.7;
+text-align:right;
+color:#222;
+}
+
+.duaArabic{
+font-size:30px;
+color:#3a8f5a;
+text-align:center;
+margin:18px 0;
+font-weight:600;
+}
+
+.duaMeaning{
+font-size:16px;
+line-height:1.6;
+text-align:right;
+color:#333;
+}
+
+.duaRef{
+margin-top:12px;
+padding-top:10px;
+border-top:1px solid #ddd;
+font-size:14px;
+text-align:right;
+color:#555;
+}
+
+
+  
+
   
 </style>
+  
 </head>
 
 <body>
@@ -283,86 +372,25 @@ opacity:0.5;
 
 </div>
   
-<div class="card"
-onclick="increaseTasbih()"
-style="text-align:center;cursor:pointer;user-select:none;position:relative;">
-
-  
-<!-- TASBIH HEADER -->
-<div style="margin-bottom:15px;">
-
-<h2 style="margin:0;font-size:26px;font-weight:800;text-align:center;">
-📿 Tasbih
-</h2>
-
-<div style="
-display:flex;
-align-items:center;
-justify-content:space-between;
-margin-top:10px;
-">
-
-<!-- segmented control -->
-<div id="tasbihModes"
-onclick="event.stopPropagation();"
-style="
-display:flex;
-background:rgba(0,0,0,0.08);
-border-radius:14px;
-overflow:hidden;
-height:36px;
-">
-
-<button class="modeBtn" onclick="setTasbihMode(33)">33</button>
-<button class="modeBtn" onclick="setTasbihMode(100)">100</button>
-<button class="modeBtn" onclick="setTasbihMode('inf')">∞</button>
-
-</div>
-
-<!-- sound toggle -->
-<div style="display:flex;align-items:center;gap:6px;">
-
-<span>🔕</span>
-
-<label class="switch" onclick="event.stopPropagation();">
-<input type="checkbox" id="vibrationToggle" onchange="toggleVibration();">
-<span class="slider"></span>
-</label>
-
-<span>🔔</span>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- COUNTER -->
-<div id="tasbihCount"
-style="font-size:90px;font-weight:700;margin:25px 0;text-align:center;letter-spacing:2px;">
-0
-</div>
-
-<div style="color:gray;margin-bottom:15px;">
-Target: <span id="tasbihTargetLabel">33</span>
-</div>
-
-<!-- RESET -->
-<button onclick="resetTasbih();event.stopPropagation();"
-style="
-background:#ff3b30;
-padding:12px 30px;
-border-radius:16px;
-border:none;
-color:white;
-font-size:16px;
-font-weight:700;
+<div class="card" onclick="openZikrPage()" style="
 cursor:pointer;
+display:flex;
+justify-content:space-between;
+align-items:center;
 ">
-Reset
-</button>
+
+<div style="font-weight:600;font-size:17px;">
+🌿 Daily Dhikr
+</div>
+
+<div style="font-size:24px;opacity:0.5;">
+›
+</div>
 
 </div>
+  
+  
+  
 
 <!-- ☁️ ICLOUD -->
 <div class="card">
@@ -383,7 +411,170 @@ Restore
 
 </div>
 
- <div id="duaPage" style="display:none;">
+<div id="tasbihPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+z-index:4000;
+background:url('wallpaper.jpg') center/cover no-repeat;
+overflow:auto;
+padding:15px;
+">
+
+  <div style="padding:10px;">
+    <button onclick="closeTasbihPage()" style="
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    border:1px solid #ccc;
+    background:white;
+    font-size:20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    ">
+      ←
+    </button>
+  </div>
+
+ <div style="
+text-align:center;
+font-size:32px;
+font-weight:700;
+color:#34c759;
+margin-top:10px;
+margin-bottom:16px;
+">
+Tasbih Counter
+</div>
+
+<div class="card" style="
+max-width:260px;
+margin:10px auto 16px auto;
+padding:12px;
+text-align:center;
+">
+
+  <div id="tasbihModes"
+  onclick="event.stopPropagation();"
+  style="
+  display:flex;
+  background:rgba(0,0,0,0.08);
+  border-radius:14px;
+  overflow:hidden;
+  height:44px;
+  ">
+
+  <button class="modeBtn" onclick="setTasbihMode(33)" style="font-size:18px;color:#5c4632;">33</button>
+<button class="modeBtn" onclick="setTasbihMode(100)" style="font-size:18px;color:#5c4632;">100</button>
+<button class="modeBtn" onclick="setTasbihMode('inf')" style="font-size:22px;color:#5c4632;">∞</button>
+
+  </div>
+
+</div>
+  
+
+
+
+<div style="
+width:92%;
+max-width:360px;
+margin:0 auto;
+background:#d8b89a;
+border-radius:40px;
+padding:26px 20px 34px 20px;
+box-shadow:0 10px 24px rgba(0,0,0,0.18);
+position:relative;
+">
+
+<div id="tasbihScreen" style="
+width:150px;
+height:60px;
+margin:0 auto 24px auto;
+background:#e9ddcf;
+border-radius:14px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:38px;
+font-weight:700;
+color:#4a3a2d;
+letter-spacing:2px;
+box-shadow:inset 0 2px 6px rgba(0,0,0,0.12);
+">
+0
+</div>
+<div onclick="increaseTasbih()" style="
+width:190px;
+height:190px;
+margin:0 auto;
+border-radius:50%;
+background:#cfa782;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:inset 0 4px 10px rgba(255,255,255,0.25), inset 0 -6px 12px rgba(0,0,0,0.12);
+cursor:pointer;
+">
+
+<div style="
+width:90px;
+height:90px;
+border-radius:50%;
+background:#f6efe8;
+box-shadow:0 4px 10px rgba(0,0,0,0.18);
+">
+</div>
+
+</div>
+
+</div>
+
+<div style="
+margin-top:24px;
+display:flex;
+justify-content:center;
+gap:12px;
+flex-wrap:wrap;
+">
+
+<button onclick="resetTasbih()" style="
+background:#b68d68;
+color:white;
+border:none;
+border-radius:16px;
+padding:12px 20px;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+">
+Reset
+</button>
+
+<button style="
+background:#e8d7c5;
+color:#5c4632;
+border:none;
+border-radius:16px;
+padding:12px 20px;
+font-size:16px;
+font-weight:700;
+">
+Count
+</button>
+
+</div>
+
+</div>
+
+</div>
+  
+  
+  <div id="duaPage" style="display:none;">
 
 <div class="card" onclick="closeDuaPage()" style="cursor:pointer;">
 ⬅️ Back
@@ -420,40 +611,410 @@ margin-top:10px;
 
 
 
-<script>
+<div id="zikrPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+z-index:4000;
+background:url('wallpaper.jpg') center/cover no-repeat;
+overflow:auto;
+padding:15px;
+">
+
+<div style="padding:10px;">
+<button onclick="closeZikrPage()" style="
+width:36px;
+height:36px;
+border-radius:50%;
+border:1px solid #ccc;
+background:white;
+font-size:20px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+">
+←
+</button>
+</div>
+
+<div class="card" style="
+text-align:center;
+padding:28px 20px;
+margin-top:10px;
+">
+<div style="font-size:42px;margin-bottom:10px;">🌿</div>
+<div style="font-size:28px;font-weight:700;">
+Daily Dhikr
+</div>
+<div style="font-size:15px;color:#666;margin-top:8px;">
+Choose a dhikr
+</div>
+</div>
+
+<div class="card" onclick="openZikrDetail('subhanallah')" style="
+cursor:pointer;
+display:flex;
+justify-content:space-between;
+align-items:center;
+">
+<div>
+<div style="font-size:17px;font-weight:700;margin-bottom:4px;">
+SubhanAllahi wa bihamdihi
+</div>
+<div style="font-size:14px;color:#666;">
+سُبْحَانَ اللَّهِ وَبِحَمْدِهِ
+</div>
+</div>
+<div style="font-size:24px;opacity:0.5;">›</div>
+</div>
+
+<div class="card" onclick="openZikrDetail('hawqala')" style="
+cursor:pointer;
+display:flex;
+justify-content:space-between;
+align-items:center;
+">
+<div>
+<div style="font-size:17px;font-weight:700;margin-bottom:4px;">
+La hawla wa la quwwata illa billah
+</div>
+<div style="font-size:14px;color:#666;">
+لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللّٰهِ
+</div>
+</div>
+<div style="font-size:24px;opacity:0.5;">›</div>
+</div>
+
+</div>
+
+
+<div id="zikrDetailPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+z-index:4100;
+background:url('wallpaper.jpg') center/cover no-repeat;
+overflow:auto;
+padding:15px;
+">
+
+<div style="padding:10px;">
+<button onclick="closeZikrDetail()" style="
+width:36px;
+height:36px;
+border-radius:50%;
+border:1px solid #ccc;
+background:white;
+font-size:20px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+">
+←
+</button>
+</div>
+
+<div class="card" style="
+background:white;
+border-radius:24px;
+padding:28px;
+margin-top:10px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+">
+
+<div id="zikrHadithText" style="
+font-size:18px;
+line-height:1.8;
+margin-bottom:26px;
+color:#111;
+">
+</div>
+
+<div id="zikrArabicText" style="
+font-size:42px;
+font-weight:700;
+color:#6fa37a;
+line-height:1.7;
+margin-bottom:26px;
+">
+</div>
+
+<div id="zikrMeaningText" style="
+font-size:19px;
+line-height:1.8;
+margin-bottom:18px;
+">
+</div>
+
+<div id="zikrRefText" style="
+margin-top:12px;
+padding-top:12px;
+border-top:1px solid #e5e5e5;
+font-size:14px;
+color:#666;
+line-height:1.7;
+">
+</div>
+
+<div onclick="increaseZikrTasbih()" style="
+background:rgba(255,255,255,0.78);
+backdrop-filter:blur(20px);
+border-radius:28px;
+padding:20px 18px 40px 18px;
+margin-top:24px;
+text-align:center;
+cursor:pointer;
+user-select:none;
+min-height:320px;
+display:flex;
+flex-direction:column;
+justify-content:flex-start;
+">
+
+<div style="
+display:flex;
+justify-content:center;
+margin-bottom:28px;
+">
+
+<div id="zikrModes" onclick="event.stopPropagation()" style="
+display:flex;
+background:rgba(0,0,0,0.08);
+border-radius:18px;
+overflow:hidden;
+height:44px;
+min-width:220px;
+">
+
+<button id="zikr33Btn" onclick="setZikrMode(33)" style="
+flex:1;
+border:none;
+background:transparent;
+font-size:20px;
+font-weight:700;
+cursor:pointer;
+">
+33
+</button>
+
+<button id="zikr100Btn" onclick="setZikrMode(100)" style="
+flex:1;
+border:none;
+background:#34c759;
+color:white;
+font-size:20px;
+font-weight:700;
+cursor:pointer;
+">
+100
+</button>
+
+<button id="zikrInfBtn" onclick="setZikrMode('inf')" style="
+flex:1;
+border:none;
+background:transparent;
+font-size:24px;
+font-weight:700;
+cursor:pointer;
+">
+∞
+</button>
+
+</div>
+
+</div>
+
+<div id="zikrCountText" style="
+font-size:64px;
+font-weight:700;
+color:#5f946b;
+margin-top:10px;
+margin-bottom:30px;
+letter-spacing:1px;
+">
+0 / 100
+</div>
+
+<div style="
+flex:1;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+color:#8a8a8a;
+letter-spacing:1px;
+">
+Tap Anywhere
+</div>
+
+<button onclick="resetZikrTasbih();event.stopPropagation();" style="
+background:#ff3b30;
+padding:12px 30px;
+border-radius:16px;
+border:none;
+color:white;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+align-self:center;
+">
+Reset
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div id="qiblaPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+z-index:5000;
+background:url('wallpaper.jpg') center/cover no-repeat;
+overflow:auto;
+padding:15px;
+">
+
+<div style="padding:15px;">
+<button onclick="closeQiblaPage()" style="
+width:36px;
+height:36px;
+border-radius:50%;
+border:1px solid #ccc;
+background:white;
+font-size:20px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+">
+←
+</button>
+</div>
+
+<div class="card" style="text-align:center;padding:20px;">
+
+<div style="
+font-size:28px;
+font-weight:700;
+margin-bottom:15px;
+">
+Qibla Direction
+</div>
+
+<div style="
+background:white;
+border-radius:20px;
+padding:30px 20px;
+margin-top:10px;
+text-align:center;
+">
+
+<div style="font-size:56px;margin-bottom:10px;">🧭</div>
+
+<div style="
+font-size:20px;
+font-weight:700;
+margin-bottom:10px;
+">
+Open Google Qibla Finder
+</div>
+
+<div style="
+font-size:14px;
+color:#666;
+line-height:1.5;
+margin-bottom:20px;
+">
+For now, camera works better in Safari.
+Tap below to open Qibla Finder.
+</div>
+
+<button onclick="openGoogleQibla()" style="
+padding:14px 22px;
+border:none;
+border-radius:16px;
+background:#007aff;
+color:white;
+font-size:17px;
+font-weight:700;
+cursor:pointer;
+">
+Open in Safari
+</button>
+
+</div>
+
+<div style="
+font-size:14px;
+margin-top:12px;
+color:#666;
+">
+If the page does not load, Google may be blocking iframe on your device.
+</div>
+
+</div>
+
+</div>
 
 
   
+<script>
+
+
 function setTasbihMode(mode){
 
 tasbihLock = true;
 
 localStorage.setItem(getTargetKey(), mode);
 
-document.getElementById("tasbihTargetLabel").innerText =
-mode === "inf" ? "∞" : mode;
+let targetLabel = document.getElementById("tasbihTargetLabel");
+if(targetLabel){
+targetLabel.innerText = mode === "inf" ? "∞" : mode;
+}
 
 // reset counter
 localStorage.setItem(getTasbihKey(),0);
-document.getElementById("tasbihCount").innerText = 0;
+
+let counter = document.getElementById("tasbihCount");
+if(counter){
+counter.innerText = 0;
+}
+
+let screen = document.getElementById("tasbihScreen");
+if(screen){
+screen.innerText = 0;
+}
 
 // highlight selected button
-document.querySelectorAll(".modeBtn").forEach(b=>{
+let modeButtons = document.querySelectorAll(".modeBtn");
+modeButtons.forEach(b=>{
 b.classList.remove("active");
 });
 
-if(mode===33) document.querySelectorAll(".modeBtn")[0].classList.add("active");
-if(mode===100) document.querySelectorAll(".modeBtn")[1].classList.add("active");
-if(mode==="inf") document.querySelectorAll(".modeBtn")[2].classList.add("active");
+if(mode===33 && modeButtons[0]) modeButtons[0].classList.add("active");
+if(mode===100 && modeButtons[1]) modeButtons[1].classList.add("active");
+if(mode==="inf" && modeButtons[2]) modeButtons[2].classList.add("active");
 
 setTimeout(()=>{ tasbihLock=false; },150);
 
 }
-  
-let clickSound = new Audio("click.mp3");
-clickSound.preload = "auto";
-  
-let audioCtx = null;
+
 
 function loadSalah(){
 
@@ -463,6 +1024,8 @@ let key = "salah-"+formatKey(currentDate);
 let saved = JSON.parse(localStorage.getItem(key)) || {};
 
 let container = document.getElementById("salahContainer");
+if(!container) return;
+
 container.innerHTML = "";
 
 prayers.forEach(p=>{
@@ -472,7 +1035,7 @@ let div = document.createElement("div");
 div.innerHTML = `
 <div style="font-size:13px;margin-bottom:4px;">${p}</div>
 <input type="checkbox"
-${saved[p]?"checked":""}
+${saved[p] ? "checked" : ""}
 onchange="toggleSalah('${p}',this.checked)">
 `;
 
@@ -481,6 +1044,7 @@ container.appendChild(div);
 });
 
 }
+
 
   
   function toggleSalah(prayer,status){
@@ -501,14 +1065,13 @@ localStorage.setItem(key,JSON.stringify(saved));
 
 let tasbihLock = false;
   
-let taskList = JSON.parse(localStorage.getItem("taskList"));
+let taskList = JSON.parse(localStorage.getItem("taskList")) || [];
 
-  if(Array.isArray(taskList)){
 taskList = taskList.filter(t =>
 !["Fajr","Dhuhur","Asr","Maghrib","Isha"].includes(t.name)
 );
+
 localStorage.setItem("taskList", JSON.stringify(taskList));
-}
   
   console.log("INITIAL taskList:", taskList);
 
@@ -556,13 +1119,14 @@ Cancel
 `;
 
 document.getElementById("taskMenu").style.display = "block";
+  document.getElementById("menuOverlay").style.display = "block";
 
 }
 
-  function closeTaskMenu(){
+function closeTaskMenu(){
 document.getElementById("taskMenu").style.display = "none";
+document.getElementById("menuOverlay").style.display = "none";
 }
-
 
 function addTaskFlow(){
 
@@ -713,11 +1277,20 @@ count++;
 localStorage.setItem(key,count);
 
 let counter = document.getElementById("tasbihCount");
+if(counter){
 counter.innerText = count;
+}
 
+let screen = document.getElementById("tasbihScreen");
+if(screen){
+screen.innerText = count;
+}
+  
+if(counter){
 counter.classList.remove("glow");
 void counter.offsetWidth;
 counter.classList.add("glow");
+}
 
 if(isVibrationEnabled()){
 clickSound.currentTime = 0;
@@ -1049,37 +1622,126 @@ function loadTasbih(){
 
 let target = localStorage.getItem(getTargetKey()) || 33;
 
-document.getElementById("tasbihTargetLabel").innerText =
-target === "inf" ? "∞" : target;
+let targetLabel = document.getElementById("tasbihTargetLabel");
+if(targetLabel){
+targetLabel.innerText = target === "inf" ? "∞" : target;
+}
 
-// highlight selected mode
-document.querySelectorAll(".modeBtn").forEach(b=>{
+let modeButtons = document.querySelectorAll(".modeBtn");
+modeButtons.forEach(b=>{
 b.classList.remove("active");
 });
 
-if(target == 33) document.querySelectorAll(".modeBtn")[0].classList.add("active");
-if(target == 100) document.querySelectorAll(".modeBtn")[1].classList.add("active");
-if(target == "inf") document.querySelectorAll(".modeBtn")[2].classList.add("active");
+if(target == 33 && modeButtons[0]) modeButtons[0].classList.add("active");
+if(target == 100 && modeButtons[1]) modeButtons[1].classList.add("active");
+if(target == "inf" && modeButtons[2]) modeButtons[2].classList.add("active");
 
-// vibration toggle
 let vibrationToggle = document.getElementById("vibrationToggle");
 if(vibrationToggle){
 vibrationToggle.checked = isVibrationEnabled();
 }
 
-// load count
 let count = parseInt(localStorage.getItem(getTasbihKey()) || 0);
-document.getElementById("tasbihCount").innerText = count;
 
+let counter = document.getElementById("tasbihCount");
+if(counter){
+counter.innerText = count;
 }
 
-  
+let screen = document.getElementById("tasbihScreen");
+if(screen){
+screen.innerText = count;
+}
+
+}
 function resetTasbih(){
 localStorage.setItem(getTasbihKey(),0);
-document.getElementById("tasbihCount").innerText = 0;
+
+let counter = document.getElementById("tasbihCount");
+if(counter){
+counter.innerText = 0;
 }
 
+let screen = document.getElementById("tasbihScreen");
+if(screen){
+screen.innerText = 0;
+}
+}
 
+// ===== ZIKR TASBIH SYSTEM =====
+
+let zikrCount = 0;
+let zikrTarget = 100;
+
+function updateZikrDisplay(){
+
+let targetText = zikrTarget === "inf" ? "∞" : zikrTarget;
+document.getElementById("zikrCountText").innerText = zikrCount + " / " + targetText;
+
+document.getElementById("zikr33Btn").style.background = "transparent";
+document.getElementById("zikr33Btn").style.color = "black";
+
+document.getElementById("zikr100Btn").style.background = "transparent";
+document.getElementById("zikr100Btn").style.color = "black";
+
+document.getElementById("zikrInfBtn").style.background = "transparent";
+document.getElementById("zikrInfBtn").style.color = "black";
+
+if(zikrTarget === 33){
+document.getElementById("zikr33Btn").style.background = "#34c759";
+document.getElementById("zikr33Btn").style.color = "white";
+}
+
+if(zikrTarget === 100){
+document.getElementById("zikr100Btn").style.background = "#34c759";
+document.getElementById("zikr100Btn").style.color = "white";
+}
+
+if(zikrTarget === "inf"){
+document.getElementById("zikrInfBtn").style.background = "#34c759";
+document.getElementById("zikrInfBtn").style.color = "white";
+}
+
+}
+
+function setZikrMode(mode){
+
+zikrTarget = mode;
+zikrCount = 0;
+updateZikrDisplay();
+
+}
+
+function increaseZikrTasbih(){
+
+if(zikrTarget === "inf"){
+zikrCount++;
+}else{
+if(zikrCount < zikrTarget){
+zikrCount++;
+}
+}
+
+updateZikrDisplay();
+
+if(isVibrationEnabled()){
+clickSound.currentTime = 0;
+clickSound.play().catch(()=>{});
+}
+
+if(navigator.vibrate){
+navigator.vibrate(30);
+}
+
+}
+
+function resetZikrTasbih(){
+
+zikrCount = 0;
+updateZikrDisplay();
+
+}
+  
 
 function changeTarget(){
 
@@ -1109,15 +1771,50 @@ function isSurah(name){
 }
 function handleTaskClick(name){
 
-// Special file
-if(name==="Surah Ad Duha to Surah Al Nas"){
-openPDF("Last 22 Surah.pdf");
+if(name === "Surah Ikhlas"){
+openSurahPage('ikhlasPage');
+return;
+}
+  
+  
+if(name === "Surah Waqiya"){
+openWaqiyaPage();
 return;
 }
 
-// Automatic for all other Surahs
+  if(name === "Surah Yaseen"){
+openSurahPage('yaseenPage');
+return;
+}
+
+if(name === "Surah Mulk"){
+openSurahPage('mulkPage');
+return;
+}
+
+if(name === "Surah Rehman"){
+openSurahPage('rehmanPage');
+return;
+}
+
+if(name === "Surah Sajdah"){
+openSurahPage('sajdahPage');
+return;
+}
+
+if(name === "Surah Taghabun"){
+openSurahPage('taghabunPage');
+return;
+}
+
+if(name === "Surah Ad Duha to Surah Al Nas"){
+openSurahPage('last22Page');
+return;
+}
+
+/* keep normal PDF only for surahs you have NOT converted yet */
 if(isSurah(name)){
-let file=name.replaceAll(" ","-") + ".pdf";
+let file = name.replaceAll(" ","-") + ".pdf";
 openPDF(file);
 }
 
@@ -1126,6 +1823,8 @@ openPDF(file);
 function openPDF(file){
 window.location.assign(file);
 }
+
+
 
   function toggleVibration(){
 let enabled = document.getElementById("vibrationToggle").checked;
@@ -1408,9 +2107,129 @@ location.reload();
 
 }
 
+function openQiblaPage(){
+
+window.open("https://qiblafinder.withgoogle.com/","_blank");
+
+}
+
+function closeQiblaPage(){
+
+let page = document.getElementById("qiblaPage");
+if(page){
+page.style.display = "none";
+}
+
+window.scrollTo(0,0);
+
+}
+
+function openGoogleQibla(){
+window.open("https://qiblafinder.withgoogle.com/","_blank");
+}
+  
+let currentZikr = "";
+
+const zikrData = {
+subhanallah: {
+hadith: `نبی صلی اللہ علیہ وآلہ وسلم نے فرمایا:
+"دو کلمے زبان پر ہلکے ہیں لیکن میزان میں انتہائی وزنی اور اللہ تعالیٰ کو از حد محبوب ہیں"`,
+arabic: `سُبْحَانَ اللَّهِ وَبِحَمْدِهِ<br>سُبْحَانَ اللَّهِ الْعَظِيم`,
+meaning: `"پاک ہے اللہ اپنی خوبیوں سمیت، پاک ہے اللہ بہت عظمت والا"`,
+ref: `صحیح البخاری، الأیمان والنذور، حدیث: 6682`
+},
+hawqala: {
+hadith: `نبی صلی اللہ علیہ وآلہ وسلم نے فرمایا:
+"کیا میں تمہیں جنت کے خزانوں میں سے ایک خزانے کے متعلق نہ بتاؤں؟"
+عبداللہ بن قیسؓ کہتے ہیں کہ رسول اللہ ﷺ نے فرمایا:`,
+arabic: `لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللّٰهِ`,
+meaning: `گناہ سے بچنے کی ہمت ہے نہ نیکی کرنے کی طاقت مگر
+اللہ ہی کی توفیق سے۔`,
+ref: `صحیح البخاری، الادب المفرد، باب قول: لا حول ولا قوة إلا بالله<br>حدیث: 6409`
+}
+};
+
+function openZikrPage(){
+document.getElementById("zikrPage").style.display = "block";
+}
+
+function closeZikrPage(){
+document.getElementById("zikrPage").style.display = "none";
+}
+
+function openZikrDetail(name){
+
+currentZikr = name;
+zikrCount = 0;
+zikrTarget = 100;
+updateZikrDisplay();
+
+let data = zikrData[name];
+if(!data) return;
+
+document.getElementById("zikrHadithText").innerHTML = data.hadith;
+document.getElementById("zikrArabicText").innerHTML = data.arabic;
+document.getElementById("zikrMeaningText").innerHTML = data.meaning;
+document.getElementById("zikrRefText").innerHTML = data.ref;
+
+document.getElementById("zikrDetailPage").style.display = "block";
+}
+
+function closeZikrDetail(){
+document.getElementById("zikrDetailPage").style.display = "none";
+}
+  function openWaqiyaPage(){
+
+document.getElementById("waqiyaPage").style.display = "block";
+
+}
+
+function closeWaqiyaPage(){
+
+document.getElementById("waqiyaPage").style.display = "none";
+
+}
+
+
+  function openSurahPage(id){
+document.getElementById(id).style.display="block";
+}
+
+function closeSurahPage(id){
+document.getElementById(id).style.display="none";
+}
+
+ 
+function openTasbihPage(){
+  let page = document.getElementById("tasbihPage");
+  if(page){
+    page.style.display = "block";
+  }
+  window.scrollTo(0,0);
+}
+
+function closeTasbihPage(){
+  let page = document.getElementById("tasbihPage");
+  if(page){
+    page.style.display = "none";
+  }
+  window.scrollTo(0,0);
+}
+
+
+  
+
+  
+
   
   
 </script>
+
+
+
+
+  
+  <div id="menuOverlay"></div>
 
  <div id="taskMenu" style="
 position:fixed;
@@ -1501,6 +2320,314 @@ Cancel
 </button>
 
 </div>
+<!-- Bottom Navigation -->
+<div id="bottomNav">
 
+<div class="navItem">🏠<br>Home</div>
+
+<div class="navItem" onclick="openTasbihPage()">📿<br>Tasbih</div>
+<div class="navItem">🤲<br>Dua</div>
+
+<div class="navItem" onclick="openQiblaPage()">🧭<br>Qibla</div>
+
+</div>
+
+
+  <div id="waqiyaPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+z-index:5000;
+background:url('wallpaper.jpg') center/cover no-repeat;
+overflow:auto;
+padding:15px;
+">
+
+  <div style="padding:10px;">
+    <button onclick="closeWaqiyaPage()" style="
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    border:1px solid #ccc;
+    background:white;
+    font-size:20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    ">
+    ←
+    </button>
+  </div>
+
+  <div class="card" style="
+  text-align:center;
+  padding:20px;
+  margin-top:10px;
+  ">
+    <div style="font-size:28px;font-weight:700;">Surah Waqiya</div>
+    <div style="font-size:14px;color:#666;margin-top:6px;">PDF View</div>
+  </div>
+
+  <div style="
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  margin-top:14px;
+  ">
+
+    <img src="waqiya-1.png" style="
+    width:100%;
+    display:block;
+    border-radius:18px;
+    background:white;
+    box-shadow:0 6px 18px rgba(0,0,0,0.12);
+    ">
+
+    <img src="waqiya-2.png" style="
+    width:100%;
+    display:block;
+    border-radius:18px;
+    background:white;
+    box-shadow:0 6px 18px rgba(0,0,0,0.12);
+    ">
+
+    <img src="waqiya-3.png" style="
+    width:100%;
+    display:block;
+    border-radius:18px;
+    background:white;
+    box-shadow:0 6px 18px rgba(0,0,0,0.12);
+    ">
+
+    <img src="waqiya-4.png" style="
+    width:100%;
+    display:block;
+    border-radius:18px;
+    background:white;
+    box-shadow:0 6px 18px rgba(0,0,0,0.12);
+    ">
+
+  </div>
+
+</div>
+
+<div id="mulkPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:url('wallpaper.jpg') center/cover no-repeat;
+overflow:auto;
+padding:15px;
+z-index:5000;
+">
+
+<button onclick="closeSurahPage('mulkPage')" style="
+width:36px;
+height:36px;
+border-radius:50%;
+border:1px solid #ccc;
+background:white;
+font-size:20px;
+">←</button>
+
+<img src="mulk-1.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="mulk-2.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="mulk-3.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+
+</div>
+
+
+<div id="rehmanPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:url('wallpaper.jpg') center/cover no-repeat;
+overflow:auto;
+padding:15px;
+z-index:5000;
+">
+
+<button onclick="closeSurahPage('rehmanPage')" style="
+width:36px;
+height:36px;
+border-radius:50%;
+border:1px solid #ccc;
+background:white;
+font-size:20px;
+">←</button>
+
+<img src="rehman-1.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="rehman-2.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="rehman-3.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+
+</div>
+
+
+
+<div id="sajdahPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:url('wallpaper.jpg') center/cover no-repeat;
+overflow:auto;
+padding:15px;
+z-index:5000;
+">
+
+<button onclick="closeSurahPage('sajdahPage')" style="
+width:36px;
+height:36px;
+border-radius:50%;
+border:1px solid #ccc;
+background:white;
+font-size:20px;
+">←</button>
+
+<img src="sajdah-1.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="sajdah-2.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="sajdah-3.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="sajdah-4.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+
+</div>
+
+
+
+<div id="taghabunPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:url('wallpaper.jpg') center/cover no-repeat;
+overflow:auto;
+padding:15px;
+z-index:5000;
+">
+
+<button onclick="closeSurahPage('taghabunPage')" style="
+width:36px;
+height:36px;
+border-radius:50%;
+border:1px solid #ccc;
+background:white;
+font-size:20px;
+">←</button>
+
+<img src="taghabun-1.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="taghabun-2.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="taghabun-3.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+
+</div>
+
+
+
+<div id="last22Page" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:url('wallpaper.jpg') center/cover no-repeat;
+overflow:auto;
+padding:15px;
+z-index:5000;
+">
+
+<button onclick="closeSurahPage('last22Page')" style="
+width:36px;
+height:36px;
+border-radius:50%;
+border:1px solid #ccc;
+background:white;
+font-size:20px;
+">←</button>
+
+<img src="last22-1.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="last22-2.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="last22-3.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="last22-4.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="last22-5.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="last22-6.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="last22-7.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="last22-8.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+
+</div>
+
+<div id="ikhlasPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:url('wallpaper.jpg') center/cover no-repeat;
+overflow:auto;
+padding:15px;
+z-index:5000;
+">
+
+<button onclick="closeSurahPage('ikhlasPage')" style="
+width:36px;
+height:36px;
+border-radius:50%;
+border:1px solid #ccc;
+background:white;
+font-size:20px;
+">←</button>
+
+<img src="Surah Ikhlas.jpg" style="
+width:100%;
+display:block;
+margin-top:10px;
+border-radius:22px;
+">
+
+</div>
+
+  <div id="yaseenPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:url('wallpaper.jpg') center/cover no-repeat;
+overflow:auto;
+padding:15px;
+z-index:5000;
+">
+
+<button onclick="closeSurahPage('yaseenPage')" style="
+width:36px;
+height:36px;
+border-radius:50%;
+border:1px solid #ccc;
+background:white;
+font-size:20px;
+">←</button>
+
+<img src="yaseen-1.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="yaseen-2.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="yaseen-3.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="yaseen-4.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+
+</div>
+
+  
 </body>
 </html>
