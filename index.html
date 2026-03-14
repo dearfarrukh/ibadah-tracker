@@ -2321,6 +2321,16 @@ function closeTasbihPage(){
 let salahSource = "location";
 let salahDayOffset = 0;
 
+  let salahLocationData = {
+lat: null,
+lon: null,
+city: "Loading location...",
+state: "",
+country: ""
+};
+
+let salahLiveCache = {};
+  
 const salahDummyData = {
 "-3": {
 locationName: "West Hempstead",
@@ -2547,6 +2557,235 @@ isha: "8:30 PM"
 }
 };
 
+function formatSalahApiDate(dateObj){
+let day = String(dateObj.getDate()).padStart(2,"0");
+let month = String(dateObj.getMonth()+1).padStart(2,"0");
+let year = dateObj.getFullYear();
+return day + "-" + month + "-" + year;
+}
+
+function to12Hour(time24){
+if(!time24) return "--:--";
+
+let clean = String(time24).split(" ")[0];
+let parts = clean.split(":");
+
+if(parts.length < 2) return clean;
+
+let hour = parseInt(parts[0], 10);
+let minute = parts[1];
+let ampm = hour >= 12 ? "PM" : "AM";
+
+hour = hour % 12;
+if(hour === 0) hour = 12;
+
+return hour + ":" + minute + " " + ampm;
+}
+
+function getLocationPosition(){
+return new Promise(function(resolve, reject){
+if(!navigator.geolocation){
+reject(new Error("Geolocation not supported"));
+return;
+}
+
+navigator.geolocation.getCurrentPosition(
+function(position){
+resolve(position);
+},
+function(error){
+reject(error);
+},
+{
+enableHighAccuracy:true,
+timeout:10000,
+maximumAge:300000
+}
+);
+});
+}
+
+async function loadUserLocationData(){
+
+if(salahLocationData.lat !== null && salahLocationData.lon !== null){
+return salahLocationData;
+}
+
+let position = await getLocationPosition();
+
+salahLocationData.lat = position.coords.latitude;
+salahLocationData.lon = position.coords.longitude;
+
+try{
+let geoUrl =
+"https://nominatim.openstreetmap.org/reverse?format=jsonv2"
++ "&lat=" + encodeURIComponent(salahLocationData.lat)
++ "&lon=" + encodeURIComponent(salahLocationData.lon);
+
+let geoRes = await fetch(geoUrl, {
+headers: {
+"Accept": "application/json"
+}
+});
+
+let geoData = await geoRes.json();
+let a = geoData.address || {};
+
+salahLocationData.city =
+a.city ||
+a.town ||
+a.village ||
+a.suburb ||
+a.county ||
+"My Location";
+
+salahLocationData.state = a.state || "";
+salahLocationData.country = a.country || "";
+}catch(err){
+salahLocationData.city = "My Location";
+}
+
+return salahLocationData;
+}
+
+async function loadRealLocationSalahTimes(dateObj){
+
+let dateKey = formatKey(dateObj);
+
+if(salahLiveCache[dateKey]){
+return salahLiveCache[dateKey];
+}
+
+let loc = await loadUserLocationData();
+let apiDate = formatSalahApiDate(dateObj);
+
+let salahUrl =
+"https://api.aladhan.com/v1/timings/" + apiDate
++ "?latitude=" + encodeURIComponent(loc.lat)
++ "&longitude=" + encodeURIComponent(loc.lon)
++ "&method=2"
++ "&school=1";
+
+let res = await fetch(salahUrl);
+let json = await res.json();
+
+if(!json || !json.data || !json.data.timings){
+throw new Error("Could not load Salah times");
+}
+
+let t = json.data.timings;
+
+let liveData = {
+locationName: loc.city || "My Location",
+sourceLabel: "North America Timings",
+fajr: to12Hour(t.Fajr),
+sunrise: to12Hour(t.Sunrise),
+dhuhr: to12Hour(t.Dhuhr),
+asr: to12Hour(t.Asr),
+maghrib: to12Hour(t.Maghrib),
+isha: to12Hour(t.Isha)
+};
+
+salahLiveCache[dateKey] = liveData;
+return liveData;
+}
+
+function setSalahLoadingState(){
+let cityEl = document.getElementById("salahCityName");
+let sourceEl = document.getElementById("salahSourceLabel");
+
+if(cityEl) cityEl.innerText = salahLocationData.city || "Loading location...";
+if(sourceEl) sourceEl.innerText = "Loading Salah times...";
+
+document.getElementById("fajrTime").innerText = "--:--";
+document.getElementById("sunriseTime").innerText = "--:--";
+document.getElementById("sunriseCardTime").innerText = "--:--";
+document.getElementById("dhuhrTime").innerText = "--:--";
+document.getElementById("asrTime").innerText = "--:--";
+document.getElementById("maghribTime").innerText = "--:--";
+document.getElementById("sunsetTime").innerText = "--:--";
+document.getElementById("ishaTime").innerText = "--:--";
+}
+
+function applySalahDataToScreen(data){
+if(!data) return;
+
+let cityEl = document.getElementById("salahCityName");
+let sourceEl = document.getElementById("salahSourceLabel");
+
+if(cityEl) cityEl.innerText = data.locationName;
+if(sourceEl) sourceEl.innerText = data.sourceLabel;
+
+document.getElementById("fajrTime").innerText = data.fajr;
+document.getElementById("sunriseTime").innerText = data.sunrise;
+document.getElementById("sunriseCardTime").innerText = data.sunrise;
+document.getElementById("dhuhrTime").innerText = data.dhuhr;
+document.getElementById("asrTime").innerText = data.asr;
+document.getElementById("maghribTime").innerText = data.maghrib;
+document.getElementById("sunsetTime").innerText = data.maghrib;
+document.getElementById("ishaTime").innerText = data.isha;
+}
+
+async function refreshLocationSalahData(){
+try{
+let selectedDate = getSelectedSalahDate();
+setSalahLoadingState();
+let liveData = await loadRealLocationSalahTimes(selectedDate);
+
+if(salahSource === "location"){
+applySalahDataToScreen(liveData);
+}
+}catch(err){
+document.getElementById("salahCityName").innerText = "Location unavailable";
+document.getElementById("salahSourceLabel").innerText = "Allow location + internet";
+}
+}
+
+async function loadMuhammadiMasjidTimes(){
+
+let url = "https://muhammadimasjid.info/";
+let fetchUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
+
+let res = await fetch(fetchUrl);
+let html = await res.text();
+
+function pickTime(label){
+let pattern = new RegExp(label + "[\\s\\S]*?(\\d{2}:\\d{2}\\s?[AP]M)", "i");
+let match = html.match(pattern);
+return match ? match[1].replace(/\s+/g," ").trim() : "--:--";
+}
+
+let fajr = pickTime("Fajr");
+let sunrise = pickTime("Sunrise");
+let dhuhr = pickTime("Zuhr|Dhuhr");
+let asr = pickTime("Asr");
+let maghrib = pickTime("Magrib|Maghrib");
+let isha = pickTime("Isha");
+
+return {
+locationName: "Muhammadi Masjid",
+sourceLabel: "Masjid Timings",
+fajr: fajr,
+sunrise: sunrise,
+dhuhr: dhuhr,
+asr: asr,
+maghrib: maghrib,
+isha: isha
+};
+}
+
+async function refreshMasjidSalahData(){
+try{
+let data = await loadMuhammadiMasjidTimes();
+if(salahSource === "masjid"){
+applySalahDataToScreen(data);
+}
+}catch(err){
+document.getElementById("salahCityName").innerText = "Muhammadi Masjid";
+document.getElementById("salahSourceLabel").innerText = "Masjid site unavailable";
+}
+}
+  
 function getSelectedSalahDate(){
 let d = new Date();
 d.setHours(0,0,0,0);
@@ -2652,39 +2891,19 @@ month:"long",
 year:"numeric"
 }).format(selectedDate);
 
-let dataSet = salahSource === "location" ? salahDummyData : salahMasjidDummyData;
-let data = dataSet[String(salahDayOffset)];
-
-if(!data) return;
-
 let selectedDateEl = document.getElementById("salahSelectedDate");
 let selectedHijriEl = document.getElementById("salahSelectedHijri");
-let cityEl = document.getElementById("salahCityName");
-let sourceEl = document.getElementById("salahSourceLabel");
 
 if(selectedDateEl) selectedDateEl.innerText = dateText;
 if(selectedHijriEl) selectedHijriEl.innerText = hijriText;
-if(cityEl) cityEl.innerText = data.locationName;
-if(sourceEl) sourceEl.innerText = data.sourceLabel;
 
-document.getElementById("fajrTime").innerText = data.fajr;
-document.getElementById("sunriseTime").innerText = data.sunrise;
-document.getElementById("sunriseCardTime").innerText = data.sunrise;
-document.getElementById("dhuhrTime").innerText = data.dhuhr;
-document.getElementById("asrTime").innerText = data.asr;
-document.getElementById("maghribTime").innerText = data.maghrib;
-document.getElementById("sunsetTime").innerText = data.maghrib;
-document.getElementById("ishaTime").innerText = data.isha;
+if(salahSource === "location"){
+refreshLocationSalahData();
+return;
 }
 
-let salahTouchStartX = 0;
-let salahTouchEndX = 0;
-
-function handleSalahSwipeStart(e){
-if(!e.touches || !e.touches.length) return;
-salahTouchStartX = e.touches[0].clientX;
+refreshMasjidSalahData();
 }
-
 function handleSalahSwipeEnd(e){
 if(!e.changedTouches || !e.changedTouches.length) return;
 salahTouchEndX = e.changedTouches[0].clientX;
@@ -2704,8 +2923,8 @@ changeSalahDay(-1);  // swipe right = previous day
   
 function openSalahPage(){
 document.getElementById("salahPage").style.display = "block";
-renderSalahPage();
 setSalahSource(salahSource);
+renderSalahPage();
 window.scrollTo(0,0);
 }
 
