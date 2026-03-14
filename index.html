@@ -2577,14 +2577,63 @@ locationBtn.style.color = "#111";
 renderSalahPage();
 }
 
+
+let salahSliding = false;
+
 function changeSalahDay(step){
+
+if(salahSliding) return;
+
 let nextOffset = salahDayOffset + step;
 
 if(nextOffset < -3) return;
 if(nextOffset > 7) return;
 
+let card = document.getElementById("salahTimesCard");
+
+if(!card){
 salahDayOffset = nextOffset;
 renderSalahPage();
+return;
+}
+
+salahSliding = true;
+
+if(step > 0){
+card.style.transform = "translateX(-80px)";
+card.style.opacity = "0";
+}else{
+card.style.transform = "translateX(80px)";
+card.style.opacity = "0";
+}
+
+setTimeout(function(){
+
+salahDayOffset = nextOffset;
+renderSalahPage();
+
+if(step > 0){
+card.style.transition = "none";
+card.style.transform = "translateX(80px)";
+card.style.opacity = "0";
+}else{
+card.style.transition = "none";
+card.style.transform = "translateX(-80px)";
+card.style.opacity = "0";
+}
+
+void card.offsetWidth;
+
+card.style.transition = "transform 0.28s ease, opacity 0.28s ease";
+card.style.transform = "translateX(0)";
+card.style.opacity = "1";
+
+setTimeout(function(){
+salahSliding = false;
+},280);
+
+},280);
+
 }
 
 function renderSalahPage(){
@@ -2628,6 +2677,31 @@ document.getElementById("sunsetTime").innerText = data.maghrib;
 document.getElementById("ishaTime").innerText = data.isha;
 }
 
+let salahTouchStartX = 0;
+let salahTouchEndX = 0;
+
+function handleSalahSwipeStart(e){
+if(!e.touches || !e.touches.length) return;
+salahTouchStartX = e.touches[0].clientX;
+}
+
+function handleSalahSwipeEnd(e){
+if(!e.changedTouches || !e.changedTouches.length) return;
+salahTouchEndX = e.changedTouches[0].clientX;
+
+let diff = salahTouchEndX - salahTouchStartX;
+
+if(Math.abs(diff) < 50) return;
+
+if(diff < 0){
+changeSalahDay(1);   // swipe left = next day
+}else{
+changeSalahDay(-1);  // swipe right = previous day
+}
+}
+
+
+  
 function openSalahPage(){
 document.getElementById("salahPage").style.display = "block";
 renderSalahPage();
@@ -3062,7 +3136,10 @@ z-index:5000;
   <img loading="lazy" src="yaseen-6.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
 
 </div>
-<div id="salahPage" style="
+<div id="salahPage"
+ontouchstart="handleSalahSwipeStart(event)"
+ontouchend="handleSalahSwipeEnd(event)"
+style="
 display:none;
 position:fixed;
 top:0;
@@ -3177,13 +3254,13 @@ box-sizing:border-box;
 
   </div>
 
-  <div style="
-  background:rgba(232,234,245,0.96);
-  border-radius:34px;
-  padding:18px 16px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.10);
-  margin-bottom:18px;
-  ">
+ <div id="salahDateCard" style="
+background:rgba(232,234,245,0.96);
+border-radius:34px;
+padding:18px 16px;
+box-shadow:0 8px 20px rgba(0,0,0,0.10);
+margin-bottom:18px;
+">
 
     <div style="
     display:flex;
@@ -3252,13 +3329,14 @@ box-sizing:border-box;
 
   </div>
 
-  <div style="
-  background:rgba(232,234,245,0.96);
-  border-radius:34px;
-  padding:18px 20px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.10);
-  margin-bottom:18px;
-  ">
+ <div id="salahTimesCard" style="
+background:rgba(232,234,245,0.96);
+border-radius:34px;
+padding:18px 20px;
+box-shadow:0 8px 20px rgba(0,0,0,0.10);
+margin-bottom:18px;
+transition:transform 0.28s ease, opacity 0.28s ease;
+">
 
     <div style="
     font-size:20px;
