@@ -2318,46 +2318,332 @@ function closeTasbihPage(){
   }
   window.scrollTo(0,0);
 }
+let salahSource = "location";
+let salahDayOffset = 0;
 
+const salahDummyData = {
+"-3": {
+locationName: "West Hempstead",
+sourceLabel: "North America Timings",
+fajr: "5:18 AM",
+sunrise: "7:01 AM",
+dhuhr: "1:13 PM",
+asr: "4:57 PM",
+maghrib: "6:59 PM",
+isha: "8:28 PM"
+},
+"-2": {
+locationName: "West Hempstead",
+sourceLabel: "North America Timings",
+fajr: "5:17 AM",
+sunrise: "7:00 AM",
+dhuhr: "1:14 PM",
+asr: "4:58 PM",
+maghrib: "7:00 PM",
+isha: "8:29 PM"
+},
+"-1": {
+locationName: "West Hempstead",
+sourceLabel: "North America Timings",
+fajr: "5:16 AM",
+sunrise: "6:59 AM",
+dhuhr: "1:14 PM",
+asr: "4:59 PM",
+maghrib: "7:01 PM",
+isha: "8:29 PM"
+},
+"0": {
+locationName: "West Hempstead",
+sourceLabel: "North America Timings",
+fajr: "5:15 AM",
+sunrise: "6:58 AM",
+dhuhr: "1:15 PM",
+asr: "5:00 PM",
+maghrib: "7:02 PM",
+isha: "8:30 PM"
+},
+"1": {
+locationName: "West Hempstead",
+sourceLabel: "North America Timings",
+fajr: "5:14 AM",
+sunrise: "6:56 AM",
+dhuhr: "1:15 PM",
+asr: "5:01 PM",
+maghrib: "7:03 PM",
+isha: "8:31 PM"
+},
+"2": {
+locationName: "West Hempstead",
+sourceLabel: "North America Timings",
+fajr: "5:12 AM",
+sunrise: "6:55 AM",
+dhuhr: "1:15 PM",
+asr: "5:02 PM",
+maghrib: "7:04 PM",
+isha: "8:32 PM"
+},
+"3": {
+locationName: "West Hempstead",
+sourceLabel: "North America Timings",
+fajr: "5:11 AM",
+sunrise: "6:54 AM",
+dhuhr: "1:16 PM",
+asr: "5:03 PM",
+maghrib: "7:05 PM",
+isha: "8:33 PM"
+},
+"4": {
+locationName: "West Hempstead",
+sourceLabel: "North America Timings",
+fajr: "5:10 AM",
+sunrise: "6:52 AM",
+dhuhr: "1:16 PM",
+asr: "5:04 PM",
+maghrib: "7:06 PM",
+isha: "8:34 PM"
+},
+"5": {
+locationName: "West Hempstead",
+sourceLabel: "North America Timings",
+fajr: "5:08 AM",
+sunrise: "6:51 AM",
+dhuhr: "1:16 PM",
+asr: "5:05 PM",
+maghrib: "7:07 PM",
+isha: "8:35 PM"
+},
+"6": {
+locationName: "West Hempstead",
+sourceLabel: "North America Timings",
+fajr: "5:07 AM",
+sunrise: "6:49 AM",
+dhuhr: "1:17 PM",
+asr: "5:06 PM",
+maghrib: "7:08 PM",
+isha: "8:36 PM"
+},
+"7": {
+locationName: "West Hempstead",
+sourceLabel: "North America Timings",
+fajr: "5:05 AM",
+sunrise: "6:48 AM",
+dhuhr: "1:17 PM",
+asr: "5:07 PM",
+maghrib: "7:09 PM",
+isha: "8:37 PM"
+}
+};
+
+const salahMasjidDummyData = {
+"-3": {
+locationName: "Muhammadi Masjid",
+sourceLabel: "Masjid Timings",
+fajr: "5:10 AM",
+sunrise: "7:01 AM",
+dhuhr: "1:20 PM",
+asr: "5:05 PM",
+maghrib: "6:59 PM",
+isha: "8:20 PM"
+},
+"-2": {
+locationName: "Muhammadi Masjid",
+sourceLabel: "Masjid Timings",
+fajr: "5:09 AM",
+sunrise: "7:00 AM",
+dhuhr: "1:20 PM",
+asr: "5:06 PM",
+maghrib: "7:00 PM",
+isha: "8:21 PM"
+},
+"-1": {
+locationName: "Muhammadi Masjid",
+sourceLabel: "Masjid Timings",
+fajr: "5:08 AM",
+sunrise: "6:59 AM",
+dhuhr: "1:20 PM",
+asr: "5:07 PM",
+maghrib: "7:01 PM",
+isha: "8:22 PM"
+},
+"0": {
+locationName: "Muhammadi Masjid",
+sourceLabel: "Masjid Timings",
+fajr: "5:07 AM",
+sunrise: "6:58 AM",
+dhuhr: "1:20 PM",
+asr: "5:08 PM",
+maghrib: "7:02 PM",
+isha: "8:23 PM"
+},
+"1": {
+locationName: "Muhammadi Masjid",
+sourceLabel: "Masjid Timings",
+fajr: "5:06 AM",
+sunrise: "6:56 AM",
+dhuhr: "1:21 PM",
+asr: "5:09 PM",
+maghrib: "7:03 PM",
+isha: "8:24 PM"
+},
+"2": {
+locationName: "Muhammadi Masjid",
+sourceLabel: "Masjid Timings",
+fajr: "5:05 AM",
+sunrise: "6:55 AM",
+dhuhr: "1:21 PM",
+asr: "5:10 PM",
+maghrib: "7:04 PM",
+isha: "8:25 PM"
+},
+"3": {
+locationName: "Muhammadi Masjid",
+sourceLabel: "Masjid Timings",
+fajr: "5:04 AM",
+sunrise: "6:54 AM",
+dhuhr: "1:21 PM",
+asr: "5:11 PM",
+maghrib: "7:05 PM",
+isha: "8:26 PM"
+},
+"4": {
+locationName: "Muhammadi Masjid",
+sourceLabel: "Masjid Timings",
+fajr: "5:03 AM",
+sunrise: "6:52 AM",
+dhuhr: "1:22 PM",
+asr: "5:12 PM",
+maghrib: "7:06 PM",
+isha: "8:27 PM"
+},
+"5": {
+locationName: "Muhammadi Masjid",
+sourceLabel: "Masjid Timings",
+fajr: "5:02 AM",
+sunrise: "6:51 AM",
+dhuhr: "1:22 PM",
+asr: "5:13 PM",
+maghrib: "7:07 PM",
+isha: "8:28 PM"
+},
+"6": {
+locationName: "Muhammadi Masjid",
+sourceLabel: "Masjid Timings",
+fajr: "5:01 AM",
+sunrise: "6:49 AM",
+dhuhr: "1:22 PM",
+asr: "5:14 PM",
+maghrib: "7:08 PM",
+isha: "8:29 PM"
+},
+"7": {
+locationName: "Muhammadi Masjid",
+sourceLabel: "Masjid Timings",
+fajr: "5:00 AM",
+sunrise: "6:48 AM",
+dhuhr: "1:23 PM",
+asr: "5:15 PM",
+maghrib: "7:09 PM",
+isha: "8:30 PM"
+}
+};
+
+function getSelectedSalahDate(){
+let d = new Date();
+d.setHours(0,0,0,0);
+d.setDate(d.getDate() + salahDayOffset);
+return d;
+}
+
+function setSalahSource(source){
+salahSource = source;
+
+let locationBtn = document.getElementById("locationTabBtn");
+let masjidBtn = document.getElementById("masjidTabBtn");
+
+if(locationBtn && masjidBtn){
+if(source === "location"){
+locationBtn.style.background = "#111";
+locationBtn.style.color = "white";
+masjidBtn.style.background = "transparent";
+masjidBtn.style.color = "#111";
+}else{
+masjidBtn.style.background = "#111";
+masjidBtn.style.color = "white";
+locationBtn.style.background = "transparent";
+locationBtn.style.color = "#111";
+}
+}
+
+renderSalahPage();
+}
+
+function changeSalahDay(step){
+let nextOffset = salahDayOffset + step;
+
+if(nextOffset < -3) return;
+if(nextOffset > 7) return;
+
+salahDayOffset = nextOffset;
+renderSalahPage();
+}
+
+function renderSalahPage(){
+
+let selectedDate = getSelectedSalahDate();
+
+let dateText = selectedDate.toLocaleDateString("en-US", {
+weekday:"long",
+month:"short",
+day:"numeric"
+});
+
+let hijriText = new Intl.DateTimeFormat("en-TN-u-ca-islamic", {
+day:"numeric",
+month:"long",
+year:"numeric"
+}).format(selectedDate);
+
+let dataSet = salahSource === "location" ? salahDummyData : salahMasjidDummyData;
+let data = dataSet[String(salahDayOffset)];
+
+if(!data) return;
+
+let selectedDateEl = document.getElementById("salahSelectedDate");
+let selectedHijriEl = document.getElementById("salahSelectedHijri");
+let cityEl = document.getElementById("salahCityName");
+let sourceEl = document.getElementById("salahSourceLabel");
+
+if(selectedDateEl) selectedDateEl.innerText = dateText;
+if(selectedHijriEl) selectedHijriEl.innerText = hijriText;
+if(cityEl) cityEl.innerText = data.locationName;
+if(sourceEl) sourceEl.innerText = data.sourceLabel;
+
+document.getElementById("fajrTime").innerText = data.fajr;
+document.getElementById("sunriseTime").innerText = data.sunrise;
+document.getElementById("sunriseCardTime").innerText = data.sunrise;
+document.getElementById("dhuhrTime").innerText = data.dhuhr;
+document.getElementById("asrTime").innerText = data.asr;
+document.getElementById("maghribTime").innerText = data.maghrib;
+document.getElementById("sunsetTime").innerText = data.maghrib;
+document.getElementById("ishaTime").innerText = data.isha;
+}
 
 function openSalahPage(){
 document.getElementById("salahPage").style.display = "block";
-updateSalahTopCard();
+renderSalahPage();
+setSalahSource(salahSource);
 window.scrollTo(0,0);
 }
 
 function closeSalahPage(){
 document.getElementById("salahPage").style.display = "none";
 }
-  function updateSalahTopCard(){
-
-let now = new Date();
-
-let timeText = now.toLocaleTimeString([], {
-hour: 'numeric',
-minute: '2-digit'
-});
-
-let dateText = now.toLocaleDateString([], {
-weekday: 'long',
-month: 'long',
-day: 'numeric'
-});
-
-document.getElementById("salahTopTime").innerText = timeText;
-document.getElementById("salahTopDate").innerText = dateText;
-document.getElementById("salahTopIslamicDate").innerText = "23 Ramadan 1447";
-
-}
-  setInterval(function(){
-let salahPage = document.getElementById("salahPage");
-if(salahPage && salahPage.style.display === "block"){
-updateSalahTopCard();
-}
-}, 1000);
 
 
-  
+
+
+
+
   
 
   
@@ -2787,16 +3073,18 @@ z-index:5000;
 background:url('wallpaper.jpg') center/cover no-repeat;
 overflow:auto;
 padding:0;
+-webkit-overflow-scrolling:touch;
 ">
 
 <div style="
 position:sticky;
 top:0;
 z-index:50;
-padding:15px 15px 10px 15px;
+padding:15px 15px 6px 15px;
+background:linear-gradient(to bottom, rgba(0,0,0,0.18), rgba(0,0,0,0));
 ">
 
-  <div style="padding:10px 0 8px 0;">
+  <div style="padding:10px 0 4px 0;">
     <button onclick="closeSalahPage()" style="
     width:38px;
     height:38px;
@@ -2814,72 +3102,163 @@ padding:15px 15px 10px 15px;
     </button>
   </div>
 
+</div>
+  
+<div style="
+width:92%;
+max-width:720px;
+margin:0 auto;
+padding:0 15px 120px 15px;
+box-sizing:border-box;
+">
+
+  <div style="
+  text-align:center;
+  margin-top:4px;
+  margin-bottom:14px;
+  text-shadow:0 1px 3px rgba(0,0,0,0.35);
+  ">
+    <div id="salahCityName" style="
+    font-size:22px;
+    font-weight:800;
+    color:white;
+    ">
+    West Hempstead
+    </div>
+
+    <div id="salahSourceLabel" style="
+    font-size:14px;
+    font-weight:600;
+    color:white;
+    margin-top:4px;
+    opacity:0.95;
+    ">
+    North America Timings
+    </div>
+  </div>
+
+  <div style="
+  background:rgba(232,234,245,0.96);
+  border-radius:30px;
+  padding:8px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.10);
+  margin-bottom:16px;
+  display:flex;
+  gap:8px;
+  ">
+
+    <button id="locationTabBtn" onclick="setSalahSource('location')" style="
+    flex:1;
+    border:none;
+    border-radius:22px;
+    padding:14px 10px;
+    background:#111;
+    color:white;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    ">
+    My Location
+    </button>
+
+    <button id="masjidTabBtn" onclick="setSalahSource('masjid')" style="
+    flex:1;
+    border:none;
+    border-radius:22px;
+    padding:14px 10px;
+    background:transparent;
+    color:#111;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    ">
+    My Masjid
+    </button>
+
+  </div>
+
+  <div style="
+  background:rgba(232,234,245,0.96);
+  border-radius:34px;
+  padding:18px 16px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.10);
+  margin-bottom:18px;
+  ">
+
+    <div style="
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    ">
+
+      <button onclick="changeSalahDay(-1)" style="
+      width:44px;
+      height:44px;
+      border:none;
+      border-radius:50%;
+      background:white;
+      font-size:22px;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow:0 2px 8px rgba(0,0,0,0.08);
+      ">
+      ‹
+      </button>
+
+      <div style="flex:1;text-align:center;">
+        <div id="salahSelectedDate" style="
+        font-size:20px;
+        font-weight:800;
+        color:#000;
+        ">
+        Saturday, Mar 14
+        </div>
+
+        <div id="salahSelectedHijri" style="
+        font-size:14px;
+        color:#777;
+        margin-top:4px;
+        font-weight:600;
+        ">
+        Ramadan 24, 1447 AH
+        </div>
+      </div>
+
+      <button onclick="changeSalahDay(1)" style="
+      width:44px;
+      height:44px;
+      border:none;
+      border-radius:50%;
+      background:white;
+      font-size:22px;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow:0 2px 8px rgba(0,0,0,0.08);
+      ">
+      ›
+      </button>
+
+    </div>
+
+    <div id="salahRangeNote" style="
+    margin-top:12px;
+    text-align:center;
+    font-size:13px;
+    color:#666;
+    ">
+    You can go 3 days back and 7 days forward
+    </div>
+
+  </div>
+
   <div style="
   background:rgba(232,234,245,0.96);
   border-radius:34px;
   padding:18px 20px;
   box-shadow:0 8px 20px rgba(0,0,0,0.10);
-  max-width:720px;
-  margin:0 auto;
-  text-align:center;
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
+  margin-bottom:18px;
   ">
-
-    <div id="salahLiveTime" style="
-    font-size:32px;
-    font-weight:800;
-    color:#000;
-    line-height:1.1;
-    ">
-    3:46
-    </div>
-
-    <div id="salahTopDate" style="
-    font-size:18px;
-    font-weight:800;
-    color:#000;
-    margin-top:6px;
-    ">
-    Friday, Mar 13, 2026
-    </div>
-
-    <div id="salahTopIslamicDate" style="
-    font-size:15px;
-    color:#8d8d95;
-    margin-top:4px;
-    font-weight:500;
-    ">
-    Ramadan 24, 1447 AH
-    </div>
-
-  </div>
-</div>
-
-<div style="
-width:92%;
-margin:0 auto;
-padding:0 15px 24px 15px;
-">
-
-  <div style="
-  text-align:center;
-  font-size:18px;
-  font-weight:700;
-  color:white;
-  margin-top:4px;
-  margin-bottom:14px;
-  text-shadow:0 1px 3px rgba(0,0,0,0.35);
-  ">
-  📍 <span id="salahCityName">Mineola, NY</span>
-  </div>
-
- <div style="
-background:rgba(232,234,245,0.96);
-border-radius:34px;
-padding:18px 20px;
-...
-">
 
     <div style="
     font-size:20px;
@@ -2901,6 +3280,18 @@ padding:18px 20px;
     ">
       <div>🌅 Fajr</div>
       <div id="fajrTime" style="font-weight:700;">5:15 AM</div>
+    </div>
+
+    <div style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 0;
+    border-bottom:1px solid rgba(0,0,0,0.08);
+    font-size:18px;
+    ">
+      <div>🌄 Sunrise</div>
+      <div id="sunriseTime" style="font-weight:700;">6:58 AM</div>
     </div>
 
     <div style="
@@ -2953,71 +3344,63 @@ padding:18px 20px;
   </div>
 
   <div style="
-  background:rgba(232,234,245,0.94);
-  border-radius:34px;
-  padding:20px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.10);
-  margin-bottom:20px;
+  display:flex;
+  gap:14px;
+  margin-bottom:18px;
   ">
 
     <div style="
-    display:flex;
-    gap:14px;
+    flex:1;
+    background:rgba(232,234,245,0.94);
+    border-radius:28px;
+    padding:18px 12px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,0.10);
     ">
-
+      <div style="font-size:28px;">🌄</div>
       <div style="
-      flex:1;
-      background:rgba(255,255,255,0.45);
-      border-radius:24px;
-     border-radius:28px
-
-      text-align:center;
+      font-size:16px;
+      font-weight:700;
+      margin-top:6px;
+      color:#000;
       ">
-        <div style="font-size:28px;">🌄</div>
-        <div style="
-        font-size:16px;
-        font-weight:700;
-        margin-top:6px;
-        color:#000;
-        ">
-        Sunrise
-        </div>
-        <div id="sunriseTime" style="
-        font-size:22px;
-        font-weight:800;
-        margin-top:8px;
-        color:#000;
-        ">
-        6:58 AM
-        </div>
+      Sunrise
       </div>
+      <div id="sunriseCardTime" style="
+      font-size:22px;
+      font-weight:800;
+      margin-top:8px;
+      color:#000;
+      ">
+      6:58 AM
+      </div>
+    </div>
 
+    <div style="
+    flex:1;
+    background:rgba(232,234,245,0.94);
+    border-radius:28px;
+    padding:18px 12px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,0.10);
+    ">
+      <div style="font-size:28px;">🌅</div>
       <div style="
-      flex:1;
-      background:rgba(255,255,255,0.45);
-      border-radius:24px;
-      padding:18px 12px;
-      text-align:center;
+      font-size:16px;
+      font-weight:700;
+      margin-top:6px;
+      color:#000;
       ">
-        <div style="font-size:28px;">🌅</div>
-        <div style="
-        font-size:16px;
-        font-weight:700;
-        margin-top:6px;
-        color:#000;
-        ">
-        Sunset
-        </div>
-        <div id="sunsetTime" style="
-        font-size:22px;
-        font-weight:800;
-        margin-top:8px;
-        color:#000;
-        ">
-        7:02 PM
-        </div>
+      Sunset
       </div>
-
+      <div id="sunsetTime" style="
+      font-size:22px;
+      font-weight:800;
+      margin-top:8px;
+      color:#000;
+      ">
+      7:02 PM
+      </div>
     </div>
 
   </div>
@@ -3025,7 +3408,6 @@ padding:18px 20px;
 </div>
 
 </div>
-
   
 </body>
 </html>
