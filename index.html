@@ -265,7 +265,10 @@ font-size:14px;
 text-align:right;
 color:#555;
 }
-
+img{
+max-width:100%;
+height:auto;
+}
 
   
 
@@ -2317,6 +2320,44 @@ function closeTasbihPage(){
 }
 
 
+function openSalahPage(){
+document.getElementById("salahPage").style.display = "block";
+updateSalahTopCard();
+window.scrollTo(0,0);
+}
+
+function closeSalahPage(){
+document.getElementById("salahPage").style.display = "none";
+}
+  function updateSalahTopCard(){
+
+let now = new Date();
+
+let timeText = now.toLocaleTimeString([], {
+hour: 'numeric',
+minute: '2-digit'
+});
+
+let dateText = now.toLocaleDateString([], {
+weekday: 'long',
+month: 'long',
+day: 'numeric'
+});
+
+document.getElementById("salahTopTime").innerText = timeText;
+document.getElementById("salahTopDate").innerText = dateText;
+document.getElementById("salahTopIslamicDate").innerText = "23 Ramadan 1447";
+
+}
+  setInterval(function(){
+let salahPage = document.getElementById("salahPage");
+if(salahPage && salahPage.style.display === "block"){
+updateSalahTopCard();
+}
+}, 1000);
+
+
+  
   
 
   
@@ -2425,7 +2466,10 @@ Cancel
 
 <div class="navItem">🏠<br>Home</div>
 
+<div class="navItem" onclick="openSalahPage()">🕒<br>Salah</div>
+
 <div class="navItem" onclick="openTasbihPage()">📿<br>Tasbih</div>
+
 <div class="navItem">🤲<br>Dua</div>
 
 <div class="navItem" onclick="openQiblaPage()">🧭<br>Qibla</div>
@@ -2699,7 +2743,7 @@ border-radius:22px;
 
 </div>
 
-  <div id="yaseenPage" style="
+ <div id="yaseenPage" style="
 display:none;
 position:fixed;
 top:0;
@@ -2708,23 +2752,277 @@ right:0;
 bottom:0;
 background:url('wallpaper.jpg') center/cover no-repeat;
 overflow:auto;
+-webkit-overflow-scrolling:touch;
 padding:15px;
 z-index:5000;
 ">
 
-<button onclick="closeSurahPage('yaseenPage')" style="
-width:36px;
-height:36px;
-border-radius:50%;
-border:1px solid #ccc;
-background:white;
-font-size:20px;
-">←</button>
+  <button onclick="closeSurahPage('yaseenPage')" style="
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:1px solid #ccc;
+  background:white;
+  font-size:20px;
+  ">
+    ←
+  </button>
 
-<img src="yaseen-1.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
-<img src="yaseen-2.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
-<img src="yaseen-3.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
-<img src="yaseen-4.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+  <img loading="lazy" src="yaseen-1.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+  <img loading="lazy" src="yaseen-2.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+  <img loading="lazy" src="yaseen-3.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+  <img loading="lazy" src="yaseen-4.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+  <img loading="lazy" src="yaseen-5.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+  <img loading="lazy" src="yaseen-6.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+
+</div>
+<div id="salahPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+z-index:5000;
+background:url('wallpaper.jpg') center/cover no-repeat;
+overflow:auto;
+padding:0;
+">
+
+<div style="
+position:sticky;
+top:0;
+z-index:50;
+padding:15px 15px 10px 15px;
+">
+
+  <div style="padding:10px 0 8px 0;">
+    <button onclick="closeSalahPage()" style="
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    border:1px solid #d6d6d6;
+    background:white;
+    font-size:20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 3px 10px rgba(0,0,0,0.12);
+    ">
+    ←
+    </button>
+  </div>
+
+  <div style="
+  background:rgba(232,234,245,0.96);
+  border-radius:34px;
+  padding:18px 20px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.10);
+  max-width:720px;
+  margin:0 auto;
+  text-align:center;
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  ">
+
+    <div id="salahLiveTime" style="
+    font-size:32px;
+    font-weight:800;
+    color:#000;
+    line-height:1.1;
+    ">
+    3:46
+    </div>
+
+    <div id="salahTopDate" style="
+    font-size:18px;
+    font-weight:800;
+    color:#000;
+    margin-top:6px;
+    ">
+    Friday, Mar 13, 2026
+    </div>
+
+    <div id="salahTopIslamicDate" style="
+    font-size:15px;
+    color:#8d8d95;
+    margin-top:4px;
+    font-weight:500;
+    ">
+    Ramadan 24, 1447 AH
+    </div>
+
+  </div>
+</div>
+
+<div style="
+width:92%;
+margin:0 auto;
+padding:0 15px 24px 15px;
+">
+
+  <div style="
+  text-align:center;
+  font-size:18px;
+  font-weight:700;
+  color:white;
+  margin-top:4px;
+  margin-bottom:14px;
+  text-shadow:0 1px 3px rgba(0,0,0,0.35);
+  ">
+  📍 <span id="salahCityName">Mineola, NY</span>
+  </div>
+
+ <div style="
+background:rgba(232,234,245,0.96);
+border-radius:34px;
+padding:18px 20px;
+...
+">
+
+    <div style="
+    font-size:20px;
+    font-weight:800;
+    color:#000;
+    margin-bottom:16px;
+    text-align:center;
+    ">
+    Salah Times
+    </div>
+
+    <div style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 0;
+    border-bottom:1px solid rgba(0,0,0,0.08);
+    font-size:18px;
+    ">
+      <div>🌅 Fajr</div>
+      <div id="fajrTime" style="font-weight:700;">5:15 AM</div>
+    </div>
+
+    <div style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 0;
+    border-bottom:1px solid rgba(0,0,0,0.08);
+    font-size:18px;
+    ">
+      <div>☀️ Dhuhr</div>
+      <div id="dhuhrTime" style="font-weight:700;">1:15 PM</div>
+    </div>
+
+    <div style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 0;
+    border-bottom:1px solid rgba(0,0,0,0.08);
+    font-size:18px;
+    ">
+      <div>⛅ Asr</div>
+      <div id="asrTime" style="font-weight:700;">5:00 PM</div>
+    </div>
+
+    <div style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 0;
+    border-bottom:1px solid rgba(0,0,0,0.08);
+    font-size:18px;
+    ">
+      <div>🌇 Maghrib</div>
+      <div id="maghribTime" style="font-weight:700;">7:10 PM</div>
+    </div>
+
+    <div style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 0 0 0;
+    font-size:18px;
+    ">
+      <div>☁️🌙 Isha</div>
+      <div id="ishaTime" style="font-weight:700;">8:30 PM</div>
+    </div>
+
+  </div>
+
+  <div style="
+  background:rgba(232,234,245,0.94);
+  border-radius:34px;
+  padding:20px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.10);
+  margin-bottom:20px;
+  ">
+
+    <div style="
+    display:flex;
+    gap:14px;
+    ">
+
+      <div style="
+      flex:1;
+      background:rgba(255,255,255,0.45);
+      border-radius:24px;
+     border-radius:28px
+
+      text-align:center;
+      ">
+        <div style="font-size:28px;">🌄</div>
+        <div style="
+        font-size:16px;
+        font-weight:700;
+        margin-top:6px;
+        color:#000;
+        ">
+        Sunrise
+        </div>
+        <div id="sunriseTime" style="
+        font-size:22px;
+        font-weight:800;
+        margin-top:8px;
+        color:#000;
+        ">
+        6:58 AM
+        </div>
+      </div>
+
+      <div style="
+      flex:1;
+      background:rgba(255,255,255,0.45);
+      border-radius:24px;
+      padding:18px 12px;
+      text-align:center;
+      ">
+        <div style="font-size:28px;">🌅</div>
+        <div style="
+        font-size:16px;
+        font-weight:700;
+        margin-top:6px;
+        color:#000;
+        ">
+        Sunset
+        </div>
+        <div id="sunsetTime" style="
+        font-size:22px;
+        font-weight:800;
+        margin-top:8px;
+        color:#000;
+        ">
+        7:02 PM
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
 
 </div>
 
