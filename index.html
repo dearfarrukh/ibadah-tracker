@@ -395,24 +395,6 @@ align-items:center;
   
   
 
-<!-- ☁️ ICLOUD -->
-<div class="card">
-<h3>☁️ iCloud Backup</h3>
-
-<button onclick="exportBackup()" style="width:100%;margin-bottom:10px;">
-Export
-</button>
-
-<input type="file" id="restoreFile"
-onchange="importBackup()"
-style="display:none;">
-
-<button onclick="document.getElementById('restoreFile').click()"
-style="width:100%">
-Restore
-</button>
-
-</div>
 
 <div id="tasbihPage" style="
 display:none;
@@ -997,7 +979,193 @@ If the page does not load, Google may be blocking iframe on your device.
 
 </div>
 
+<!-- FLOATING MENU BUTTON -->
+<div id="floatingMenuBtn" onclick="toggleSideMenu()" style="
+position:fixed;
+top:20px;
+left:20px;
+width:52px;
+height:52px;
+border-radius:18px;
+background:rgba(255,255,255,0.92);
+backdrop-filter:blur(10px);
+-webkit-backdrop-filter:blur(10px);
+box-shadow:0 8px 20px rgba(0,0,0,0.18);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+font-weight:700;
+color:#5c4632;
+z-index:9999;
+cursor:pointer;
+user-select:none;
+">
+☰
+</div>
 
+<!-- SIDE MENU OVERLAY -->
+<div id="sideMenuOverlay" onclick="closeSideMenu()" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:rgba(0,0,0,0.35);
+z-index:9997;
+"></div>
+
+<!-- SIDE MENU -->
+<div id="sideMenu" style="
+position:fixed;
+top:0;
+left:-280px;
+width:260px;
+height:100%;
+background:linear-gradient(to bottom,#f4e7d8,#ead7c2);
+box-shadow:8px 0 24px rgba(0,0,0,0.18);
+z-index:9998;
+padding:90px 18px 20px 18px;
+transition:left 0.28s ease;
+box-sizing:border-box;
+">
+
+<div style="
+font-size:24px;
+font-weight:800;
+color:#5c4632;
+margin-bottom:22px;
+letter-spacing:0.3px;
+">
+Menu
+</div>
+
+<div onclick="refreshApp()" style="
+background:rgba(255,255,255,0.75);
+padding:16px 18px;
+border-radius:18px;
+font-size:18px;
+font-weight:700;
+color:#5c4632;
+margin-bottom:14px;
+box-shadow:0 6px 14px rgba(0,0,0,0.08);
+cursor:pointer;
+">
+🔄 Refresh App
+</div>
+
+<div onclick="openBackupPopup()" style="
+background:rgba(255,255,255,0.75);
+padding:16px 18px;
+border-radius:18px;
+font-size:18px;
+font-weight:700;
+color:#5c4632;
+margin-bottom:14px;
+box-shadow:0 6px 14px rgba(0,0,0,0.08);
+cursor:pointer;
+">
+☁️ Backup
+</div>
+
+</div>
+
+<!-- BACKUP POPUP OVERLAY -->
+<div id="backupPopupOverlay" onclick="closeBackupPopup()" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:rgba(0,0,0,0.45);
+z-index:10000;
+align-items:center;
+justify-content:center;
+padding:20px;
+box-sizing:border-box;
+">
+
+<div onclick="event.stopPropagation()" style="
+width:100%;
+max-width:340px;
+background:#fffaf4;
+border-radius:28px;
+padding:28px 22px 22px 22px;
+box-shadow:0 18px 40px rgba(0,0,0,0.22);
+text-align:center;
+">
+
+<div style="
+font-size:26px;
+font-weight:800;
+color:#5c4632;
+margin-bottom:10px;
+">
+Backup
+</div>
+
+<div style="
+font-size:16px;
+font-weight:600;
+color:#7a634d;
+line-height:1.5;
+margin-bottom:24px;
+">
+Save or restore your app data
+</div>
+
+<div onclick="backupData()" style="
+background:#d8b89a;
+color:#fff;
+font-size:20px;
+font-weight:800;
+padding:15px;
+border-radius:18px;
+margin-bottom:12px;
+cursor:pointer;
+box-shadow:0 8px 16px rgba(0,0,0,0.12);
+">
+Backup
+</div>
+
+<div onclick="importData()" style="
+background:#efe3d6;
+color:#5c4632;
+font-size:20px;
+font-weight:800;
+padding:15px;
+border-radius:18px;
+margin-bottom:12px;
+cursor:pointer;
+box-shadow:0 8px 16px rgba(0,0,0,0.08);
+">
+Import
+</div>
+
+<div onclick="closeBackupPopup()" style="
+background:#f5f5f5;
+color:#666;
+font-size:18px;
+font-weight:700;
+padding:14px;
+border-radius:18px;
+cursor:pointer;
+">
+Cancel
+</div>
+
+</div>
+</div>
+
+<!-- HIDDEN FILE INPUT FOR IMPORT -->
+<input type="file" id="backupFileInput" accept=".json" style="display:none;" onchange="handleImportFile(event)">
+
+
+
+
+  
   
 <script>
 
@@ -1175,11 +1343,25 @@ taskList = [
 {name:"Surah Ad Duha to Surah Al Nas",start:0,end:null}
 ];
 
-
 localStorage.setItem("taskList", JSON.stringify(taskList));
 
 }
 
+function restoreDefaultTasks(){
+taskList = [
+{name:"Surah Mulk",start:0,end:null},
+{name:"Surah Sajdah",start:0,end:null},
+{name:"Surah Yaseen",start:0,end:null},
+{name:"Surah Rehman",start:0,end:null},
+{name:"Surah Taghabun",start:0,end:null},
+{name:"Surah Waqiya",start:0,end:null},
+{name:"Surah Ikhlas",start:0,end:null},
+{name:"Surah Ad Duha to Surah Al Nas",start:0,end:null}
+];
+
+localStorage.setItem("taskList", JSON.stringify(taskList));
+loadTasks();
+}
 
 function manageTasks(){
 
@@ -2254,12 +2436,14 @@ ref: `صحیح البخاری، الادب المفرد، باب قول: لا ح
 
 function openZikrPage(){
 document.getElementById("zikrPage").style.display = "block";
+document.getElementById("floatingMenuBtn").style.display = "none";
+window.scrollTo(0,0);
 }
 
 function closeZikrPage(){
 document.getElementById("zikrPage").style.display = "none";
+document.getElementById("floatingMenuBtn").style.display = "flex";
 }
-
 function openZikrDetail(name){
 
 currentZikr = name;
@@ -2294,29 +2478,29 @@ document.getElementById("waqiyaPage").style.display = "none";
 }
 
 
-  function openSurahPage(id){
-document.getElementById(id).style.display="block";
+ function openSurahPage(id){
+document.getElementById(id).style.display = "block";
+document.getElementById("floatingMenuBtn").style.display = "none";
+window.scrollTo(0,0);
 }
 
 function closeSurahPage(id){
-document.getElementById(id).style.display="none";
+document.getElementById(id).style.display = "none";
+document.getElementById("floatingMenuBtn").style.display = "flex";
+window.scrollTo(0,0);
 }
 
  
 function openTasbihPage(){
-  let page = document.getElementById("tasbihPage");
-  if(page){
-    page.style.display = "block";
-  }
-  window.scrollTo(0,0);
+document.getElementById("tasbihPage").style.display = "block";
+document.getElementById("floatingMenuBtn").style.display = "none";
+window.scrollTo(0,0);
 }
 
 function closeTasbihPage(){
-  let page = document.getElementById("tasbihPage");
-  if(page){
-    page.style.display = "none";
-  }
-  window.scrollTo(0,0);
+document.getElementById("tasbihPage").style.display = "none";
+document.getElementById("floatingMenuBtn").style.display = "flex";
+window.scrollTo(0,0);
 }
 let salahSource = "location";
 let salahDayOffset = 0;
@@ -2923,13 +3107,159 @@ changeSalahDay(-1);  // swipe right = previous day
   
 function openSalahPage(){
 document.getElementById("salahPage").style.display = "block";
-setSalahSource(salahSource);
-renderSalahPage();
-window.scrollTo(0,0);
+document.getElementById("floatingMenuBtn").style.display = "none";
 }
 
 function closeSalahPage(){
 document.getElementById("salahPage").style.display = "none";
+document.getElementById("floatingMenuBtn").style.display = "flex";
+}
+
+
+function toggleSideMenu(){
+let menu = document.getElementById("sideMenu");
+let overlay = document.getElementById("sideMenuOverlay");
+
+if(menu.style.left === "0px"){
+menu.style.left = "-280px";
+overlay.style.display = "none";
+}else{
+menu.style.left = "0px";
+overlay.style.display = "block";
+}
+}
+
+function closeSideMenu(){
+document.getElementById("sideMenu").style.left = "-280px";
+document.getElementById("sideMenuOverlay").style.display = "none";
+}
+
+function refreshApp(){
+closeSideMenu();
+location.reload();
+}
+
+function openBackupPopup(){
+closeSideMenu();
+document.getElementById("backupPopupOverlay").style.display = "flex";
+}
+
+function closeBackupPopup(){
+document.getElementById("backupPopupOverlay").style.display = "none";
+}
+
+function backupData(){
+
+let backup = {
+version: 2,
+taskList: [],
+storage: {}
+};
+
+let savedTaskList = localStorage.getItem("taskList");
+
+if(savedTaskList){
+try{
+backup.taskList = JSON.parse(savedTaskList);
+}catch(err){
+backup.taskList = [];
+}
+}
+
+for(let i = 0; i < localStorage.length; i++){
+let key = localStorage.key(i);
+
+if(key !== "taskList"){
+backup.storage[key] = localStorage.getItem(key);
+}
+}
+
+let blob = new Blob(
+[JSON.stringify(backup, null, 2)],
+{type:"application/json"}
+);
+
+let a = document.createElement("a");
+a.href = URL.createObjectURL(blob);
+a.download = "ibadah-backup.json";
+a.click();
+
+setTimeout(function(){
+closeBackupPopup();
+}, 300);
+}
+
+  
+function importData(){
+document.getElementById("backupFileInput").click();
+}
+
+function handleImportFile(event){
+let file = event.target.files[0];
+if(!file) return;
+
+let reader = new FileReader();
+
+reader.onload = function(e){
+try{
+let data = JSON.parse(e.target.result);
+
+if(!confirm("Import backup? This will replace current app data.")){
+event.target.value = "";
+return;
+}
+
+let finalTaskList = [];
+let finalStorage = {};
+
+if(Array.isArray(data.taskList) && data.storage){
+finalTaskList = data.taskList;
+finalStorage = data.storage;
+}
+else{
+for(let key in data){
+
+if(key === "taskList"){
+if(typeof data[key] === "string"){
+try{
+finalTaskList = JSON.parse(data[key]);
+}catch(err){
+finalTaskList = [];
+}
+}
+else if(Array.isArray(data[key])){
+finalTaskList = data[key];
+}
+}
+else{
+finalStorage[key] = data[key];
+}
+
+}
+}
+
+localStorage.clear();
+
+localStorage.setItem("taskList", JSON.stringify(finalTaskList));
+
+for(let key in finalStorage){
+localStorage.setItem(key, finalStorage[key]);
+}
+
+closeBackupPopup();
+
+setTimeout(function(){
+location.reload();
+}, 300);
+
+}catch(err){
+alert("Invalid backup file");
+}
+
+event.target.value = "";
+};
+
+reader.readAsText(file);
 }
 
 
@@ -2937,13 +3267,10 @@ document.getElementById("salahPage").style.display = "none";
 
 
 
-  
 
-  
 
-  
-  
 </script>
+
 
 
 
