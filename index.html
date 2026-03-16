@@ -355,25 +355,7 @@ Manage Tasks
 </div>
 
 </div>
-<div class="card" onclick="openDuaPage()" style="
-cursor:pointer;
-display:flex;
-justify-content:space-between;
-align-items:center;
-">
 
-<div style="font-weight:600;font-size:17px;">
-🤲 Masnoon Duas
-</div>
-
-<div style="
-font-size:24px;
-opacity:0.5;
-">
-›
-</div>
-
-</div>
   
 <div class="card" onclick="openZikrPage()" style="
 cursor:pointer;
@@ -581,40 +563,7 @@ Reset
 </div>
   
   
-  <div id="duaPage" style="display:none;">
-
-<div class="card" onclick="closeDuaPage()" style="cursor:pointer;">
-⬅️ Back
-</div>
-
-<div class="card" style="text-align:center;padding:30px;">
-
-<div style="font-size:60px;">🤲</div>
-
-<div style="
-font-size:32px;
-font-weight:700;
-margin-top:10px;
-">
-مسنون دعائیں
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>Masnoon Duas</h3>
-
-<p>Before Eating</p>
-<p>After Eating</p>
-<p>Before Sleeping</p>
-<p>After Waking Up</p>
-<p>Entering Home</p>
-<p>Leaving Home</p>
-
-</div>
-
-</div>
+  
 
 
 
@@ -1023,7 +972,7 @@ top:0;
 left:-280px;
 width:260px;
 height:100%;
-background:linear-gradient(to bottom,#f4e7d8,#ead7c2);
+background:#e9e9ee;
 box-shadow:8px 0 24px rgba(0,0,0,0.18);
 z-index:9998;
 padding:90px 18px 20px 18px;
@@ -1041,7 +990,21 @@ letter-spacing:0.3px;
 Menu
 </div>
 
-<div onclick="refreshApp()" style="
+  <div onclick="goToMainPage()" style="
+background:rgba(255,255,255,0.75);
+padding:16px 18px;
+border-radius:18px;
+font-size:18px;
+font-weight:700;
+color:#5c4632;
+margin-bottom:14px;
+box-shadow:0 6px 14px rgba(0,0,0,0.08);
+cursor:pointer;
+">
+🏠 Main Page
+</div>
+
+  <div onclick="refreshApp()" style="
 background:rgba(255,255,255,0.75);
 padding:16px 18px;
 border-radius:18px;
@@ -2373,23 +2336,16 @@ loadTasks();
 manageTasks();
 
 }
-
-  function openDuaPage(){
-
-document.getElementById("duaPage").style.display="block";
-
-document.querySelectorAll("body > div").forEach(el=>{
-if(el.id !== "duaPage"){
-el.style.display="none";
-}
-});
-
+function openDuaPage(){
+document.getElementById("duaPage").style.display = "block";
+document.getElementById("floatingMenuBtn").style.display = "none";
+window.scrollTo(0,0);
 }
 
 function closeDuaPage(){
-
-location.reload();
-
+document.getElementById("duaPage").style.display = "none";
+document.getElementById("floatingMenuBtn").style.display = "flex";
+window.scrollTo(0,0);
 }
 
 function openQiblaPage(){
@@ -3263,6 +3219,28 @@ reader.readAsText(file);
 }
 
 
+  function openIstikharaPage(){
+document.getElementById("istikharaPage").style.display = "block";
+document.getElementById("floatingMenuBtn").style.display = "none";
+window.scrollTo(0,0);
+}
+
+function closeIstikharaPage(){
+document.getElementById("istikharaPage").style.display = "none";
+document.getElementById("floatingMenuBtn").style.display = "none";
+window.scrollTo(0,0);
+}
+  
+  
+  function goToMainPage(){
+closeMenu();
+location.reload();
+}
+
+
+  
+
+  
 
 
 
@@ -3376,13 +3354,71 @@ Cancel
 
 <div class="navItem" onclick="openTasbihPage()">📿<br>Tasbih</div>
 
-<div class="navItem">🤲<br>Dua</div>
+<div class="navItem" onclick="openDuaPage()">🤲<br>Dua</div>
 
 <div class="navItem" onclick="openQiblaPage()">🧭<br>Qibla</div>
 
 </div>
 
 
+<div id="duaPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+z-index:10001;
+background:url('wallpaper.jpg') center/cover no-repeat;
+overflow:auto;
+padding:15px;
+">
+
+<div style="padding:10px;">
+<button onclick="closeDuaPage()" style="
+width:36px;
+height:36px;
+border-radius:50%;
+border:1px solid #ccc;
+background:white;
+font-size:20px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+">
+←
+</button>
+</div>
+
+<div class="card">
+
+<h2 style="margin:0;font-size:24px;font-weight:800;text-align:center;">
+📿 Masnoon Duas
+</h2>
+
+</div>
+
+<div class="card" onclick="openIstikharaPage()" style="cursor:pointer;margin-top:15px;">
+
+<div style="display:flex;justify-content:space-between;align-items:center;">
+
+<div style="font-weight:600;font-size:17px;">
+Istikhara Dua
+</div>
+
+<div style="font-size:24px;opacity:0.5;">
+›
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+
+  
   <div id="waqiyaPage" style="
 display:none;
 position:fixed;
@@ -3649,6 +3685,34 @@ border-radius:22px;
 
 </div>
 
+
+  <div id="istikharaPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:url('wallpaper.jpg') center/cover no-repeat;
+overflow:auto;
+padding:15px;
+z-index:10002;
+">
+
+<button onclick="closeIstikharaPage()" style="
+width:36px;
+height:36px;
+border-radius:50%;
+border:1px solid #ccc;
+background:white;
+font-size:20px;
+">←</button>
+
+<img src="duas/istikhara-1.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="duas/istikhara-2.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="duas/istikhara-3.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+
+</div>
  <div id="yaseenPage" style="
 display:none;
 position:fixed;
