@@ -91,7 +91,7 @@ justify-content:space-between;
 padding:10px 0;
 }
   input:checked + span {
-background:#007aff;
+background:#e9e9ee;
 }
 
 input:checked + span:before {
@@ -154,13 +154,26 @@ padding:10px 16px;
 font-size:17px;
 font-weight:700;
 cursor:pointer;
+outline:none;
+box-shadow:none;
+appearance:none;
+-webkit-appearance:none;
+-webkit-tap-highlight-color:transparent;
 }
-
+.modeBtn:focus{
+outline:none;
+box-shadow:none;
+}
 .modeBtn.active{
 background:#34c759;
 color:white;
+border:none;
 }
 
+  #tasbihModes:focus{
+outline:none;
+box-shadow:none;
+}
 span[onclick]{
 transition:0.15s;
 }
@@ -413,7 +426,7 @@ text-align:center;
 max-width:360px;
 margin:10px auto 16px auto;
 padding:20px;
-background:#ffffff;
+background:#cfcfd6;
 border-radius:24px;
 box-shadow:0 6px 18px rgba(0,0,0,0.12);
 ">
@@ -435,20 +448,22 @@ max-width:360px;
 margin:10px auto 16px auto;
 padding:12px;
 text-align:center;
-background:#e6d8c8;
+background:#dcdce1;
 border-radius:28px;
 box-shadow:0 6px 18px rgba(0,0,0,0.15);
 ">
 
-  <div id="tasbihModes"
-  onclick="event.stopPropagation();"
-  style="
-  display:flex;
-  background:#f2e7db;
-  border-radius:18px;
-  overflow:hidden;
-  height:52px;
-  ">
+<div id="tasbihModes"
+onclick="event.stopPropagation();"
+style="
+display:flex;
+background:#e9e9ee;
+border-radius:18px;
+overflow:hidden;
+height:52px;
+outline:none;
+-webkit-tap-highlight-color:transparent;
+">
 
   <button class="modeBtn" onclick="setTasbihMode(33)" style="font-size:20px;color:#5c4632;">33</button>
 <button class="modeBtn" onclick="setTasbihMode(100)" style="font-size:20px;color:#5c4632;">100</button>
@@ -460,30 +475,29 @@ box-shadow:0 6px 18px rgba(0,0,0,0.15);
   
 
 
-
 <div style="
 width:92%;
 max-width:360px;
 margin:0 auto;
-background:#d8b89a;
+background:#cfcfd6;
 border-radius:40px;
 padding:26px 20px 34px 20px;
 box-shadow:0 10px 24px rgba(0,0,0,0.18);
 position:relative;
 ">
-
+  
 <div id="tasbihScreen" style="
 width:150px;
 height:60px;
 margin:0 auto 24px auto;
-background:#e9ddcf;
+background:#e9e9ee;
 border-radius:14px;
 display:flex;
 align-items:center;
 justify-content:center;
 font-size:38px;
 font-weight:700;
-color:#4a3a2d;
+color:black;
 letter-spacing:2px;
 box-shadow:inset 0 2px 6px rgba(0,0,0,0.12);
 ">
@@ -494,7 +508,7 @@ width:210px;
 height:210px;
 margin:0 auto;
 border-radius:50%;
-background:#ffffff;
+background:#e9e9ee;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -506,7 +520,7 @@ position:relative;
 width:180px;
 height:180px;
 border-radius:50%;
-background:#e6d8c8;
+background:#e9e9ee;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -541,8 +555,8 @@ flex-wrap:wrap;
 ">
 
 <button onclick="resetTasbih()" style="
-background:#b68d68;
-color:white;
+background:#e9e9ee;
+color:#5c4632;
 border:none;
 border-radius:18px;
 padding:16px 34px;
@@ -1080,7 +1094,7 @@ Save or restore your app data
 </div>
 
 <div onclick="backupData()" style="
-background:#d8b89a;
+background:#007aff;
 color:#fff;
 font-size:20px;
 font-weight:800;
@@ -3219,18 +3233,27 @@ reader.readAsText(file);
 }
 
 
-  function openIstikharaPage(){
-document.getElementById("istikharaPage").style.display = "block";
+function openDuaViewer(duaName){
+
+let imageBox = document.getElementById("duaViewerImages");
+
+if(duaName === "istikhara"){
+imageBox.innerHTML = `
+<img src="duas/istikhara-1.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="duas/istikhara-2.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<img src="duas/istikhara-3.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+`;
+}
+
+document.getElementById("duaViewerPage").style.display = "block";
 document.getElementById("floatingMenuBtn").style.display = "none";
 window.scrollTo(0,0);
 }
 
-function closeIstikharaPage(){
-document.getElementById("istikharaPage").style.display = "none";
-document.getElementById("floatingMenuBtn").style.display = "none";
+function closeDuaViewer(){
+document.getElementById("duaViewerPage").style.display = "none";
 window.scrollTo(0,0);
 }
-  
   
   function goToMainPage(){
 closeMenu();
@@ -3399,7 +3422,7 @@ justify-content:center;
 
 </div>
 
-<div class="card" onclick="openIstikharaPage()" style="cursor:pointer;margin-top:15px;">
+<div class="card" onclick="openDuaViewer('istikhara')" style="cursor:pointer;margin-top:15px;">
 
 <div style="display:flex;justify-content:space-between;align-items:center;">
 
@@ -3686,7 +3709,7 @@ border-radius:22px;
 </div>
 
 
-  <div id="istikharaPage" style="
+ <div id="duaViewerPage" style="
 display:none;
 position:fixed;
 top:0;
@@ -3699,20 +3722,23 @@ padding:15px;
 z-index:10002;
 ">
 
-<button onclick="closeIstikharaPage()" style="
+<button onclick="closeDuaViewer()" style="
 width:36px;
 height:36px;
 border-radius:50%;
 border:1px solid #ccc;
 background:white;
 font-size:20px;
-">←</button>
+">
+←
+</button>
 
-<img src="duas/istikhara-1.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
-<img src="duas/istikhara-2.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
-<img src="duas/istikhara-3.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
+<div id="duaViewerImages"></div>
 
 </div>
+
+
+  
  <div id="yaseenPage" style="
 display:none;
 position:fixed;
