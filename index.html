@@ -404,22 +404,559 @@ overflow:auto;
 padding:15px;
 ">
 
-  <div style="padding:10px;">
-    <button onclick="closeTasbihPage()" style="
-    width:36px;
-    height:36px;
-    border-radius:50%;
-    border:1px solid #ccc;
-    background:white;
+<!-- TASBIH SETTINGS OVERLAY -->
+<div id="tasbihSettingsOverlay" onclick="closeTasbihSettings()" style="
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:rgba(0,0,0,0.35);
+backdrop-filter:blur(3px);
+-webkit-backdrop-filter:blur(3px);
+z-index:8000;
+display:none;
+"></div>
+
+<!-- TASBIH SETTINGS PANEL -->
+<div id="tasbihSettingsDrawer" style="
+position:fixed;
+top:0;
+right:-70%;
+width:70%;
+max-width:380px;
+height:100%;
+background:white;
+z-index:8100;
+box-shadow:-10px 0 30px rgba(0,0,0,0.2);
+transition:0.25s;
+padding:20px;
+box-sizing:border-box;
+">
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+">
+
+<div style="
+font-size:22px;
+font-weight:800;
+">
+Settings
+</div>
+
+<button onclick="closeTasbihSettings()" style="
+border:none;
+background:#e9e9ee;
+width:36px;
+height:36px;
+border-radius:10px;
+font-size:18px;
+cursor:pointer;
+">
+✕
+</button>
+
+</div>
+
+<div style="
+font-size:18px;
+font-weight:800;
+margin-bottom:12px;
+color:#111;
+">
+Style
+</div>
+
+<button onclick="showClassicMode()" style="
+width:100%;
+padding:18px;
+border-radius:18px;
+border:none;
+background:#f3f3f3;
+margin-bottom:12px;
+cursor:pointer;
+font-size:20px;
+font-weight:800;
+color:#111;
+text-align:left;
+">
+Classic
+</button>
+
+<button onclick="showDarkNightMode()" style="
+width:100%;
+padding:18px;
+border-radius:18px;
+border:none;
+background:#f3f3f3;
+cursor:pointer;
+font-size:20px;
+font-weight:800;
+color:#111;
+text-align:left;
+">
+Dark Night
+</button>
+  
+</div>
+
+
+
+
+  <!-- DARK NIGHT TASBIH -->
+<div id="darkNightTasbih" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+z-index:4500;
+background:url('Images/dark-tasbih-bg.jpg') center/cover no-repeat;
+overflow:hidden;
+">
+
+<!-- DARK NIGHT HEADER -->
+<div style="
+position:absolute;
+top:20px;
+left:20px;
+right:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:5;
+">
+
+<!-- BACK BUTTON -->
+<button onclick="closeTasbihPage()" style="
+width:42px;
+height:42px;
+border-radius:50%;
+border:none;
+background:rgba(255,255,255,0.15);
+color:white;
+font-size:20px;
+display:flex;
+align-items:center;
+justify-content:center;
+backdrop-filter:blur(10px);
+cursor:pointer;
+">
+←
+</button>
+
+<!-- SETTINGS BUTTON -->
+<button onclick="openTasbihSettings()" style="
+width:44px;
+height:44px;
+border:none;
+border-radius:14px;
+background:rgba(255,255,255,0.15);
+color:white;
+font-size:22px;
+backdrop-filter:blur(10px);
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+">
+⚙️
+</button>
+
+</div>
+
+<!-- TARGET + RESET -->
+<div style="
+position:absolute;
+top:38%;
+left:20px;
+right:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+">
+
+  <!-- LEFT TARGET CIRCLE -->
+ <div style="position:relative;">
+  <div id="darkTargetCircle" onclick="toggleDarkTargetMenu(event)" style="
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.2);
+  border:2px solid rgba(255,255,255,0.8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:22px;
+  font-weight:700;
+  cursor:pointer;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  ">
+  <span id="darkTargetText">100</span>
+  </div>
+
+  <div id="darkTargetMenu" style="
+  display:none;
+  position:absolute;
+  top:82px;
+  left:0;
+  width:120px;
+  background:rgba(20,20,20,0.96);
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius:20px;
+  padding:8px;
+  box-shadow:0 16px 40px rgba(0,0,0,0.35);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  z-index:20;
+  ">
+
+    <button onclick="selectDarkTarget(33,event)" style="
+    width:100%;
+    border:none;
+    border-radius:14px;
+    padding:12px 10px;
+    margin-bottom:8px;
+    background:rgba(255,255,255,0.10);
+    color:white;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+    ">
+    33
+    </button>
+
+    <button onclick="selectDarkTarget(100,event)" style="
+    width:100%;
+    border:none;
+    border-radius:14px;
+    padding:12px 10px;
+    margin-bottom:8px;
+    background:rgba(255,255,255,0.10);
+    color:white;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+    ">
+    100
+    </button>
+
+    <button onclick="selectDarkTarget('inf',event)" style="
+    width:100%;
+    border:none;
+    border-radius:14px;
+    padding:12px 10px;
+    margin-bottom:8px;
+    background:rgba(255,255,255,0.10);
+    color:white;
+    font-size:20px;
+    font-weight:700;
+    cursor:pointer;
+    ">
+    ∞
+    </button>
+
+    <button onclick="closeDarkTargetMenu(event)" style="
+    width:100%;
+    border:none;
+    border-radius:14px;
+    padding:10px 10px;
+    background:rgba(255,255,255,0.06);
+    color:#d6d6d6;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    ">
+    Cancel
+    </button>
+
+  </div>
+</div>
+
+  <!-- RIGHT RESET CIRCLE -->
+  <div style="
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.2);
+  border:2px solid rgba(255,255,255,0.8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  " onclick="resetTasbih()">
+  Reset
+  </div>
+
+</div>
+
+<!-- BIG RING -->
+<div id="darkNightRing" onclick="tapDarkNightRing()" style="
+position:absolute;
+left:50%;
+bottom:110px;
+transform:translateX(-50%);
+width:320px;
+height:320px;
+border-radius:50%;
+border:4px solid white;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:80px;
+font-weight:800;
+cursor:pointer;
+transition:transform .15s;
+user-select:none;
+-webkit-user-select:none;
+touch-action:manipulation;
+">
+
+<span id="darkTasbihNumber">0</span>
+
+</div>
+
+</div>
+
+  
+<!-- DARK TARGET POPUP -->
+<div id="darkTargetPopup" onclick="closeDarkTargetPopup()" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:rgba(0,0,0,0.45);
+backdrop-filter:blur(4px);
+-webkit-backdrop-filter:blur(4px);
+z-index:8700;
+">
+
+  <div onclick="event.stopPropagation()" style="
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:260px;
+  max-width:88%;
+  background:rgba(20,20,20,0.92);
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius:28px;
+  padding:18px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.35);
+  ">
+
+    <div style="
+    color:white;
+    font-size:20px;
+    font-weight:800;
+    text-align:center;
+    margin-bottom:14px;
+    ">
+    Select Target
+    </div>
+
+    <button onclick="setDarkTarget(33)" style="
+    width:100%;
+    border:none;
+    border-radius:18px;
+    padding:16px;
+    margin-bottom:10px;
+    background:rgba(255,255,255,0.10);
+    color:white;
+    font-size:20px;
+    font-weight:700;
+    cursor:pointer;
+    ">
+    33
+    </button>
+
+    <button onclick="setDarkTarget(100)" style="
+    width:100%;
+    border:none;
+    border-radius:18px;
+    padding:16px;
+    margin-bottom:10px;
+    background:rgba(255,255,255,0.10);
+    color:white;
+    font-size:20px;
+    font-weight:700;
+    cursor:pointer;
+    ">
+    100
+    </button>
+
+    <button onclick="setDarkTarget('inf')" style="
+    width:100%;
+    border:none;
+    border-radius:18px;
+    padding:16px;
+    background:rgba(255,255,255,0.10);
+    color:white;
+    font-size:20px;
+    font-weight:700;
+    cursor:pointer;
+    ">
+    ∞
+    </button>
+
+  </div>
+</div>
+
+<!-- TASBIH SETTINGS DRAWER -->
+<div id="tasbihSettingsDrawer" style="
+position:fixed;
+top:0;
+right:-70%;
+width:70%;
+max-width:380px;
+height:100%;
+background:#f7f7fa;
+box-shadow:-10px 0 30px rgba(0,0,0,0.18);
+z-index:8600;
+transition:0.28s ease;
+border-top-left-radius:26px;
+border-bottom-left-radius:26px;
+overflow:auto;
+padding:22px 18px 30px 18px;
+box-sizing:border-box;
+">
+
+  <div style="
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:22px;
+  ">
+    <div style="
+    font-size:22px;
+    font-weight:800;
+    color:#111;
+    ">
+      Settings
+    </div>
+
+    <button onclick="closeTasbihSettings()" style="
+    width:38px;
+    height:38px;
+    border:none;
+    border-radius:12px;
+    background:#e9e9ee;
     font-size:20px;
     cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    color:#111;
     ">
-      ←
+      ✕
     </button>
   </div>
+
+  <div style="
+  font-size:15px;
+  font-weight:700;
+  color:#666;
+  margin-bottom:10px;
+  letter-spacing:0.2px;
+  ">
+    Style
+  </div>
+
+  <div style="
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  ">
+
+    <button id="styleBtnClassic" onclick="setTasbihStyle('classic')" style="
+width:100%;
+border:none;
+border-radius:20px;
+background:white;
+padding:16px 16px;
+text-align:left;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+cursor:pointer;
+outline:3px solid #111;
+">
+  <div style="font-size:17px;font-weight:800;color:#111;">Classic</div>
+  <div style="font-size:13px;color:#666;margin-top:4px;">Your current Tasbih style</div>
+</button>
+
+   <button id="styleBtnDarkNight" onclick="setTasbihStyle('dark')" style="
+width:100%;
+border:none;
+border-radius:20px;
+background:white;
+padding:16px 16px;
+text-align:left;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+cursor:pointer;
+outline:none;
+">
+  <div style="font-size:17px;font-weight:800;color:#111;">Dark Night</div>
+  <div style="font-size:13px;color:#666;margin-top:4px;">New dark sky ring Tasbih style</div>
+</button>
+  </div>
+
+</div>
+  <div style="padding:10px;">
+
+    <!-- TASBIH HEADER -->
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px 4px 20px 4px;
+">
+
+<!-- BACK BUTTON -->
+<button onclick="closeTasbihPage()" style="
+width:40px;
+height:40px;
+border-radius:50%;
+border:1px solid #ccc;
+background:white;
+font-size:20px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+">
+←
+</button>
+
+<!-- SETTINGS BUTTON -->
+<button onclick="openTasbihSettings()" style="
+width:44px;
+height:44px;
+border:none;
+border-radius:14px;
+background:rgba(255,255,255,0.75);
+backdrop-filter:blur(12px);
+-webkit-backdrop-filter:blur(12px);
+box-shadow:0 6px 18px rgba(0,0,0,0.10);
+font-size:22px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#111;
+">
+⚙️
+</button>
+
+</div>
 
  <div class="card" style="
 text-align:center;
@@ -1903,10 +2440,17 @@ counter.innerText = count;
 let screen = document.getElementById("tasbihScreen");
 if(screen){
 screen.innerText = count;
-  buildTasbihBars();
 }
 
+let center = document.getElementById("tasbihCenterText");
+if(center){
+center.innerText = count + " / " + (target === "inf" ? "∞" : target);
 }
+
+buildTasbihBars();
+}
+
+  
 function resetTasbih(){
 localStorage.setItem(getTasbihKey(),0);
 
@@ -1928,8 +2472,8 @@ center.innerText = "0 / " + target;
 }
 
 buildTasbihBars();
+updateDarkNightNumber();
 }
-
 // ===== ZIKR TASBIH SYSTEM =====
 
 let zikrCount = 0;
@@ -2465,11 +3009,38 @@ function openTasbihPage(){
 document.getElementById("tasbihPage").style.display = "block";
 document.getElementById("floatingMenuBtn").style.display = "none";
 window.scrollTo(0,0);
+
+applySavedTasbihStyle();
 }
 
 function closeTasbihPage(){
-document.getElementById("tasbihPage").style.display = "none";
-document.getElementById("floatingMenuBtn").style.display = "flex";
+
+let tasbihPage = document.getElementById("tasbihPage");
+let darkNightTasbih = document.getElementById("darkNightTasbih");
+let overlay = document.getElementById("tasbihSettingsOverlay");
+let drawer = document.getElementById("tasbihSettingsDrawer");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+
+if(tasbihPage){
+tasbihPage.style.display = "none";
+}
+
+if(darkNightTasbih){
+darkNightTasbih.style.display = "none";
+}
+
+if(overlay){
+overlay.style.display = "none";
+}
+
+if(drawer){
+drawer.style.right = "-70%";
+}
+
+if(floatingMenuBtn){
+floatingMenuBtn.style.display = "flex";
+}
+
 window.scrollTo(0,0);
 }
 let salahSource = "location";
@@ -3260,12 +3831,205 @@ closeMenu();
 location.reload();
 }
 
+function openTasbihSettings(){
+
+let overlay = document.getElementById("tasbihSettingsOverlay");
+let drawer = document.getElementById("tasbihSettingsDrawer");
+
+if(overlay){
+overlay.style.display = "block";
+setTimeout(function(){
+overlay.style.opacity = "1";
+},10);
+}
+
+if(drawer){
+drawer.style.right = "0";
+}
+
+}
+
+function closeTasbihSettings(){
+
+let overlay = document.getElementById("tasbihSettingsOverlay");
+let drawer = document.getElementById("tasbihSettingsDrawer");
+
+if(overlay){
+overlay.style.opacity = "0";
+setTimeout(function(){
+overlay.style.display = "none";
+},250);
+}
+
+if(drawer){
+drawer.style.right = "-70%";
+}
+
+}
+  
+function animateDarkNightRing(){
+
+let ring = document.getElementById("darkNightRing");
+
+if(!ring) return;
+
+ring.style.transform = "translateX(-50%) scale(1.1)";
+
+setTimeout(function(){
+ring.style.transform = "translateX(-50%) scale(1)";
+},150);
+
+}
+
+function tapDarkNightRing(){
+
+increaseTasbih();
+animateDarkNightRing();
+updateDarkNightNumber();
+
+}
+document.addEventListener("click", function(e){
+
+let menu = document.getElementById("darkTargetMenu");
+let circle = document.getElementById("darkTargetCircle");
+
+if(!menu || !circle) return;
+
+if(menu.contains(e.target)) return;
+if(circle.contains(e.target)) return;
+
+menu.style.display = "none";
+
+});
+
+function saveTasbihStyle(style){
+localStorage.setItem("tasbihStyle", style);
+}
+
+function applySavedTasbihStyle(){
+
+let savedStyle = localStorage.getItem("tasbihStyle") || "classic";
+
+if(savedStyle === "dark"){
+showDarkNightMode();
+}else{
+showClassicMode();
+}
+
+}
+
+
+  
+function toggleDarkTargetMenu(event){
+if(event) event.stopPropagation();
+
+let menu = document.getElementById("darkTargetMenu");
+if(!menu) return;
+
+if(menu.style.display === "block"){
+menu.style.display = "none";
+}else{
+menu.style.display = "block";
+}
+}
+
+function closeDarkTargetMenu(event){
+if(event) event.stopPropagation();
+
+let menu = document.getElementById("darkTargetMenu");
+if(menu){
+menu.style.display = "none";
+}
+}
+
+function selectDarkTarget(mode,event){
+if(event) event.stopPropagation();
+
+setTasbihMode(mode);
+
+let darkTargetText = document.getElementById("darkTargetText");
+if(darkTargetText){
+darkTargetText.innerText = mode === "inf" ? "∞" : mode;
+}
+
+updateDarkNightNumber();
+closeDarkTargetMenu();
+}
+
+function showDarkNightMode(){
+
+let dark = document.getElementById("darkNightTasbih");
+let drawer = document.getElementById("tasbihSettingsDrawer");
+let overlay = document.getElementById("tasbihSettingsOverlay");
+
+  saveTasbihStyle("dark");
+
+  if(dark){
+dark.style.display = "block";
+}
+
+if(drawer){
+drawer.style.right = "-70%";
+}
+
+if(overlay){
+overlay.style.display = "none";
+}
+
+updateDarkNightNumber();
+closeDarkTargetMenu();
+
+let savedTarget = localStorage.getItem(getTargetKey()) || 33;
+let darkTargetText = document.getElementById("darkTargetText");
+if(darkTargetText){
+darkTargetText.innerText = savedTarget === "inf" ? "∞" : savedTarget;
+}
+
+}
+function showClassicMode(){
+
+let dark = document.getElementById("darkNightTasbih");
+let drawer = document.getElementById("tasbihSettingsDrawer");
+let overlay = document.getElementById("tasbihSettingsOverlay");
+
+saveTasbihStyle("classic");
+
+if(dark){
+dark.style.display = "none";
+}
+
+if(drawer){
+drawer.style.right = "-70%";
+}
+
+if(overlay){
+overlay.style.display = "none";
+}
+
+closeDarkTargetMenu();
+
+}
+
+function hideDarkNightTasbih(){
+document.getElementById("darkNightTasbih").style.display="none";
+}
+
+function updateDarkNightNumber(){
+
+let main = document.getElementById("tasbihScreen");
+let dark = document.getElementById("darkTasbihNumber");
+
+if(main && dark){
+dark.innerText = main.innerText;
+}
+
+}
 
   
 
+
+
   
-
-
 
 
 
