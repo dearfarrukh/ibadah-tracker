@@ -3277,15 +3277,20 @@ document.getElementById("zikrDetailPage").style.display = "block";
 function closeZikrDetail(){
 document.getElementById("zikrDetailPage").style.display = "none";
 }
-  function openWaqiyaPage(){
+
+function openWaqiyaPage(){
 
 document.getElementById("waqiyaPage").style.display = "block";
+document.getElementById("floatingMenuBtn").style.display = "none";
+window.scrollTo(0,0);
 
 }
 
 function closeWaqiyaPage(){
 
 document.getElementById("waqiyaPage").style.display = "none";
+document.getElementById("floatingMenuBtn").style.display = "flex";
+window.scrollTo(0,0);
 
 }
 
