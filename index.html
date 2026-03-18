@@ -6,7 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="apple-touch-icon" href="icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
-
+<meta name="theme-color" content="#e9e9ee">
+<link rel="manifest" href="manifest.webmanifest">
 <style>
 
 body{
@@ -3408,8 +3409,7 @@ let salahUrl =
 "https://api.aladhan.com/v1/timings/" + apiDate
 + "?latitude=" + encodeURIComponent(loc.lat)
 + "&longitude=" + encodeURIComponent(loc.lon)
-+ "&method=2&school=" + (getAsrMethod() === "hanafi" ? "1" : "0")
-+ "&school=1";
++ "&method=2&school=" + (getAsrMethod() === "hanafi" ? "1" : "0");
 
 let res = await fetch(salahUrl);
 let json = await res.json();
@@ -5465,5 +5465,23 @@ Default source, calculation method, Ramadan settings, and more can be added here
 </div>
 
 </div>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("./sw.js")
+      .then(function () {
+        console.log("Service worker registered");
+      })
+      .catch(function (error) {
+        console.log("Service worker registration failed:", error);
+      });
+  });
+}
+</script>
+
+</body>
+
+
+
 </body>
 </html>
