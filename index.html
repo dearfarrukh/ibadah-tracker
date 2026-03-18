@@ -1612,79 +1612,100 @@ top:0;
 left:0;
 right:0;
 bottom:0;
-background:rgba(0,0,0,0.45);
+background:rgba(15,23,42,0.42);
+backdrop-filter:blur(8px);
+-webkit-backdrop-filter:blur(8px);
 z-index:10000;
 align-items:center;
 justify-content:center;
-padding:20px;
+padding:22px;
 box-sizing:border-box;
+touch-action:none;
 ">
 
 <div onclick="event.stopPropagation()" style="
 width:100%;
-max-width:340px;
-background:#fffaf4;
-border-radius:28px;
-padding:28px 22px 22px 22px;
-box-shadow:0 18px 40px rgba(0,0,0,0.22);
-text-align:center;
+max-width:420px;
+background:linear-gradient(180deg,#ffffff 0%,#f7f7fb 100%);
+border-radius:32px;
+padding:30px 22px 22px 22px;
+box-shadow:0 20px 50px rgba(0,0,0,0.22);
+text-align:left;
+border:1px solid rgba(255,255,255,0.7);
 ">
 
 <div style="
-font-size:26px;
+font-size:30px;
 font-weight:800;
-color:#5c4632;
-margin-bottom:10px;
+color:#111;
+margin-bottom:8px;
+letter-spacing:-0.3px;
 ">
-Backup
+Backup & Restore
 </div>
 
 <div style="
-font-size:16px;
+font-size:18px;
 font-weight:600;
-color:#7a634d;
+color:#666;
 line-height:1.5;
-margin-bottom:24px;
+margin-bottom:20px;
 ">
-Save or restore your app data
+Save your app data manually to your iCloud folder, or import a backup file.
+</div>
+
+<div id="backupLastSavedText" style="
+background:#f2f2f7;
+border-radius:20px;
+padding:16px 18px;
+font-size:18px;
+font-weight:700;
+color:#111;
+margin-bottom:16px;
+box-shadow:inset 0 0 0 1px rgba(0,0,0,0.04);
+">
+Last backup: Not saved yet
 </div>
 
 <div onclick="backupData()" style="
-background:#007aff;
+background:#111;
 color:#fff;
-font-size:20px;
+font-size:22px;
 font-weight:800;
-padding:15px;
-border-radius:18px;
+padding:18px;
+border-radius:22px;
 margin-bottom:12px;
 cursor:pointer;
-box-shadow:0 8px 16px rgba(0,0,0,0.12);
+box-shadow:0 10px 24px rgba(0,0,0,0.14);
+text-align:center;
 ">
-Backup
+Export Backup
 </div>
 
 <div onclick="importData()" style="
-background:#efe3d6;
-color:#5c4632;
-font-size:20px;
+background:#e9e9ee;
+color:#111;
+font-size:22px;
 font-weight:800;
-padding:15px;
-border-radius:18px;
+padding:18px;
+border-radius:22px;
 margin-bottom:12px;
 cursor:pointer;
-box-shadow:0 8px 16px rgba(0,0,0,0.08);
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+text-align:center;
 ">
-Import
+Import Backup
 </div>
 
 <div onclick="closeBackupPopup()" style="
-background:#f5f5f5;
+background:#f5f5f7;
 color:#666;
-font-size:18px;
+font-size:20px;
 font-weight:700;
-padding:14px;
-border-radius:18px;
+padding:16px;
+border-radius:22px;
 cursor:pointer;
+text-align:center;
 ">
 Cancel
 </div>
@@ -1692,9 +1713,29 @@ Cancel
 </div>
 </div>
 
+<!-- BACKUP STATUS TOAST -->
+<div id="backupToast" style="
+display:none;
+position:fixed;
+left:50%;
+bottom:26px;
+transform:translateX(-50%);
+background:rgba(17,17,17,0.94);
+color:white;
+padding:14px 18px;
+border-radius:18px;
+font-size:17px;
+font-weight:700;
+z-index:10020;
+box-shadow:0 10px 30px rgba(0,0,0,0.22);
+max-width:88%;
+text-align:center;
+">
+Backup file ready. Save it in your Ibadah folder.
+</div>
+
 <!-- HIDDEN FILE INPUT FOR IMPORT -->
 <input type="file" id="backupFileInput" accept=".json" style="display:none;" onchange="handleImportFile(event)">
-
 
 
 
@@ -3702,11 +3743,72 @@ location.reload();
 
 function openBackupPopup(){
 closeSideMenu();
-document.getElementById("backupPopupOverlay").style.display = "flex";
+
+let overlay = document.getElementById("backupPopupOverlay");
+if(overlay){
+overlay.style.display = "flex";
+}
+
+document.body.style.overflow = "hidden";
+document.documentElement.style.overflow = "hidden";
+
+updateBackupLastSavedText();
 }
 
 function closeBackupPopup(){
-document.getElementById("backupPopupOverlay").style.display = "none";
+let overlay = document.getElementById("backupPopupOverlay");
+if(overlay){
+overlay.style.display = "none";
+}
+
+document.body.style.overflow = "";
+document.documentElement.style.overflow = "";
+}
+
+function showBackupToast(message){
+let toast = document.getElementById("backupToast");
+if(!toast) return;
+
+toast.innerText = message;
+toast.style.display = "block";
+
+clearTimeout(window.backupToastTimer);
+
+window.backupToastTimer = setTimeout(function(){
+toast.style.display = "none";
+}, 2600);
+}
+
+function updateBackupLastSavedText(){
+let text = document.getElementById("backupLastSavedText");
+if(!text) return;
+
+let saved = localStorage.getItem("lastBackupAt");
+
+if(!saved){
+text.innerText = "Last backup: Not saved yet";
+return;
+}
+
+let date = new Date(saved);
+
+if(isNaN(date.getTime())){
+text.innerText = "Last backup: Not saved yet";
+return;
+}
+
+text.innerText =
+"Last backup: " +
+date.toLocaleDateString("en-US", {
+month:"short",
+day:"numeric",
+year:"numeric"
+}) +
+" at " +
+date.toLocaleTimeString("en-US", {
+hour:"numeric",
+minute:"2-digit"
+});
 }
 
 function backupData(){
@@ -3730,7 +3832,7 @@ backup.taskList = [];
 for(let i = 0; i < localStorage.length; i++){
 let key = localStorage.key(i);
 
-if(key !== "taskList"){
+if(key !== "taskList" && key !== "lastBackupAt"){
 backup.storage[key] = localStorage.getItem(key);
 }
 }
@@ -3745,8 +3847,13 @@ a.href = URL.createObjectURL(blob);
 a.download = "ibadah-backup.json";
 a.click();
 
+localStorage.setItem("lastBackupAt", new Date().toISOString());
+updateBackupLastSavedText();
+
 setTimeout(function(){
+showBackupToast("Backup file ready. Save it in your Ibadah folder.");
 closeBackupPopup();
+URL.revokeObjectURL(a.href);
 }, 300);
 }
 
@@ -3807,12 +3914,14 @@ for(let key in finalStorage){
 localStorage.setItem(key, finalStorage[key]);
 }
 
+localStorage.setItem("lastBackupAt", new Date().toISOString());
+
 closeBackupPopup();
 
 setTimeout(function(){
 location.reload();
 }, 300);
-
+  
 }catch(err){
 alert("Invalid backup file");
 }
