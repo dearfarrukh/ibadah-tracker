@@ -1,4 +1,4 @@
-const CACHE_VERSION = "ibadah-cache-v1";
+const CACHE_VERSION = "ibadah-cache-v2";
 const APP_FILES = [
   "./",
   "./index.html",
