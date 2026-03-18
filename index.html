@@ -1939,26 +1939,78 @@ loadTasks();
 
 function manageTasks(){
 
-let area = document.getElementById("taskMenuContent");
+document.getElementById("taskMenuContent").innerHTML = `
+<div style="
+font-size:30px;
+font-weight:900;
+color:#111;
+margin-bottom:20px;
+letter-spacing:-0.4px;
+">
+Manage Tasks
+</div>
 
-area.innerHTML = `
-
-<button onclick="showAddTask()" style="width:100%;padding:12px;margin-bottom:10px;">
+<button onclick="showAddTask()" style="
+width:100%;
+padding:20px;
+margin-bottom:12px;
+font-size:24px;
+font-weight:800;
+border:none;
+border-radius:22px;
+background:#111;
+color:white;
+box-shadow:0 10px 24px rgba(0,0,0,0.14);
+cursor:pointer;
+">
 Add Task
 </button>
 
-<button onclick="showRenameTask()" style="width:100%;padding:12px;margin-bottom:10px;">
+<button onclick="showRenameTask()" style="
+width:100%;
+padding:20px;
+margin-bottom:12px;
+font-size:24px;
+font-weight:800;
+border:none;
+border-radius:22px;
+background:#e9e9ee;
+color:#111;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+cursor:pointer;
+">
 Rename Task
 </button>
 
-<button onclick="showRemoveTask()" style="width:100%;padding:12px;margin-bottom:10px;">
+<button onclick="showRemoveTask()" style="
+width:100%;
+padding:20px;
+margin-bottom:12px;
+font-size:24px;
+font-weight:800;
+border:none;
+border-radius:22px;
+background:#e9e9ee;
+color:#111;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+cursor:pointer;
+">
 Remove Task
 </button>
 
-<button onclick="closeTaskMenu()" style="width:100%;padding:12px;background:#eee;">
-Cancel
+<button onclick="closeTaskMenu()" style="
+width:100%;
+padding:18px;
+background:#f5f5f7;
+font-size:22px;
+font-weight:700;
+border:none;
+border-radius:22px;
+color:#666;
+cursor:pointer;
+">
+Close
 </button>
-
 `;
 
 document.getElementById("taskMenu").style.display = "block";
@@ -2029,20 +2081,51 @@ let area = document.getElementById("taskExtra");
 
 if(type === "range"){
 area.innerHTML = `
-Start: <input type="date" id="taskStart"><br><br>
-End: <input type="date" id="taskEnd">
+<div style="text-align:left;margin-bottom:10px;font-size:18px;font-weight:700;color:#111;">Start Date</div>
+<input type="date" id="taskStart" style="
+width:100%;
+margin-bottom:14px;
+padding:16px 18px;
+font-size:20px;
+font-weight:600;
+border:none;
+border-radius:18px;
+background:#f2f2f7;
+box-sizing:border-box;
+color:#111;
+">
+
+<div style="text-align:left;margin-bottom:10px;font-size:18px;font-weight:700;color:#111;">End Date</div>
+<input type="date" id="taskEnd" style="
+width:100%;
+padding:16px 18px;
+font-size:20px;
+font-weight:600;
+border:none;
+border-radius:18px;
+background:#f2f2f7;
+box-sizing:border-box;
+color:#111;
+">
 `;
 }
 
 else if(type === "days"){
 area.innerHTML = `
-<label><input type="checkbox" value="Mon"> Mon</label>
-<label><input type="checkbox" value="Tue"> Tue</label>
-<label><input type="checkbox" value="Wed"> Wed</label>
-<label><input type="checkbox" value="Thu"> Thu</label>
-<label><input type="checkbox" value="Fri"> Fri</label>
-<label><input type="checkbox" value="Sat"> Sat</label>
-<label><input type="checkbox" value="Sun"> Sun</label>
+<div style="
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+text-align:left;
+">
+<label style="font-size:18px;font-weight:700;background:#f2f2f7;padding:14px 16px;border-radius:18px;"><input type="checkbox" value="Mon"> Mon</label>
+<label style="font-size:18px;font-weight:700;background:#f2f2f7;padding:14px 16px;border-radius:18px;"><input type="checkbox" value="Tue"> Tue</label>
+<label style="font-size:18px;font-weight:700;background:#f2f2f7;padding:14px 16px;border-radius:18px;"><input type="checkbox" value="Wed"> Wed</label>
+<label style="font-size:18px;font-weight:700;background:#f2f2f7;padding:14px 16px;border-radius:18px;"><input type="checkbox" value="Thu"> Thu</label>
+<label style="font-size:18px;font-weight:700;background:#f2f2f7;padding:14px 16px;border-radius:18px;"><input type="checkbox" value="Fri"> Fri</label>
+<label style="font-size:18px;font-weight:700;background:#f2f2f7;padding:14px 16px;border-radius:18px;"><input type="checkbox" value="Sat"> Sat</label>
+<label style="font-size:18px;font-weight:700;background:#f2f2f7;padding:14px 16px;border-radius:18px;"><input type="checkbox" value="Sun"> Sun</label>
+</div>
 `;
 }
 
@@ -2713,15 +2796,58 @@ function showRemoveTask(){
 let options = taskList.map(t=>`<option>${t.name}</option>`).join("");
 
 document.getElementById("taskMenuContent").innerHTML = `
-<select id="deleteSelect" style="width:100%;margin-bottom:10px;padding:8px;">
+<div style="
+font-size:28px;
+font-weight:800;
+color:#111;
+margin-bottom:18px;
+letter-spacing:-0.3px;
+">
+Remove Task
+</div>
+
+<select id="deleteSelect" style="
+width:100%;
+margin-bottom:12px;
+padding:16px 18px;
+font-size:20px;
+font-weight:600;
+border-radius:18px;
+border:none;
+background:#f2f2f7;
+box-sizing:border-box;
+color:#111;
+">
 ${options}
 </select>
 
-<button onclick="openDeletePopup()" style="width:100%;padding:10px;background:#ff3b30;color:white;margin-bottom:10px;">
+<button onclick="openDeletePopup()" style="
+width:100%;
+padding:18px;
+background:#ff3b30;
+color:white;
+margin-bottom:12px;
+font-size:22px;
+font-weight:800;
+border:none;
+border-radius:22px;
+box-shadow:0 10px 24px rgba(255,59,48,0.22);
+cursor:pointer;
+">
 Delete Task
 </button>
 
-<button onclick="manageTasks()" style="width:100%;padding:10px;">
+<button onclick="manageTasks()" style="
+width:100%;
+padding:16px;
+font-size:20px;
+font-weight:700;
+border:none;
+border-radius:22px;
+background:#f5f5f7;
+color:#666;
+cursor:pointer;
+">
 Back
 </button>
 `;
@@ -2796,21 +2922,79 @@ manageTasks();
 let area = document.getElementById("taskMenuContent");
 
 area.innerHTML = `
-<input id="taskNameInput" placeholder="Task Name" style="width:100%;margin-bottom:10px;padding:8px;">
+<div style="
+font-size:28px;
+font-weight:800;
+color:#111;
+margin-bottom:18px;
+letter-spacing:-0.3px;
+">
+Add Task
+</div>
 
-<select id="taskTypeSelect" style="width:100%;margin-bottom:10px;padding:8px;">
+<input id="taskNameInput" placeholder="Task Name" style="
+width:100%;
+margin-bottom:12px;
+padding:16px 18px;
+font-size:20px;
+font-weight:600;
+border-radius:18px;
+border:none;
+background:#f2f2f7;
+box-sizing:border-box;
+color:#111;
+">
+
+<select id="taskTypeSelect" style="
+width:100%;
+margin-bottom:12px;
+padding:16px 18px;
+font-size:20px;
+font-weight:600;
+border-radius:18px;
+border:none;
+background:#f2f2f7;
+box-sizing:border-box;
+color:#111;
+">
 <option value="">Select Type</option>
 <option value="range">Date Range</option>
 <option value="today">Start Today</option>
 <option value="days">Specific Days</option>
 </select>
 
-<div id="taskExtra"></div>
+<div id="taskExtra" style="margin-bottom:12px;"></div>
 
-<button onclick="createTask()" style="width:100%;margin-bottom:10px;">Save</button>
-<button onclick="manageTasks()" style="width:100%;">Back</button>
+<button onclick="createTask()" style="
+width:100%;
+margin-bottom:12px;
+padding:18px;
+font-size:22px;
+font-weight:800;
+border:none;
+border-radius:22px;
+background:#111;
+color:white;
+box-shadow:0 10px 24px rgba(0,0,0,0.14);
+cursor:pointer;
+">
+Save
+</button>
+
+<button onclick="manageTasks()" style="
+width:100%;
+padding:16px;
+font-size:20px;
+font-weight:700;
+border:none;
+border-radius:22px;
+background:#f5f5f7;
+color:#666;
+cursor:pointer;
+">
+Back
+</button>
 `;
-
 document.getElementById("taskTypeSelect").onchange = showTaskOptions;
 
 }
@@ -2867,17 +3051,71 @@ function showRenameTask(){
 let options = taskList.map(t=>`<option>${t.name}</option>`).join("");
 
 document.getElementById("taskMenuContent").innerHTML = `
-<select id="renameSelect" style="width:100%;margin-bottom:10px;padding:8px;">
+<div style="
+font-size:28px;
+font-weight:800;
+color:#111;
+margin-bottom:18px;
+letter-spacing:-0.3px;
+">
+Rename Task
+</div>
+
+<select id="renameSelect" style="
+width:100%;
+margin-bottom:12px;
+padding:16px 18px;
+font-size:20px;
+font-weight:600;
+border-radius:18px;
+border:none;
+background:#f2f2f7;
+box-sizing:border-box;
+color:#111;
+">
 ${options}
 </select>
 
-<input id="renameInput" placeholder="New Name" style="width:100%;margin-bottom:10px;padding:8px;">
+<input id="renameInput" placeholder="New Name" style="
+width:100%;
+margin-bottom:12px;
+padding:16px 18px;
+font-size:20px;
+font-weight:600;
+border-radius:18px;
+border:none;
+background:#f2f2f7;
+box-sizing:border-box;
+color:#111;
+">
 
-<button onclick="confirmRenameTask()" style="width:100%;padding:10px;margin-bottom:10px;">
+<button onclick="confirmRenameTask()" style="
+width:100%;
+padding:18px;
+margin-bottom:12px;
+font-size:22px;
+font-weight:800;
+border:none;
+border-radius:22px;
+background:#111;
+color:white;
+box-shadow:0 10px 24px rgba(0,0,0,0.14);
+cursor:pointer;
+">
 Rename
 </button>
 
-<button onclick="manageTasks()" style="width:100%;padding:10px;">
+<button onclick="manageTasks()" style="
+width:100%;
+padding:16px;
+font-size:20px;
+font-weight:700;
+border:none;
+border-radius:22px;
+background:#f5f5f7;
+color:#666;
+cursor:pointer;
+">
 Back
 </button>
 `;
@@ -4530,36 +4768,96 @@ function openSalahSettingsFromMenu(){
   
   <div id="menuOverlay"></div>
 
- <div id="taskMenu" style="
+<div id="taskMenu" style="
 position:fixed;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-background:white;
-border-radius:20px;
-padding:20px;
-box-shadow:0 10px 40px rgba(0,0,0,0.3);
+background:linear-gradient(180deg,#ffffff 0%,#f7f7fb 100%);
+border-radius:34px;
+padding:32px 24px 24px 24px;
+box-shadow:0 25px 60px rgba(0,0,0,0.25);
 display:none;
 z-index:1000;
 text-align:center;
-width:280px;
+width:360px;
+max-width:92%;
+border:1px solid rgba(255,255,255,0.7);
 ">
 
 <div id="taskMenuContent">
 
-<button onclick="showAddTask()" style="width:100%;padding:12px;margin-bottom:10px;font-size:18px;font-weight:600;">
+<div style="
+font-size:30px;
+font-weight:900;
+color:#111;
+margin-bottom:20px;
+letter-spacing:-0.4px;
+">
+Manage Tasks
+</div>
+
+
+
+<button onclick="showAddTask()" style="
+width:100%;
+padding:20px;
+margin-bottom:12px;
+font-size:24px;
+font-weight:800;
+border:none;
+border-radius:22px;
+background:#111;
+color:white;
+box-shadow:0 10px 24px rgba(0,0,0,0.14);
+cursor:pointer;
+">
 Add Task
 </button>
 
-<button onclick="showRenameTask()" style="width:100%;padding:12px;margin-bottom:10px;font-size:18px;font-weight:600;">
+<button onclick="showRenameTask()" style="
+width:100%;
+padding:20px;
+margin-bottom:12px;
+font-size:24px;
+font-weight:800;
+border:none;
+border-radius:22px;
+background:#e9e9ee;
+color:#111;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+cursor:pointer;
+">
 Rename Task
 </button>
 
-<button onclick="showRemoveTask()" style="width:100%;padding:12px;margin-bottom:10px;font-size:18px;font-weight:600;">
+<button onclick="showRemoveTask()" style="
+width:100%;
+padding:20px;
+margin-bottom:12px;
+font-size:24px;
+font-weight:800;
+border:none;
+border-radius:22px;
+background:#e9e9ee;
+color:#111;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+cursor:pointer;
+">
 Remove Task
 </button>
 
-<button onclick="closeTaskMenu()" style="width:100%;padding:12px;background:#eee;font-size:18px;font-weight:600;">
+<button onclick="closeTaskMenu()" style="
+width:100%;
+padding:18px;
+background:#f5f5f7;
+font-size:22px;
+font-weight:700;
+border:none;
+border-radius:22px;
+color:#666;
+cursor:pointer;
+">
 Close
 </button>
 
@@ -4567,57 +4865,78 @@ Close
 
 </div>
 
-  <div id="deleteChoicePopup" style="
+<div id="deleteChoicePopup" style="
 position:fixed;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-background:white;
-border-radius:20px;
-padding:20px;
-box-shadow:0 10px 40px rgba(0,0,0,0.3);
+background:linear-gradient(180deg,#ffffff 0%,#f7f7fb 100%);
+border-radius:32px;
+padding:28px 22px 22px 22px;
+box-shadow:0 20px 50px rgba(0,0,0,0.22);
 display:none;
 z-index:2000;
 text-align:center;
-width:260px;
+width:320px;
+max-width:88%;
+border:1px solid rgba(255,255,255,0.7);
 ">
 
-<h3 style="margin-bottom:15px;">Delete Task</h3>
+<h3 style="
+margin-bottom:18px;
+font-size:28px;
+font-weight:800;
+color:#111;
+letter-spacing:-0.3px;
+">
+Delete Task
+</h3>
 
 <button onclick="deleteFromBeginning()" style="
 width:100%;
-padding:12px;
-margin-bottom:10px;
+padding:20px;
+margin-bottom:12px;
 background:#ff3b30;
 color:white;
 border:none;
-border-radius:12px;
+border-radius:22px;
+font-size:22px;
+font-weight:800;
+box-shadow:0 10px 24px rgba(255,59,48,0.22);
+cursor:pointer;
 ">
 Delete From Beginning
 </button>
 
 <button onclick="deleteFromToday()" style="
 width:100%;
-padding:12px;
-margin-bottom:10px;
+padding:18px;
+margin-bottom:12px;
 background:#ff9500;
 color:white;
 border:none;
-border-radius:12px;
+border-radius:22px;
+font-size:22px;
+font-weight:800;
+box-shadow:0 10px 24px rgba(255,149,0,0.20);
+cursor:pointer;
 ">
 Delete From Today
 </button>
 
 <button onclick="closeDeletePopup()" style="
 width:100%;
-padding:12px;
-background:#eee;
+padding:16px;
+background:#f5f5f7;
 border:none;
-border-radius:12px;
+border-radius:22px;
+font-size:20px;
+font-weight:700;
+color:#666;
+cursor:pointer;
 ">
 Cancel
 </button>
-
 </div>
 <!-- Bottom Navigation -->
 <div id="bottomNav">
