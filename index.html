@@ -2107,6 +2107,17 @@ background:#f2f2f7;
 box-sizing:border-box;
 color:#111;
 ">
+
+<div style="
+margin-top:10px;
+font-size:14px;
+font-weight:600;
+color:#666;
+line-height:1.4;
+padding-left:2px;
+">
+Date Range can include past dates.
+</div>
 `;
 }
 
@@ -2793,7 +2804,51 @@ function showRemoveTask(){
 
 
 
-let options = taskList.map(t=>`<option>${t.name}</option>`).join("");
+let visibleTasks = getManageableTasks();
+let options = visibleTasks.map(t=>`<option>${t.name}</option>`).join("");
+
+if(!options){
+document.getElementById("taskMenuContent").innerHTML = `
+<div style="
+font-size:28px;
+font-weight:800;
+color:#111;
+margin-bottom:18px;
+letter-spacing:-0.3px;
+">
+Remove Task
+</div>
+
+<div style="
+background:#f2f2f7;
+border-radius:20px;
+padding:18px;
+font-size:18px;
+font-weight:600;
+color:#666;
+margin-bottom:12px;
+line-height:1.5;
+">
+No current tasks to remove.
+Historical tasks are hidden from this screen.
+</div>
+
+<button onclick="manageTasks()" style="
+width:100%;
+padding:16px;
+font-size:20px;
+font-weight:700;
+border:none;
+border-radius:22px;
+background:#f5f5f7;
+color:#666;
+cursor:pointer;
+">
+Back
+</button>
+`;
+return;
+}
 
 document.getElementById("taskMenuContent").innerHTML = `
 <div style="
@@ -2999,6 +3054,45 @@ document.getElementById("taskTypeSelect").onchange = showTaskOptions;
 
 }
 
+function getTodayTaskTime(){
+return new Date(currentDate).setHours(0,0,0,0);
+}
+
+function isHistoricalTask(task){
+
+let today = getTodayTaskTime();
+
+if(task.end === null || task.end === undefined) return false;
+
+return Number(task.end) < today;
+}
+
+function getSelectedTaskTime(){
+return new Date(currentDate).setHours(0,0,0,0);
+}
+
+function isTaskActiveOnSelectedDate(task){
+
+let selectedTime = getSelectedTaskTime();
+
+if(task.start !== undefined && selectedTime < Number(task.start)) return false;
+
+if(task.end !== null && task.end !== undefined && selectedTime > Number(task.end)) return false;
+
+if(task.days){
+let dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+let selectedDayName = dayNames[new Date(currentDate).getDay()];
+if(!task.days.includes(selectedDayName)) return false;
+}
+
+return true;
+}
+
+function getManageableTasks(){
+return taskList.filter(task => isTaskActiveOnSelectedDate(task));
+}
+
+  
   function createTask(){
 
 let name = document.getElementById("taskNameInput").value.trim();
@@ -3006,9 +3100,23 @@ let type = document.getElementById("taskTypeSelect").value;
 
 if(!name) return;
 
+if(!type){
+alert("Please select a task type.");
+return;
+}
+
 let task = {name:name};
 
-let today = new Date(currentDate).setHours(0,0,0,0);
+let today = new Date().setHours(0,0,0,0);
+
+let sameCurrentTask = taskList.find(function(t){
+return t.name.trim().toLowerCase() === name.toLowerCase() && !isHistoricalTask(t);
+});
+
+if(sameCurrentTask){
+alert("This task already exists in your current task list.");
+return;
+}
 
 if(type==="range"){
 
@@ -3021,11 +3129,12 @@ task.end = new Date(e[0], e[1]-1, e[2]).setHours(0,0,0,0);
 
 else if(type==="today"){
 
+alert("This task will start from today's date.");
+
 task.start = today;
 task.end = null;
 
 }
-
 else if(type==="days"){
 
 let days=[...document.querySelectorAll("#taskExtra input:checked")].map(d=>d.value);
@@ -3048,7 +3157,52 @@ function showRenameTask(){
 
 
 
-let options = taskList.map(t=>`<option>${t.name}</option>`).join("");
+let visibleTasks = getManageableTasks();
+let options = visibleTasks.map(t=>`<option>${t.name}</option>`).join("");
+
+if(!options){
+document.getElementById("taskMenuContent").innerHTML = `
+<div style="
+font-size:28px;
+font-weight:800;
+color:#111;
+margin-bottom:18px;
+letter-spacing:-0.3px;
+">
+Rename Task
+</div>
+
+<div style="
+background:#f2f2f7;
+border-radius:20px;
+padding:18px;
+font-size:18px;
+font-weight:600;
+color:#666;
+margin-bottom:12px;
+line-height:1.5;
+">
+No current tasks to rename.
+Historical tasks are hidden from this screen.
+</div>
+
+<button onclick="manageTasks()" style="
+width:100%;
+padding:16px;
+font-size:20px;
+font-weight:700;
+border:none;
+border-radius:22px;
+background:#f5f5f7;
+color:#666;
+cursor:pointer;
+">
+Back
+</button>
+`;
+return;
+}
+  
 
 document.getElementById("taskMenuContent").innerHTML = `
 <div style="
