@@ -335,6 +335,9 @@ z-index:5;
 
 </div>
 
+
+  
+
 <!-- SALAH -->
 <div class="card">
 <h3>🕌 Daily Salah</h3>
@@ -371,23 +374,7 @@ Manage Tasks
 </div>
 
   
-<div class="card" onclick="openZikrPage()" style="
-cursor:pointer;
-display:flex;
-justify-content:space-between;
-align-items:center;
-">
-
-<div style="font-weight:600;font-size:17px;">
-🌿 Daily Dhikr
-</div>
-
-<div style="font-size:24px;opacity:0.5;">
-›
-</div>
-
-</div>
-  
+ 
   
   
 
@@ -398,11 +385,11 @@ position:fixed;
 top:0;
 left:0;
 right:0;
-bottom:0;
+bottom:92px;
 z-index:4000;
 background:url('wallpaper.jpg') center/cover no-repeat;
 overflow:auto;
-padding:15px;
+padding:15px 15px 110px 15px;
 ">
 
 <!-- TASBIH SETTINGS OVERLAY -->
@@ -515,7 +502,7 @@ position:fixed;
 top:0;
 left:0;
 right:0;
-bottom:0;
+bottom:92px;
 z-index:4500;
 background:url('Images/dark-tasbih-bg.jpg') center/cover no-repeat;
 overflow:hidden;
@@ -534,21 +521,21 @@ z-index:5;
 ">
 
 <!-- BACK BUTTON -->
-<button onclick="closeTasbihPage()" style="
-width:42px;
-height:42px;
+<button id="tasbihTopBtn" onclick="handleTasbihTopButton()" style="
+width:38px;
+height:38px;
 border-radius:50%;
-border:none;
-background:rgba(255,255,255,0.15);
-color:white;
+border:1px solid #d6d6d6;
+background:white;
 font-size:20px;
+font-weight:700;
+cursor:pointer;
 display:flex;
 align-items:center;
 justify-content:center;
-backdrop-filter:blur(10px);
-cursor:pointer;
+box-shadow:0 3px 10px rgba(0,0,0,0.12);
 ">
-←
+<span id="tasbihTopBtnIcon">←</span>
 </button>
 
 <!-- SETTINGS BUTTON -->
@@ -574,7 +561,7 @@ justify-content:center;
 <!-- TARGET + RESET -->
 <div style="
 position:absolute;
-top:38%;
+top:30%;
 left:20px;
 right:20px;
 display:flex;
@@ -1126,7 +1113,7 @@ top:0;
 left:0;
 right:0;
 bottom:0;
-z-index:4000;
+z-index:5000;
 background:url('wallpaper.jpg') center/cover no-repeat;
 overflow:auto;
 padding:15px;
@@ -1207,7 +1194,7 @@ top:0;
 left:0;
 right:0;
 bottom:0;
-z-index:4100;
+z-index:6000;
 background:url('wallpaper.jpg') center/cover no-repeat;
 overflow:auto;
 padding:15px;
@@ -1485,25 +1472,24 @@ If the page does not load, Google may be blocking iframe on your device.
 position:fixed;
 top:20px;
 left:20px;
-width:52px;
-height:52px;
-border-radius:18px;
-background:rgba(255,255,255,0.92);
-backdrop-filter:blur(10px);
--webkit-backdrop-filter:blur(10px);
-box-shadow:0 8px 20px rgba(0,0,0,0.18);
+width:38px;
+height:38px;
+border-radius:50%;
+border:1px solid #d6d6d6;
+background:white;
+box-shadow:0 3px 10px rgba(0,0,0,0.12);
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:28px;
-font-weight:700;
-color:#5c4632;
+font-size:20px;
+color:#111;
 z-index:9999;
 cursor:pointer;
-user-select:none;
 ">
 ☰
 </div>
+
+  
 
 <!-- SIDE MENU OVERLAY -->
 <div id="sideMenuOverlay" onclick="closeSideMenu()" style="
@@ -1586,7 +1572,7 @@ cursor:pointer;
 
   
   
-  <div onclick="openSalahSettingsFromMenu()" style="
+ <div onclick="openAppSettingsPage()" style="
 background:rgba(255,255,255,0.75);
 padding:16px 18px;
 border-radius:18px;
@@ -1597,8 +1583,10 @@ margin-bottom:14px;
 box-shadow:0 6px 14px rgba(0,0,0,0.08);
 cursor:pointer;
 ">
-⚙️ Salah Settings
+⚙️ App Settings
 </div>
+
+  
 </div>
 
 
@@ -1745,6 +1733,13 @@ Backup file ready. Save it in your Ibadah folder.
 
 
 
+
+
+
+
+
+
+  
 function buildTasbihBars(){
 
 let container = document.getElementById("tasbihProgress");
@@ -2204,6 +2199,41 @@ loadTasks();
 }
 
   
+
+function getDefaultPage(){
+  return localStorage.getItem("defaultPage") || "tracker";
+}
+
+function openSelectedDefaultPage(){
+  let defaultPage = getDefaultPage();
+
+  if(defaultPage === "salah"){
+    openSalahPage();
+  }else if(defaultPage === "tasbih"){
+    openTasbihPage();
+  }else{
+    openTrackerPage();
+  }
+}
+
+function returnToDefaultPage(){
+
+let defaultPage = localStorage.getItem("defaultPage") || "tracker";
+
+if(defaultPage === "salah"){
+  openSalahPage();
+}
+else if(defaultPage === "tasbih"){
+  openTasbihPage();
+}
+else{
+  openTrackerPage();
+}
+
+}
+
+
+
   
 function increaseTasbih(){
 
@@ -3399,6 +3429,75 @@ loadTasks();
 manageTasks();
 
 }
+
+
+function openTrackerPage(){
+
+lastMainTab = "tracker";
+
+let morePage = document.getElementById("morePage");
+let salahPage = document.getElementById("salahPage");
+let tasbihPage = document.getElementById("tasbihPage");
+let duaPage = document.getElementById("duaPage");
+let qiblaPage = document.getElementById("qiblaPage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+let bottomNav = document.getElementById("bottomNav");
+
+if(morePage) morePage.style.display = "none";
+if(salahPage) salahPage.style.display = "none";
+if(tasbihPage) tasbihPage.style.display = "none";
+if(duaPage) duaPage.style.display = "none";
+if(qiblaPage) qiblaPage.style.display = "none";
+
+if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
+if(bottomNav) bottomNav.style.display = "flex";
+
+window.scrollTo(0,0);
+}
+  
+function openMorePage(){
+
+lastMainTab = "more";
+
+let morePage = document.getElementById("morePage");
+let salahPage = document.getElementById("salahPage");
+let tasbihPage = document.getElementById("tasbihPage");
+let duaPage = document.getElementById("duaPage");
+let qiblaPage = document.getElementById("qiblaPage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+let bottomNav = document.getElementById("bottomNav");
+
+if(salahPage) salahPage.style.display = "none";
+if(tasbihPage) tasbihPage.style.display = "none";
+if(duaPage) duaPage.style.display = "none";
+if(qiblaPage) qiblaPage.style.display = "none";
+
+if(morePage) morePage.style.display = "block";
+
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+if(bottomNav) bottomNav.style.display = "flex";
+
+window.scrollTo(0,0);
+}
+
+function closeMorePage(){
+
+lastMainTab = "tracker";
+
+let morePage = document.getElementById("morePage");
+let trackerPage = document.getElementById("trackerPage");
+let salahPage = document.getElementById("salahPage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+
+if(morePage) morePage.style.display = "none";
+if(trackerPage) trackerPage.style.display = "block";
+if(salahPage) salahPage.style.display = "none";
+
+if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
+
+window.scrollTo(0,0);
+}
+  
 function openDuaPage(){
 document.getElementById("duaPage").style.display = "block";
 document.getElementById("floatingMenuBtn").style.display = "none";
@@ -3407,7 +3506,14 @@ window.scrollTo(0,0);
 
 function closeDuaPage(){
 document.getElementById("duaPage").style.display = "none";
+
+if(lastMainTab === "more"){
+document.getElementById("morePage").style.display = "block";
+document.getElementById("floatingMenuBtn").style.display = "none";
+}else{
 document.getElementById("floatingMenuBtn").style.display = "flex";
+}
+
 window.scrollTo(0,0);
 }
 
@@ -3433,6 +3539,7 @@ window.open("https://qiblafinder.withgoogle.com/","_blank");
 }
   
 let currentZikr = "";
+  let lastMainTab = "tracker";
 
 const zikrData = {
 subhanallah: {
@@ -3454,15 +3561,60 @@ ref: `صحیح البخاری، الادب المفرد، باب قول: لا ح
 };
 
 function openZikrPage(){
-document.getElementById("zikrPage").style.display = "block";
-document.getElementById("floatingMenuBtn").style.display = "none";
+
+lastMainTab = "more";
+
+let salahPage = document.getElementById("salahPage");
+let morePage = document.getElementById("morePage");
+let zikrPage = document.getElementById("zikrPage");
+let tasbihPage = document.getElementById("tasbihPage");
+let duaPage = document.getElementById("duaPage");
+let qiblaPage = document.getElementById("qiblaPage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+let bottomNav = document.getElementById("bottomNav");
+
+if(salahPage) salahPage.style.display = "none";
+if(morePage) morePage.style.display = "none";
+if(tasbihPage) tasbihPage.style.display = "none";
+if(duaPage) duaPage.style.display = "none";
+if(qiblaPage) qiblaPage.style.display = "none";
+
+if(zikrPage) zikrPage.style.display = "block";
+
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+if(bottomNav) bottomNav.style.display = "flex";
+
 window.scrollTo(0,0);
+
 }
 
+
+  
+
 function closeZikrPage(){
-document.getElementById("zikrPage").style.display = "none";
-document.getElementById("floatingMenuBtn").style.display = "flex";
+
+let zikrPage = document.getElementById("zikrPage");
+let morePage = document.getElementById("morePage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+let bottomNav = document.getElementById("bottomNav");
+
+if(zikrPage) zikrPage.style.display = "none";
+
+if(lastMainTab === "more"){
+if(morePage) morePage.style.display = "block";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+}else{
+if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
 }
+
+if(bottomNav) bottomNav.style.display = "flex";
+
+window.scrollTo(0,0);
+
+}
+
+  
+  
 function openZikrDetail(name){
 
 currentZikr = name;
@@ -3478,13 +3630,17 @@ document.getElementById("zikrArabicText").innerHTML = data.arabic;
 document.getElementById("zikrMeaningText").innerHTML = data.meaning;
 document.getElementById("zikrRefText").innerHTML = data.ref;
 
+document.getElementById("zikrPage").style.display = "none";
 document.getElementById("zikrDetailPage").style.display = "block";
+
+window.scrollTo(0,0);
 }
 
 function closeZikrDetail(){
 document.getElementById("zikrDetailPage").style.display = "none";
+document.getElementById("zikrPage").style.display = "block";
+window.scrollTo(0,0);
 }
-
 function openWaqiyaPage(){
 
 document.getElementById("waqiyaPage").style.display = "block";
@@ -3514,13 +3670,46 @@ document.getElementById("floatingMenuBtn").style.display = "flex";
 window.scrollTo(0,0);
 }
 
- 
+
+
+
+  function updateTasbihTopButton(){
+
+let btn = document.getElementById("tasbihTopBtn");
+let icon = document.getElementById("tasbihTopBtnIcon");
+let defaultPage = (localStorage.getItem("defaultPage") || "").trim().toLowerCase();
+
+if(!btn || !icon) return;
+
+if(defaultPage === "tasbih"){
+icon.innerHTML = "☰";
+}else{
+icon.innerHTML = "←";
+}
+
+}
+
+
+
+  function handleTasbihTopButton(){
+
+let defaultPage = (localStorage.getItem("defaultPage") || "").trim().toLowerCase();
+
+if(defaultPage === "tasbih"){
+openMorePage();
+}else{
+closeTasbihPage();
+}
+
+}
+
+
+  
 function openTasbihPage(){
 document.getElementById("tasbihPage").style.display = "block";
 document.getElementById("floatingMenuBtn").style.display = "none";
+updateTasbihTopButton();
 window.scrollTo(0,0);
-
-applySavedTasbihStyle();
 }
 
 function closeTasbihPage(){
@@ -3547,8 +3736,18 @@ if(drawer){
 drawer.style.right = "-70%";
 }
 
+if(lastMainTab === "more"){
+let morePage = document.getElementById("morePage");
+if(morePage){
+morePage.style.display = "block";
+}
+if(floatingMenuBtn){
+floatingMenuBtn.style.display = "none";
+}
+}else{
 if(floatingMenuBtn){
 floatingMenuBtn.style.display = "flex";
+}
 }
 
 window.scrollTo(0,0);
@@ -4397,6 +4596,16 @@ return;
 
 refreshMasjidSalahData();
 }
+
+
+  let salahTouchStartX = 0;
+let salahTouchEndX = 0;
+
+function handleSalahSwipeStart(e){
+if(!e.touches || !e.touches.length) return;
+salahTouchStartX = e.touches[0].clientX;
+}
+
 function handleSalahSwipeEnd(e){
 if(!e.changedTouches || !e.changedTouches.length) return;
 salahTouchEndX = e.changedTouches[0].clientX;
@@ -4412,18 +4621,49 @@ changeSalahDay(-1);  // swipe right = previous day
 }
 }
 
-
+  
   
 function openSalahPage(){
-document.getElementById("salahPage").style.display = "block";
-document.getElementById("floatingMenuBtn").style.display = "none";
+
+lastMainTab = "salah";
+
+let morePage = document.getElementById("morePage");
+let salahPage = document.getElementById("salahPage");
+let tasbihPage = document.getElementById("tasbihPage");
+let duaPage = document.getElementById("duaPage");
+let qiblaPage = document.getElementById("qiblaPage");
+let zikrPage = document.getElementById("zikrPage");
+let zikrDetailPage = document.getElementById("zikrDetailPage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+let bottomNav = document.getElementById("bottomNav");
+  updateSalahTopButton();
+
+if(morePage) morePage.style.display = "none";
+if(tasbihPage) tasbihPage.style.display = "none";
+if(duaPage) duaPage.style.display = "none";
+if(qiblaPage) qiblaPage.style.display = "none";
+if(zikrPage) zikrPage.style.display = "none";
+if(zikrDetailPage) zikrDetailPage.style.display = "none";
+
+if(salahPage) salahPage.style.display = "block";
+
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+if(bottomNav) bottomNav.style.display = "flex";
+
+renderSalahPage();
+window.scrollTo(0,0);
 }
 
+  
 function closeSalahPage(){
-document.getElementById("salahPage").style.display = "none";
-document.getElementById("floatingMenuBtn").style.display = "flex";
-}
 
+let salahPage = document.getElementById("salahPage");
+
+if(salahPage) salahPage.style.display = "none";
+
+returnToDefaultPage();
+
+}
 
 function toggleSideMenu(){
 let menu = document.getElementById("sideMenu");
@@ -5086,15 +5326,17 @@ function ibadahScheduleMidnightRefresh(){
 }
 
 if(document.readyState === "loading"){
-  document.addEventListener("DOMContentLoaded", function(){
-    ibadahPatchSalahFunctions();
-    ibadahScheduleMidnightRefresh();
-    setAsrToggleUI();
-  });
+ document.addEventListener("DOMContentLoaded", function(){
+  ibadahPatchSalahFunctions();
+  ibadahScheduleMidnightRefresh();
+  setAsrToggleUI();
+  openSelectedDefaultPage();
+});
 }else{
   ibadahPatchSalahFunctions();
   ibadahScheduleMidnightRefresh();
   setAsrToggleUI();
+  openSelectedDefaultPage();
 }
 
 })();
@@ -5210,12 +5452,157 @@ function openSalahSettingsFromMenu(){
   window.scrollTo(0,0);
 }
 
+function openAppSettingsPage(){
+
+let appSettingsPage = document.getElementById("appSettingsPage");
+let morePage = document.getElementById("morePage");
+let salahPage = document.getElementById("salahPage");
+let tasbihPage = document.getElementById("tasbihPage");
+let duaPage = document.getElementById("duaPage");
+let qiblaPage = document.getElementById("qiblaPage");
+let zikrPage = document.getElementById("zikrPage");
+let zikrDetailPage = document.getElementById("zikrDetailPage");
+
+if(salahPage && salahPage.style.display === "block"){
+localStorage.setItem("appSettingsReturnPage", "salah");
+}else if(morePage && morePage.style.display === "block"){
+localStorage.setItem("appSettingsReturnPage", "more");
+}else if(tasbihPage && tasbihPage.style.display === "block"){
+localStorage.setItem("appSettingsReturnPage", "tasbih");
+}else if(duaPage && duaPage.style.display === "block"){
+localStorage.setItem("appSettingsReturnPage", "dua");
+}else if(qiblaPage && qiblaPage.style.display === "block"){
+localStorage.setItem("appSettingsReturnPage", "qibla");
+}else if(zikrDetailPage && zikrDetailPage.style.display === "block"){
+localStorage.setItem("appSettingsReturnPage", "zikrDetail");
+}else if(zikrPage && zikrPage.style.display === "block"){
+localStorage.setItem("appSettingsReturnPage", "zikr");
+}else{
+localStorage.setItem("appSettingsReturnPage", "more");
+}
+
+if(appSettingsPage) appSettingsPage.style.display = "block";
+window.scrollTo(0,0);
+}
+
+
+
+  
+function closeAppSettingsPage(){
+
+let appSettingsPage = document.getElementById("appSettingsPage");
+let defaultPage = localStorage.getItem("defaultPage") || "tracker";
+
+if(appSettingsPage) appSettingsPage.style.display = "none";
+
+// go to selected home page
+if(defaultPage === "salah"){
+openSalahPage();
+}
+else if(defaultPage === "tasbih"){
+openTasbihPage();
+}
+else if(defaultPage === "dua"){
+openDuaPage();
+}
+else if(defaultPage === "qibla"){
+openQiblaPage();
+}
+else{
+openTrackerPage();
+}
+
+window.scrollTo(0,0);
+}
+
+
+function getDefaultPageLabel(){
+  let page = getDefaultPage();
+
+  if(page === "salah") return "Salah Times";
+  if(page === "tasbih") return "Tasbih";
+
+  return "Daily Task";
+}
+
+function updateDefaultPageSubtitle(){
+  let el = document.getElementById("defaultPageSubtitle");
+  if(!el) return;
+  el.innerText = getDefaultPageLabel();
+}
+
+function openDefaultPagePicker(){
+  let popup = document.getElementById("defaultPagePopupOverlay");
+  if(!popup) return;
+
+  popup.style.display = "flex";
+  updateDefaultPageChecks();
+}
+
+
+  function closeDefaultPagePopup(){
+  let popup = document.getElementById("defaultPagePopupOverlay");
+  if(!popup) return;
+  popup.style.display = "none";
+}
+
+function setDefaultPage(page){
+  localStorage.setItem("defaultPage", page);
+  updateDefaultPageSubtitle();
+  updateDefaultPageChecks();
+  closeDefaultPagePopup();
+}
+
+function updateDefaultPageChecks(){
+  let current = getDefaultPage();
+
+  let salah = document.getElementById("defaultPageCheckSalah");
+  let dailyTask = document.getElementById("defaultPageCheckDailyTask");
+  let tasbih = document.getElementById("defaultPageCheckTasbih");
+
+  if(salah) salah.style.opacity = current === "salah" ? "1" : "0";
+  if(dailyTask) dailyTask.style.opacity = current === "tracker" ? "1" : "0";
+  if(tasbih) tasbih.style.opacity = current === "tasbih" ? "1" : "0";
+}
+
+
+
+function handleSalahTopButton(){
+
+// if salah is the selected app home page → open side menu
+if(localStorage.getItem("defaultPage") === "salah"){
+
+toggleSideMenu();
+
+}else{
+
+// normal behavior → go back
+closeSalahPage();
+
+}
+
+}
+
+
+ function updateSalahTopButton(){
+
+let btn = document.getElementById("salahTopBtn");
+
+if(!btn) return;
+
+if(localStorage.getItem("defaultPage") === "salah"){
+btn.innerHTML = "☰";
+}else{
+btn.innerHTML = "←";
+}
+
+}
+
+
   
 
 
-
-
-
+  
 
   
 </script>
@@ -5455,15 +5842,125 @@ Cancel
 
 <div class="navItem" onclick="openSalahPage()">🕒<br>Salah</div>
 
-<div class="navItem" onclick="openTasbihPage()">📿<br>Tasbih</div>
+<div class="navItem" onclick="openTrackerPage()">📈<br>Tracker</div>
 
-<div class="navItem" onclick="openDuaPage()">🤲<br>Dua</div>
-
-<div class="navItem" onclick="openQiblaPage()">🧭<br>Qibla</div>
+<div class="navItem" onclick="openMorePage()">•••<br>More</div>
 
 </div>
 
 
+
+<div id="morePage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:92px;
+z-index:10001;
+background:url('wallpaper.jpg') center/cover no-repeat;
+overflow:auto;
+padding:15px;
+">
+
+<div style="padding:10px;">
+<button onclick="closeMorePage()" style="
+width:36px;
+height:36px;
+border-radius:50%;
+border:1px solid #ccc;
+background:white;
+font-size:20px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+">
+←
+</button>
+</div>
+
+<div class="card" style="
+text-align:center;
+padding:24px 20px;
+margin-top:10px;
+">
+<div style="font-size:28px;font-weight:800;color:#111;">
+More
+</div>
+<div style="font-size:15px;color:#666;margin-top:8px;">
+More tools and pages
+</div>
+</div>
+
+<div class="card" style="
+padding:18px;
+margin-top:14px;
+">
+
+<div style="
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+">
+
+<div onclick="document.getElementById('morePage').style.display='none'; openTasbihPage();" style="
+background:white;
+border-radius:22px;
+padding:18px 10px;
+text-align:center;
+cursor:pointer;
+box-shadow:0 6px 16px rgba(0,0,0,0.08);
+">
+<div style="font-size:28px;margin-bottom:8px;">📿</div>
+<div style="font-size:15px;font-weight:700;color:#111;">Tasbih</div>
+</div>
+
+<div onclick="openDuaPage()" style="
+background:white;
+border-radius:22px;
+padding:18px 10px;
+text-align:center;
+cursor:pointer;
+box-shadow:0 6px 16px rgba(0,0,0,0.08);
+">
+<div style="font-size:28px;margin-bottom:8px;">🤲</div>
+<div style="font-size:15px;font-weight:700;color:#111;">Dua</div>
+</div>
+
+<div onclick="openZikrPage()" style="
+background:white;
+border-radius:22px;
+padding:18px 10px;
+text-align:center;
+cursor:pointer;
+box-shadow:0 6px 16px rgba(0,0,0,0.08);
+">
+<div style="font-size:28px;margin-bottom:8px;">🌿</div>
+<div style="font-size:15px;font-weight:700;color:#111;">Daily Dhikr</div>
+</div>
+
+<div onclick="document.getElementById('morePage').style.display='none'; openQiblaPage();" style="
+background:white;
+border-radius:22px;
+padding:18px 10px;
+text-align:center;
+cursor:pointer;
+box-shadow:0 6px 16px rgba(0,0,0,0.08);
+">
+<div style="font-size:28px;margin-bottom:8px;">🧭</div>
+<div style="font-size:15px;font-weight:700;color:#111;">Qibla</div>
+
+
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+  
 <div id="duaPage" style="
 display:none;
 position:fixed;
@@ -5519,7 +6016,265 @@ Istikhara Dua
 </div>
 </div>
 
+ <div id="appSettingsPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+z-index:10050;
+background:#e9e9ee;
+overflow:auto;
+-webkit-overflow-scrolling:touch;
+">
 
+  <div style="
+  max-width:720px;
+  margin:0 auto;
+  min-height:100%;
+  padding:20px 16px 40px 16px;
+  box-sizing:border-box;
+  ">
+
+    <div style="
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:26px;
+    padding-top:4px;
+    ">
+      
+      <button onclick="closeAppSettingsPage()" style="
+      width:42px;
+      height:42px;
+      border:none;
+      border-radius:50%;
+      background:white;
+      font-size:24px;
+      font-weight:700;
+      color:#111;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 4px 12px rgba(0,0,0,0.08);
+      flex-shrink:0;
+      ">
+      ←
+      </button>
+
+      <div style="
+      flex:1;
+      text-align:center;
+      font-size:20px;
+      font-weight:800;
+      color:#111;
+      margin:0 10px;
+      ">
+      Settings
+      </div>
+
+      <div style="width:42px;height:42px;flex-shrink:0;"></div>
+    </div>
+
+    <div style="
+    background:rgba(255,255,255,0.72);
+    border-radius:24px;
+    overflow:hidden;
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    ">
+
+      <div onclick="openDefaultPagePicker()" style="
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:18px 16px;
+      cursor:pointer;
+      ">
+
+        <div style="
+        width:42px;
+        height:42px;
+        border-radius:14px;
+        background:white;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:20px;
+        flex-shrink:0;
+        box-shadow:0 3px 8px rgba(0,0,0,0.06);
+        ">
+        🏠
+        </div>
+
+        <div style="flex:1;min-width:0;">
+          <div style="
+          font-size:18px;
+          font-weight:800;
+          color:#111;
+          line-height:1.2;
+          margin-bottom:3px;
+          ">
+          Default Page
+          </div>
+
+          <div id="defaultPageSubtitle" style="
+          font-size:14px;
+          color:#666;
+          line-height:1.35;
+          white-space:nowrap;
+          overflow:hidden;
+          text-overflow:ellipsis;
+          ">
+          Choose which page opens first
+          </div>
+        </div>
+
+        <div style="
+        font-size:22px;
+        color:#8a8a8e;
+        font-weight:700;
+        flex-shrink:0;
+        ">
+        ›
+        </div>
+      </div>
+
+    </div>
+
+    <div style="
+    text-align:center;
+    font-size:13px;
+    color:#777;
+    margin-top:18px;
+    ">
+    App Settings
+    </div>
+
+  </div>
+</div>
+
+<div id="defaultPagePopupOverlay" onclick="closeDefaultPagePopup()" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+z-index:10100;
+background:rgba(0,0,0,0.28);
+backdrop-filter:blur(8px);
+-webkit-backdrop-filter:blur(8px);
+align-items:center;
+justify-content:center;
+padding:20px;
+box-sizing:border-box;
+">
+
+ <div onclick="event.stopPropagation()" style="
+  width:100%;
+  max-width:380px;
+  background:rgba(255,255,255,0.92);
+  border-radius:28px;
+  padding:22px 18px 16px 18px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.20);
+  box-sizing:border-box;
+  ">
+
+    <div style="
+    text-align:center;
+    font-size:22px;
+    font-weight:800;
+    color:#111;
+    margin-bottom:8px;
+    ">
+    Default Page
+    </div>
+
+    <div style="
+    text-align:center;
+    font-size:14px;
+    color:#666;
+    line-height:1.45;
+    margin-bottom:18px;
+    ">
+    Choose which page should open first when the app starts
+    </div>
+
+    <div onclick="setDefaultPage('salah')" style="
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 14px;
+    background:white;
+    border-radius:18px;
+    margin-bottom:10px;
+    cursor:pointer;
+    box-shadow:0 4px 12px rgba(0,0,0,0.06);
+    ">
+      <div>
+        <div style="font-size:17px;font-weight:800;color:#111;">Salah Times</div>
+        <div style="font-size:13px;color:#777;margin-top:2px;">Open the Salah page first</div>
+      </div>
+      <div id="defaultPageCheckSalah" style="font-size:22px;color:#111;opacity:0;">✓</div>
+    </div>
+
+<div onclick="setDefaultPage('tracker')" style="
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 14px;
+    background:white;
+    border-radius:18px;
+    margin-bottom:10px;
+    cursor:pointer;
+    box-shadow:0 4px 12px rgba(0,0,0,0.06);
+    ">
+      <div>
+        <div style="font-size:17px;font-weight:800;color:#111;">Daily Task</div>
+        <div style="font-size:13px;color:#777;margin-top:2px;">Open the tracker page first</div>
+      </div>
+      <div id="defaultPageCheckDailyTask" style="font-size:22px;color:#111;opacity:0;">✓</div>
+    </div>
+
+    <div onclick="setDefaultPage('tasbih')" style="
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 14px;
+    background:white;
+    border-radius:18px;
+    margin-bottom:16px;
+    cursor:pointer;
+    box-shadow:0 4px 12px rgba(0,0,0,0.06);
+    ">
+      <div>
+        <div style="font-size:17px;font-weight:800;color:#111;">Tasbih</div>
+        <div style="font-size:13px;color:#777;margin-top:2px;">Open the Tasbih page first</div>
+      </div>
+      <div id="defaultPageCheckTasbih" style="font-size:22px;color:#111;opacity:0;">✓</div>
+    </div>
+
+    <button onclick="closeDefaultPagePopup()" style="
+    width:100%;
+    border:none;
+    background:#111;
+    color:white;
+    font-size:17px;
+    font-weight:800;
+    padding:16px;
+    border-radius:18px;
+    cursor:pointer;
+    ">
+    Done
+    </button>
+
+  </div>
+</div>
 
   
   <div id="waqiyaPage" style="
@@ -5861,7 +6616,7 @@ position:fixed;
 top:0;
 left:0;
 right:0;
-bottom:0;
+bottom:92px;
 z-index:5000;
 background:url('wallpaper.jpg') center/cover no-repeat;
 overflow:auto;
@@ -5885,21 +6640,21 @@ padding:10px 0 4px 0;
 ">
 
   <!-- Back Button -->
-  <button onclick="closeSalahPage()" style="
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  border:1px solid #d6d6d6;
-  background:white;
-  font-size:20px;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 3px 10px rgba(0,0,0,0.12);
-  ">
-  ←
-  </button>
+  <button id="salahTopBtn" onclick="handleSalahTopButton()" style="
+width:38px;
+height:38px;
+border-radius:50%;
+border:1px solid #d6d6d6;
+background:white;
+font-size:20px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:0 3px 10px rgba(0,0,0,0.12);
+">
+←
+</button>
 
    <!-- SETTINGS BUTTON -->
   <button onclick="openSalahSettingsPage()" style="
@@ -6594,7 +7349,7 @@ Default source, calculation method, Ramadan settings, and more can be added here
 // service worker removed for now
 </script>
 
-</body>
+
 
 
 
