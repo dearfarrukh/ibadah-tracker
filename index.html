@@ -304,6 +304,7 @@ height:auto;
 
 <div style="display:flex;align-items:center;gap:10px;">
 
+<!-- Prev Day Button -->
 <button onclick="prevDay()">⬅️</button>
 
 <div style="flex:1;text-align:center;position:relative;">
@@ -327,6 +328,7 @@ z-index:5;
 
 </div>
 
+<!-- Next Day Button -->
 <button onclick="nextDay()">➡️</button>
 
 </div>
@@ -342,6 +344,7 @@ z-index:5;
 <div class="card">
 <h3>🕌 Daily Salah</h3>
 
+<!-- Salah Container -->
 <div id="salahContainer"
 style="display:flex;justify-content:space-between;text-align:center;">
 </div>
@@ -355,9 +358,12 @@ style="display:flex;justify-content:space-between;text-align:center;">
 <div class="card">
 <h3>📝 Daily Tasks</h3>
 
+<!-- Task Container -->
 <div id="taskContainer"></div>
 
 <div style="margin-top:15px;text-align:center;">
+
+  <!-- Manage Tasks Button -->
 <button onclick="manageTasks()" style="
 padding:12px 30px;
 border-radius:16px;
@@ -379,6 +385,9 @@ Manage Tasks
   
 
 
+<!-- =========================
+     TASBIH PAGE
+========================= -->
 <div id="tasbihPage" style="
 display:none;
 position:fixed;
@@ -393,6 +402,10 @@ padding:15px 15px 110px 15px;
 ">
 
 <!-- TASBIH SETTINGS OVERLAY -->
+<!-- =========================
+     TASBIH SETTINGS OVERLAY
+========================= -->
+<!-- Tasbih Settings Overlay Card -->
 <div id="tasbihSettingsOverlay" onclick="closeTasbihSettings()" style="
 position:fixed;
 top:0;
@@ -407,6 +420,9 @@ display:none;
 "></div>
 
 <!-- TASBIH SETTINGS PANEL -->
+<!-- =========================
+     TASBIH SETTINGS DRAWER
+========================= -->
 <div id="tasbihSettingsDrawer" style="
 position:fixed;
 top:0;
@@ -436,6 +452,7 @@ font-weight:800;
 Settings
 </div>
 
+<!-- Close Tasbih Settings Button -->
 <button onclick="closeTasbihSettings()" style="
 border:none;
 background:#e9e9ee;
@@ -459,6 +476,7 @@ color:#111;
 Style
 </div>
 
+<!-- Show Classic Mode Button -->
 <button onclick="showClassicMode()" style="
 width:100%;
 padding:18px;
@@ -475,6 +493,7 @@ text-align:left;
 Classic
 </button>
 
+<!-- Show Dark Night Mode Button -->
 <button onclick="showDarkNightMode()" style="
 width:100%;
 padding:18px;
@@ -521,6 +540,7 @@ z-index:5;
 ">
 
 <!-- BACK BUTTON -->
+<!-- Tasbih Top Button -->
 <button id="tasbihTopBtn" onclick="handleTasbihTopButton()" style="
 width:38px;
 height:38px;
@@ -539,6 +559,7 @@ box-shadow:0 3px 10px rgba(0,0,0,0.12);
 </button>
 
 <!-- SETTINGS BUTTON -->
+<!-- Open Tasbih Settings Button -->
 <button onclick="openTasbihSettings()" style="
 width:44px;
 height:44px;
@@ -571,6 +592,7 @@ align-items:center;
 
   <!-- LEFT TARGET CIRCLE -->
  <div style="position:relative;">
+<!-- Dark Target Circle Card -->
   <div id="darkTargetCircle" onclick="toggleDarkTargetMenu(event)" style="
   width:70px;
   height:70px;
@@ -590,6 +612,9 @@ align-items:center;
   <span id="darkTargetText">100</span>
   </div>
 
+<!-- =========================
+     DARK TARGET MENU
+========================= -->
   <div id="darkTargetMenu" style="
   display:none;
   position:absolute;
@@ -606,6 +631,7 @@ align-items:center;
   z-index:20;
   ">
 
+<!-- Select Dark Target Button -->
     <button onclick="selectDarkTarget(33,event)" style="
     width:100%;
     border:none;
@@ -621,6 +647,7 @@ align-items:center;
     33
     </button>
 
+<!-- Select Dark Target Button -->
     <button onclick="selectDarkTarget(100,event)" style="
     width:100%;
     border:none;
@@ -636,6 +663,7 @@ align-items:center;
     100
     </button>
 
+<!-- Select Dark Target Button -->
     <button onclick="selectDarkTarget('inf',event)" style="
     width:100%;
     border:none;
@@ -651,6 +679,7 @@ align-items:center;
     ∞
     </button>
 
+<!-- Close Dark Target Menu Button -->
     <button onclick="closeDarkTargetMenu(event)" style="
     width:100%;
     border:none;
@@ -689,6 +718,7 @@ align-items:center;
 </div>
 
 <!-- BIG RING -->
+<!-- Dark Night Ring Card -->
 <div id="darkNightRing" onclick="tapDarkNightRing()" style="
 position:absolute;
 left:50%;
@@ -719,6 +749,10 @@ touch-action:manipulation;
 
   
 <!-- DARK TARGET POPUP -->
+<!-- =========================
+     DARK TARGET POPUP
+========================= -->
+<!-- Dark Target Popup Card -->
 <div id="darkTargetPopup" onclick="closeDarkTargetPopup()" style="
 display:none;
 position:fixed;
@@ -732,6 +766,7 @@ backdrop-filter:blur(4px);
 z-index:8700;
 ">
 
+<!-- Event Card -->
   <div onclick="event.stopPropagation()" style="
   position:absolute;
   left:50%;
@@ -756,6 +791,7 @@ z-index:8700;
     Select Target
     </div>
 
+<!-- Set Dark Target Button -->
     <button onclick="setDarkTarget(33)" style="
     width:100%;
     border:none;
@@ -771,6 +807,7 @@ z-index:8700;
     33
     </button>
 
+<!-- Set Dark Target Button -->
     <button onclick="setDarkTarget(100)" style="
     width:100%;
     border:none;
@@ -786,6 +823,7 @@ z-index:8700;
     100
     </button>
 
+<!-- Set Dark Target Button -->
     <button onclick="setDarkTarget('inf')" style="
     width:100%;
     border:none;
@@ -836,6 +874,7 @@ box-sizing:border-box;
       Settings
     </div>
 
+<!-- Close Tasbih Settings Button -->
     <button onclick="closeTasbihSettings()" style="
     width:38px;
     height:38px;
@@ -866,6 +905,7 @@ box-sizing:border-box;
   gap:12px;
   ">
 
+<!-- Style Button Classic Button -->
     <button id="styleBtnClassic" onclick="setTasbihStyle('classic')" style="
 width:100%;
 border:none;
@@ -881,6 +921,7 @@ outline:3px solid #111;
   <div style="font-size:13px;color:#666;margin-top:4px;">Your current Tasbih style</div>
 </button>
 
+<!-- Style Button Dark Night Button -->
    <button id="styleBtnDarkNight" onclick="setTasbihStyle('dark')" style="
 width:100%;
 border:none;
@@ -909,6 +950,7 @@ padding:10px 4px 20px 4px;
 ">
 
 <!-- BACK BUTTON -->
+<!-- Back Button -->
 <button onclick="closeTasbihPage()" style="
 width:40px;
 height:40px;
@@ -925,6 +967,7 @@ justify-content:center;
 </button>
 
 <!-- SETTINGS BUTTON -->
+<!-- Open Tasbih Settings Button -->
 <button onclick="openTasbihSettings()" style="
 width:44px;
 height:44px;
@@ -990,8 +1033,11 @@ outline:none;
 -webkit-tap-highlight-color:transparent;
 ">
 
+<!-- Set Tasbih Mode Button -->
   <button class="modeBtn" onclick="setTasbihMode(33)" style="font-size:20px;color:#5c4632;">33</button>
+<!-- Set Tasbih Mode Button -->
 <button class="modeBtn" onclick="setTasbihMode(100)" style="font-size:20px;color:#5c4632;">100</button>
+<!-- Set Tasbih Mode Button -->
 <button class="modeBtn" onclick="setTasbihMode('inf')" style="font-size:24px;color:#5c4632;">∞</button>
 
   </div>
@@ -1028,6 +1074,7 @@ box-shadow:inset 0 2px 6px rgba(0,0,0,0.12);
 ">
 0
 </div>
+<!-- Increase Tasbih Card -->
 <div onclick="increaseTasbih()" style="
 width:210px;
 height:210px;
@@ -1079,6 +1126,7 @@ gap:12px;
 flex-wrap:wrap;
 ">
 
+<!-- Reset Tasbih Button -->
 <button onclick="resetTasbih()" style="
 background:#e9e9ee;
 color:#5c4632;
@@ -1106,6 +1154,9 @@ Reset
 
 
 
+<!-- =========================
+     ZIKR PAGE
+========================= -->
 <div id="zikrPage" style="
 display:none;
 position:fixed;
@@ -1120,6 +1171,7 @@ padding:15px;
 ">
 
 <div style="padding:10px;">
+<!-- Close Zikr Page Button -->
 <button onclick="closeZikrPage()" style="
 width:36px;
 height:36px;
@@ -1150,6 +1202,7 @@ Choose a dhikr
 </div>
 </div>
 
+<!-- Open Zikr Detail Card -->
 <div class="card" onclick="openZikrDetail('subhanallah')" style="
 cursor:pointer;
 display:flex;
@@ -1167,6 +1220,7 @@ SubhanAllahi wa bihamdihi
 <div style="font-size:24px;opacity:0.5;">›</div>
 </div>
 
+<!-- Open Zikr Detail Card -->
 <div class="card" onclick="openZikrDetail('hawqala')" style="
 cursor:pointer;
 display:flex;
@@ -1187,6 +1241,9 @@ La hawla wa la quwwata illa billah
 </div>
 
 
+<!-- =========================
+     ZIKR DETAIL PAGE
+========================= -->
 <div id="zikrDetailPage" style="
 display:none;
 position:fixed;
@@ -1201,6 +1258,7 @@ padding:15px;
 ">
 
 <div style="padding:10px;">
+<!-- Close Zikr Detail Button -->
 <button onclick="closeZikrDetail()" style="
 width:36px;
 height:36px;
@@ -1260,6 +1318,7 @@ line-height:1.7;
 ">
 </div>
 
+<!-- Increase Zikr Tasbih Card -->
 <div onclick="increaseZikrTasbih()" style="
 background:rgba(255,255,255,0.78);
 backdrop-filter:blur(20px);
@@ -1281,6 +1340,7 @@ justify-content:center;
 margin-bottom:28px;
 ">
 
+<!-- Zikr Modes Card -->
 <div id="zikrModes" onclick="event.stopPropagation()" style="
 display:flex;
 background:rgba(0,0,0,0.08);
@@ -1290,6 +1350,7 @@ height:44px;
 min-width:220px;
 ">
 
+<!-- Zikr33 Button -->
 <button id="zikr33Btn" onclick="setZikrMode(33)" style="
 flex:1;
 border:none;
@@ -1301,6 +1362,7 @@ cursor:pointer;
 33
 </button>
 
+<!-- Zikr100 Button -->
 <button id="zikr100Btn" onclick="setZikrMode(100)" style="
 flex:1;
 border:none;
@@ -1313,6 +1375,7 @@ cursor:pointer;
 100
 </button>
 
+<!-- Zikr Inf Button -->
 <button id="zikrInfBtn" onclick="setZikrMode('inf')" style="
 flex:1;
 border:none;
@@ -1351,6 +1414,7 @@ letter-spacing:1px;
 Tap Anywhere
 </div>
 
+<!-- Reset Zikr Tasbih Button -->
 <button onclick="resetZikrTasbih();event.stopPropagation();" style="
 background:#ff3b30;
 padding:12px 30px;
@@ -1372,6 +1436,9 @@ Reset
 </div>
 
 
+<!-- =========================
+     QIBLA PAGE
+========================= -->
 <div id="qiblaPage" style="
 display:none;
 position:fixed;
@@ -1386,6 +1453,7 @@ padding:15px;
 ">
 
 <div style="padding:15px;">
+<!-- Close Qibla Page Button -->
 <button onclick="closeQiblaPage()" style="
 width:36px;
 height:36px;
@@ -1440,6 +1508,7 @@ For now, camera works better in Safari.
 Tap below to open Qibla Finder.
 </div>
 
+<!-- Open Google Qibla Button -->
 <button onclick="openGoogleQibla()" style="
 padding:14px 22px;
 border:none;
@@ -1468,6 +1537,10 @@ If the page does not load, Google may be blocking iframe on your device.
 </div>
 
 <!-- FLOATING MENU BUTTON -->
+<!-- =========================
+     FLOATING MENU BUTTON
+========================= -->
+<!-- Floating Menu Button -->
 <div id="floatingMenuBtn" onclick="toggleSideMenu()" style="
 position:fixed;
 top:20px;
@@ -1492,6 +1565,10 @@ cursor:pointer;
   
 
 <!-- SIDE MENU OVERLAY -->
+<!-- =========================
+     SIDE MENU OVERLAY
+========================= -->
+<!-- Side Menu Overlay Card -->
 <div id="sideMenuOverlay" onclick="closeSideMenu()" style="
 display:none;
 position:fixed;
@@ -1504,6 +1581,9 @@ z-index:9997;
 "></div>
 
 <!-- SIDE MENU -->
+<!-- =========================
+     SIDE MENU
+========================= -->
 <div id="sideMenu" style="
 position:fixed;
 top:0;
@@ -1528,6 +1608,7 @@ letter-spacing:0.3px;
 Menu
 </div>
 
+<!-- Go To Main Page Card -->
   <div onclick="goToMainPage()" style="
 background:rgba(255,255,255,0.75);
 padding:16px 18px;
@@ -1542,6 +1623,7 @@ cursor:pointer;
 🏠 Main Page
 </div>
 
+<!-- Refresh App Card -->
   <div onclick="refreshApp()" style="
 background:rgba(255,255,255,0.75);
 padding:16px 18px;
@@ -1556,6 +1638,7 @@ cursor:pointer;
 🔄 Refresh App
 </div>
 
+<!-- Open Backup Popup Card -->
 <div onclick="openBackupPopup()" style="
 background:rgba(255,255,255,0.75);
 padding:16px 18px;
@@ -1572,6 +1655,7 @@ cursor:pointer;
 
   
   
+<!-- Open App Settings Page Card -->
  <div onclick="openAppSettingsPage()" style="
 background:rgba(255,255,255,0.75);
 padding:16px 18px;
@@ -1593,6 +1677,10 @@ cursor:pointer;
 
   
 <!-- BACKUP POPUP OVERLAY -->
+<!-- =========================
+     BACKUP POPUP OVERLAY
+========================= -->
+<!-- Backup Popup Overlay Card -->
 <div id="backupPopupOverlay" onclick="closeBackupPopup()" style="
 display:none;
 position:fixed;
@@ -1611,6 +1699,7 @@ box-sizing:border-box;
 touch-action:none;
 ">
 
+<!-- Event Card -->
 <div onclick="event.stopPropagation()" style="
 width:100%;
 max-width:420px;
@@ -1655,6 +1744,7 @@ box-shadow:inset 0 0 0 1px rgba(0,0,0,0.04);
 Last backup: Not saved yet
 </div>
 
+<!-- Backup Data Card -->
 <div onclick="backupData()" style="
 background:#111;
 color:#fff;
@@ -1670,6 +1760,7 @@ text-align:center;
 Export Backup
 </div>
 
+<!-- Import Data Card -->
 <div onclick="importData()" style="
 background:#e9e9ee;
 color:#111;
@@ -1685,6 +1776,7 @@ text-align:center;
 Import Backup
 </div>
 
+<!-- Close Backup Popup Card -->
 <div onclick="closeBackupPopup()" style="
 background:#f5f5f7;
 color:#666;
@@ -1723,12 +1815,16 @@ Backup file ready. Save it in your Ibadah folder.
 </div>
 
 <!-- HIDDEN FILE INPUT FOR IMPORT -->
+<!-- Backup File Input -->
 <input type="file" id="backupFileInput" accept=".json" style="display:none;" onchange="handleImportFile(event)">
 
 
 
   
   
+<!-- =========================
+     JAVASCRIPT LOGIC
+========================= -->
 <script>
 
 
@@ -1740,6 +1836,9 @@ Backup file ready. Save it in your Ibadah folder.
 
 
   
+// =========================
+// BUILD TASBIH BARS
+// =========================
 function buildTasbihBars(){
 
 let container = document.getElementById("tasbihProgress");
@@ -1795,6 +1894,9 @@ container.appendChild(bar);
 }
 
   
+// =========================
+// SET TASBIH MODE
+// =========================
 function setTasbihMode(mode){
 
 tasbihLock = true;
@@ -1840,6 +1942,9 @@ setTimeout(()=>{ tasbihLock=false; },150);
 }
 
 
+// =========================
+// LOAD SALAH
+// =========================
 function loadSalah(){
 
 let prayers = ["Fajr","Dhuhur","Asr","Maghrib","Isha"];
@@ -1880,6 +1985,9 @@ container.appendChild(div);
 
 
   
+// =========================
+// TOGGLE SALAH
+// =========================
   function toggleSalah(prayer,status){
 
 let key = "salah-"+formatKey(currentDate);
@@ -1925,6 +2033,9 @@ localStorage.setItem("taskList", JSON.stringify(taskList));
 
 }
 
+// =========================
+// RESTORE DEFAULT TASKS
+// =========================
 function restoreDefaultTasks(){
 taskList = [
 {name:"Surah Mulk",start:0,end:null},
@@ -1941,6 +2052,9 @@ localStorage.setItem("taskList", JSON.stringify(taskList));
 loadTasks();
 }
 
+// =========================
+// MANAGE TASKS
+// =========================
 function manageTasks(){
 
 document.getElementById("taskMenuContent").innerHTML = `
@@ -1954,6 +2068,7 @@ letter-spacing:-0.4px;
 Manage Tasks
 </div>
 
+<!-- Show Add Task Button -->
 <button onclick="showAddTask()" style="
 width:100%;
 padding:18px;
@@ -1971,6 +2086,7 @@ letter-spacing:-0.2px;
 Add Task
 </button>
 
+<!-- Show Rename Task Button -->
 <button onclick="showRenameTask()" style="
 width:100%;
 padding:17px;
@@ -1988,6 +2104,7 @@ letter-spacing:-0.2px;
 Rename Task
 </button>
 
+<!-- Show Remove Task Button -->
 <button onclick="showRemoveTask()" style="
 width:100%;
 padding:17px;
@@ -2005,6 +2122,7 @@ letter-spacing:-0.2px;
 Remove Task
 </button>
 
+<!-- Close Task Menu Button -->
 <button onclick="closeTaskMenu()" style="
 width:100%;
 padding:18px;
@@ -2025,11 +2143,17 @@ document.getElementById("taskMenu").style.display = "block";
 
 }
 
+// =========================
+// CLOSE TASK MENU
+// =========================
 function closeTaskMenu(){
 document.getElementById("taskMenu").style.display = "none";
 document.getElementById("menuOverlay").style.display = "none";
 }
 
+// =========================
+// ADD TASK FLOW
+// =========================
 function addTaskFlow(){
 
 closeTaskMenu();
@@ -2081,6 +2205,9 @@ loadTasks();
 }
 
 
+// =========================
+// SHOW TASK OPTIONS
+// =========================
   function showTaskOptions(){
 
 let type = document.getElementById("taskTypeSelect").value;
@@ -2089,6 +2216,7 @@ let area = document.getElementById("taskExtra");
 if(type === "range"){
 area.innerHTML = `
 <div style="text-align:left;margin-bottom:10px;font-size:18px;font-weight:700;color:#111;">Start Date</div>
+<!-- Task Start -->
 <input type="date" id="taskStart" style="
 width:100%;
 margin-bottom:14px;
@@ -2103,6 +2231,7 @@ color:#111;
 ">
 
 <div style="text-align:left;margin-bottom:10px;font-size:18px;font-weight:700;color:#111;">End Date</div>
+<!-- Task End -->
 <input type="date" id="taskEnd" style="
 width:100%;
 padding:16px 18px;
@@ -2154,6 +2283,9 @@ area.innerHTML = "";
 }
 
 
+// =========================
+// SAVE NEW TASK
+// =========================
   function saveNewTask(){
 
 let name = document.getElementById("taskNameInput").value.trim();
@@ -2200,10 +2332,16 @@ loadTasks();
 
   
 
+// =========================
+// GET DEFAULT PAGE
+// =========================
 function getDefaultPage(){
   return localStorage.getItem("defaultPage") || "tracker";
 }
 
+// =========================
+// OPEN SELECTED DEFAULT PAGE
+// =========================
 function openSelectedDefaultPage(){
   let defaultPage = getDefaultPage();
 
@@ -2216,6 +2354,9 @@ function openSelectedDefaultPage(){
   }
 }
 
+// =========================
+// RETURN TO DEFAULT PAGE
+// =========================
 function returnToDefaultPage(){
 
 let defaultPage = localStorage.getItem("defaultPage") || "tracker";
@@ -2235,6 +2376,9 @@ else{
 
 
   
+// =========================
+// INCREASE TASBIH
+// =========================
 function increaseTasbih(){
 
 if(tasbihLock) return;
@@ -2295,6 +2439,9 @@ counter.classList.add("completeFlash");
 }
 }
   
+// =========================
+// ISLAMIC TODAY
+// =========================
 function islamicToday(){
 let now=new Date();
 let d=new Date(now.getFullYear(),now.getMonth(),now.getDate());
@@ -2302,10 +2449,16 @@ if(now.getHours()<2){d.setDate(d.getDate()-1);}
 return d;
 }
 
+// =========================
+// FORMAT KEY
+// =========================
  function formatKey(d){
 return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 }
   
+// =========================
+// SET DATE
+// =========================
 function setDate(d){
 
 currentDate=new Date(d);
@@ -2333,12 +2486,18 @@ loadTasks();
 loadTasbih();
 }
 
+// =========================
+// MANUAL PICK
+// =========================
 function manualPick(value){
 let p=value.split("-");
 setDate(new Date(p[0],p[1]-1,p[2]));
 }
 
 
+// =========================
+// LOAD TASKS
+// =========================
 function loadTasks(){
 
 let dateKey = formatKey(currentDate);
@@ -2408,6 +2567,9 @@ container.appendChild(div);
 }
   
   
+// =========================
+// TOGGLE TASK
+// =========================
 function toggleTask(task,status){
 let key=formatKey(currentDate);
 let saved=JSON.parse(localStorage.getItem(key))||{};
@@ -2416,16 +2578,25 @@ localStorage.setItem(key,JSON.stringify(saved));
 updateStreak();
 }
 
+// =========================
+// PREV DAY
+// =========================
 function prevDay(){
 currentDate.setDate(currentDate.getDate()-1);
 setDate(currentDate);
 }
 
+// =========================
+// NEXT DAY
+// =========================
 function nextDay(){
 currentDate.setDate(currentDate.getDate()+1);
 setDate(currentDate);
 }
 
+// =========================
+// UPDATE STREAK
+// =========================
 function updateStreak(){
 let streak=0;
 let today=islamicToday();
@@ -2440,6 +2611,9 @@ else break;
 document.getElementById("streakCount").innerText=streak+" Days";
 }
 
+// =========================
+// HANDLE ACTION
+// =========================
 function handleAction(){
 
 let action=document.getElementById("actionSelect").value;
@@ -2449,7 +2623,9 @@ area.innerHTML="";
 // ADD
 if(action==="add"){
 area.innerHTML=`
+<!-- New Task Name -->
 <input id="newTaskName" placeholder="Task Name">
+<!-- Confirm Add Button -->
 <button onclick="confirmAdd()">Add</button>
 `;
 }
@@ -2466,7 +2642,9 @@ return key>=task.start && (!task.end || key<=task.end);
 let opt=activeTasks.map(t=>`<option>${t.name}</option>`).join("");
 
 area.innerHTML=`
+<!-- Delete Task Select -->
 <select id="deleteTaskSelect">${opt}</select>
+<!-- Confirm Delete Button -->
 <button onclick="confirmDelete()">Delete</button>
 `;
 }
@@ -2477,14 +2655,20 @@ else if(action==="rename"){
 let opt=taskList.map(t=>`<option>${t.name}</option>`).join("");
 
 area.innerHTML=`
+<!-- Rename Select -->
 <select id="renameSelect">${opt}</select>
+<!-- Rename Input -->
 <input id="renameInput" placeholder="New Name">
+<!-- Confirm Rename Button -->
 <button onclick="confirmRename()">Rename</button>
 `;
 }
 
 }
 
+// =========================
+// CONFIRM ADD
+// =========================
 function confirmAdd(){
 
 let n=document.getElementById("newTaskName").value.trim();
@@ -2507,6 +2691,9 @@ loadTasks();
 
 }
 
+// =========================
+// CONFIRM DELETE
+// =========================
 function confirmDelete(){
 
 let t=document.getElementById("deleteTaskSelect").value;
@@ -2526,6 +2713,9 @@ loadTasks();
 
 }
 
+// =========================
+// CONFIRM RENAME
+// =========================
 function confirmRename(){
 
 let oldName=document.getElementById("renameSelect").value;
@@ -2545,6 +2735,9 @@ loadTasks();
 
 }
 
+// =========================
+// EXPORT BACKUP
+// =========================
 function exportBackup(){
 let data={taskList,storage:{}};
 for(let i=0;i<localStorage.length;i++){
@@ -2559,6 +2752,9 @@ a.download="backup.json";
 a.click();
 }
 
+// =========================
+// IMPORT BACKUP
+// =========================
 function importBackup(){
 
 let file=document.getElementById("restoreFile").files[0];
@@ -2602,16 +2798,25 @@ r.readAsText(file);
   
 // ===== TASBIH SYSTEM =====
 
+// =========================
+// GET TASBIH KEY
+// =========================
 function getTasbihKey(){
 let dateKey=formatKey(currentDate);
 return "tasbih-"+dateKey;
 }
 
+// =========================
+// GET TARGET KEY
+// =========================
 function getTargetKey(){
 let dateKey=formatKey(currentDate);
 return "tasbih-target-"+dateKey;
 }
 
+// =========================
+// LOAD TASBIH
+// =========================
 function loadTasbih(){
 
 let target = localStorage.getItem(getTargetKey()) || 33;
@@ -2656,6 +2861,9 @@ buildTasbihBars();
 }
 
   
+// =========================
+// RESET TASBIH
+// =========================
 function resetTasbih(){
 localStorage.setItem(getTasbihKey(),0);
 
@@ -2684,6 +2892,9 @@ updateDarkNightNumber();
 let zikrCount = 0;
 let zikrTarget = 100;
 
+// =========================
+// UPDATE ZIKR DISPLAY
+// =========================
 function updateZikrDisplay(){
 
 let targetText = zikrTarget === "inf" ? "∞" : zikrTarget;
@@ -2715,6 +2926,9 @@ document.getElementById("zikrInfBtn").style.color = "white";
 
 }
 
+// =========================
+// SET ZIKR MODE
+// =========================
 function setZikrMode(mode){
 
 zikrTarget = mode;
@@ -2723,6 +2937,9 @@ updateZikrDisplay();
 
 }
 
+// =========================
+// INCREASE ZIKR TASBIH
+// =========================
 function increaseZikrTasbih(){
 
 if(zikrTarget === "inf"){
@@ -2746,6 +2963,9 @@ navigator.vibrate(30);
 
 }
 
+// =========================
+// RESET ZIKR TASBIH
+// =========================
 function resetZikrTasbih(){
 
 zikrCount = 0;
@@ -2754,6 +2974,9 @@ updateZikrDisplay();
 }
   
 
+// =========================
+// CHANGE TARGET
+// =========================
 function changeTarget(){
 
 tasbihLock = true;
@@ -2777,9 +3000,15 @@ tasbihLock = false;
 }
 
   
+// =========================
+// IS SURAH
+// =========================
 function isSurah(name){
     return name.includes("Surah");
 }
+// =========================
+// HANDLE TASK CLICK
+// =========================
 function handleTaskClick(name){
 
 if(name === "Surah Ikhlas"){
@@ -2831,17 +3060,26 @@ openPDF(file);
 
 }
 
+// =========================
+// OPEN PDF
+// =========================
 function openPDF(file){
 window.location.assign(file);
 }
 
 
 
+// =========================
+// TOGGLE VIBRATION
+// =========================
   function toggleVibration(){
 let enabled = document.getElementById("vibrationToggle").checked;
 localStorage.setItem("tasbih-vibration", enabled);
 }
 
+// =========================
+// IS VIBRATION ENABLED
+// =========================
 function isVibrationEnabled(){
 return localStorage.getItem("tasbih-vibration") === "true";
 }
@@ -2851,6 +3089,9 @@ setDate(islamicToday());
 
  
 
+// =========================
+// SHOW REMOVE TASK
+// =========================
 function showRemoveTask(){
 
 let visibleTasks = getManageableTasks();
@@ -2885,6 +3126,7 @@ No current tasks to remove.
 Historical tasks are hidden from this screen.
 </div>
 
+<!-- Manage Tasks Button -->
 <button onclick="manageTasks()" style="
 width:100%;
 padding:17px;
@@ -2917,6 +3159,7 @@ padding-top:2px;
 Remove Task
 </div>
 
+<!-- Delete Select -->
 <select id="deleteSelect" style="
 width:100%;
 margin-bottom:14px;
@@ -2936,6 +3179,7 @@ appearance:none;
 ${options}
 </select>
 
+<!-- Open Delete Popup Button -->
 <button onclick="openDeletePopup()" style="
 width:100%;
 padding:18px;
@@ -2953,6 +3197,7 @@ letter-spacing:-0.2px;
 Delete Task
 </button>
 
+<!-- Manage Tasks Button -->
 <button onclick="manageTasks()" style="
 width:100%;
 padding:17px;
@@ -2972,6 +3217,9 @@ Back
 
 }
   
+// =========================
+// RENAME TASK FLOW
+// =========================
 function renameTaskFlow(){
 
 
@@ -2981,12 +3229,15 @@ let area = document.getElementById("actionArea");
 let options = taskList.map(t=>`<option>${t.name}</option>`).join("");
 
 area.innerHTML = `
+<!-- Rename Select -->
 <select id="renameSelect" style="width:100%;margin-bottom:10px;">
 ${options}
 </select>
 
+<!-- Rename Input -->
 <input id="renameInput" placeholder="New Name" style="width:100%;margin-bottom:10px;">
 
+<!-- Confirm Rename Button -->
 <button onclick="confirmRename()" style="width:100%;">
 Rename
 </button>
@@ -2996,6 +3247,9 @@ Rename
 
   
 
+// =========================
+// CONFIRM DELETE TASK
+// =========================
  function confirmDeleteTask(){
 
 let name = document.getElementById("deleteSelect").value;
@@ -3016,6 +3270,9 @@ manageTasks();
 
 
 
+// =========================
+// DELETE TASK FROM TODAY
+// =========================
   function deleteTaskFromToday(){
 
 let name = document.getElementById("deleteSelect").value;
@@ -3045,6 +3302,9 @@ manageTasks();
 
 
   
+// =========================
+// SHOW ADD TASK
+// =========================
   function showAddTask(){
 
 let area = document.getElementById("taskMenuContent");
@@ -3060,6 +3320,7 @@ letter-spacing:-0.3px;
 Add Task
 </div>
 
+<!-- Task Name Input -->
 <input id="taskNameInput" placeholder="Task Name" style="
 width:100%;
 margin-bottom:12px;
@@ -3073,6 +3334,7 @@ box-sizing:border-box;
 color:#111;
 ">
 
+<!-- Task Type Select -->
 <select id="taskTypeSelect" style="
 width:100%;
 margin-bottom:12px;
@@ -3093,6 +3355,7 @@ color:#111;
 
 <div id="taskExtra" style="margin-bottom:12px;"></div>
 
+<!-- Create Task Button -->
 <button onclick="createTask()" style="
 width:100%;
 margin-bottom:12px;
@@ -3109,6 +3372,7 @@ cursor:pointer;
 Save
 </button>
 
+<!-- Manage Tasks Button -->
 <button onclick="manageTasks()" style="
 width:100%;
 padding:16px;
@@ -3127,10 +3391,16 @@ document.getElementById("taskTypeSelect").onchange = showTaskOptions;
 
 }
 
+// =========================
+// GET TODAY TASK TIME
+// =========================
 function getTodayTaskTime(){
 return new Date(currentDate).setHours(0,0,0,0);
 }
 
+// =========================
+// IS HISTORICAL TASK
+// =========================
 function isHistoricalTask(task){
 
 let today = getTodayTaskTime();
@@ -3140,10 +3410,16 @@ if(task.end === null || task.end === undefined) return false;
 return Number(task.end) < today;
 }
 
+// =========================
+// GET SELECTED TASK TIME
+// =========================
 function getSelectedTaskTime(){
 return new Date(currentDate).setHours(0,0,0,0);
 }
 
+// =========================
+// IS TASK ACTIVE ON SELECTED DATE
+// =========================
 function isTaskActiveOnSelectedDate(task){
 
 let selectedTime = getSelectedTaskTime();
@@ -3161,11 +3437,17 @@ if(!task.days.includes(selectedDayName)) return false;
 return true;
 }
 
+// =========================
+// GET MANAGEABLE TASKS
+// =========================
 function getManageableTasks(){
 return taskList.filter(task => isTaskActiveOnSelectedDate(task));
 }
 
   
+// =========================
+// CREATE TASK
+// =========================
   function createTask(){
 
 let name = document.getElementById("taskNameInput").value.trim();
@@ -3226,6 +3508,9 @@ loadTasks();
 
 }
 
+// =========================
+// SHOW RENAME TASK
+// =========================
 function showRenameTask(){
 
 
@@ -3261,6 +3546,7 @@ No current tasks to rename.
 Historical tasks are hidden from this screen.
 </div>
 
+<!-- Manage Tasks Button -->
 <button onclick="manageTasks()" style="
 width:100%;
 padding:16px;
@@ -3290,6 +3576,7 @@ letter-spacing:-0.3px;
 Rename Task
 </div>
 
+<!-- Rename Select -->
 <select id="renameSelect" style="
 width:100%;
 margin-bottom:12px;
@@ -3305,6 +3592,7 @@ color:#111;
 ${options}
 </select>
 
+<!-- Rename Input -->
 <input id="renameInput" placeholder="New Name" style="
 width:100%;
 margin-bottom:14px;
@@ -3323,6 +3611,7 @@ appearance:none;
 ">
 
   
+<!-- Confirm Rename Task Button -->
 <button onclick="confirmRenameTask()" style="
 width:100%;
 padding:18px;
@@ -3340,6 +3629,7 @@ letter-spacing:-0.2px;
 Rename
 </button>
 
+<!-- Manage Tasks Button -->
 <button onclick="manageTasks()" style="
 width:100%;
 padding:16px;
@@ -3357,6 +3647,9 @@ Back
 
 }
 
+// =========================
+// CONFIRM RENAME TASK
+// =========================
 function confirmRenameTask(){
 
 let oldName = document.getElementById("renameSelect").value;
@@ -3380,6 +3673,9 @@ loadTasks();
 
 let deleteTargetTask = null;
 
+// =========================
+// OPEN DELETE POPUP
+// =========================
 function openDeletePopup(){
 
 deleteTargetTask = document.getElementById("deleteSelect").value;
@@ -3388,6 +3684,9 @@ document.getElementById("taskMenu").style.display = "none";
 document.getElementById("deleteChoicePopup").style.display = "flex";
 
 }
+// =========================
+// CLOSE DELETE POPUP
+// =========================
 function closeDeletePopup(){
 
 document.getElementById("deleteChoicePopup").style.display = "none";
@@ -3396,6 +3695,9 @@ document.getElementById("menuOverlay").style.display = "block";
 
 }
 
+// =========================
+// DELETE FROM BEGINNING
+// =========================
 function deleteFromBeginning(){
 
 taskList = taskList.filter(t => t.name !== deleteTargetTask);
@@ -3408,6 +3710,9 @@ manageTasks();
 
 }
 
+// =========================
+// DELETE FROM TODAY
+// =========================
 function deleteFromToday(){
 
 let today = new Date(currentDate).setHours(0,0,0,0);
@@ -3431,30 +3736,263 @@ manageTasks();
 }
 
 
+// =========================
+// OPEN TRACKER PAGE
+// =========================
 function openTrackerPage(){
 
 lastMainTab = "tracker";
 
-let morePage = document.getElementById("morePage");
+let homePage = document.getElementById("homePage");
+let trackerPage = document.getElementById("trackerPage");
 let salahPage = document.getElementById("salahPage");
+let morePage = document.getElementById("morePage");
 let tasbihPage = document.getElementById("tasbihPage");
 let duaPage = document.getElementById("duaPage");
 let qiblaPage = document.getElementById("qiblaPage");
+let zikrPage = document.getElementById("zikrPage");
+let zikrDetailPage = document.getElementById("zikrDetailPage");
 let floatingMenuBtn = document.getElementById("floatingMenuBtn");
 let bottomNav = document.getElementById("bottomNav");
 
-if(morePage) morePage.style.display = "none";
+// CLOSE ALL
+if(homePage) homePage.style.display = "none";
 if(salahPage) salahPage.style.display = "none";
+if(morePage) morePage.style.display = "none";
 if(tasbihPage) tasbihPage.style.display = "none";
 if(duaPage) duaPage.style.display = "none";
 if(qiblaPage) qiblaPage.style.display = "none";
+if(zikrPage) zikrPage.style.display = "none";
+if(zikrDetailPage) zikrDetailPage.style.display = "none";
+
+// OPEN TRACKER
+if(trackerPage) trackerPage.style.display = "block";
 
 if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
 if(bottomNav) bottomNav.style.display = "flex";
 
 window.scrollTo(0,0);
+
 }
+
+
+// ==============================
+// MAIN PAGE NAVIGATION FUNCTION
+// ==============================
+
+function goToMainPage(){
+
+let defaultPage = (localStorage.getItem("defaultPage") || "tracker").trim().toLowerCase();
+
+// Close menu/settings if open
+let morePage = document.getElementById("morePage");
+let appSettingsPage = document.getElementById("appSettingsPage");
+
+if(morePage) morePage.style.display = "none";
+if(appSettingsPage) appSettingsPage.style.display = "none";
+
+// Open correct page
+if(defaultPage === "salah"){
+openSalahPage();
+}
+else if(defaultPage === "tasbih"){
+openTasbihPage();
+}
+else if(defaultPage === "home"){
+openHomePage();
+}
+else{
+openTrackerPage();
+}
+
+}
+
+
+
+  // =========================
+// OPEN HOME PAGE
+// =========================
+function openHomePage(){
+
+let homePage = document.getElementById("homePage");
+let trackerPage = document.getElementById("trackerPage");
+let salahPage = document.getElementById("salahPage");
+let morePage = document.getElementById("morePage");
+let tasbihPage = document.getElementById("tasbihPage");
+let duaPage = document.getElementById("duaPage");
+let zikrPage = document.getElementById("zikrPage");
+let zikrDetailPage = document.getElementById("zikrDetailPage");
+let qiblaPage = document.getElementById("qiblaPage");
+let appSettingsPage = document.getElementById("appSettingsPage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+
+if(trackerPage) trackerPage.style.display = "none";
+if(salahPage) salahPage.style.display = "none";
+if(morePage) morePage.style.display = "none";
+if(tasbihPage) tasbihPage.style.display = "none";
+if(duaPage) duaPage.style.display = "none";
+if(zikrPage) zikrPage.style.display = "none";
+if(zikrDetailPage) zikrDetailPage.style.display = "none";
+if(qiblaPage) qiblaPage.style.display = "none";
+if(appSettingsPage) appSettingsPage.style.display = "none";
+
+if(homePage) homePage.style.display = "block";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+
+lastMainTab = "home";
+updateHomePageSalahSummary();
+window.scrollTo(0,0);
+
+}
+
+
+
+
+
+
+  // =========================
+// UPDATE HOME PAGE SALAH SUMMARY
+// =========================
+async function updateHomePageSalahSummary(){
+
+let locationEl = document.getElementById("homeLocationName");
+let islamicEl = document.getElementById("homeIslamicDate");
+let normalEl = document.getElementById("homeNormalDate");
+let nextNameEl = document.getElementById("homeNextSalahName");
+let nextTimeEl = document.getElementById("homeNextSalahTime");
+let countdownEl = document.getElementById("homeCountdown");
+
+if(!locationEl || !islamicEl || !normalEl || !nextNameEl || !nextTimeEl || !countdownEl) return;
+
+let now = new Date();
+
+normalEl.innerText = now.toLocaleDateString("en-US", {
+weekday:"long",
+month:"short",
+day:"numeric",
+year:"numeric"
+});
+
+islamicEl.innerText = new Intl.DateTimeFormat("en-TN-u-ca-islamic", {
+day:"numeric",
+month:"long",
+year:"numeric"
+}).format(now);
+
+locationEl.innerText = "Loading...";
+nextNameEl.innerText = "Next Salah";
+nextTimeEl.innerText = "--:--";
+countdownEl.innerText = "00:00:00";
+
+try{
+
+let loc = await loadUserLocationData();
+
+locationEl.innerText = loc.city || "My Location";
+
+let liveData = await loadRealLocationSalahTimes(now);
+
+let salahList = [
+{name:"Fajr", time: liveData.fajr},
+{name:"Dhuhr", time: liveData.dhuhr},
+{name:"Asr", time: liveData.asr},
+{name:"Maghrib", time: liveData.maghrib},
+{name:"Isha", time: liveData.isha}
+];
+
+function convertTimeToDate(timeText){
+if(!timeText || timeText === "--:--") return null;
+
+let parts = timeText.trim().split(" ");
+if(parts.length < 2) return null;
+
+let hm = parts[0].split(":");
+if(hm.length < 2) return null;
+
+let hour = parseInt(hm[0],10);
+let minute = parseInt(hm[1],10);
+let ampm = parts[1].toUpperCase();
+
+if(ampm === "PM" && hour !== 12) hour += 12;
+if(ampm === "AM" && hour === 12) hour = 0;
+
+let d = new Date();
+d.setHours(hour, minute, 0, 0);
+return d;
+}
+
+let nextSalah = null;
+
+for(let i = 0; i < salahList.length; i++){
+let salahTime = convertTimeToDate(salahList[i].time);
+if(salahTime && salahTime > now){
+nextSalah = {
+name: salahList[i].name,
+time: salahList[i].time,
+dateObj: salahTime
+};
+break;
+}
+}
+
+if(!nextSalah){
+let tomorrowFajr = convertTimeToDate(liveData.fajr);
+if(tomorrowFajr){
+tomorrowFajr.setDate(tomorrowFajr.getDate() + 1);
+nextSalah = {
+name: "Fajr",
+time: liveData.fajr,
+dateObj: tomorrowFajr
+};
+}
+}
+
+if(nextSalah){
+nextNameEl.innerText = nextSalah.name;
+nextTimeEl.innerText = nextSalah.time;
+
+clearInterval(window.homeCountdownTimer);
+
+function updateCountdown(){
+let diff = nextSalah.dateObj.getTime() - new Date().getTime();
+
+if(diff < 0){
+countdownEl.innerText = "00:00:00";
+return;
+}
+
+let hours = Math.floor(diff / 3600000);
+let minutes = Math.floor((diff % 3600000) / 60000);
+let seconds = Math.floor((diff % 60000) / 1000);
+
+countdownEl.innerText =
+String(hours).padStart(2,"0") + ":" +
+String(minutes).padStart(2,"0") + ":" +
+String(seconds).padStart(2,"0");
+}
+
+updateCountdown();
+window.homeCountdownTimer = setInterval(updateCountdown, 1000);
+}
+
+}catch(err){
+
+locationEl.innerText = "Location unavailable";
+nextNameEl.innerText = "Next Salah";
+nextTimeEl.innerText = "--:--";
+countdownEl.innerText = "00:00:00";
+
+}
+
+}
+
+
   
+
+  
+// =========================
+// OPEN MORE PAGE
+// =========================
 function openMorePage(){
 
 lastMainTab = "more";
@@ -3480,6 +4018,9 @@ if(bottomNav) bottomNav.style.display = "flex";
 window.scrollTo(0,0);
 }
 
+// =========================
+// CLOSE MORE PAGE
+// =========================
 function closeMorePage(){
 
 lastMainTab = "tracker";
@@ -3498,12 +4039,18 @@ if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
 window.scrollTo(0,0);
 }
   
+// =========================
+// OPEN DUA PAGE
+// =========================
 function openDuaPage(){
 document.getElementById("duaPage").style.display = "block";
 document.getElementById("floatingMenuBtn").style.display = "none";
 window.scrollTo(0,0);
 }
 
+// =========================
+// CLOSE DUA PAGE
+// =========================
 function closeDuaPage(){
 document.getElementById("duaPage").style.display = "none";
 
@@ -3517,12 +4064,18 @@ document.getElementById("floatingMenuBtn").style.display = "flex";
 window.scrollTo(0,0);
 }
 
+// =========================
+// OPEN QIBLA PAGE
+// =========================
 function openQiblaPage(){
 
 window.open("https://qiblafinder.withgoogle.com/","_blank");
 
 }
 
+// =========================
+// CLOSE QIBLA PAGE
+// =========================
 function closeQiblaPage(){
 
 let page = document.getElementById("qiblaPage");
@@ -3534,6 +4087,9 @@ window.scrollTo(0,0);
 
 }
 
+// =========================
+// OPEN GOOGLE QIBLA
+// =========================
 function openGoogleQibla(){
 window.open("https://qiblafinder.withgoogle.com/","_blank");
 }
@@ -3560,10 +4116,36 @@ ref: `صحیح البخاری، الادب المفرد، باب قول: لا ح
 }
 };
 
-function openZikrPage(){
+
+  // =========================
+// OPEN ZIKR PAGE FROM HOME
+// =========================
+function openHomeZikrPage(){
+
+lastMainTab = "home";
+openZikrPage();
+
+}
+
+
+  // =========================
+// OPEN ZIKR PAGE FROM MORE
+// =========================
+function openMoreZikrPage(){
 
 lastMainTab = "more";
+openZikrPage();
 
+}
+
+  
+  
+// =========================
+// OPEN ZIKR PAGE
+// =========================
+function openZikrPage(){
+
+let homePage = document.getElementById("homePage");
 let salahPage = document.getElementById("salahPage");
 let morePage = document.getElementById("morePage");
 let zikrPage = document.getElementById("zikrPage");
@@ -3573,6 +4155,7 @@ let qiblaPage = document.getElementById("qiblaPage");
 let floatingMenuBtn = document.getElementById("floatingMenuBtn");
 let bottomNav = document.getElementById("bottomNav");
 
+if(homePage) homePage.style.display = "none";
 if(salahPage) salahPage.style.display = "none";
 if(morePage) morePage.style.display = "none";
 if(tasbihPage) tasbihPage.style.display = "none";
@@ -3588,11 +4171,14 @@ window.scrollTo(0,0);
 
 }
 
-
   
 
+// =========================
+// CLOSE ZIKR PAGE
+// =========================
 function closeZikrPage(){
 
+let homePage = document.getElementById("homePage");
 let zikrPage = document.getElementById("zikrPage");
 let morePage = document.getElementById("morePage");
 let floatingMenuBtn = document.getElementById("floatingMenuBtn");
@@ -3600,10 +4186,15 @@ let bottomNav = document.getElementById("bottomNav");
 
 if(zikrPage) zikrPage.style.display = "none";
 
-if(lastMainTab === "more"){
+if(lastMainTab === "home"){
+if(homePage) homePage.style.display = "block";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+}
+else if(lastMainTab === "more"){
 if(morePage) morePage.style.display = "block";
 if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-}else{
+}
+else{
 if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
 }
 
@@ -3612,9 +4203,11 @@ if(bottomNav) bottomNav.style.display = "flex";
 window.scrollTo(0,0);
 
 }
-
   
   
+// =========================
+// OPEN ZIKR DETAIL
+// =========================
 function openZikrDetail(name){
 
 currentZikr = name;
@@ -3636,11 +4229,17 @@ document.getElementById("zikrDetailPage").style.display = "block";
 window.scrollTo(0,0);
 }
 
+// =========================
+// CLOSE ZIKR DETAIL
+// =========================
 function closeZikrDetail(){
 document.getElementById("zikrDetailPage").style.display = "none";
 document.getElementById("zikrPage").style.display = "block";
 window.scrollTo(0,0);
 }
+// =========================
+// OPEN WAQIYA PAGE
+// =========================
 function openWaqiyaPage(){
 
 document.getElementById("waqiyaPage").style.display = "block";
@@ -3649,6 +4248,9 @@ window.scrollTo(0,0);
 
 }
 
+// =========================
+// CLOSE WAQIYA PAGE
+// =========================
 function closeWaqiyaPage(){
 
 document.getElementById("waqiyaPage").style.display = "none";
@@ -3658,12 +4260,18 @@ window.scrollTo(0,0);
 }
 
 
+// =========================
+// OPEN SURAH PAGE
+// =========================
  function openSurahPage(id){
 document.getElementById(id).style.display = "block";
 document.getElementById("floatingMenuBtn").style.display = "none";
 window.scrollTo(0,0);
 }
 
+// =========================
+// CLOSE SURAH PAGE
+// =========================
 function closeSurahPage(id){
 document.getElementById(id).style.display = "none";
 document.getElementById("floatingMenuBtn").style.display = "flex";
@@ -3673,6 +4281,9 @@ window.scrollTo(0,0);
 
 
 
+// =========================
+// UPDATE TASBIH TOP BUTTON
+// =========================
   function updateTasbihTopButton(){
 
 let btn = document.getElementById("tasbihTopBtn");
@@ -3691,6 +4302,9 @@ icon.innerHTML = "←";
 
 
 
+// =========================
+// HANDLE TASBIH TOP BUTTON
+// =========================
   function handleTasbihTopButton(){
 
 let defaultPage = (localStorage.getItem("defaultPage") || "").trim().toLowerCase();
@@ -3704,54 +4318,109 @@ closeTasbihPage();
 }
 
 
+// =========================
+// OPEN TASBIH FROM HOME
+// =========================
+function openHomeTasbihPage(){
+
+lastMainTab = "home";
+openTasbihPage();
+
+}
+
+  // =========================
+// OPEN TASBIH FROM MORE
+// =========================
+function openMoreTasbihPage(){
+
+lastMainTab = "more";
+openTasbihPage();
+
+}
   
+  
+// =========================
+// OPEN TASBIH PAGE 
+// =========================
 function openTasbihPage(){
-document.getElementById("tasbihPage").style.display = "block";
-document.getElementById("floatingMenuBtn").style.display = "none";
+
+let homePage = document.getElementById("homePage");
+let trackerPage = document.getElementById("trackerPage");
+let salahPage = document.getElementById("salahPage");
+let morePage = document.getElementById("morePage");
+let duaPage = document.getElementById("duaPage");
+let zikrPage = document.getElementById("zikrPage");
+let zikrDetailPage = document.getElementById("zikrDetailPage");
+let qiblaPage = document.getElementById("qiblaPage");
+let tasbihPage = document.getElementById("tasbihPage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+let bottomNav = document.getElementById("bottomNav");
+
+// CLOSE ALL
+if(homePage) homePage.style.display = "none";
+if(trackerPage) trackerPage.style.display = "none";
+if(salahPage) salahPage.style.display = "none";
+if(morePage) morePage.style.display = "none";
+if(duaPage) duaPage.style.display = "none";
+if(zikrPage) zikrPage.style.display = "none";
+if(zikrDetailPage) zikrDetailPage.style.display = "none";
+if(qiblaPage) qiblaPage.style.display = "none";
+
+// OPEN TASBIH
+if(tasbihPage) tasbihPage.style.display = "block";
+
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+if(bottomNav) bottomNav.style.display = "flex";
+
 updateTasbihTopButton();
 window.scrollTo(0,0);
+
 }
 
+
+  
+// =========================
+// CLOSE TASBIH PAGE
+// =========================
 function closeTasbihPage(){
 
-let tasbihPage = document.getElementById("tasbihPage");
-let darkNightTasbih = document.getElementById("darkNightTasbih");
-let overlay = document.getElementById("tasbihSettingsOverlay");
-let drawer = document.getElementById("tasbihSettingsDrawer");
-let floatingMenuBtn = document.getElementById("floatingMenuBtn");
-
-if(tasbihPage){
-tasbihPage.style.display = "none";
-}
-
-if(darkNightTasbih){
-darkNightTasbih.style.display = "none";
-}
-
-if(overlay){
-overlay.style.display = "none";
-}
-
-if(drawer){
-drawer.style.right = "-70%";
-}
-
-if(lastMainTab === "more"){
+let homePage = document.getElementById("homePage");
+let trackerPage = document.getElementById("trackerPage");
 let morePage = document.getElementById("morePage");
-if(morePage){
-morePage.style.display = "block";
+let tasbihPage = document.getElementById("tasbihPage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+let bottomNav = document.getElementById("bottomNav");
+
+if(tasbihPage) tasbihPage.style.display = "none";
+
+if(lastMainTab === "home"){
+if(homePage) homePage.style.display = "block";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
 }
-if(floatingMenuBtn){
-floatingMenuBtn.style.display = "none";
+else if(lastMainTab === "more"){
+if(morePage) morePage.style.display = "block";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
 }
-}else{
-if(floatingMenuBtn){
-floatingMenuBtn.style.display = "flex";
+else{
+if(trackerPage) trackerPage.style.display = "block";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
 }
-}
+
+if(bottomNav) bottomNav.style.display = "flex";
 
 window.scrollTo(0,0);
+
 }
+
+
+
+
+
+
+
+
+
+  
 let salahSource = "location";
 let salahDayOffset = 0;
 
@@ -4001,6 +4670,9 @@ isha: "8:30 PM"
 }
 };
 
+// =========================
+// FORMAT SALAH API DATE
+// =========================
 function formatSalahApiDate(dateObj){
 let day = String(dateObj.getDate()).padStart(2,"0");
 let month = String(dateObj.getMonth()+1).padStart(2,"0");
@@ -4008,6 +4680,9 @@ let year = dateObj.getFullYear();
 return day + "-" + month + "-" + year;
 }
 
+// =========================
+// TO12 HOUR
+// =========================
 function to12Hour(time24){
 if(!time24) return "--:--";
 
@@ -4026,6 +4701,9 @@ if(hour === 0) hour = 12;
 return hour + ":" + minute + " " + ampm;
 }
 
+// =========================
+// GET LOCATION POSITION
+// =========================
 function getLocationPosition(){
 return new Promise(function(resolve, reject){
 if(!navigator.geolocation){
@@ -4135,6 +4813,9 @@ salahLiveCache[cacheKey] = liveData;
 return liveData;
 }
 
+// =========================
+// SET SALAH LOADING STATE
+// =========================
 function setSalahLoadingState(){
 let cityEl = document.getElementById("salahCityName");
 let sourceEl = document.getElementById("salahSourceLabel");
@@ -4152,6 +4833,9 @@ document.getElementById("sunsetTime").innerText = "--:--";
 document.getElementById("ishaTime").innerText = "--:--";
 }
 
+// =========================
+// APPLY SALAH DATA TO SCREEN
+// =========================
 function applySalahDataToScreen(data){
 if(!data) return;
 
@@ -4194,6 +4878,9 @@ let fetchUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
 let res = await fetch(fetchUrl);
 let html = await res.text();
 
+// =========================
+// PICK TIME
+// =========================
 function pickTime(label){
 let pattern = new RegExp(label + "[\\s\\S]*?(\\d{2}:\\d{2}\\s?[AP]M)", "i");
 let match = html.match(pattern);
@@ -4231,6 +4918,9 @@ document.getElementById("salahSourceLabel").innerText = "Masjid site unavailable
 }
 }
 
+// =========================
+// HIDE SALAH LOCATION SUGGESTIONS
+// =========================
 function hideSalahLocationSuggestions(){
 let box = document.getElementById("salahLocationSuggestions");
 if(box){
@@ -4240,6 +4930,9 @@ box.innerHTML = "";
 salahLocationSuggestions = [];
 }
 
+// =========================
+// RENDER SALAH LOCATION SUGGESTIONS
+// =========================
 function renderSalahLocationSuggestions(list){
 let box = document.getElementById("salahLocationSuggestions");
 if(!box) return;
@@ -4261,6 +4954,7 @@ let region = parts[parts.length - 3] || parts[parts.length - 2] || "";
 let shortName = name + (region ? ", " + region.trim() : "");
 
 html += `
+<!-- Select Salah Location Suggestion Card -->
 <div onclick="selectSalahLocationSuggestion(${index})" style="
 padding:14px 16px;
 font-size:15px;
@@ -4299,6 +4993,9 @@ return [];
 return data;
 }
 
+// =========================
+// HANDLE SALAH LOCATION TYPING
+// =========================
 function handleSalahLocationTyping(){
 let input = document.getElementById("salahLocationInput");
 if(!input) return;
@@ -4470,6 +5167,9 @@ document.getElementById("salahSourceLabel").innerText = "Check internet and try 
 }
 }
   
+// =========================
+// GET SELECTED SALAH DATE
+// =========================
 function getSelectedSalahDate(){
 let d = new Date();
 d.setHours(0,0,0,0);
@@ -4477,6 +5177,9 @@ d.setDate(d.getDate() + salahDayOffset);
 return d;
 }
 
+// =========================
+// SET SALAH SOURCE
+// =========================
 function setSalahSource(source){
 salahSource = source;
 
@@ -4511,6 +5214,9 @@ renderSalahPage();
   
 let salahSliding = false;
 
+// =========================
+// CHANGE SALAH DAY
+// =========================
 function changeSalahDay(step){
 
 if(salahSliding) return;
@@ -4567,6 +5273,9 @@ salahSliding = false;
 
 }
 
+// =========================
+// RENDER SALAH PAGE
+// =========================
 function renderSalahPage(){
 
 let selectedDate = getSelectedSalahDate();
@@ -4601,11 +5310,17 @@ refreshMasjidSalahData();
   let salahTouchStartX = 0;
 let salahTouchEndX = 0;
 
+// =========================
+// HANDLE SALAH SWIPE START
+// =========================
 function handleSalahSwipeStart(e){
 if(!e.touches || !e.touches.length) return;
 salahTouchStartX = e.touches[0].clientX;
 }
 
+// =========================
+// HANDLE SALAH SWIPE END
+// =========================
 function handleSalahSwipeEnd(e){
 if(!e.changedTouches || !e.changedTouches.length) return;
 salahTouchEndX = e.changedTouches[0].clientX;
@@ -4623,6 +5338,9 @@ changeSalahDay(-1);  // swipe right = previous day
 
   
   
+// =========================
+// OPEN SALAH PAGE
+// =========================
 function openSalahPage(){
 
 lastMainTab = "salah";
@@ -4655,6 +5373,9 @@ window.scrollTo(0,0);
 }
 
   
+// =========================
+// CLOSE SALAH PAGE
+// =========================
 function closeSalahPage(){
 
 let salahPage = document.getElementById("salahPage");
@@ -4665,6 +5386,9 @@ returnToDefaultPage();
 
 }
 
+// =========================
+// TOGGLE SIDE MENU
+// =========================
 function toggleSideMenu(){
 let menu = document.getElementById("sideMenu");
 let overlay = document.getElementById("sideMenuOverlay");
@@ -4678,16 +5402,25 @@ overlay.style.display = "block";
 }
 }
 
+// =========================
+// CLOSE SIDE MENU
+// =========================
 function closeSideMenu(){
 document.getElementById("sideMenu").style.left = "-280px";
 document.getElementById("sideMenuOverlay").style.display = "none";
 }
 
+// =========================
+// REFRESH APP
+// =========================
 function refreshApp(){
 closeSideMenu();
 location.reload();
 }
 
+// =========================
+// OPEN BACKUP POPUP
+// =========================
 function openBackupPopup(){
 closeSideMenu();
 
@@ -4702,6 +5435,9 @@ document.documentElement.style.overflow = "hidden";
 updateBackupLastSavedText();
 }
 
+// =========================
+// CLOSE BACKUP POPUP
+// =========================
 function closeBackupPopup(){
 let overlay = document.getElementById("backupPopupOverlay");
 if(overlay){
@@ -4712,6 +5448,9 @@ document.body.style.overflow = "";
 document.documentElement.style.overflow = "";
 }
 
+// =========================
+// SHOW BACKUP TOAST
+// =========================
 function showBackupToast(message){
 let toast = document.getElementById("backupToast");
 if(!toast) return;
@@ -4726,6 +5465,9 @@ toast.style.display = "none";
 }, 2600);
 }
 
+// =========================
+// UPDATE BACKUP LAST SAVED TEXT
+// =========================
 function updateBackupLastSavedText(){
 let text = document.getElementById("backupLastSavedText");
 if(!text) return;
@@ -4758,6 +5500,9 @@ minute:"2-digit"
 });
 }
 
+// =========================
+// BACKUP DATA
+// =========================
 function backupData(){
 
 let backup = {
@@ -4805,10 +5550,16 @@ URL.revokeObjectURL(a.href);
 }
 
   
+// =========================
+// IMPORT DATA
+// =========================
 function importData(){
 document.getElementById("backupFileInput").click();
 }
 
+// =========================
+// HANDLE IMPORT FILE
+// =========================
 function handleImportFile(event){
 let file = event.target.files[0];
 if(!file) return;
@@ -4880,6 +5631,9 @@ reader.readAsText(file);
 }
 
 
+// =========================
+// OPEN DUA VIEWER
+// =========================
 function openDuaViewer(duaName){
 
 let imageBox = document.getElementById("duaViewerImages");
@@ -4897,16 +5651,25 @@ document.getElementById("floatingMenuBtn").style.display = "none";
 window.scrollTo(0,0);
 }
 
+// =========================
+// CLOSE DUA VIEWER
+// =========================
 function closeDuaViewer(){
 document.getElementById("duaViewerPage").style.display = "none";
 window.scrollTo(0,0);
 }
   
+// =========================
+// GO TO MAIN PAGE
+// =========================
  function goToMainPage(){
 closeSideMenu();
 location.reload();
 }
 
+// =========================
+// OPEN TASBIH SETTINGS
+// =========================
 function openTasbihSettings(){
 
 let overlay = document.getElementById("tasbihSettingsOverlay");
@@ -4925,6 +5688,9 @@ drawer.style.right = "0";
 
 }
 
+// =========================
+// CLOSE TASBIH SETTINGS
+// =========================
 function closeTasbihSettings(){
 
 let overlay = document.getElementById("tasbihSettingsOverlay");
@@ -4943,6 +5709,9 @@ drawer.style.right = "-70%";
 
 }
   
+// =========================
+// ANIMATE DARK NIGHT RING
+// =========================
 function animateDarkNightRing(){
 
 let ring = document.getElementById("darkNightRing");
@@ -4957,6 +5726,9 @@ ring.style.transform = "translateX(-50%) scale(1)";
 
 }
 
+// =========================
+// TAP DARK NIGHT RING
+// =========================
 function tapDarkNightRing(){
 
 increaseTasbih();
@@ -4978,10 +5750,16 @@ menu.style.display = "none";
 
 });
 
+// =========================
+// SAVE TASBIH STYLE
+// =========================
 function saveTasbihStyle(style){
 localStorage.setItem("tasbihStyle", style);
 }
 
+// =========================
+// APPLY SAVED TASBIH STYLE
+// =========================
 function applySavedTasbihStyle(){
 
 let savedStyle = localStorage.getItem("tasbihStyle") || "classic";
@@ -4996,6 +5774,9 @@ showClassicMode();
 
 
   
+// =========================
+// TOGGLE DARK TARGET MENU
+// =========================
 function toggleDarkTargetMenu(event){
 if(event) event.stopPropagation();
 
@@ -5009,6 +5790,9 @@ menu.style.display = "block";
 }
 }
 
+// =========================
+// CLOSE DARK TARGET MENU
+// =========================
 function closeDarkTargetMenu(event){
 if(event) event.stopPropagation();
 
@@ -5018,6 +5802,9 @@ menu.style.display = "none";
 }
 }
 
+// =========================
+// SELECT DARK TARGET
+// =========================
 function selectDarkTarget(mode,event){
 if(event) event.stopPropagation();
 
@@ -5032,6 +5819,9 @@ updateDarkNightNumber();
 closeDarkTargetMenu();
 }
 
+// =========================
+// SHOW DARK NIGHT MODE
+// =========================
 function showDarkNightMode(){
 
 let dark = document.getElementById("darkNightTasbih");
@@ -5062,6 +5852,9 @@ darkTargetText.innerText = savedTarget === "inf" ? "∞" : savedTarget;
 }
 
 }
+// =========================
+// SHOW CLASSIC MODE
+// =========================
 function showClassicMode(){
 
 let dark = document.getElementById("darkNightTasbih");
@@ -5086,10 +5879,16 @@ closeDarkTargetMenu();
 
 }
 
+// =========================
+// HIDE DARK NIGHT TASBIH
+// =========================
 function hideDarkNightTasbih(){
 document.getElementById("darkNightTasbih").style.display="none";
 }
 
+// =========================
+// UPDATE DARK NIGHT NUMBER
+// =========================
 function updateDarkNightNumber(){
 
 let main = document.getElementById("tasbihScreen");
@@ -5104,11 +5903,17 @@ dark.innerText = main.innerText;
   
 (function(){
 
+// =========================
+// IBADAH SET TEXT
+// =========================
 function ibadahSetText(id, value){
   let el = document.getElementById(id);
   if(el) el.innerText = value;
 }
 
+// =========================
+// IBADAH FORMAT DATE
+// =========================
 function ibadahFormatDate(dateObj){
   return dateObj.toLocaleDateString("en-US", {
     weekday: "long",
@@ -5117,6 +5922,9 @@ function ibadahFormatDate(dateObj){
   });
 }
 
+// =========================
+// IBADAH API DATE
+// =========================
 function ibadahApiDate(dateObj){
   let d = String(dateObj.getDate()).padStart(2, "0");
   let m = String(dateObj.getMonth() + 1).padStart(2, "0");
@@ -5124,6 +5932,9 @@ function ibadahApiDate(dateObj){
   return d + "-" + m + "-" + y;
 }
 
+// =========================
+// IBADAH CLEAN TIME
+// =========================
 function ibadahCleanTime(value){
   if(!value) return "--:--";
 
@@ -5141,6 +5952,9 @@ function ibadahCleanTime(value){
   return hour + ":" + minute + " " + ampm;
 }
 
+// =========================
+// IBADAH CURRENT SALAH DATE
+// =========================
 function ibadahCurrentSalahDate(){
   let offset = 0;
 
@@ -5154,6 +5968,9 @@ function ibadahCurrentSalahDate(){
   return d;
 }
 
+// =========================
+// IBADAH SHOW LOADING
+// =========================
 function ibadahShowLoading(){
   let d = ibadahCurrentSalahDate();
 
@@ -5172,6 +5989,9 @@ function ibadahShowLoading(){
   ibadahSetText("sunsetTime", "--:--");
 }
 
+// =========================
+// IBADAH APPLY TIMES
+// =========================
 function ibadahApplyTimes(city, hijriText, timings){
   let d = ibadahCurrentSalahDate();
 
@@ -5190,6 +6010,9 @@ function ibadahApplyTimes(city, hijriText, timings){
   ibadahSetText("sunsetTime", ibadahCleanTime(timings.Sunset || timings.Maghrib));
 }
 
+// =========================
+// IBADAH LOAD LIVE SALAH
+// =========================
 function ibadahLoadLiveSalah(){
   if(typeof salahSource !== "undefined" && salahSource === "masjid"){
     return;
@@ -5265,6 +6088,9 @@ function ibadahLoadLiveSalah(){
   );
 }
 
+// =========================
+// IBADAH PATCH SALAH FUNCTIONS
+// =========================
 function ibadahPatchSalahFunctions(){
   if(window.__ibadahSalahPatched) return;
   window.__ibadahSalahPatched = true;
@@ -5301,6 +6127,9 @@ function ibadahPatchSalahFunctions(){
   }
 }
 
+// =========================
+// IBADAH SCHEDULE MIDNIGHT REFRESH
+// =========================
 function ibadahScheduleMidnightRefresh(){
   let now = new Date();
   let nextMidnight = new Date();
@@ -5331,16 +6160,23 @@ if(document.readyState === "loading"){
   ibadahScheduleMidnightRefresh();
   setAsrToggleUI();
   openSelectedDefaultPage();
+  updateHomePageSalahSummary();
 });
 }else{
   ibadahPatchSalahFunctions();
   ibadahScheduleMidnightRefresh();
   setAsrToggleUI();
   openSelectedDefaultPage();
+  updateHomePageSalahSummary();
 }
 
 })();
 
+
+
+// =========================
+// GET ASR METHOD
+// =========================
 function getAsrMethod(){
   let m = localStorage.getItem("asrMethod");
 
@@ -5352,6 +6188,9 @@ function getAsrMethod(){
   return m;
 }
 
+// =========================
+// SET ASR TOGGLE UI
+// =========================
 function setAsrToggleUI(){
   let label = document.getElementById("asrMethodLabel");
   let knob = document.getElementById("asrMethodKnob");
@@ -5396,6 +6235,9 @@ async function toggleAsrMethod(){
   }
 }
 
+// =========================
+// UPDATE SALAH SETTINGS CHECKS
+// =========================
   function updateSalahSettingsChecks(){
   let hanafiCheck = document.getElementById("hanafiCheck");
   let shafiCheck = document.getElementById("shafiCheck");
@@ -5434,17 +6276,26 @@ async function selectAsrMethod(method){
   }
 }
 
+// =========================
+// OPEN SALAH SETTINGS PAGE
+// =========================
 function openSalahSettingsPage(){
   document.getElementById("salahSettingsPage").style.display = "block";
   updateSalahSettingsChecks();
   window.scrollTo(0,0);
 }
 
+// =========================
+// CLOSE SALAH SETTINGS PAGE
+// =========================
 function closeSalahSettingsPage(){
   document.getElementById("salahSettingsPage").style.display = "none";
   window.scrollTo(0,0);
 }
 
+// =========================
+// OPEN SALAH SETTINGS FROM MENU
+// =========================
 function openSalahSettingsFromMenu(){
   closeSideMenu();
   document.getElementById("salahSettingsPage").style.display = "block";
@@ -5452,6 +6303,9 @@ function openSalahSettingsFromMenu(){
   window.scrollTo(0,0);
 }
 
+// =========================
+// OPEN APP SETTINGS PAGE
+// =========================
 function openAppSettingsPage(){
 
 let appSettingsPage = document.getElementById("appSettingsPage");
@@ -5488,6 +6342,9 @@ window.scrollTo(0,0);
 
 
   
+// =========================
+// CLOSE APP SETTINGS PAGE
+// =========================
 function closeAppSettingsPage(){
 
 let appSettingsPage = document.getElementById("appSettingsPage");
@@ -5516,6 +6373,9 @@ window.scrollTo(0,0);
 }
 
 
+// =========================
+// GET DEFAULT PAGE LABEL
+// =========================
 function getDefaultPageLabel(){
   let page = getDefaultPage();
 
@@ -5525,12 +6385,18 @@ function getDefaultPageLabel(){
   return "Daily Task";
 }
 
+// =========================
+// UPDATE DEFAULT PAGE SUBTITLE
+// =========================
 function updateDefaultPageSubtitle(){
   let el = document.getElementById("defaultPageSubtitle");
   if(!el) return;
   el.innerText = getDefaultPageLabel();
 }
 
+// =========================
+// OPEN DEFAULT PAGE PICKER
+// =========================
 function openDefaultPagePicker(){
   let popup = document.getElementById("defaultPagePopupOverlay");
   if(!popup) return;
@@ -5540,12 +6406,18 @@ function openDefaultPagePicker(){
 }
 
 
+// =========================
+// CLOSE DEFAULT PAGE POPUP
+// =========================
   function closeDefaultPagePopup(){
   let popup = document.getElementById("defaultPagePopupOverlay");
   if(!popup) return;
   popup.style.display = "none";
 }
 
+// =========================
+// SET DEFAULT PAGE
+// =========================
 function setDefaultPage(page){
   localStorage.setItem("defaultPage", page);
   updateDefaultPageSubtitle();
@@ -5553,6 +6425,9 @@ function setDefaultPage(page){
   closeDefaultPagePopup();
 }
 
+// =========================
+// UPDATE DEFAULT PAGE CHECKS
+// =========================
 function updateDefaultPageChecks(){
   let current = getDefaultPage();
 
@@ -5567,39 +6442,66 @@ function updateDefaultPageChecks(){
 
 
 
+// ==============================
+// SALAH TOP BUTTON ACTION (NOT USED)
+// ==============================
+
 function handleSalahTopButton(){
 
-// if salah is the selected app home page → open side menu
-if(localStorage.getItem("defaultPage") === "salah"){
-
-toggleSideMenu();
-
-}else{
-
-// normal behavior → go back
-closeSalahPage();
-
-}
-
 }
 
 
- function updateSalahTopButton(){
+// ==============================
+// SALAH TOP BUTTON
+// ==============================
+
+function updateSalahTopButton(){
 
 let btn = document.getElementById("salahTopBtn");
+let icon = document.getElementById("salahTopBtnIcon");
 
-if(!btn) return;
+if(!btn || !icon) return;
 
-if(localStorage.getItem("defaultPage") === "salah"){
-btn.innerHTML = "☰";
-}else{
-btn.innerHTML = "←";
-}
+icon.textContent = "☰";
 
 }
 
 
   
+// =========================
+// HOME PAGE - TOGGLE ALL SALAH TIMES
+// =========================
+function toggleHomeAllTimes(){
+
+let box = document.getElementById("homeAllTimesBox");
+let arrow = document.getElementById("homeTimesArrow");
+
+if(!box || !arrow) return;
+
+if(box.style.display === "none" || box.style.display === ""){
+box.style.display = "block";
+arrow.textContent = "▲";
+}else{
+box.style.display = "none";
+arrow.textContent = "▼";
+}
+
+}
+
+  // =========================
+// OPEN TASBIH PAGE FROM HOME
+// =========================
+function openHomeTasbihPage(){
+
+let homePage = document.getElementById("homePage");
+
+if(homePage) homePage.style.display = "none";
+
+lastMainTab = "home";
+
+openTasbihPage();
+
+}
 
 
   
@@ -5622,8 +6524,14 @@ btn.innerHTML = "←";
 
 
   
+<!-- =========================
+     MENU OVERLAY
+========================= -->
   <div id="menuOverlay"></div>
 
+<!-- =========================
+     TASK MENU
+========================= -->
 <div id="taskMenu" style="
 position:fixed;
 left:0;
@@ -5650,6 +6558,9 @@ overflow-y:auto;
 ">
 
 
+<!-- =========================
+     TASK MENU CONTENT
+========================= -->
 <div id="taskMenuContent">
 
 <div style="
@@ -5674,6 +6585,7 @@ Manage Tasks
 
 
 
+<!-- Show Add Task Button -->
 <button onclick="showAddTask()" style="
 width:100%;
 padding:20px;
@@ -5690,6 +6602,7 @@ cursor:pointer;
 Add Task
 </button>
 
+<!-- Show Rename Task Button -->
 <button onclick="showRenameTask()" style="
 width:100%;
 padding:20px;
@@ -5706,6 +6619,7 @@ cursor:pointer;
 Rename Task
 </button>
 
+<!-- Show Remove Task Button -->
 <button onclick="showRemoveTask()" style="
 width:100%;
 padding:20px;
@@ -5722,6 +6636,7 @@ cursor:pointer;
 Remove Task
 </button>
 
+<!-- Close Task Menu Button -->
 <button onclick="closeTaskMenu()" style="
 width:100%;
 padding:17px;
@@ -5742,6 +6657,9 @@ Back
 
 </div>
 
+<!-- =========================
+     DELETE CHOICE POPUP
+========================= -->
 <div id="deleteChoicePopup" style="
 position:fixed;
 top:0;
@@ -5783,6 +6701,7 @@ line-height:1.5;
 Choose how you want to remove this task.
 </div>
 
+<!-- Confirm Delete Task Button -->
 <button onclick="confirmDeleteTask()" style="
 width:100%;
 padding:16px;
@@ -5800,6 +6719,7 @@ letter-spacing:-0.2px;
 Delete From Beginning
 </button>
 
+<!-- Delete Task From Today Button -->
 <button onclick="deleteTaskFromToday()" style="
 width:100%;
 padding:16px;
@@ -5817,6 +6737,7 @@ letter-spacing:-0.2px;
 Delete From Today
 </button>
 
+<!-- Close Delete Popup Button -->
 <button onclick="closeDeletePopup()" style="
 width:100%;
 padding:16px;
@@ -5834,22 +6755,387 @@ Cancel
 
 </div>
 </div>
+
+
+<!-- =========================
+     HOME PAGE
+========================= -->
+<div id="homePage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:82px;
+z-index:4500;
+background:#e9e9ee;
+overflow:auto;
+-webkit-overflow-scrolling:touch;
+">
+
+    <!-- =========================
+       HOME TOP WALLPAPER SECTION
+       (HEIGHT INCREASED FOR CARD OVERLAP)
+  ========================= -->
+  <div style="
+  position:relative;
+  height:330px;
+  background:url('homewallpaper.jpg') center/cover no-repeat;
+  padding:14px 14px 20px 14px;
+  box-sizing:border-box;
+  color:white;
+  ">
+
+    <!-- TOP ROW -->
+    <div style="
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    ">
+
+      <!-- HOME MENU BUTTON -->
+      <button onclick="toggleSideMenu()" style="
+      width:42px;
+      height:42px;
+      border:none;
+      border-radius:50%;
+      background:rgba(255,255,255,0.22);
+      color:white;
+      font-size:20px;
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+      box-shadow:0 6px 18px rgba(0,0,0,0.16);
+      cursor:pointer;
+      ">
+      ☰
+      </button>
+
+      <!-- LOCATION + DATES -->
+      <div style="
+text-align:right;
+max-width:190px;
+">
+
+        <div id="homeLocationName" style="
+        font-size:15px;
+        font-weight:800;
+        line-height:1.2;
+        margin-bottom:4px;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        ">
+        Loading...
+        </div>
+
+        <div id="homeIslamicDate" style="
+        font-size:12px;
+        font-weight:600;
+        opacity:0.96;
+        line-height:1.35;
+        ">
+        Islamic date
+        </div>
+
+        <div id="homeNormalDate" style="
+        font-size:12px;
+        font-weight:600;
+        opacity:0.96;
+        line-height:1.35;
+        ">
+        Normal date
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER TITLE -->
+    <div style="
+    position:absolute;
+    left:50%;
+    top:78px;
+    transform:translateX(-50%);
+    font-size:34px;
+    font-weight:800;
+    text-align:center;
+    text-shadow:0 4px 12px rgba(0,0,0,0.22);
+    letter-spacing:1px;
+    white-space:nowrap;
+    ">
+    🕋﷽🕋
+    </div>
+
+    <!-- NEXT SALAH + COUNTDOWN ROW -->
+    <div style="
+    position:absolute;
+    left:14px;
+    right:14px;
+    bottom:-1px;
+    display:flex;
+    gap:12px;
+    align-items:stretch;
+    ">
+
+      <!-- NEXT SALAH STAR CARD -->
+      <div style="
+      flex:1;
+      min-height:126px;
+      background:rgba(255,255,255,0.96);
+      border-radius:28px;
+      box-shadow:0 14px 30px rgba(0,0,0,0.14);
+      padding:14px 14px 12px 14px;
+      box-sizing:border-box;
+      color:#111;
+      position:relative;
+      overflow:hidden;
+      ">
+
+        <!-- STAR + NEXT SALAH -->
+        <div style="
+        display:flex;
+        align-items:flex-start;
+        gap:10px;
+        margin-bottom:8px;
+        ">
+
+          <!-- SMALL STAR -->
+          <div style="
+          width:38px;
+          height:38px;
+          flex:0 0 38px;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          font-size:22px;
+          line-height:1;
+          ">
+          ✦
+          </div>
+
+          <!-- NEXT SALAH TEXT -->
+          <div style="flex:1;min-width:0;">
+            <div id="homeNextSalahName" style="
+            font-size:12px;
+            font-weight:700;
+            color:#666;
+            margin-bottom:2px;
+            text-transform:uppercase;
+            letter-spacing:0.6px;
+            ">
+            Next Salah
+            </div>
+
+            <div id="homeNextSalahTime" style="
+            font-size:28px;
+            font-weight:900;
+            color:#111;
+            line-height:1.1;
+            ">
+            --:--
+            </div>
+          </div>
+        </div>
+
+        <!-- OPEN SALAH PAGE ROW -->
+        <div style="
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        margin-top:8px;
+        margin-bottom:6px;
+        cursor:pointer;
+        " onclick="openSalahPage()">
+
+          <!-- =========================
+     HOME NEXT SALAH ONLY 
+========================= -->
+<div style="
+font-size:12px;
+color:#888;
+font-weight:600;
+letter-spacing:0.3px;
+">
+View all Salah times
+</div>
+
+          <div id="homeTimesArrow" style="
+          font-size:18px;
+          font-weight:800;
+          color:#666;
+          padding-left:10px;
+          ">
+          ›
+          </div>
+        </div>
+      </div>
+
+      <!-- COUNTDOWN CARD -->
+      <div style="
+      flex:1;
+      min-height:126px;
+      background:rgba(255,255,255,0.96);
+      border-radius:28px;
+      box-shadow:0 14px 30px rgba(0,0,0,0.14);
+      padding:14px 12px;
+      box-sizing:border-box;
+      text-align:center;
+      color:#111;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      ">
+
+        <div style="
+        font-size:12px;
+        font-weight:700;
+        color:#666;
+        text-transform:uppercase;
+        letter-spacing:0.6px;
+        margin-bottom:8px;
+        ">
+        Time Left
+        </div>
+
+        <div id="homeCountdown" style="
+        font-size:24px;
+        font-weight:900;
+        line-height:1.1;
+        color:#111;
+        ">
+        00:00:00
+        </div>
+
+        <div style="
+        font-size:11px;
+        font-weight:600;
+        color:#777;
+        margin-top:8px;
+        ">
+        until next salah
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================
+      HOME LOWER SECTION SPACING FIX
+ ========================= -->
+  <div style="
+  background:#e9e9ee;
+  padding:44px 16px 28px 16px;
+  ">
+
+    <!-- SHORTCUTS CARD -->
+    <div style="
+    background:white;
+    border-radius:28px;
+    padding:20px 14px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.08);
+    ">
+
+      <div style="
+      font-size:17px;
+      font-weight:800;
+      color:#111;
+      margin-bottom:16px;
+      ">
+      Quick Access
+      </div>
+
+      <div style="
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      ">
+
+        <!-- TASBIH SHORTCUT -->
+<div onclick="openHomeTasbihPage()" style="
+        background:#f8f8fa;
+        border-radius:22px;
+        padding:16px 8px;
+        text-align:center;
+        cursor:pointer;
+        box-shadow:inset 0 0 0 1px rgba(0,0,0,0.04);
+        ">
+          <div style="font-size:24px;margin-bottom:8px;">📿</div>
+          <div style="font-size:13px;font-weight:700;color:#111;">Tasbih</div>
+        </div>
+
+        <!-- QIBLA SHORTCUT -->
+        <div onclick="openQiblaPage()" style="
+        background:#f8f8fa;
+        border-radius:22px;
+        padding:16px 8px;
+        text-align:center;
+        cursor:pointer;
+        box-shadow:inset 0 0 0 1px rgba(0,0,0,0.04);
+        ">
+          <div style="font-size:24px;margin-bottom:8px;">🧭</div>
+          <div style="font-size:13px;font-weight:700;color:#111;">Qibla</div>
+        </div>
+
+        <!-- DUA SHORTCUT -->
+        <div onclick="openDuaPage()" style="
+        background:#f8f8fa;
+        border-radius:22px;
+        padding:16px 8px;
+        text-align:center;
+        cursor:pointer;
+        box-shadow:inset 0 0 0 1px rgba(0,0,0,0.04);
+        ">
+          <div style="font-size:24px;margin-bottom:8px;">🤲</div>
+          <div style="font-size:13px;font-weight:700;color:#111;">Dua</div>
+        </div>
+
+        <!-- DAILY ZIKR SHORTCUT -->
+        <div onclick="openHomeZikrPage()" style="
+        background:#f8f8fa;
+        border-radius:22px;
+        padding:16px 8px;
+        text-align:center;
+        cursor:pointer;
+        box-shadow:inset 0 0 0 1px rgba(0,0,0,0.04);
+        ">
+          <div style="font-size:24px;margin-bottom:8px;">✨</div>
+          <div style="font-size:13px;font-weight:700;color:#111;">Daily Zikr</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
   
 <!-- Bottom Navigation -->
 <div id="bottomNav">
 
-<div class="navItem">🏠<br>Home</div>
+<div onclick="openHomePage()" class="navItem">🏠<br>Home</div>
 
+<!-- Open Salah Page Card -->
 <div class="navItem" onclick="openSalahPage()">🕒<br>Salah</div>
 
+<!-- Open Tracker Page Card -->
 <div class="navItem" onclick="openTrackerPage()">📈<br>Tracker</div>
 
+<!-- Open More Page Card -->
 <div class="navItem" onclick="openMorePage()">•••<br>More</div>
 
 </div>
 
 
 
+<!-- =========================
+     MORE PAGE
+========================= -->
 <div id="morePage" style="
 display:none;
 position:fixed;
@@ -5864,6 +7150,7 @@ padding:15px;
 ">
 
 <div style="padding:10px;">
+<!-- Close More Page Button -->
 <button onclick="closeMorePage()" style="
 width:36px;
 height:36px;
@@ -5904,7 +7191,8 @@ grid-template-columns:1fr 1fr;
 gap:14px;
 ">
 
-<div onclick="document.getElementById('morePage').style.display='none'; openTasbihPage();" style="
+<!-- Open Tasbih Page Card -->
+<div onclick="openMoreTasbihPage()" style="
 background:white;
 border-radius:22px;
 padding:18px 10px;
@@ -5916,6 +7204,7 @@ box-shadow:0 6px 16px rgba(0,0,0,0.08);
 <div style="font-size:15px;font-weight:700;color:#111;">Tasbih</div>
 </div>
 
+<!-- Open Dua Page Card -->
 <div onclick="openDuaPage()" style="
 background:white;
 border-radius:22px;
@@ -5928,7 +7217,8 @@ box-shadow:0 6px 16px rgba(0,0,0,0.08);
 <div style="font-size:15px;font-weight:700;color:#111;">Dua</div>
 </div>
 
-<div onclick="openZikrPage()" style="
+<!-- Open Zikr Page Card -->
+<div onclick="openMoreZikrPage()" style="
 background:white;
 border-radius:22px;
 padding:18px 10px;
@@ -5940,6 +7230,7 @@ box-shadow:0 6px 16px rgba(0,0,0,0.08);
 <div style="font-size:15px;font-weight:700;color:#111;">Daily Dhikr</div>
 </div>
 
+<!-- Open Qibla Page Card -->
 <div onclick="document.getElementById('morePage').style.display='none'; openQiblaPage();" style="
 background:white;
 border-radius:22px;
@@ -5961,6 +7252,9 @@ box-shadow:0 6px 16px rgba(0,0,0,0.08);
 
 
   
+<!-- =========================
+     DUA PAGE
+========================= -->
 <div id="duaPage" style="
 display:none;
 position:fixed;
@@ -5975,6 +7269,7 @@ padding:15px;
 ">
 
 <div style="padding:10px;">
+<!-- Close Dua Page Button -->
 <button onclick="closeDuaPage()" style="
 width:36px;
 height:36px;
@@ -5999,6 +7294,7 @@ justify-content:center;
 
 </div>
 
+<!-- Open Dua Viewer Card -->
 <div class="card" onclick="openDuaViewer('istikhara')" style="cursor:pointer;margin-top:15px;">
 
 <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -6016,6 +7312,9 @@ Istikhara Dua
 </div>
 </div>
 
+<!-- =========================
+     APP SETTINGS PAGE
+========================= -->
  <div id="appSettingsPage" style="
 display:none;
 position:fixed;
@@ -6045,6 +7344,7 @@ overflow:auto;
     padding-top:4px;
     ">
       
+<!-- Close App Settings Page Button -->
       <button onclick="closeAppSettingsPage()" style="
       width:42px;
       height:42px;
@@ -6087,6 +7387,7 @@ overflow:auto;
     -webkit-backdrop-filter:blur(10px);
     ">
 
+<!-- Open Default Page Picker Card -->
       <div onclick="openDefaultPagePicker()" style="
       display:flex;
       align-items:center;
@@ -6122,6 +7423,9 @@ overflow:auto;
           Default Page
           </div>
 
+<!-- =========================
+     DEFAULT PAGE SUBTITLE
+========================= -->
           <div id="defaultPageSubtitle" style="
           font-size:14px;
           color:#666;
@@ -6158,6 +7462,10 @@ overflow:auto;
   </div>
 </div>
 
+<!-- =========================
+     DEFAULT PAGE POPUP OVERLAY
+========================= -->
+<!-- Default Page Popup Overlay Card -->
 <div id="defaultPagePopupOverlay" onclick="closeDefaultPagePopup()" style="
 display:none;
 position:fixed;
@@ -6175,6 +7483,7 @@ padding:20px;
 box-sizing:border-box;
 ">
 
+<!-- Event Card -->
  <div onclick="event.stopPropagation()" style="
   width:100%;
   max-width:380px;
@@ -6205,6 +7514,7 @@ box-sizing:border-box;
     Choose which page should open first when the app starts
     </div>
 
+<!-- Set Default Page Card -->
     <div onclick="setDefaultPage('salah')" style="
     display:flex;
     align-items:center;
@@ -6220,9 +7530,13 @@ box-sizing:border-box;
         <div style="font-size:17px;font-weight:800;color:#111;">Salah Times</div>
         <div style="font-size:13px;color:#777;margin-top:2px;">Open the Salah page first</div>
       </div>
+<!-- =========================
+     DEFAULT PAGE CHECK SALAH
+========================= -->
       <div id="defaultPageCheckSalah" style="font-size:22px;color:#111;opacity:0;">✓</div>
     </div>
 
+<!-- Set Default Page Card -->
 <div onclick="setDefaultPage('tracker')" style="
     display:flex;
     align-items:center;
@@ -6238,9 +7552,13 @@ box-sizing:border-box;
         <div style="font-size:17px;font-weight:800;color:#111;">Daily Task</div>
         <div style="font-size:13px;color:#777;margin-top:2px;">Open the tracker page first</div>
       </div>
+<!-- =========================
+     DEFAULT PAGE CHECK DAILY TASK
+========================= -->
       <div id="defaultPageCheckDailyTask" style="font-size:22px;color:#111;opacity:0;">✓</div>
     </div>
 
+<!-- Set Default Page Card -->
     <div onclick="setDefaultPage('tasbih')" style="
     display:flex;
     align-items:center;
@@ -6256,9 +7574,13 @@ box-sizing:border-box;
         <div style="font-size:17px;font-weight:800;color:#111;">Tasbih</div>
         <div style="font-size:13px;color:#777;margin-top:2px;">Open the Tasbih page first</div>
       </div>
+<!-- =========================
+     DEFAULT PAGE CHECK TASBIH
+========================= -->
       <div id="defaultPageCheckTasbih" style="font-size:22px;color:#111;opacity:0;">✓</div>
     </div>
 
+<!-- Close Default Page Popup Button -->
     <button onclick="closeDefaultPagePopup()" style="
     width:100%;
     border:none;
@@ -6277,6 +7599,9 @@ box-sizing:border-box;
 </div>
 
   
+<!-- =========================
+     WAQIYA PAGE
+========================= -->
   <div id="waqiyaPage" style="
 display:none;
 position:fixed;
@@ -6291,6 +7616,7 @@ padding:15px;
 ">
 
   <div style="padding:10px;">
+<!-- Close Waqiya Page Button -->
     <button onclick="closeWaqiyaPage()" style="
     width:36px;
     height:36px;
@@ -6359,6 +7685,9 @@ padding:15px;
 
 </div>
 
+<!-- =========================
+     MULK PAGE
+========================= -->
 <div id="mulkPage" style="
 display:none;
 position:fixed;
@@ -6372,6 +7701,7 @@ padding:15px;
 z-index:5000;
 ">
 
+<!-- Close Surah Page Button -->
 <button onclick="closeSurahPage('mulkPage')" style="
 width:36px;
 height:36px;
@@ -6388,6 +7718,9 @@ font-size:20px;
 </div>
 
 
+<!-- =========================
+     REHMAN PAGE
+========================= -->
 <div id="rehmanPage" style="
 display:none;
 position:fixed;
@@ -6401,6 +7734,7 @@ padding:15px;
 z-index:5000;
 ">
 
+<!-- Close Surah Page Button -->
 <button onclick="closeSurahPage('rehmanPage')" style="
 width:36px;
 height:36px;
@@ -6418,6 +7752,9 @@ font-size:20px;
 
 
 
+<!-- =========================
+     SAJDAH PAGE
+========================= -->
 <div id="sajdahPage" style="
 display:none;
 position:fixed;
@@ -6431,6 +7768,7 @@ padding:15px;
 z-index:5000;
 ">
 
+<!-- Close Surah Page Button -->
 <button onclick="closeSurahPage('sajdahPage')" style="
 width:36px;
 height:36px;
@@ -6449,6 +7787,9 @@ font-size:20px;
 
 
 
+<!-- =========================
+     TAGHABUN PAGE
+========================= -->
 <div id="taghabunPage" style="
 display:none;
 position:fixed;
@@ -6462,6 +7803,7 @@ padding:15px;
 z-index:5000;
 ">
 
+<!-- Close Surah Page Button -->
 <button onclick="closeSurahPage('taghabunPage')" style="
 width:36px;
 height:36px;
@@ -6479,6 +7821,9 @@ font-size:20px;
 
 
 
+<!-- =========================
+     LAST22 PAGE
+========================= -->
 <div id="last22Page" style="
 display:none;
 position:fixed;
@@ -6492,6 +7837,7 @@ padding:15px;
 z-index:5000;
 ">
 
+<!-- Close Surah Page Button -->
 <button onclick="closeSurahPage('last22Page')" style="
 width:36px;
 height:36px;
@@ -6512,6 +7858,9 @@ font-size:20px;
 
 </div>
 
+<!-- =========================
+     IKHLAS PAGE
+========================= -->
 <div id="ikhlasPage" style="
 display:none;
 position:fixed;
@@ -6525,6 +7874,7 @@ padding:15px;
 z-index:5000;
 ">
 
+<!-- Close Surah Page Button -->
 <button onclick="closeSurahPage('ikhlasPage')" style="
 width:36px;
 height:36px;
@@ -6544,6 +7894,9 @@ border-radius:22px;
 </div>
 
 
+<!-- =========================
+     DUA VIEWER PAGE
+========================= -->
  <div id="duaViewerPage" style="
 display:none;
 position:fixed;
@@ -6557,6 +7910,7 @@ padding:15px;
 z-index:10002;
 ">
 
+<!-- Close Dua Viewer Button -->
 <button onclick="closeDuaViewer()" style="
 width:36px;
 height:36px;
@@ -6574,6 +7928,9 @@ font-size:20px;
 
 
   
+<!-- =========================
+     YASEEN PAGE
+========================= -->
  <div id="yaseenPage" style="
 display:none;
 position:fixed;
@@ -6588,6 +7945,7 @@ padding:15px;
 z-index:5000;
 ">
 
+<!-- Close Surah Page Button -->
   <button onclick="closeSurahPage('yaseenPage')" style="
   width:36px;
   height:36px;
@@ -6607,6 +7965,9 @@ z-index:5000;
   <img loading="lazy" src="yaseen-6.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
 
 </div>
+<!-- =========================
+     SALAH PAGE
+========================= -->
 <div id="salahPage"
 ontouchstart="handleSalahSwipeStart(event)"
 ontouchend="handleSalahSwipeEnd(event)"
@@ -6640,7 +8001,8 @@ padding:10px 0 4px 0;
 ">
 
   <!-- Back Button -->
-  <button id="salahTopBtn" onclick="handleSalahTopButton()" style="
+<!-- Salah Top Button -->
+<button id="salahTopBtn" onclick="toggleSideMenu()" style="
 width:38px;
 height:38px;
 border-radius:50%;
@@ -6653,10 +8015,11 @@ align-items:center;
 justify-content:center;
 box-shadow:0 3px 10px rgba(0,0,0,0.12);
 ">
-←
+<span id="salahTopBtnIcon">☰</span>
 </button>
 
    <!-- SETTINGS BUTTON -->
+<!-- Open Salah Settings Page Button -->
   <button onclick="openSalahSettingsPage()" style="
   width:40px;
   height:40px;
@@ -6718,6 +8081,7 @@ box-sizing:border-box;
   box-sizing:border-box;
   ">
 
+<!-- Location Tab Button -->
     <button id="locationTabBtn" onclick="setSalahSource('location')" style="
     flex:1;
     border:none;
@@ -6733,6 +8097,7 @@ box-sizing:border-box;
     My Location
     </button>
 
+<!-- Masjid Tab Button -->
     <button id="masjidTabBtn" onclick="setSalahSource('masjid')" style="
     flex:1;
     border:none;
@@ -6748,6 +8113,7 @@ box-sizing:border-box;
     My Masjid
     </button>
 
+<!-- Entered Tab Button -->
     <button id="enteredTabBtn" onclick="setSalahSource('entered')" style="
     flex:1;
     border:none;
@@ -6764,6 +8130,7 @@ box-sizing:border-box;
     </button>
   </div>
 
+<!-- Entered Location Card -->
 <div id="enteredLocationCard" style="
 display:none;
 background:rgba(232,234,245,0.96);
@@ -6791,6 +8158,7 @@ position:relative;
   align-items:center;
   position:relative;
   ">
+<!-- Salah Location Input -->
     <input id="salahLocationInput" type="text" placeholder="Example: Makkah, London, Karachi" oninput="handleSalahLocationTyping()" autocomplete="off" style="
     flex:1;
     border:none;
@@ -6803,6 +8171,7 @@ position:relative;
     box-sizing:border-box;
     ">
 
+<!-- Search Entered Location And Load Button -->
     <button onclick="searchEnteredLocationAndLoad()" style="
     border:none;
     border-radius:18px;
@@ -6831,6 +8200,7 @@ position:relative;
 
 
   
+<!-- Salah Date Card -->
 <div id="salahDateCard" style="
 background:#e9e9ee;
 border-radius:22px;
@@ -6857,6 +8227,7 @@ box-sizing:border-box;
 overflow:hidden;
 ">
 
+<!-- Change Salah Day Button -->
       <button onclick="changeSalahDay(-1)" style="
      width:36px;
 height:36px;
@@ -6902,6 +8273,7 @@ text-overflow:ellipsis;
         </div>
       </div>
 
+<!-- Change Salah Day Button -->
       <button onclick="changeSalahDay(1)" style="
       width:36px;
 height:36px;
@@ -6920,6 +8292,7 @@ height:36px;
 
      </div>
 
+<!-- Salah Times Card -->
 <div id="salahTimesCard" style="
 background:rgba(232,234,245,0.96);
 border-radius:28px;
@@ -7122,6 +8495,7 @@ padding:8px 0;
       ">
       Sunrise
       </div>
+<!-- Sunrise Card Time -->
       <div id="sunriseCardTime" style="
       font-size:22px;
       font-weight:800;
@@ -7164,6 +8538,9 @@ padding:8px 0;
 </div>
 
 </div>
+<!-- =========================
+     SALAH SETTINGS PAGE
+========================= -->
   <div id="salahSettingsPage" style="
 display:none;
 position:fixed;
@@ -7193,6 +8570,7 @@ align-items:center;
 padding:10px 0 4px 0;
 ">
 
+<!-- Close Salah Settings Page Button -->
 <button onclick="closeSalahSettingsPage()" style="
 width:38px;
 height:38px;
@@ -7262,6 +8640,7 @@ line-height:1.5;
 Choose which Asr calculation you want for My Location.
 </div>
 
+<!-- Select Asr Method Card -->
 <div onclick="selectAsrMethod('hanafi')" style="
 display:flex;
 justify-content:space-between;
@@ -7286,6 +8665,7 @@ color:#34c759;
 </div>
 </div>
 
+<!-- Select Asr Method Card -->
 <div onclick="selectAsrMethod('shafi')" style="
 display:flex;
 justify-content:space-between;
@@ -7345,6 +8725,9 @@ Default source, calculation method, Ramadan settings, and more can be added here
 
   
   
+<!-- =========================
+     JAVASCRIPT LOGIC
+========================= -->
   <script>
 // service worker removed for now
 </script>
