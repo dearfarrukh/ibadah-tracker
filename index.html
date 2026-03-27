@@ -4559,8 +4559,8 @@ isha: "8:37 PM"
 
 const salahMasjidDummyData = {
 "-3": {
-locationName: "My Masjid",
-sourceLabel: "Masjid Timings",
+locationName: "Saved Location",
+sourceLabel: "Saved Location - Hanafi",
 fajr: "5:10 AM",
 sunrise: "7:01 AM",
 dhuhr: "1:20 PM",
@@ -4569,8 +4569,8 @@ maghrib: "6:59 PM",
 isha: "8:20 PM"
 },
 "-2": {
-locationName: "My Masjid",
-sourceLabel: "Masjid Timings",
+locationName: "Saved Location",
+sourceLabel: "Saved Location - Hanafi",
 fajr: "5:09 AM",
 sunrise: "7:00 AM",
 dhuhr: "1:20 PM",
@@ -4579,8 +4579,8 @@ maghrib: "7:00 PM",
 isha: "8:21 PM"
 },
 "-1": {
-locationName: "My Masjid",
-sourceLabel: "Masjid Timings",
+locationName: "Saved Location",
+sourceLabel: "Saved Location - Hanafi",
 fajr: "5:08 AM",
 sunrise: "6:59 AM",
 dhuhr: "1:20 PM",
@@ -4589,8 +4589,8 @@ maghrib: "7:01 PM",
 isha: "8:22 PM"
 },
 "0": {
-locationName: "My Masjid",
-sourceLabel: "Masjid Timings",
+locationName: "Saved Location",
+sourceLabel: "Saved Location - Hanafi",
 fajr: "5:07 AM",
 sunrise: "6:58 AM",
 dhuhr: "1:20 PM",
@@ -4599,8 +4599,8 @@ maghrib: "7:02 PM",
 isha: "8:23 PM"
 },
 "1": {
-locationName: "My Masjid",
-sourceLabel: "Masjid Timings",
+locationName: "Saved Location",
+sourceLabel: "Saved Location - Hanafi",
 fajr: "5:06 AM",
 sunrise: "6:56 AM",
 dhuhr: "1:21 PM",
@@ -4609,8 +4609,8 @@ maghrib: "7:03 PM",
 isha: "8:24 PM"
 },
 "2": {
-locationName: "My Masjid",
-sourceLabel: "Masjid Timings",
+locationName: "Saved Location",
+sourceLabel: "Saved Location - Hanafi",
 fajr: "5:05 AM",
 sunrise: "6:55 AM",
 dhuhr: "1:21 PM",
@@ -4619,8 +4619,8 @@ maghrib: "7:04 PM",
 isha: "8:25 PM"
 },
 "3": {
-locationName: "My Masjid",
-sourceLabel: "Masjid Timings",
+locationName: "Saved Location",
+sourceLabel: "Saved Location - Hanafi",
 fajr: "5:04 AM",
 sunrise: "6:54 AM",
 dhuhr: "1:21 PM",
@@ -4629,8 +4629,8 @@ maghrib: "7:05 PM",
 isha: "8:26 PM"
 },
 "4": {
-locationName: "My Masjid",
-sourceLabel: "Masjid Timings",
+locationName: "Saved Location",
+sourceLabel: "Saved Location - Hanafi",
 fajr: "5:03 AM",
 sunrise: "6:52 AM",
 dhuhr: "1:22 PM",
@@ -4639,8 +4639,8 @@ maghrib: "7:06 PM",
 isha: "8:27 PM"
 },
 "5": {
-locationName: "My Masjid",
-sourceLabel: "Masjid Timings",
+locationName: "Saved Location",
+sourceLabel: "Saved Location - Hanafi",
 fajr: "5:02 AM",
 sunrise: "6:51 AM",
 dhuhr: "1:22 PM",
@@ -4649,8 +4649,8 @@ maghrib: "7:07 PM",
 isha: "8:28 PM"
 },
 "6": {
-locationName: "My Masjid",
-sourceLabel: "Masjid Timings",
+locationName: "Saved Location",
+sourceLabel: "Saved Location - Hanafi",
 fajr: "5:01 AM",
 sunrise: "6:49 AM",
 dhuhr: "1:22 PM",
@@ -4659,8 +4659,8 @@ maghrib: "7:08 PM",
 isha: "8:29 PM"
 },
 "7": {
-locationName: "My Masjid",
-sourceLabel: "Masjid Timings",
+locationName: "Saved Location",
+sourceLabel: "Saved Location - Hanafi",
 fajr: "5:00 AM",
 sunrise: "6:48 AM",
 dhuhr: "1:23 PM",
@@ -4946,8 +4946,8 @@ let maghrib = pickTime("Magrib|Maghrib");
 let isha = pickTime("Isha");
 
 return {
-locationName: "My Masjid",
-sourceLabel: "Masjid Timings",
+locationName: "Saved Location",
+sourceLabel: "Saved Location - Hanafi",
 fajr: fajr,
 sunrise: sunrise,
 dhuhr: dhuhr,
@@ -4959,13 +4959,24 @@ isha: isha
 
 async function refreshMasjidSalahData(){
 try{
-let data = await loadMuhammadiMasjidTimes();
+let picked = getSelectedSavedSalahLocation();
+
+if(!picked || !picked.lat || !picked.lon){
+document.getElementById("salahCityName").innerText = "Saved Location";
+document.getElementById("salahSourceLabel").innerText = "Choose or add a saved location";
+setSalahLoadingState();
+return;
+}
+
+let selectedDate = getSelectedSalahDate();
+let data = await loadSavedLocationSalahTimes(selectedDate, picked);
+
 if(salahSource === "masjid"){
 applySalahDataToScreen(data);
 }
 }catch(err){
-document.getElementById("salahCityName").innerText = "My Masjid";
-document.getElementById("salahSourceLabel").innerText = "Masjid site unavailable";
+document.getElementById("salahCityName").innerText = "Saved Location";
+document.getElementById("salahSourceLabel").innerText = "Could not load saved location";
 }
 }
 
@@ -5217,6 +5228,432 @@ document.getElementById("salahCityName").innerText = "Could not load";
 document.getElementById("salahSourceLabel").innerText = "Check internet and try again";
 }
 }
+
+
+// =========================
+// GET SAVED SALAH LOCATIONS
+// =========================
+function getSavedSalahLocations(){
+let saved = localStorage.getItem("savedSalahLocations");
+
+if(!saved) return [];
+
+try{
+let parsed = JSON.parse(saved);
+return Array.isArray(parsed) ? parsed : [];
+}catch(err){
+return [];
+}
+}
+
+// =========================
+// SET SAVED SALAH LOCATIONS
+// =========================
+function setSavedSalahLocations(locations){
+localStorage.setItem("savedSalahLocations", JSON.stringify(locations || []));
+}
+
+// =========================
+// GET SELECTED SAVED SALAH LOCATION
+// =========================
+function getSelectedSavedSalahLocation(){
+let saved = localStorage.getItem("selectedSavedSalahLocation");
+
+if(!saved) return null;
+
+try{
+return JSON.parse(saved);
+}catch(err){
+return null;
+}
+}
+
+// =========================
+// SET SELECTED SAVED SALAH LOCATION
+// =========================
+function setSelectedSavedSalahLocation(locationObj){
+if(!locationObj){
+localStorage.removeItem("selectedSavedSalahLocation");
+return;
+}
+
+localStorage.setItem("selectedSavedSalahLocation", JSON.stringify(locationObj));
+}
+
+// =========================
+// RENDER SAVED SALAH LOCATION LIST
+// =========================
+function renderSavedSalahLocationList(){
+let area = document.getElementById("savedSalahLocationListArea");
+if(!area) return;
+
+let savedLocations = getSavedSalahLocations();
+let selectedSaved = getSelectedSavedSalahLocation();
+
+if(!savedLocations.length){
+area.innerHTML = `
+  <div style="
+  background:#f7f7f9;
+  border-radius:18px;
+  padding:14px 14px;
+  font-size:14px;
+  color:#666;
+  line-height:1.5;
+  ">
+  No saved locations yet
+  </div>
+  `;
+  return;
+}
+
+let html = "";
+
+savedLocations.forEach(function(location, index){
+let isSelected =
+selectedSaved &&
+selectedSaved.name === location.name &&
+String(selectedSaved.lat) === String(location.lat) &&
+String(selectedSaved.lon) === String(location.lon);
+
+html += `
+<button onclick="selectSavedSalahLocation(${index})" style="
+width:100%;
+border:none;
+background:${isSelected ? "#111" : "#f7f7f9"};
+color:${isSelected ? "white" : "#111"};
+border-radius:18px;
+padding:14px 14px;
+text-align:left;
+font-size:15px;
+font-weight:700;
+cursor:pointer;
+margin-bottom:8px;
+box-sizing:border-box;
+display:flex;
+align-items:center;
+justify-content:space-between;
+">
+  <span>${index + 1}) ${location.name || "Saved Location"}</span>
+  <span style="
+  font-size:13px;
+  opacity:${isSelected ? "0.9" : "0.45"};
+  ">
+  ${isSelected ? "Selected" : "›"}
+  </span>
+</button>
+`;
+});
+
+area.innerHTML = html;
+}
+
+
+
+  
+// =========================
+// SELECT SAVED SALAH LOCATION
+// =========================
+function selectSavedSalahLocation(index){
+let savedLocations = getSavedSalahLocations();
+
+if(index < 0 || index >= savedLocations.length) return;
+
+let picked = savedLocations[index];
+setSelectedSavedSalahLocation(picked);
+renderSavedSalahLocationList();
+closeSalahTopDropdown();
+applySavedLocationObject(picked);
+}
+
+
+  let modalLocationSuggestions = [];
+let modalLocationTypingTimer = null;
+
+// =========================
+// HIDE MODAL LOCATION SUGGESTIONS
+// =========================
+function hideModalLocationSuggestions(){
+let box = document.getElementById("modalLocationSuggestions");
+if(box){
+box.style.display = "none";
+box.innerHTML = "";
+}
+modalLocationSuggestions = [];
+}
+
+// =========================
+// RENDER MODAL LOCATION SUGGESTIONS
+// =========================
+function renderModalLocationSuggestions(list){
+let box = document.getElementById("modalLocationSuggestions");
+if(!box) return;
+
+if(!list || !list.length){
+hideModalLocationSuggestions();
+return;
+}
+
+let html = "";
+
+list.forEach(function(item, index){
+let shortName = item.display_name || "Unknown Location";
+
+html += `
+<div onclick="selectModalLocationSuggestion(${index})" style="
+padding:14px 16px;
+font-size:15px;
+color:#111;
+cursor:pointer;
+border-bottom:${index === list.length - 1 ? "none" : "1px solid rgba(0,0,0,0.06)"};
+background:#f7f7f9;
+line-height:1.4;
+">
+${shortName}
+</div>
+`;
+});
+
+box.innerHTML = html;
+box.style.display = "block";
+}
+
+// =========================
+// HANDLE MODAL LOCATION TYPING
+// =========================
+function handleModalLocationTyping(){
+let input = document.getElementById("modalLocationInput");
+if(!input) return;
+
+let query = input.value.trim();
+
+if(modalLocationTypingTimer){
+clearTimeout(modalLocationTypingTimer);
+}
+
+if(query.length < 2){
+hideModalLocationSuggestions();
+return;
+}
+
+modalLocationTypingTimer = setTimeout(async function(){
+try{
+let results = await fetchSalahLocationSuggestions(query);
+modalLocationSuggestions = results;
+renderModalLocationSuggestions(results);
+}catch(err){
+hideModalLocationSuggestions();
+}
+}, 350);
+}
+
+// =========================
+// ADD SAVED SALAH LOCATION
+// =========================
+function addSavedSalahLocation(locationObj){
+if(!locationObj || !locationObj.name || !locationObj.lat || !locationObj.lon) return;
+
+let savedLocations = getSavedSalahLocations();
+
+let alreadyExists = savedLocations.some(function(item){
+return (
+item.name === locationObj.name &&
+String(item.lat) === String(locationObj.lat) &&
+String(item.lon) === String(locationObj.lon)
+);
+});
+
+if(!alreadyExists){
+savedLocations.unshift({
+name: locationObj.name,
+lat: locationObj.lat,
+lon: locationObj.lon
+});
+setSavedSalahLocations(savedLocations);
+}
+
+setSelectedSavedSalahLocation({
+name: locationObj.name,
+lat: locationObj.lat,
+lon: locationObj.lon
+});
+}
+
+// =========================
+// APPLY SAVED LOCATION OBJECT
+// =========================
+async function applySavedLocationObject(locationObj){
+if(!locationObj || !locationObj.lat || !locationObj.lon) return;
+
+setSelectedSavedSalahLocation(locationObj);
+  localStorage.setItem("salahLocationMode", "saved");
+salahSource = "masjid";
+
+document.getElementById("salahCityName").innerText = locationObj.name || "Saved Location";
+document.getElementById("salahSourceLabel").innerText = "Loading saved location...";
+setSalahLoadingState();
+
+try{
+let selectedDate = getSelectedSalahDate();
+let data = await loadSavedLocationSalahTimes(selectedDate, locationObj);
+
+if(salahSource === "masjid"){
+applySalahDataToScreen(data);
+}
+}catch(err){
+document.getElementById("salahCityName").innerText = locationObj.name || "Saved Location";
+document.getElementById("salahSourceLabel").innerText = "Could not load saved location";
+}
+}
+
+// =========================
+// SELECT MODAL LOCATION SUGGESTION
+// =========================
+async function selectModalLocationSuggestion(index){
+let item = modalLocationSuggestions[index];
+if(!item) return;
+
+let input = document.getElementById("modalLocationInput");
+if(input){
+input.value = item.display_name || "";
+}
+
+let pickedLocation = {
+name: (item.display_name || "").split(",")[0] || "Saved Location",
+lat: item.lat,
+lon: item.lon
+};
+
+addSavedSalahLocation(pickedLocation);
+hideModalLocationSuggestions();
+closeEnterLocationModal();
+renderSavedSalahLocationList();
+
+await applySavedLocationObject(pickedLocation);
+}
+
+// =========================
+// SEARCH MODAL LOCATION AND SAVE
+// =========================
+async function searchModalLocationAndSave(){
+let input = document.getElementById("modalLocationInput");
+if(!input) return;
+
+let query = input.value.trim();
+
+hideModalLocationSuggestions();
+
+if(!query){
+document.getElementById("salahCityName").innerText = "Enter a location";
+document.getElementById("salahSourceLabel").innerText = "Try: London, UK or Karachi, Pakistan";
+return;
+}
+
+try{
+document.getElementById("salahCityName").innerText = "Searching...";
+document.getElementById("salahSourceLabel").innerText = "Finding location...";
+setSalahLoadingState();
+
+let geoUrl =
+"https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&q=" +
+encodeURIComponent(query);
+
+let geoRes = await fetch(geoUrl, {
+headers: {
+"Accept": "application/json"
+}
+});
+
+let geoData = await geoRes.json();
+
+if(!geoData || !geoData.length){
+document.getElementById("salahCityName").innerText = "Location not found";
+document.getElementById("salahSourceLabel").innerText = "Try: London, UK • Karachi, Pakistan • Makkah, Saudi Arabia";
+return;
+}
+
+let found = geoData[0];
+
+let pickedLocation = {
+name: found.display_name.split(",")[0] || query,
+lat: found.lat,
+lon: found.lon
+};
+
+addSavedSalahLocation(pickedLocation);
+closeEnterLocationModal();
+renderSavedSalahLocationList();
+
+await applySavedLocationObject(pickedLocation);
+}catch(err){
+document.getElementById("salahCityName").innerText = "Could not load";
+document.getElementById("salahSourceLabel").innerText = "Check internet and try again";
+}
+}
+
+// =========================
+// LOAD SAVED LOCATION SALAH TIMES
+// =========================
+async function loadSavedLocationSalahTimes(dateObj, locationObj){
+if(!locationObj || !locationObj.lat || !locationObj.lon){
+throw new Error("No saved location selected");
+}
+
+let apiDate = formatSalahApiDate(dateObj);
+
+let salahUrl =
+"https://api.aladhan.com/v1/timings/" + apiDate
++ "?latitude=" + encodeURIComponent(locationObj.lat)
++ "&longitude=" + encodeURIComponent(locationObj.lon)
++ "&method=2&school=" + (getAsrMethod() === "hanafi" ? "1" : "0");
+
+let res = await fetch(salahUrl);
+let json = await res.json();
+
+if(!json || !json.data || !json.data.timings){
+throw new Error("Could not load saved location Salah times");
+}
+
+let t = json.data.timings;
+
+return {
+locationName: locationObj.name || "Saved Location",
+sourceLabel: "Saved Location - " + (getAsrMethod() === "hanafi" ? "Hanafi" : "Shafi"),
+fajr: to12Hour(t.Fajr),
+sunrise: to12Hour(t.Sunrise),
+dhuhr: to12Hour(t.Dhuhr),
+asr: to12Hour(t.Asr),
+maghrib: to12Hour(t.Maghrib),
+isha: to12Hour(t.Isha)
+};
+}
+
+
+
+
+
+ // =========================
+// USE CURRENT LOCATION FROM SAVED PAGE
+// =========================
+function useCurrentLocationFromSaved(){
+
+// ✅ CLOSE DROPDOWN FIRST
+closeSalahTopDropdown();
+
+// set mode
+localStorage.setItem("salahLocationMode", "current");
+
+// switch to location source
+salahSource = "location";
+
+// update UI
+document.getElementById("salahCityName").innerText = "Getting location...";
+document.getElementById("salahSourceLabel").innerText = "Using current location...";
+setSalahLoadingState();
+
+// load location salah
+refreshLocationSalahData();
+}
+
   
 // =========================
 // GET SELECTED SALAH DATE
@@ -5228,42 +5665,170 @@ d.setDate(d.getDate() + salahDayOffset);
 return d;
 }
 
-// =========================
-// SET SALAH SOURCE
-// =========================
-function setSalahSource(source){
-salahSource = source;
 
-let locationBtn = document.getElementById("locationTabBtn");
-let masjidBtn = document.getElementById("masjidTabBtn");
-let enteredBtn = document.getElementById("enteredTabBtn");
+
+// =========================
+// TOGGLE SALAH TOP DROPDOWN
+// =========================
+function toggleSalahTopDropdown(){
+let overlay = document.getElementById("salahTopDropdownOverlay");
+let menu = document.getElementById("salahTopDropdownMenu");
+let arrow = document.getElementById("salahTopDropdownArrow");
+
+if(!overlay || !menu || !arrow) return;
+
+let isOpen = overlay.style.display === "block";
+
+if(isOpen){
+closeSalahTopDropdown();
+}else{
+openSalahTopDropdown();
+}
+}
+
+// =========================
+// OPEN ENTER LOCATION MODAL
+// =========================
+function openEnterLocationModal(){
+let overlay = document.getElementById("enterLocationModalOverlay");
+
+if(!overlay) return;
+
+overlay.style.display = "block";
+
+setTimeout(function(){
+let input = document.getElementById("modalLocationInput");
+if(input) input.focus();
+},120);
+}
+
+
+  
+// =========================
+// CLOSE ENTER LOCATION MODAL
+// =========================
+function closeEnterLocationModal(){
+let overlay = document.getElementById("enterLocationModalOverlay");
+let input = document.getElementById("modalLocationInput");
+
+if(!overlay) return;
+
+overlay.style.display = "none";
+
+if(input){
+input.value = "";
+}
+
+hideModalLocationSuggestions();
+}
+  
+
+
+  
+
+// =========================
+// OPEN SALAH TOP DROPDOWN
+// =========================
+function openSalahTopDropdown(){
+let overlay = document.getElementById("salahTopDropdownOverlay");
+let menu = document.getElementById("salahTopDropdownMenu");
+let arrow = document.getElementById("salahTopDropdownArrow");
+
+if(!overlay || !menu || !arrow) return;
+
+renderSavedSalahLocationList();
+
+overlay.style.display = "block";
+menu.style.display = "block";
+
+setTimeout(function(){
+menu.style.opacity = "1";
+menu.style.transform = "translateX(-50%) translateY(0)";
+arrow.style.transform = "rotate(90deg)";
+},10);
+}
+
+// =========================
+// CLOSE SALAH TOP DROPDOWN
+// =========================
+function closeSalahTopDropdown(){
+let overlay = document.getElementById("salahTopDropdownOverlay");
+let menu = document.getElementById("salahTopDropdownMenu");
+let arrow = document.getElementById("salahTopDropdownArrow");
+
+if(!overlay || !menu || !arrow) return;
+
+menu.style.opacity = "0";
+menu.style.transform = "translateX(-50%) translateY(-8px)";
+arrow.style.transform = "rotate(0deg)";
+
+setTimeout(function(){
+overlay.style.display = "none";
+menu.style.display = "none";
+},220);
+}
+
+// =========================
+// OPEN SALAH TOP DROPDOWN FROM TAB
+// =========================
+
+
+// =========================
+// CHOOSE SALAH TOP DROPDOWN ACTION
+// =========================
+// =========================
+// HANDLE DROPDOWN ACTION
+// =========================
+function chooseSalahTopDropdownAction(action){
+closeSalahTopDropdown();
+
+if(action === "entered"){
+openEnterLocationModal();
+return;
+}
+}
+
+
+
+// =========================
+// SET SALAH SOURCE WITHOUT OLD TAB BUTTON
+// =========================
+
+  
+  function setSalahSource(source){
+salahSource = source || "location";
+
+closeSalahTopDropdown();
+
 let searchCard = document.getElementById("enteredLocationCard");
-
-if(locationBtn){
-locationBtn.style.background = source === "location" ? "#111" : "transparent";
-locationBtn.style.color = source === "location" ? "white" : "#111";
-}
-
-if(masjidBtn){
-masjidBtn.style.background = source === "masjid" ? "#111" : "transparent";
-masjidBtn.style.color = source === "masjid" ? "white" : "#111";
-}
-
-if(enteredBtn){
-enteredBtn.style.background = source === "entered" ? "#111" : "transparent";
-enteredBtn.style.color = source === "entered" ? "white" : "#111";
-}
+let dropdownWrap = document.getElementById("salahTopDropdownWrap");
+let myLocationWrap = document.getElementById("salahMyLocationWrap");
+let useCurrentLocationWrap = document.getElementById("useCurrentLocationWrap");
 
 if(searchCard){
-searchCard.style.display = source === "entered" ? "block" : "none";
+searchCard.style.display = "none";
 }
 
-hideSalahLocationSuggestions();
+if(dropdownWrap){
+dropdownWrap.style.display = "block";
+}
 
+if(myLocationWrap){
+myLocationWrap.style.display = "none";
+}
+
+if(useCurrentLocationWrap){
+useCurrentLocationWrap.style.display = "block";
+}
+
+renderSavedSalahLocationList();
+hideSalahLocationSuggestions();
 renderSalahPage();
 }
   
-let salahSliding = false;
+
+
+  
 
 // =========================
 // CHANGE SALAH DAY
@@ -5325,12 +5890,58 @@ salahSliding = false;
 }
 
 // =========================
+// BIND SALAH DATE BUTTONS
+// =========================
+function bindSalahDateButtons(){
+
+let prevBtn = document.getElementById("salahPrevDayBtn");
+let nextBtn = document.getElementById("salahNextDayBtn");
+
+if(prevBtn && !prevBtn.dataset.bound){
+prevBtn.dataset.bound = "yes";
+
+prevBtn.addEventListener("click", function(e){
+e.preventDefault();
+e.stopPropagation();
+changeSalahDay(-1);
+});
+
+prevBtn.addEventListener("touchend", function(e){
+e.preventDefault();
+e.stopPropagation();
+changeSalahDay(-1);
+}, { passive:false });
+}
+
+if(nextBtn && !nextBtn.dataset.bound){
+nextBtn.dataset.bound = "yes";
+
+nextBtn.addEventListener("click", function(e){
+e.preventDefault();
+e.stopPropagation();
+changeSalahDay(1);
+});
+
+nextBtn.addEventListener("touchend", function(e){
+e.preventDefault();
+e.stopPropagation();
+changeSalahDay(1);
+}, { passive:false });
+}
+
+}
+
+
+  
+// =========================
 // RENDER SALAH PAGE
 // =========================
 function renderSalahPage(){
 
-let selectedDate = getSelectedSalahDate();
+bindSalahDateButtons();
 
+let selectedDate = getSelectedSalahDate();
+  
 let dateText = selectedDate.toLocaleDateString("en-US", {
 weekday:"long",
 month:"short",
@@ -5354,12 +5965,13 @@ refreshLocationSalahData();
 return;
 }
 
-refreshMasjidSalahData();
+if(salahSource === "entered"){
+refreshEnteredLocationSalahData();
+return;
 }
 
-
-  let salahTouchStartX = 0;
-let salahTouchEndX = 0;
+refreshMasjidSalahData();
+}
 
 // =========================
 // HANDLE SALAH SWIPE START
@@ -5405,7 +6017,7 @@ let zikrPage = document.getElementById("zikrPage");
 let zikrDetailPage = document.getElementById("zikrDetailPage");
 let floatingMenuBtn = document.getElementById("floatingMenuBtn");
 let bottomNav = document.getElementById("bottomNav");
-  updateSalahTopButton();
+updateSalahTopButton();
 
 if(morePage) morePage.style.display = "none";
 if(tasbihPage) tasbihPage.style.display = "none";
@@ -5419,7 +6031,14 @@ if(salahPage) salahPage.style.display = "block";
 if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
 if(bottomNav) bottomNav.style.display = "flex";
 
-renderSalahPage();
+let savedMode = localStorage.getItem("salahLocationMode") || "current";
+
+if(savedMode === "saved"){
+setSalahSource("masjid");
+}else{
+setSalahSource("location");
+}
+
 window.scrollTo(0,0);
 }
 
@@ -6903,173 +7522,159 @@ max-width:190px;
       </div>
     </div>
 
-    <!-- CENTER TITLE -->
+  <!-- CENTER TITLE (Bismillah Premium Blend) -->
+<div style="
+position:absolute;
+left:50%;
+top:75px;
+transform:translateX(-50%);
+font-size:18px;
+font-weight:500;
+text-align:center;
+color:rgba(255,255,255,0.65);
+text-shadow:0 1px 4px rgba(0,0,0,0.12);
+letter-spacing:0.4px;
+white-space:nowrap;
+pointer-events:none;
+font-family:'Segoe UI', 'Arial', sans-serif;
+opacity:0.9;
+">
+بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+</div>
+    
+<!-- NEXT SALAH + COUNTDOWN ROW -->
+<div style="
+position:absolute;
+left:10px;
+right:10px;
+bottom:20px;
+display:flex;
+justify-content:space-between;
+align-items:flex-end;
+gap:10px;
+">
+
+  <!-- LEFT SIDE -->
+  <div style="
+  min-height:126px;
+  padding:14px 0px 12px 0px;
+  box-sizing:border-box;
+  color:white;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  align-items:flex-start;
+  ">
+
+    <!-- NEXT SALAH -->
     <div style="
-    position:absolute;
-    left:50%;
-    top:78px;
-    transform:translateX(-50%);
-    font-size:34px;
-    font-weight:800;
-    text-align:center;
-    text-shadow:0 4px 12px rgba(0,0,0,0.22);
-    letter-spacing:1px;
-    white-space:nowrap;
+    margin-bottom:8px;
     ">
-    🕋بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ🕋
+
+      <div id="homeNextSalahName" style="
+      font-size:15px;
+      font-weight:800;
+      color:rgba(255,255,255,0.96);
+      margin-bottom:4px;
+      text-transform:uppercase;
+      letter-spacing:0.8px;
+      text-shadow:0 4px 12px rgba(0,0,0,0.28);
+      ">
+      Next Salah
+      </div>
+
+      <div id="homeNextSalahTime" style="
+      font-size:34px;
+      font-weight:900;
+      color:white;
+      line-height:1.1;
+      text-shadow:0 6px 18px rgba(0,0,0,0.45);
+      ">
+      --:--
+      </div>
+
     </div>
 
-           <!-- NEXT SALAH + COUNTDOWN ROW -->
-    <div style="
-    position:absolute;
-    left:14px;
-    right:14px;
-    bottom:20px;
+    <!-- VIEW ALL -->
+    <div onclick="openSalahPage()" style="
     display:flex;
-    gap:18px;
-    align-items:flex-end;
+    align-items:center;
+    gap:6px;
+    cursor:pointer;
     ">
 
-      <!-- LEFT SIDE -->
       <div style="
-      flex:1;
-      min-height:126px;
-      padding:14px 8px 12px 8px;
-      box-sizing:border-box;
-      color:white;
-      position:relative;
-      overflow:hidden;
+      font-size:12px;
+      color:rgba(255,255,255,0.88);
+      font-weight:600;
+      letter-spacing:0.3px;
+      text-shadow:0 4px 12px rgba(0,0,0,0.28);
       ">
-
-        <!-- STAR + NEXT SALAH -->
-        <div style="
-        display:flex;
-        align-items:flex-start;
-        gap:10px;
-        margin-bottom:8px;
-        ">
-
-          <!-- SMALL STAR -->
-          <div style="
-          width:38px;
-          height:38px;
-          flex:0 0 38px;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          font-size:22px;
-          line-height:1;
-          color:white;
-          text-shadow:0 4px 12px rgba(0,0,0,0.28);
-          ">
-          ✦
-          </div>
-
-          <!-- NEXT SALAH TEXT -->
-          <div style="flex:1;min-width:0;">
-            <div id="homeNextSalahName" style="
-            font-size:12px;
-            font-weight:700;
-            color:rgba(255,255,255,0.88);
-            margin-bottom:2px;
-            text-transform:uppercase;
-            letter-spacing:0.6px;
-            text-shadow:0 4px 12px rgba(0,0,0,0.28);
-            ">
-            Next Salah
-            </div>
-
-            <div id="homeNextSalahTime" style="
-            font-size:28px;
-            font-weight:900;
-            color:white;
-            line-height:1.1;
-          text-shadow:0 6px 18px rgba(0,0,0,0.45);
-            ">
-            --:--
-            </div>
-          </div>
-        </div>
-
-        <!-- OPEN SALAH PAGE ROW -->
-        <div style="
-        display:flex;
-        align-items:center;
-        justify-content:space-between;
-        margin-top:8px;
-        margin-bottom:6px;
-        cursor:pointer;
-        " onclick="openSalahPage()">
-
-          <div style="
-          font-size:12px;
-          color:rgba(255,255,255,0.88);
-          font-weight:600;
-          letter-spacing:0.3px;
-          text-shadow:0 4px 12px rgba(0,0,0,0.28);
-          ">
-          View all Salah times
-          </div>
-
-          <div id="homeTimesArrow" style="
-          font-size:18px;
-          font-weight:800;
-          color:white;
-          padding-left:10px;
-          text-shadow:0 4px 12px rgba(0,0,0,0.28);
-          ">
-          ›
-          </div>
-        </div>
+      View all Salah times
       </div>
 
-      <!-- RIGHT SIDE -->
       <div style="
-      flex:1;
-      min-height:126px;
-      padding:14px 8px 12px 8px;
-      box-sizing:border-box;
-      text-align:center;
+      font-size:16px;
+      font-weight:800;
       color:white;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
       ">
-
-        <div style="
-        font-size:12px;
-        font-weight:700;
-        color:rgba(255,255,255,0.88);
-        text-transform:uppercase;
-        letter-spacing:0.6px;
-        margin-bottom:8px;
-        text-shadow:0 4px 12px rgba(0,0,0,0.28);
-        ">
-        Time Left
-        </div>
-
-        <div id="homeCountdown" style="
-        font-size:24px;
-        font-weight:900;
-        line-height:1.1;
-        color:white;
-        text-shadow:0 6px 18px rgba(0,0,0,0.45);
-        ">
-        00:00:00
-        </div>
-
-        <div style="
-        font-size:11px;
-        font-weight:600;
-        color:rgba(255,255,255,0.88);
-        margin-top:8px;
-        text-shadow:0 4px 12px rgba(0,0,0,0.28);
-        ">
-        until next salah
-        </div>
+      ›
       </div>
+
+    </div>
+
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div style="
+  min-width:130px;
+  min-height:126px;
+  padding:14px 0px 12px 0px;
+  box-sizing:border-box;
+  text-align:right;
+  color:white;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  align-items:flex-end;
+  ">
+
+    <div style="
+    font-size:12px;
+    font-weight:700;
+    color:rgba(255,255,255,0.88);
+    text-transform:uppercase;
+    letter-spacing:0.6px;
+    margin-bottom:8px;
+    text-shadow:0 4px 12px rgba(0,0,0,0.28);
+    ">
+    Time Left
+    </div>
+
+    <div id="homeCountdown" style="
+    font-size:26px;
+    font-weight:900;
+    line-height:1.1;
+    color:white;
+    text-shadow:0 6px 18px rgba(0,0,0,0.45);
+    ">
+    00:00:00
+    </div>
+
+    <div style="
+    font-size:11px;
+    font-weight:600;
+    color:rgba(255,255,255,0.88);
+    margin-top:8px;
+    text-shadow:0 4px 12px rgba(0,0,0,0.28);
+    ">
+    until next salah
     </div>
   </div>
+    </div>
+ 
+
+</div>
   <!-- =========================
       HOME LOWER SECTION SPACING FIX
  ========================= -->
@@ -8088,10 +8693,12 @@ box-shadow:0 3px 10px rgba(0,0,0,0.12);
 
 </div>
   
+<!-- SALAH PAGE CONTENT WRAP -->
 <div style="
 width:100%;
-margin:0 auto;
-padding:0 12px 120px 12px;
+max-width:none;
+margin:0;
+padding:0 14px 120px 14px;
 box-sizing:border-box;
 ">
 
@@ -8120,156 +8727,178 @@ box-sizing:border-box;
     </div>
   </div>
 
-  <!-- LOCATION UPDATE TEXT -->
-<div onclick="handleUseMyLocation()" style="
-text-align:center;
-margin-top:12px;
-margin-bottom:6px;
-font-size:14px;
-color:rgba(255,255,255,0.85);
-cursor:pointer;
-font-weight:500;
-letter-spacing:0.2px;
-">
-📍 Tap to update location
-</div>
+<!-- =========================
+     SALAH MY LOCATION WRAPPER
+     EMPTY SAFE VERSION
+========================= -->
+<div id="salahMyLocationWrap" style="display:none;"></div>
 
-<div style="
-  background:rgba(232,234,245,0.96);
-  border-radius:28px;
-  padding:7px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.10);
-  margin-bottom:18px;
+
+  
+
+<!-- SALAH TOP LOCATION DROPDOWN -->
+<div id="salahTopDropdownWrap" style="
+display:none;
+width:100%;
+max-width:none;
+padding:0;
+margin:12px 0 10px 0;
+position:relative;
+box-sizing:border-box;
+">
+
+  <!-- Saved Location Search Bar + Dropdown Button -->
+  <button id="salahTopLocationBtn" onclick="toggleSalahTopDropdown()" style="
+  width:100%;
+  max-width:none;
+  border:none;
+  border-radius:20px;
+  padding:16px 16px;
+  background:rgba(255,255,255,0.92);
+  color:#111;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
   display:flex;
-  gap:7px;
+  align-items:center;
+ justify-content:center;
+  box-shadow:0 10px 28px rgba(0,0,0,0.12);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
   box-sizing:border-box;
   ">
+    <!-- Left Text -->
+    <span>🔎 Search Location</span>
 
-  
-  
-
-<!-- Location Tab Button -->
-    <button id="locationTabBtn" onclick="setSalahSource('location')" style="
-    flex:1;
-    border:none;
-    border-radius:20px;
-    padding:14px 8px;
-    background:#111;
-    color:white;
-    font-size:15px;
-    font-weight:700;
-    cursor:pointer;
-    box-sizing:border-box;
+    <!-- Right Arrow -->
+    <span id="salahTopDropdownArrow" style="
+    font-size:16px;
+    transition:transform 0.22s ease;
+    color:#666;
     ">
-    My Location
-    </button>
+    ›
+    </span>
 
-<!-- Masjid Tab Button -->
-    <button id="masjidTabBtn" onclick="setSalahSource('masjid')" style="
-    flex:1;
-    border:none;
-    border-radius:20px;
-    padding:14px 8px;
-    background:transparent;
-    color:#111;
-    font-size:15px;
-    font-weight:700;
-    cursor:pointer;
-    box-sizing:border-box;
-    ">
-    My Masjid
-    </button>
-
-<!-- Entered Tab Button -->
-    <button id="enteredTabBtn" onclick="setSalahSource('entered')" style="
-    flex:1;
-    border:none;
-    border-radius:20px;
-    padding:14px 8px;
-    background:transparent;
-    color:#111;
-    font-size:15px;
-    font-weight:700;
-    cursor:pointer;
-    box-sizing:border-box;
-    ">
-    Enter Location
-    </button>
-  </div>
-
-  
-
-<!-- Entered Location Card -->
-<div id="enteredLocationCard" style="
-display:none;
-background:rgba(232,234,245,0.96);
-border-radius:28px;
-padding:14px;
-box-shadow:0 8px 20px rgba(0,0,0,0.10);
-margin-bottom:18px;
-width:100%;
-box-sizing:border-box;
-position:relative;
-">
-
-  <div style="
-  font-size:14px;
-  font-weight:700;
-  color:#111;
-  margin-bottom:10px;
-  ">
-  Search city, state, or country
-  </div>
-
-  <div style="
-  display:flex;
-  gap:10px;
-  align-items:center;
-  position:relative;
-  ">
-<!-- Salah Location Input -->
-    <input id="salahLocationInput" type="text" placeholder="Example: Makkah, London, Karachi" oninput="handleSalahLocationTyping()" autocomplete="off" style="
-    flex:1;
-    border:none;
-    outline:none;
-    border-radius:18px;
-    padding:15px 16px;
-    font-size:15px;
-    background:white;
-    color:#111;
-    box-sizing:border-box;
-    ">
-
-<!-- Search Entered Location And Load Button -->
-    <button onclick="searchEnteredLocationAndLoad()" style="
-    border:none;
-    border-radius:18px;
-    padding:15px 16px;
-    background:#111;
-    color:white;
-    font-size:15px;
-    font-weight:700;
-    cursor:pointer;
-    white-space:nowrap;
-    ">
-    Search
-    </button>
-  </div>
-
-  <div id="salahLocationSuggestions" style="
-  display:none;
-  margin-top:10px;
-  background:white;
-  border-radius:20px;
-  overflow:hidden;
-  box-shadow:0 8px 20px rgba(0,0,0,0.10);
-  border:1px solid rgba(0,0,0,0.06);
-  "></div>
+  </button>
 </div>
 
+<!-- SALAH TOP DROPDOWN OVERLAY -->
+<div id="salahTopDropdownOverlay" onclick="closeSalahTopDropdown()" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:rgba(0,0,0,0.22);
+backdrop-filter:blur(2px);
+-webkit-backdrop-filter:blur(2px);
+z-index:6998;
+"></div>
+
+<!-- SALAH TOP DROPDOWN MENU -->
+<div id="salahTopDropdownMenu" style="
+display:none;
+position:fixed;
+top:165px;
+left:50%;
+transform:translateX(-50%) translateY(-8px);
+width:calc(100% - 28px);
+max-width:520px;
+background:white;
+border-radius:24px;
+padding:10px;
+box-sizing:border-box;
+box-shadow:0 18px 45px rgba(0,0,0,0.22);
+z-index:6999;
+opacity:0;
+transition:opacity 0.22s ease, transform 0.22s ease;
+">
+
+
+    <!-- Enter New Location Button -->
+  <button onclick="chooseSalahTopDropdownAction('entered')" style="
+  width:100%;
+  border:none;
+  background:#f7f7f9;
+  border-radius:20px;
+  padding:18px 16px;
+  text-align:left;
+  font-size:18px;
+  font-weight:800;
+  color:#111;
+  cursor:pointer;
+  margin-bottom:12px;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,0.03);
+  ">
+  Enter New Location
+  </button>
+
+
+
+<!-- =========================
+     SALAH DROPDOWN - USE CURRENT LOCATION ROW (IOS STYLE)
+========================= -->
+<!-- =========================
+     USE CURRENT LOCATION BUTTON (MATCH ENTER NEW LOCATION STYLE)
+========================= -->
+<button onclick="useCurrentLocationFromSaved()" style="
+width:100%;
+border:none;
+background:#f7f7f9;
+border-radius:20px;
+padding:18px 16px;
+text-align:left;
+font-size:18px;
+font-weight:800;
+color:#111;
+cursor:pointer;
+margin-bottom:12px;
+box-shadow:inset 0 0 0 1px rgba(0,0,0,0.03);
+">
+📍 Use Current Location
+</button>
+
 
   
-<!-- Salah Date Card -->
+    <div style="
+  font-size:12px;
+  font-weight:800;
+  color:#777;
+  padding:4px 6px 8px 6px;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  ">
+  Saved Location List
+  </div>
+
+
+
+  
+  
+   <!-- Saved Location List Area -->
+  <div id="savedSalahLocationListArea"></div>
+</div>
+
+  
+
+
+
+
+
+
+  
+
+<!-- =========================
+     ENTER LOCATION CARD
+     EMPTY SAFE VERSION
+========================= -->
+<div id="enteredLocationCard" style="display:none;"></div>
+
+
+
+  
+ <!-- Salah Date Card -->
 <div id="salahDateCard" style="
 background:#e9e9ee;
 border-radius:22px;
@@ -8297,7 +8926,7 @@ overflow:hidden;
 ">
 
 <!-- Change Salah Day Button -->
-      <button onclick="changeSalahDay(-1)" style="
+      <button id="salahPrevDayBtn" type="button" onclick="changeSalahDay(-1)" style="
      width:36px;
 height:36px;
       border:none;
@@ -8343,7 +8972,8 @@ text-overflow:ellipsis;
       </div>
 
 <!-- Change Salah Day Button -->
-      <button onclick="changeSalahDay(1)" style="
+     <!-- Change Salah Day Button -->
+      <button id="salahNextDayBtn" type="button" onclick="changeSalahDay(1)" style="
       width:36px;
 height:36px;
       border:none;
@@ -8360,6 +8990,12 @@ height:36px;
     </div>
 
      </div>
+
+
+
+  
+
+
 
 <!-- Salah Times Card -->
 <div id="salahTimesCard" style="
@@ -8802,6 +9438,125 @@ Default source, calculation method, Ramadan settings, and more can be added here
 </script>
 
 
+
+
+<!-- =========================
+     ENTER LOCATION MODAL
+========================= -->
+<div id="enterLocationModalOverlay" onclick="closeEnterLocationModal()" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:rgba(0,0,0,0.35);
+z-index:10030;
+">
+
+  <!-- CARD -->
+  <div onclick="event.stopPropagation()" style="
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:92%;
+  max-width:420px;
+  background:white;
+  border-radius:26px;
+  padding:18px 16px 16px 16px;
+  box-shadow:0 25px 60px rgba(0,0,0,0.25);
+  box-sizing:border-box;
+  ">
+
+    <!-- TITLE -->
+    <div style="
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:12px;
+    text-align:center;
+    color:#111;
+    ">
+    Enter Location
+    </div>
+
+    <!-- SEARCH LABEL -->
+    <div style="
+    font-size:13px;
+    font-weight:700;
+    color:#666;
+    margin-bottom:10px;
+    ">
+    Search city, state, or country
+    </div>
+
+    <!-- INPUT ROW -->
+    <div style="
+    display:flex;
+    gap:10px;
+    align-items:center;
+    ">
+      <input id="modalLocationInput" type="text" placeholder="Example: Makkah, London, Karachi" oninput="handleModalLocationTyping()" autocomplete="off" style="
+      flex:1;
+      border:none;
+      outline:none;
+      border-radius:18px;
+      padding:15px 16px;
+      font-size:15px;
+      background:#f7f7f9;
+      color:#111;
+      box-sizing:border-box;
+      ">
+
+      <button onclick="searchModalLocationAndSave()" style="
+      border:none;
+      border-radius:18px;
+      padding:15px 16px;
+      background:#111;
+      color:white;
+      font-size:15px;
+      font-weight:700;
+      cursor:pointer;
+      white-space:nowrap;
+      ">
+      Search
+      </button>
+    </div>
+
+    <!-- SUGGESTIONS -->
+    <div id="modalLocationSuggestions" style="
+    display:none;
+    margin-top:10px;
+    background:#f7f7f9;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(0,0,0,0.10);
+    border:1px solid rgba(0,0,0,0.06);
+    "></div>
+
+    <!-- FOOTER BUTTONS -->
+    <div style="
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:14px;
+    ">
+      <button onclick="closeEnterLocationModal()" style="
+      border:none;
+      border-radius:16px;
+      padding:12px 16px;
+      background:#f1f1f4;
+      color:#111;
+      font-size:14px;
+      font-weight:700;
+      cursor:pointer;
+      ">
+      Cancel
+      </button>
+    </div>
+
+  </div>
+</div>
 
 
 
