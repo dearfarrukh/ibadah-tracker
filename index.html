@@ -4753,6 +4753,28 @@ return hour + ":" + minute + " " + ampm;
 }
 
 // =========================
+// APPLY ISNA FAJR 18 OVERRIDE
+// =========================
+function applyIsnaFajr18Override(baseTimings, overrideTimings){
+  let savedMethod = localStorage.getItem("salahCalculationMethod") || "auto";
+
+  if(savedMethod !== "isna") return baseTimings;
+  if(!getIsnaFajr18Enabled()) return baseTimings;
+  if(!overrideTimings || !overrideTimings.Fajr) return baseTimings;
+
+  return {
+    Fajr: overrideTimings.Fajr,
+    Sunrise: baseTimings.Sunrise,
+    Dhuhr: baseTimings.Dhuhr,
+    Asr: baseTimings.Asr,
+    Maghrib: baseTimings.Maghrib,
+    Isha: baseTimings.Isha
+  };
+}
+
+
+  
+// =========================
 // GET LOCATION POSITION
 // =========================
 function getLocationPosition(){
@@ -4824,8 +4846,9 @@ return salahLocationData;
 async function loadRealLocationSalahTimes(dateObj){
 
 let dateKey = formatKey(dateObj);
-let methodKey = getAsrMethod();
-let cacheKey = dateKey + "-" + methodKey;
+let asrKey = getAsrMethod();
+let calcKey = getResolvedCalculationMethod((salahLocationData.country || ""));
+let cacheKey = dateKey + "-" + asrKey + "-" + calcKey;
 
 if(salahLiveCache[cacheKey]){
 return salahLiveCache[cacheKey];
@@ -4833,12 +4856,14 @@ return salahLiveCache[cacheKey];
 
 let loc = await loadUserLocationData();
 let apiDate = formatSalahApiDate(dateObj);
+let apiMethod = getAladhanMethodNumber(loc.country);
 
 let salahUrl =
 "https://api.aladhan.com/v1/timings/" + apiDate
 + "?latitude=" + encodeURIComponent(loc.lat)
 + "&longitude=" + encodeURIComponent(loc.lon)
-+ "&method=2&school=" + (getAsrMethod() === "hanafi" ? "1" : "0");
++ "&method=" + apiMethod
++ "&school=" + (getAsrMethod() === "hanafi" ? "1" : "0");
 
 let res = await fetch(salahUrl);
 let json = await res.json();
@@ -4849,9 +4874,28 @@ throw new Error("Could not load Salah times");
 
 let t = json.data.timings;
 
+if(
+  (localStorage.getItem("salahCalculationMethod") || "auto") === "isna" &&
+  getIsnaFajr18Enabled()
+){
+  let overrideUrl =
+  "https://api.aladhan.com/v1/timings/" + apiDate
+  + "?latitude=" + encodeURIComponent(loc.lat)
+  + "&longitude=" + encodeURIComponent(loc.lon)
+  + "&method=13"
+  + "&school=" + (getAsrMethod() === "hanafi" ? "1" : "0");
+
+  let overrideRes = await fetch(overrideUrl);
+  let overrideJson = await overrideRes.json();
+
+  if(overrideJson && overrideJson.data && overrideJson.data.timings){
+    t = applyIsnaFajr18Override(t, overrideJson.data.timings);
+  }
+}
+
 let liveData = {
 locationName: loc.city || "My Location",
-sourceLabel: "North America Timings",
+sourceLabel: getCalculationMethodSourceLabel(loc.country) + " - " + (getAsrMethod() === "hanafi" ? "Hanafi" : "Shafi"),
 fajr: to12Hour(t.Fajr),
 sunrise: to12Hour(t.Sunrise),
 dhuhr: to12Hour(t.Dhuhr),
@@ -5179,12 +5223,14 @@ throw new Error("No entered location yet");
 }
 
 let apiDate = formatSalahApiDate(dateObj);
+let apiMethod = getAladhanMethodNumber(salahEnteredLocation.query);
 
 let salahUrl =
 "https://api.aladhan.com/v1/timings/" + apiDate
 + "?latitude=" + encodeURIComponent(salahEnteredLocation.lat)
 + "&longitude=" + encodeURIComponent(salahEnteredLocation.lon)
-+ "&method=2&school=" + (getAsrMethod() === "hanafi" ? "1" : "0");
++ "&method=" + apiMethod
++ "&school=" + (getAsrMethod() === "hanafi" ? "1" : "0");
 
 let res = await fetch(salahUrl);
 let json = await res.json();
@@ -5195,9 +5241,28 @@ throw new Error("Could not load entered location Salah times");
 
 let t = json.data.timings;
 
+if(
+  (localStorage.getItem("salahCalculationMethod") || "auto") === "isna" &&
+  getIsnaFajr18Enabled()
+){
+  let overrideUrl =
+  "https://api.aladhan.com/v1/timings/" + apiDate
+  + "?latitude=" + encodeURIComponent(salahEnteredLocation.lat)
+  + "&longitude=" + encodeURIComponent(salahEnteredLocation.lon)
+  + "&method=13"
+  + "&school=" + (getAsrMethod() === "hanafi" ? "1" : "0");
+
+  let overrideRes = await fetch(overrideUrl);
+  let overrideJson = await overrideRes.json();
+
+  if(overrideJson && overrideJson.data && overrideJson.data.timings){
+    t = applyIsnaFajr18Override(t, overrideJson.data.timings);
+  }
+}
+
 return {
 locationName: salahEnteredLocation.locationName || "Entered Location",
-sourceLabel: "Entered Location Timings",
+sourceLabel: getCalculationMethodSourceLabel(salahEnteredLocation.query) + " - " + (getAsrMethod() === "hanafi" ? "Hanafi" : "Shafi"),
 fajr: to12Hour(t.Fajr),
 sunrise: to12Hour(t.Sunrise),
 dhuhr: to12Hour(t.Dhuhr),
@@ -5206,7 +5271,6 @@ maghrib: to12Hour(t.Maghrib),
 isha: to12Hour(t.Isha)
 };
 }
-
 async function refreshEnteredLocationSalahData(){
 try{
 if(!salahEnteredLocation.lat || !salahEnteredLocation.lon){
@@ -5599,12 +5663,14 @@ throw new Error("No saved location selected");
 }
 
 let apiDate = formatSalahApiDate(dateObj);
+let apiMethod = getAladhanMethodNumber(locationObj.name);
 
 let salahUrl =
 "https://api.aladhan.com/v1/timings/" + apiDate
 + "?latitude=" + encodeURIComponent(locationObj.lat)
 + "&longitude=" + encodeURIComponent(locationObj.lon)
-+ "&method=2&school=" + (getAsrMethod() === "hanafi" ? "1" : "0");
++ "&method=" + apiMethod
++ "&school=" + (getAsrMethod() === "hanafi" ? "1" : "0");
 
 let res = await fetch(salahUrl);
 let json = await res.json();
@@ -5615,9 +5681,28 @@ throw new Error("Could not load saved location Salah times");
 
 let t = json.data.timings;
 
+if(
+  (localStorage.getItem("salahCalculationMethod") || "auto") === "isna" &&
+  getIsnaFajr18Enabled()
+){
+  let overrideUrl =
+  "https://api.aladhan.com/v1/timings/" + apiDate
+  + "?latitude=" + encodeURIComponent(locationObj.lat)
+  + "&longitude=" + encodeURIComponent(locationObj.lon)
+  + "&method=13"
+  + "&school=" + (getAsrMethod() === "hanafi" ? "1" : "0");
+
+  let overrideRes = await fetch(overrideUrl);
+  let overrideJson = await overrideRes.json();
+
+  if(overrideJson && overrideJson.data && overrideJson.data.timings){
+    t = applyIsnaFajr18Override(t, overrideJson.data.timings);
+  }
+}
+
 return {
 locationName: locationObj.name || "Saved Location",
-sourceLabel: "Saved Location - " + (getAsrMethod() === "hanafi" ? "Hanafi" : "Shafi"),
+sourceLabel: getCalculationMethodSourceLabel(locationObj.name) + " - " + (getAsrMethod() === "hanafi" ? "Hanafi" : "Shafi"),
 fajr: to12Hour(t.Fajr),
 sunrise: to12Hour(t.Sunrise),
 dhuhr: to12Hour(t.Dhuhr),
@@ -6709,13 +6794,16 @@ function ibadahLoadLiveSalah(){
             "My Location";
         }
 
-        return fetch(
-          "https://api.aladhan.com/v1/timings/" +
-          ibadahApiDate(d) +
-          "?latitude=" + encodeURIComponent(lat) +
-          "&longitude=" + encodeURIComponent(lon) +
-          "&method=2&school=" + (getAsrMethod() === "hanafi" ? "1" : "0")
-        )
+      let apiMethod = getAladhanMethodNumber(place && place.address ? place.address.country : "");
+
+return fetch(
+  "https://api.aladhan.com/v1/timings/" +
+  ibadahApiDate(d) +
+  "?latitude=" + encodeURIComponent(lat) +
+  "&longitude=" + encodeURIComponent(lon) +
+  "&method=" + apiMethod +
+  "&school=" + (getAsrMethod() === "hanafi" ? "1" : "0")
+)
         .then(function(r){ return r.json(); })
         .then(function(data){
           if(!data || !data.data || !data.data.timings || !data.data.date || !data.data.date.hijri){
@@ -6845,6 +6933,157 @@ function getAsrMethod(){
   return m;
 }
 
+
+// =========================
+// GET ISNA FAJR 18 ENABLED
+// =========================
+function getIsnaFajr18Enabled(){
+  return localStorage.getItem("isnaFajr18") === "true";
+}
+
+// =========================
+// SET ISNA FAJR 18 TOGGLE UI
+// =========================
+function setIsnaFajr18ToggleUI(){
+  let savedMethod = localStorage.getItem("salahCalculationMethod") || "auto";
+  let enabled = getIsnaFajr18Enabled();
+
+  let toggle = document.getElementById("isnaFajr18Toggle");
+  let knob = document.getElementById("isnaFajr18Knob");
+  let label = document.getElementById("isnaFajr18Label");
+
+  if(!toggle || !knob || !label) return;
+
+  let isIsna = savedMethod === "isna";
+
+  if(isIsna){
+    toggle.style.opacity = "1";
+    toggle.style.pointerEvents = "auto";
+    label.style.opacity = "1";
+  }else{
+    toggle.style.opacity = "0.45";
+    toggle.style.pointerEvents = "none";
+    label.style.opacity = "0.45";
+  }
+
+  if(enabled){
+    toggle.style.background = "#111";
+    knob.style.left = "20px";
+  }else{
+    toggle.style.background = "#d1d1d6";
+    knob.style.left = "2px";
+  }
+}
+
+// =========================
+// TOGGLE ISNA FAJR 18
+// =========================
+function toggleIsnaFajr18(){
+  let savedMethod = localStorage.getItem("salahCalculationMethod") || "auto";
+
+  if(savedMethod !== "isna") return;
+
+  let nextValue = !getIsnaFajr18Enabled();
+  localStorage.setItem("isnaFajr18", nextValue ? "true" : "false");
+
+  salahLiveCache = {};
+  setIsnaFajr18ToggleUI();
+  refreshSalahAfterSettingChange();
+}
+
+  
+// =========================
+// GET SAVED CALCULATION METHOD
+// =========================
+function getSavedCalculationMethod(){
+  let method = localStorage.getItem("salahCalculationMethod");
+
+  if(!method){
+    localStorage.setItem("salahCalculationMethod", "auto");
+    return "auto";
+  }
+
+  return method;
+}
+
+// =========================
+// GET AUTO CALCULATION METHOD
+// =========================
+function getAutoCalculationMethod(countryName){
+  let country = (countryName || "").trim().toLowerCase();
+
+  if(
+    country === "united states" ||
+    country === "united states of america" ||
+    country === "usa" ||
+    country === "us" ||
+    country === "canada"
+  ){
+    return "isna";
+  }
+
+  if(
+    country === "pakistan" ||
+    country === "india" ||
+    country === "bangladesh" ||
+    country === "afghanistan"
+  ){
+    return "karachi";
+  }
+
+  if(
+    country === "saudi arabia" ||
+    country === "saudi"
+  ){
+    return "ummalqura";
+  }
+
+  return "mwl";
+}
+
+// =========================
+// GET RESOLVED CALCULATION METHOD
+// =========================
+function getResolvedCalculationMethod(countryName){
+  let savedMethod = getSavedCalculationMethod();
+
+  if(savedMethod === "auto"){
+    return getAutoCalculationMethod(countryName);
+  }
+
+  return savedMethod;
+}
+
+// =========================
+// GET ALADHAN METHOD NUMBER
+// =========================
+function getAladhanMethodNumber(countryName){
+  let method = getResolvedCalculationMethod(countryName);
+
+  if(method === "isna") return 2;
+  if(method === "karachi") return 1;
+  if(method === "mwl") return 3;
+  if(method === "ummalqura") return 4;
+  if(method === "1815") return 13;
+
+  return 3;
+}
+
+// =========================
+// GET CALCULATION METHOD SOURCE LABEL
+// =========================
+function getCalculationMethodSourceLabel(countryName){
+  let savedMethod = getSavedCalculationMethod();
+  let resolvedMethod = getResolvedCalculationMethod(countryName);
+
+  if(savedMethod === "auto"){
+    return "Auto - " + getCalculationMethodLabel(resolvedMethod);
+  }
+
+  return getCalculationMethodLabel(resolvedMethod);
+}
+  
+  
 // =========================
 // SET ASR TOGGLE UI
 // =========================
@@ -6893,61 +7132,36 @@ async function toggleAsrMethod(){
 }
 
 // =========================
-// UPDATE SALAH SETTINGS CHECKS
-// =========================
-  function updateSalahSettingsChecks(){
-  let hanafiCheck = document.getElementById("hanafiCheck");
-  let shafiCheck = document.getElementById("shafiCheck");
-  let method = getAsrMethod();
-
-  if(hanafiCheck){
-    hanafiCheck.style.opacity = method === "hanafi" ? "1" : "0";
-  }
-
-  if(shafiCheck){
-    shafiCheck.style.opacity = method === "shafi" ? "1" : "0";
-  }
-}
-
-async function selectAsrMethod(method){
-  localStorage.setItem("asrMethod", method);
-
-  setAsrToggleUI();
-  updateSalahSettingsChecks();
-
-  salahLiveCache = {};
-
-  if(salahSource === "location"){
-    setSalahLoadingState();
-
-    try{
-      let selectedDate = getSelectedSalahDate();
-      let liveData = await loadRealLocationSalahTimes(selectedDate);
-      applySalahDataToScreen(liveData);
-    }catch(err){
-      document.getElementById("salahCityName").innerText = "Location unavailable";
-      document.getElementById("salahSourceLabel").innerText = "Allow location + internet";
-    }
-  }else{
-    renderSalahPage();
-  }
-}
-
-// =========================
 // OPEN SALAH SETTINGS PAGE
 // =========================
 function openSalahSettingsPage(){
-  document.getElementById("salahSettingsPage").style.display = "block";
-  updateSalahSettingsChecks();
-  window.scrollTo(0,0);
+  let overlay = document.getElementById("salahSettingsOverlay");
+  let card = document.getElementById("salahSettingsCard");
+
+  if(!overlay || !card) return;
+
+  overlay.style.display = "block";
+  loadSalahSettingsUI();
+
+  setTimeout(function(){
+    card.style.transform = "translateX(0)";
+  },10);
 }
 
 // =========================
 // CLOSE SALAH SETTINGS PAGE
 // =========================
 function closeSalahSettingsPage(){
-  document.getElementById("salahSettingsPage").style.display = "none";
-  window.scrollTo(0,0);
+  let overlay = document.getElementById("salahSettingsOverlay");
+  let card = document.getElementById("salahSettingsCard");
+
+  if(!overlay || !card) return;
+
+  card.style.transform = "translateX(100%)";
+
+  setTimeout(function(){
+    overlay.style.display = "none";
+  },280);
 }
 
 // =========================
@@ -6955,11 +7169,218 @@ function closeSalahSettingsPage(){
 // =========================
 function openSalahSettingsFromMenu(){
   closeSideMenu();
-  document.getElementById("salahSettingsPage").style.display = "block";
-  updateSalahSettingsChecks();
-  window.scrollTo(0,0);
+  openSalahSettingsPage();
 }
 
+// =========================
+// TOGGLE CALCULATION METHOD DROPDOWN
+// =========================
+function toggleCalculationMethodDropdown(){
+  let dropdown = document.getElementById("calculationMethodDropdown");
+  let arrow = document.getElementById("calculationMethodArrow");
+
+  if(!dropdown || !arrow) return;
+
+  let asrDropdown = document.getElementById("asrCalculationDropdown");
+  let asrArrow = document.getElementById("asrCalculationArrow");
+
+  if(asrDropdown) asrDropdown.style.display = "none";
+  if(asrArrow) asrArrow.style.transform = "rotate(0deg)";
+
+  if(dropdown.style.display === "block"){
+    dropdown.style.display = "none";
+    arrow.style.transform = "rotate(0deg)";
+  }else{
+    dropdown.style.display = "block";
+    arrow.style.transform = "rotate(90deg)";
+  }
+}
+
+// =========================
+// TOGGLE ASR CALCULATION DROPDOWN
+// =========================
+function toggleAsrCalculationDropdown(){
+  let dropdown = document.getElementById("asrCalculationDropdown");
+  let arrow = document.getElementById("asrCalculationArrow");
+
+  if(!dropdown || !arrow) return;
+
+  let calcDropdown = document.getElementById("calculationMethodDropdown");
+  let calcArrow = document.getElementById("calculationMethodArrow");
+
+  if(calcDropdown) calcDropdown.style.display = "none";
+  if(calcArrow) calcArrow.style.transform = "rotate(0deg)";
+
+  if(dropdown.style.display === "block"){
+    dropdown.style.display = "none";
+    arrow.style.transform = "rotate(0deg)";
+  }else{
+    dropdown.style.display = "block";
+    arrow.style.transform = "rotate(90deg)";
+  }
+}
+
+// =========================
+// SELECT CALCULATION METHOD
+// =========================
+function selectCalculationMethod(method){
+  localStorage.setItem("salahCalculationMethod", method);
+  updateCalculationMethodUI();
+  setIsnaFajr18ToggleUI();
+
+  let selectedText = document.getElementById("selectedCalculationMethodText");
+  if(selectedText){
+    selectedText.textContent = getCalculationMethodLabel(method);
+  }
+
+  let dropdown = document.getElementById("calculationMethodDropdown");
+  let arrow = document.getElementById("calculationMethodArrow");
+
+  if(dropdown) dropdown.style.display = "none";
+  if(arrow) arrow.style.transform = "rotate(0deg)";
+
+  salahLiveCache = {};
+  refreshSalahAfterSettingChange();
+}
+
+// =========================
+// SELECT ASR CALCULATION
+// =========================
+function selectAsrCalculation(method){
+  localStorage.setItem("asrMethod", method);
+  updateAsrCalculationUI();
+  setAsrToggleUI();
+
+  let selectedText = document.getElementById("selectedAsrCalculationText");
+  if(selectedText){
+    selectedText.textContent = getAsrCalculationLabel(method);
+  }
+
+  let dropdown = document.getElementById("asrCalculationDropdown");
+  let arrow = document.getElementById("asrCalculationArrow");
+
+  if(dropdown) dropdown.style.display = "none";
+  if(arrow) arrow.style.transform = "rotate(0deg)";
+
+  salahLiveCache = {};
+  refreshSalahAfterSettingChange();
+}
+
+// =========================
+// LOAD SALAH SETTINGS UI
+// =========================
+function loadSalahSettingsUI(){
+  let savedCalculationMethod = localStorage.getItem("salahCalculationMethod") || "auto";
+  let savedAsrMethod = localStorage.getItem("asrMethod") || "hanafi";
+
+  let calculationText = document.getElementById("selectedCalculationMethodText");
+  let asrText = document.getElementById("selectedAsrCalculationText");
+
+  if(calculationText){
+    calculationText.textContent = getCalculationMethodLabel(savedCalculationMethod);
+  }
+
+  if(asrText){
+    asrText.textContent = getAsrCalculationLabel(savedAsrMethod);
+  }
+
+  updateCalculationMethodUI();
+  updateAsrCalculationUI();
+  setIsnaFajr18ToggleUI();
+
+  let calcDropdown = document.getElementById("calculationMethodDropdown");
+  let calcArrow = document.getElementById("calculationMethodArrow");
+  let asrDropdown = document.getElementById("asrCalculationDropdown");
+  let asrArrow = document.getElementById("asrCalculationArrow");
+
+  if(calcDropdown) calcDropdown.style.display = "none";
+  if(calcArrow) calcArrow.style.transform = "rotate(0deg)";
+  if(asrDropdown) asrDropdown.style.display = "none";
+  if(asrArrow) asrArrow.style.transform = "rotate(0deg)";
+}
+
+// =========================
+// UPDATE CALCULATION METHOD UI
+// =========================
+function updateCalculationMethodUI(){
+  let savedMethod = localStorage.getItem("salahCalculationMethod") || "auto";
+
+  let checks = {
+    auto: document.getElementById("calcCheckAuto"),
+    isna: document.getElementById("calcCheckIsna"),
+    karachi: document.getElementById("calcCheckKarachi"),
+    mwl: document.getElementById("calcCheckMwl"),
+    ummalqura: document.getElementById("calcCheckUmmalqura"),
+    "1815": document.getElementById("calcCheck1815")
+  };
+
+  for(let key in checks){
+    if(checks[key]){
+      checks[key].style.opacity = key === savedMethod ? "1" : "0";
+    }
+  }
+
+  let selectedText = document.getElementById("selectedCalculationMethodText");
+  if(selectedText){
+    selectedText.textContent = getCalculationMethodLabel(savedMethod);
+  }
+
+  setIsnaFajr18ToggleUI();
+}
+
+// =========================
+// UPDATE ASR CALCULATION UI
+// =========================
+function updateAsrCalculationUI(){
+  let savedMethod = localStorage.getItem("asrMethod") || "hanafi";
+
+  let hanafiCheck = document.getElementById("asrCheckHanafi");
+  let shafiCheck = document.getElementById("asrCheckShafi");
+
+  if(hanafiCheck) hanafiCheck.style.opacity = savedMethod === "hanafi" ? "1" : "0";
+  if(shafiCheck) shafiCheck.style.opacity = savedMethod === "shafi" ? "1" : "0";
+
+  let selectedText = document.getElementById("selectedAsrCalculationText");
+  if(selectedText){
+    selectedText.textContent = getAsrCalculationLabel(savedMethod);
+  }
+}
+
+// =========================
+// GET CALCULATION METHOD LABEL
+// =========================
+function getCalculationMethodLabel(method){
+  if(method === "auto") return "Auto (Recommended)";
+  if(method === "isna") return "ISNA";
+  if(method === "karachi") return "Karachi";
+  if(method === "mwl") return "Muslim World League (MWL)";
+  if(method === "ummalqura") return "Umm al-Qura (Makkah)";
+  if(method === "1815") return "Fajr 18° / Isha 15°";
+  return "Auto (Recommended)";
+}
+
+// =========================
+// GET ASR CALCULATION LABEL
+// =========================
+function getAsrCalculationLabel(method){
+  if(method === "shafi") return "Shafi";
+  return "Hanafi";
+}
+
+// =========================
+// REFRESH SALAH AFTER SETTING CHANGE
+// =========================
+function refreshSalahAfterSettingChange(){
+  if(salahSource === "location"){
+    refreshLocationSalahData();
+  }else if(salahSource === "masjid"){
+    refreshMasjidSalahData();
+  }else{
+    refreshEnteredLocationSalahData();
+  }
+}
+
+  
 // =========================
 // OPEN APP SETTINGS PAGE
 // =========================
@@ -9019,12 +9440,12 @@ padding:8px 0;
 border-bottom:1px solid rgba(0,0,0,0.06);
 ">
   <div style="display:flex;align-items:center;gap:10px;">
-    <div style="
-    width:30px;height:30px;border-radius:50%;
-    background:linear-gradient(180deg,#fde7a3,#f7c873);
-    display:flex;align-items:center;justify-content:center;
-    font-size:14px;box-shadow:0 1px 4px rgba(0,0,0,0.08);
-    ">🌅</div>
+   <div style="
+    font-size:21px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+">🌅</div>
 
     <div style="font-weight:600;font-size:17px;color:#111;">
       Fajr
@@ -9045,12 +9466,12 @@ padding:8px 0;
 border-bottom:1px solid rgba(0,0,0,0.06);
 ">
   <div style="display:flex;align-items:center;gap:10px;">
-    <div style="
-    width:30px;height:30px;border-radius:50%;
-    background:linear-gradient(180deg,#ffe8b8,#ffd58a);
-    display:flex;align-items:center;justify-content:center;
-    font-size:14px;box-shadow:0 1px 4px rgba(0,0,0,0.08);
-    ">🌄</div>
+  <div style="
+font-size:21px;
+display:flex;
+align-items:center;
+justify-content:center;
+">🌄</div>
 
     <div style="font-weight:600;font-size:17px;color:#111;">
       Sunrise
@@ -9071,12 +9492,12 @@ padding:8px 0;
 border-bottom:1px solid rgba(0,0,0,0.06);
 ">
   <div style="display:flex;align-items:center;gap:10px;">
-    <div style="
-    width:30px;height:30px;border-radius:50%;
-    background:linear-gradient(180deg,#ffe7a1,#f4bf57);
-    display:flex;align-items:center;justify-content:center;
-    font-size:14px;box-shadow:0 1px 4px rgba(0,0,0,0.08);
-    ">☀️</div>
+   <div style="
+font-size:21px;
+display:flex;
+align-items:center;
+justify-content:center;
+">☀️</div>
 
     <div style="font-weight:600;font-size:17px;color:#111;">
       Dhuhr
@@ -9097,13 +9518,12 @@ padding:8px 0;
 border-bottom:1px solid rgba(0,0,0,0.06);
 ">
   <div style="display:flex;align-items:center;gap:10px;">
-    <div style="
-    width:30px;height:30px;border-radius:50%;
-    background:linear-gradient(180deg,#ffe4b5,#e7b96c);
-    display:flex;align-items:center;justify-content:center;
-    font-size:14px;box-shadow:0 1px 4px rgba(0,0,0,0.08);
-    ">🌤️</div>
-
+   <div style="
+font-size:21px;
+display:flex;
+align-items:center;
+justify-content:center;
+">🌤️</div>
     <div style="font-weight:600;font-size:17px;color:#111;">
       Asr
     </div>
@@ -9124,11 +9544,11 @@ border-bottom:1px solid rgba(0,0,0,0.06);
 ">
   <div style="display:flex;align-items:center;gap:10px;">
     <div style="
-    width:30px;height:30px;border-radius:50%;
-    background:linear-gradient(180deg,#ffd6b3,#f59f6c);
-    display:flex;align-items:center;justify-content:center;
-    font-size:14px;box-shadow:0 1px 4px rgba(0,0,0,0.08);
-    ">🌇</div>
+font-size:21px;
+display:flex;
+align-items:center;
+justify-content:center;
+">🌇</div>
 
     <div style="font-weight:600;font-size:17px;color:#111;">
       Maghrib
@@ -9148,12 +9568,12 @@ justify-content:space-between;
 padding:8px 0;
 ">
   <div style="display:flex;align-items:center;gap:10px;">
-    <div style="
-    width:30px;height:30px;border-radius:50%;
-    background:linear-gradient(180deg,#d9dcf8,#aeb6ea);
-    display:flex;align-items:center;justify-content:center;
-    font-size:14px;box-shadow:0 1px 4px rgba(0,0,0,0.08);
-    ">🌙</div>
+   <div style="
+font-size:21px;
+display:flex;
+align-items:center;
+justify-content:center;
+">🌙</div>
 
     <div style="font-weight:600;font-size:17px;color:#111;">
       Isha
@@ -9234,191 +9654,425 @@ padding:8px 0;
 </div>
 
 </div>
-<!-- =========================
-     SALAH SETTINGS PAGE
+
+
+
+  <!-- =========================
+     SALAH SETTINGS RIGHT SLIDE PANEL
 ========================= -->
-  <div id="salahSettingsPage" style="
+<div id="salahSettingsOverlay" onclick="closeSalahSettingsPage()" style="
 display:none;
 position:fixed;
 top:0;
 left:0;
 right:0;
 bottom:0;
-z-index:6000;
-background:url('wallpaper.jpg') center/cover no-repeat;
-overflow:auto;
-padding:0;
--webkit-overflow-scrolling:touch;
+background:rgba(0,0,0,0.22);
+backdrop-filter:blur(4px);
+-webkit-backdrop-filter:blur(4px);
+z-index:10060;
 ">
 
-<div style="
-position:sticky;
-top:0;
-z-index:50;
-padding:15px 15px 10px 15px;
-background:linear-gradient(to bottom, rgba(0,0,0,0.18), rgba(0,0,0,0));
-">
+  <!-- RIGHT SLIDE PANEL -->
+  <div id="salahSettingsCard" onclick="event.stopPropagation()" style="
+  position:absolute;
+  top:0;
+  right:0;
+  width:70%;
+  max-width:420px;
+  height:100%;
+  background:#f7f7fa;
+  box-shadow:-10px 0 30px rgba(0,0,0,0.16);
+  transform:translateX(100%);
+  transition:transform 0.28s ease;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  box-sizing:border-box;
+  border-top-left-radius:28px;
+  border-bottom-left-radius:28px;
+  ">
 
-<div style="
+    <!-- SETTINGS HEADER -->
+    <div style="
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 16px 14px 16px;
+    position:sticky;
+    top:0;
+    z-index:5;
+    background:rgba(247,247,250,0.96);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(0,0,0,0.06);
+    border-top-left-radius:28px;
+    ">
+      <div style="
+      font-size:22px;
+      font-weight:800;
+      color:#111;
+      ">
+      Salah Settings
+      </div>
+
+      <button onclick="closeSalahSettingsPage()" style="
+      border:none;
+      background:white;
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      font-size:22px;
+      font-weight:700;
+      color:#111;
+      cursor:pointer;
+      box-shadow:0 4px 12px rgba(0,0,0,0.08);
+      ">
+      ×
+      </button>
+    </div>
+
+    <!-- SETTINGS CONTENT -->
+    <div style="
+    padding:14px 12px 30px 12px;
+    box-sizing:border-box;
+    ">
+
+      <!-- =========================
+           CALCULATION METHOD SECTION
+      ========================= -->
+      <div style="
+      background:white;
+      border-radius:22px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.06);
+      overflow:hidden;
+      margin-bottom:14px;
+      ">
+
+        <!-- CALCULATION METHOD ROW -->
+        <button onclick="toggleCalculationMethodDropdown()" style="
+        width:100%;
+        border:none;
+        background:white;
+        padding:16px 14px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        cursor:pointer;
+        box-sizing:border-box;
+        text-align:left;
+        ">
+          <div>
+            <div style="
+            font-size:17px;
+            font-weight:800;
+            color:#111;
+            margin-bottom:4px;
+            ">
+            Calculation Method
+            </div>
+            <div id="selectedCalculationMethodText" style="
+            font-size:13px;
+            color:#666;
+            font-weight:600;
+            ">
+            Auto (Recommended)
+            </div>
+          </div>
+
+          <div id="calculationMethodArrow" style="
+          font-size:18px;
+          font-weight:700;
+          color:#666;
+          transition:transform 0.22s ease;
+          ">
+          ›
+          </div>
+        </button>
+
+        <!-- CALCULATION METHOD DROPDOWN -->
+        <div id="calculationMethodDropdown" style="
+        display:none;
+        border-top:1px solid rgba(0,0,0,0.06);
+        background:#fbfbfd;
+        ">
+
+          <button onclick="selectCalculationMethod('auto')" style="
+          width:100%;
+          border:none;
+          background:transparent;
+          padding:16px 14px;
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          text-align:left;
+          cursor:pointer;
+          box-sizing:border-box;
+          border-bottom:1px solid rgba(0,0,0,0.05);
+          ">
+            <div>
+              <div style="font-size:16px;font-weight:800;color:#111;">Auto (Recommended)</div>
+              <div style="font-size:13px;color:#666;font-weight:600;margin-top:3px;">Uses the best method based on your location</div>
+            </div>
+            <div id="calcCheckAuto" style="font-size:28px;font-weight:900;color:#111;">✓</div>
+          </button>
+
+         <div style="
+width:100%;
+padding:16px 14px;
 display:flex;
+align-items:center;
 justify-content:space-between;
-align-items:center;
-padding:10px 0 4px 0;
-">
-
-<!-- Close Salah Settings Page Button -->
-<button onclick="closeSalahSettingsPage()" style="
-width:38px;
-height:38px;
-border-radius:50%;
-border:1px solid #d6d6d6;
-background:white;
-font-size:20px;
-cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:center;
-box-shadow:0 3px 10px rgba(0,0,0,0.12);
-">
-←
-</button>
-
-<div style="
-font-size:20px;
-font-weight:800;
-color:white;
-text-shadow:0 1px 3px rgba(0,0,0,0.35);
-">
-Salah Settings
-</div>
-
-<div style="
-width:38px;
-height:38px;
-">
-</div>
-
-</div>
-
-</div>
-
-<div style="
-width:92%;
-max-width:720px;
-margin:0 auto;
-padding:0 15px 120px 15px;
 box-sizing:border-box;
+border-bottom:1px solid rgba(0,0,0,0.05);
+gap:12px;
 ">
 
-<div class="card" style="
-background:rgba(232,234,245,0.96);
-border-radius:30px;
-padding:20px;
-box-shadow:0 8px 20px rgba(0,0,0,0.10);
-margin-top:10px;
-">
+  <!-- LEFT SIDE -->
+  <div onclick="selectCalculationMethod('isna')" style="
+  flex:1;
+  min-width:0;
+  cursor:pointer;
+  ">
+    <div style="font-size:16px;font-weight:800;color:#111;">ISNA</div>
+    <div style="font-size:13px;color:#666;font-weight:600;margin-top:3px;">Commonly used in North America</div>
+  </div>
 
-<div style="
-font-size:20px;
-font-weight:800;
-color:#111;
-margin-bottom:8px;
-">
-Asr Method
-</div>
+  <!-- RIGHT SIDE -->
+  <div style="
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-shrink:0;
+  ">
+    <div id="isnaFajr18Label" style="
+    font-size:13px;
+    font-weight:700;
+    color:#666;
+    white-space:nowrap;
+    ">
+    Fajr 18°
+    </div>
 
-<div style="
-font-size:14px;
-color:#666;
-margin-bottom:18px;
-line-height:1.5;
-">
-Choose which Asr calculation you want for My Location.
-</div>
+    <div onclick="event.stopPropagation();toggleIsnaFajr18()" id="isnaFajr18Toggle" style="
+    width:46px;
+    height:28px;
+    border-radius:999px;
+    background:#d1d1d6;
+    position:relative;
+    cursor:pointer;
+    transition:background 0.22s ease;
+    ">
+      <div id="isnaFajr18Knob" style="
+      position:absolute;
+      top:2px;
+      left:2px;
+      width:24px;
+      height:24px;
+      border-radius:50%;
+      background:white;
+      box-shadow:0 2px 6px rgba(0,0,0,0.12);
+      transition:left 0.22s ease;
+      "></div>
+    </div>
 
-<!-- Select Asr Method Card -->
-<div onclick="selectAsrMethod('hanafi')" style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:16px 14px;
-background:white;
-border-radius:18px;
-margin-bottom:12px;
-box-shadow:0 4px 12px rgba(0,0,0,0.06);
-cursor:pointer;
-">
-<div>
-<div style="font-size:17px;font-weight:700;color:#111;">Hanafi</div>
-<div style="font-size:13px;color:#666;margin-top:4px;">Later Asr time</div>
-</div>
-<div id="hanafiCheck" style="
-font-size:22px;
-font-weight:800;
-color:#34c759;
-">
-✓
-</div>
-</div>
-
-<!-- Select Asr Method Card -->
-<div onclick="selectAsrMethod('shafi')" style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:16px 14px;
-background:white;
-border-radius:18px;
-box-shadow:0 4px 12px rgba(0,0,0,0.06);
-cursor:pointer;
-">
-<div>
-<div style="font-size:17px;font-weight:700;color:#111;">Shafi</div>
-<div style="font-size:13px;color:#666;margin-top:4px;">Earlier Asr time</div>
-</div>
-<div id="shafiCheck" style="
-font-size:22px;
-font-weight:800;
-color:#34c759;
-opacity:0;
-">
-✓
-</div>
-</div>
+    <div id="calcCheckIsna" style="
+    font-size:28px;
+    font-weight:900;
+    color:#111;
+    opacity:0;
+    margin-left:2px;
+    ">
+    ✓
+    </div>
+  </div>
 
 </div>
 
-<div class="card" style="
-background:rgba(232,234,245,0.96);
-border-radius:30px;
-padding:20px;
-box-shadow:0 8px 20px rgba(0,0,0,0.10);
-margin-top:16px;
-">
+          <button onclick="selectCalculationMethod('karachi')" style="
+          width:100%;
+          border:none;
+          background:transparent;
+          padding:16px 14px;
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          text-align:left;
+          cursor:pointer;
+          box-sizing:border-box;
+          border-bottom:1px solid rgba(0,0,0,0.05);
+          ">
+            <div>
+              <div style="font-size:16px;font-weight:800;color:#111;">Karachi</div>
+              <div style="font-size:13px;color:#666;font-weight:600;margin-top:3px;">Commonly used in Pakistan and by many Hanafi users</div>
+            </div>
+            <div id="calcCheckKarachi" style="font-size:28px;font-weight:900;color:#111;opacity:0;">✓</div>
+          </button>
 
-<div style="
-font-size:20px;
-font-weight:800;
-color:#111;
-margin-bottom:8px;
-">
-Coming Later
+          <button onclick="selectCalculationMethod('mwl')" style="
+          width:100%;
+          border:none;
+          background:transparent;
+          padding:16px 14px;
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          text-align:left;
+          cursor:pointer;
+          box-sizing:border-box;
+          border-bottom:1px solid rgba(0,0,0,0.05);
+          ">
+            <div>
+              <div style="font-size:16px;font-weight:800;color:#111;">Muslim World League (MWL)</div>
+              <div style="font-size:13px;color:#666;font-weight:600;margin-top:3px;">Widely used in many parts of the world</div>
+            </div>
+            <div id="calcCheckMwl" style="font-size:28px;font-weight:900;color:#111;opacity:0;">✓</div>
+          </button>
+
+          <button onclick="selectCalculationMethod('ummalqura')" style="
+          width:100%;
+          border:none;
+          background:transparent;
+          padding:16px 14px;
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          text-align:left;
+          cursor:pointer;
+          box-sizing:border-box;
+          border-bottom:1px solid rgba(0,0,0,0.05);
+          ">
+            <div>
+              <div style="font-size:16px;font-weight:800;color:#111;">Umm al-Qura (Makkah)</div>
+              <div style="font-size:13px;color:#666;font-weight:600;margin-top:3px;">Commonly used in Saudi Arabia</div>
+            </div>
+            <div id="calcCheckUmmalqura" style="font-size:28px;font-weight:900;color:#111;opacity:0;">✓</div>
+          </button>
+
+          <button onclick="selectCalculationMethod('1815')" style="
+          width:100%;
+          border:none;
+          background:transparent;
+          padding:16px 14px;
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          text-align:left;
+          cursor:pointer;
+          box-sizing:border-box;
+          ">
+            <div>
+              <div style="font-size:16px;font-weight:800;color:#111;">18° / 15°</div>
+              <div style="font-size:13px;color:#666;font-weight:600;margin-top:3px;">Fixed angle method (Fajr 18°, Isha 15°)</div>
+            </div>
+            <div id="calcCheck1815" style="font-size:28px;font-weight:900;color:#111;opacity:0;">✓</div>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- =========================
+           ASR CALCULATION SECTION
+      ========================= -->
+      <div style="
+      background:white;
+      border-radius:22px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.06);
+      overflow:hidden;
+      ">
+
+        <!-- ASR CALCULATION ROW -->
+        <button onclick="toggleAsrCalculationDropdown()" style="
+        width:100%;
+        border:none;
+        background:white;
+        padding:16px 14px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        cursor:pointer;
+        box-sizing:border-box;
+        text-align:left;
+        ">
+          <div>
+            <div style="
+            font-size:17px;
+            font-weight:800;
+            color:#111;
+            margin-bottom:4px;
+            ">
+            Asr Calculation
+            </div>
+            <div id="selectedAsrCalculationText" style="
+            font-size:13px;
+            color:#666;
+            font-weight:600;
+            ">
+            Hanafi
+            </div>
+          </div>
+
+          <div id="asrCalculationArrow" style="
+          font-size:18px;
+          font-weight:700;
+          color:#666;
+          transition:transform 0.22s ease;
+          ">
+          ›
+          </div>
+        </button>
+
+        <!-- ASR CALCULATION DROPDOWN -->
+        <div id="asrCalculationDropdown" style="
+        display:none;
+        border-top:1px solid rgba(0,0,0,0.06);
+        background:#fbfbfd;
+        ">
+
+          <button onclick="selectAsrCalculation('hanafi')" style="
+          width:100%;
+          border:none;
+          background:transparent;
+          padding:16px 14px;
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          text-align:left;
+          cursor:pointer;
+          box-sizing:border-box;
+          border-bottom:1px solid rgba(0,0,0,0.05);
+          ">
+            <div>
+              <div style="font-size:16px;font-weight:800;color:#111;">Hanafi</div>
+              <div style="font-size:13px;color:#666;font-weight:600;margin-top:3px;">Later Asr time</div>
+            </div>
+            <div id="asrCheckHanafi" style="font-size:28px;font-weight:900;color:#111;">✓</div>
+          </button>
+
+          <button onclick="selectAsrCalculation('shafi')" style="
+          width:100%;
+          border:none;
+          background:transparent;
+          padding:16px 14px;
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          text-align:left;
+          cursor:pointer;
+          box-sizing:border-box;
+          ">
+            <div>
+              <div style="font-size:16px;font-weight:800;color:#111;">Shafi</div>
+              <div style="font-size:13px;color:#666;font-weight:600;margin-top:3px;">Earlier Asr time</div>
+            </div>
+            <div id="asrCheckShafi" style="font-size:28px;font-weight:900;color:#111;opacity:0;">✓</div>
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>
-
-<div style="
-font-size:15px;
-color:#666;
-line-height:1.7;
-">
-Default source, calculation method, Ramadan settings, and more can be added here later.
-</div>
-
-</div>
-
-</div>
-
-</div>
-
   
   
 <!-- =========================
