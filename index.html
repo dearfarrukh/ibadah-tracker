@@ -1590,65 +1590,74 @@ top:0;
 left:-280px;
 width:260px;
 height:100%;
-background:#e9e9ee;
-box-shadow:8px 0 24px rgba(0,0,0,0.18);
+background:rgba(233,233,238,0.96);
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+box-shadow:10px 0 30px rgba(0,0,0,0.16);
 z-index:9998;
 padding:90px 18px 20px 18px;
 transition:left 0.28s ease;
 box-sizing:border-box;
+border-top-right-radius:28px;
+border-bottom-right-radius:28px;
+border-right:1px solid rgba(255,255,255,0.55);
+overflow:hidden;
 ">
 
 <div style="
 font-size:24px;
 font-weight:800;
-color:#5c4632;
+color:#111;
 margin-bottom:22px;
-letter-spacing:0.3px;
+letter-spacing:0.2px;
 ">
 Menu
 </div>
 
 <!-- Go To Main Page Card -->
-  <div onclick="goToMainPage()" style="
-background:rgba(255,255,255,0.75);
+<div onclick="goToMainPage()" style="
+background:rgba(255,255,255,0.82);
 padding:16px 18px;
-border-radius:18px;
+border-radius:20px;
 font-size:18px;
-font-weight:700;
-color:#5c4632;
+font-weight:800;
+color:#111;
 margin-bottom:14px;
-box-shadow:0 6px 14px rgba(0,0,0,0.08);
+box-shadow:0 8px 18px rgba(0,0,0,0.08);
 cursor:pointer;
+border:1px solid rgba(255,255,255,0.55);
 ">
 🏠 Main Page
 </div>
-
+  
 <!-- Refresh App Card -->
-  <div onclick="refreshApp()" style="
-background:rgba(255,255,255,0.75);
+<div onclick="refreshApp()" style="
+background:rgba(255,255,255,0.82);
 padding:16px 18px;
-border-radius:18px;
+border-radius:20px;
 font-size:18px;
-font-weight:700;
-color:#5c4632;
+font-weight:800;
+color:#111;
 margin-bottom:14px;
-box-shadow:0 6px 14px rgba(0,0,0,0.08);
+box-shadow:0 8px 18px rgba(0,0,0,0.08);
 cursor:pointer;
+border:1px solid rgba(255,255,255,0.55);
 ">
 🔄 Refresh App
 </div>
 
 <!-- Open Backup Popup Card -->
 <div onclick="openBackupPopup()" style="
-background:rgba(255,255,255,0.75);
+background:rgba(255,255,255,0.82);
 padding:16px 18px;
-border-radius:18px;
+border-radius:20px;
 font-size:18px;
-font-weight:700;
-color:#5c4632;
+font-weight:800;
+color:#111;
 margin-bottom:14px;
-box-shadow:0 6px 14px rgba(0,0,0,0.08);
+box-shadow:0 8px 18px rgba(0,0,0,0.08);
 cursor:pointer;
+border:1px solid rgba(255,255,255,0.55);
 ">
 ☁️ Backup
 </div>
@@ -1656,16 +1665,17 @@ cursor:pointer;
   
   
 <!-- Open App Settings Page Card -->
- <div onclick="openAppSettingsPage()" style="
-background:rgba(255,255,255,0.75);
+<div onclick="openAppSettingsPage()" style="
+background:rgba(255,255,255,0.82);
 padding:16px 18px;
-border-radius:18px;
+border-radius:20px;
 font-size:18px;
-font-weight:700;
-color:#5c4632;
+font-weight:800;
+color:#111;
 margin-bottom:14px;
-box-shadow:0 6px 14px rgba(0,0,0,0.08);
+box-shadow:0 8px 18px rgba(0,0,0,0.08);
 cursor:pointer;
+border:1px solid rgba(255,255,255,0.55);
 ">
 ⚙️ App Settings
 </div>
@@ -2349,6 +2359,8 @@ function openSelectedDefaultPage(){
     openSalahPage();
   }else if(defaultPage === "tasbih"){
     openTasbihPage();
+  }else if(defaultPage === "home"){
+    openHomePage();
   }else{
     openTrackerPage();
   }
@@ -2366,6 +2378,9 @@ if(defaultPage === "salah"){
 }
 else if(defaultPage === "tasbih"){
   openTasbihPage();
+}
+else if(defaultPage === "home"){
+  openHomePage();
 }
 else{
   openTrackerPage();
@@ -3779,12 +3794,14 @@ window.scrollTo(0,0);
 // ==============================
 // MAIN PAGE NAVIGATION FUNCTION
 // ==============================
-
 function goToMainPage(){
 
 let defaultPage = (localStorage.getItem("defaultPage") || "tracker").trim().toLowerCase();
 
-// Close menu/settings if open
+// ✅ VERY IMPORTANT — CLOSE SIDE MENU
+closeSideMenu();
+
+// Close other pages if open
 let morePage = document.getElementById("morePage");
 let appSettingsPage = document.getElementById("appSettingsPage");
 
@@ -6404,10 +6421,7 @@ window.scrollTo(0,0);
 // =========================
 // GO TO MAIN PAGE
 // =========================
- function goToMainPage(){
-closeSideMenu();
-location.reload();
-}
+// duplicate old version removed
 
 // =========================
 // OPEN TASBIH SETTINGS
@@ -7437,11 +7451,8 @@ openSalahPage();
 else if(defaultPage === "tasbih"){
 openTasbihPage();
 }
-else if(defaultPage === "dua"){
-openDuaPage();
-}
-else if(defaultPage === "qibla"){
-openQiblaPage();
+else if(defaultPage === "home"){
+openHomePage();
 }
 else{
 openTrackerPage();
@@ -7457,6 +7468,7 @@ window.scrollTo(0,0);
 function getDefaultPageLabel(){
   let page = getDefaultPage();
 
+  if(page === "home") return "Home";
   if(page === "salah") return "Salah Times";
   if(page === "tasbih") return "Tasbih";
 
@@ -7509,10 +7521,12 @@ function setDefaultPage(page){
 function updateDefaultPageChecks(){
   let current = getDefaultPage();
 
+  let home = document.getElementById("defaultPageCheckHome");
   let salah = document.getElementById("defaultPageCheckSalah");
   let dailyTask = document.getElementById("defaultPageCheckDailyTask");
   let tasbih = document.getElementById("defaultPageCheckTasbih");
 
+  if(home) home.style.opacity = current === "home" ? "1" : "0";
   if(salah) salah.style.opacity = current === "salah" ? "1" : "0";
   if(dailyTask) dailyTask.style.opacity = current === "tracker" ? "1" : "0";
   if(tasbih) tasbih.style.opacity = current === "tasbih" ? "1" : "0";
@@ -8577,7 +8591,33 @@ box-sizing:border-box;
     Choose which page should open first when the app starts
     </div>
 
+
+   
 <!-- Set Default Page Card -->
+<div onclick="setDefaultPage('home')" style="
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:16px 14px;
+background:white;
+border-radius:18px;
+margin-bottom:10px;
+cursor:pointer;
+box-shadow:0 4px 12px rgba(0,0,0,0.06);
+">
+  <div>
+    <div style="font-size:17px;font-weight:800;color:#111;">Home</div>
+    <div style="font-size:13px;color:#777;margin-top:2px;">Open the home page first</div>
+  </div>
+
+  <div id="defaultPageCheckHome" style="
+  font-size:22px;
+  color:#111;
+  opacity:0;
+  ">
+  ✓
+  </div>
+</div>
     <div onclick="setDefaultPage('salah')" style="
     display:flex;
     align-items:center;
