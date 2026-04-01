@@ -4012,8 +4012,8 @@ countdownEl.innerText = "00:00:00";
 // =========================
 function openMorePage(){
 
-lastMainTab = "more";
-
+let homePage = document.getElementById("homePage");
+let trackerPage = document.getElementById("trackerPage");
 let morePage = document.getElementById("morePage");
 let salahPage = document.getElementById("salahPage");
 let tasbihPage = document.getElementById("tasbihPage");
@@ -4022,6 +4022,21 @@ let qiblaPage = document.getElementById("qiblaPage");
 let floatingMenuBtn = document.getElementById("floatingMenuBtn");
 let bottomNav = document.getElementById("bottomNav");
 
+// remember where More was opened from
+if(homePage && homePage.style.display === "block"){
+lastMoreSourceTab = "home";
+}
+else if(salahPage && salahPage.style.display === "block"){
+lastMoreSourceTab = "salah";
+}
+else{
+lastMoreSourceTab = "tracker";
+}
+
+lastMainTab = "more";
+
+if(homePage) homePage.style.display = "none";
+if(trackerPage) trackerPage.style.display = "none";
 if(salahPage) salahPage.style.display = "none";
 if(tasbihPage) tasbihPage.style.display = "none";
 if(duaPage) duaPage.style.display = "none";
@@ -4040,18 +4055,32 @@ window.scrollTo(0,0);
 // =========================
 function closeMorePage(){
 
-lastMainTab = "tracker";
-
+let homePage = document.getElementById("homePage");
 let morePage = document.getElementById("morePage");
 let trackerPage = document.getElementById("trackerPage");
 let salahPage = document.getElementById("salahPage");
 let floatingMenuBtn = document.getElementById("floatingMenuBtn");
 
 if(morePage) morePage.style.display = "none";
-if(trackerPage) trackerPage.style.display = "block";
-if(salahPage) salahPage.style.display = "none";
 
+if(lastMoreSourceTab === "home"){
+if(homePage) homePage.style.display = "block";
+if(trackerPage) trackerPage.style.display = "none";
+if(salahPage) salahPage.style.display = "none";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+}
+else if(lastMoreSourceTab === "salah"){
+if(salahPage) salahPage.style.display = "block";
+if(homePage) homePage.style.display = "none";
+if(trackerPage) trackerPage.style.display = "none";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+}
+else{
+if(trackerPage) trackerPage.style.display = "block";
+if(homePage) homePage.style.display = "none";
+if(salahPage) salahPage.style.display = "none";
 if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
+}
 
 window.scrollTo(0,0);
 }
@@ -4112,7 +4141,8 @@ window.open("https://qiblafinder.withgoogle.com/","_blank");
 }
   
 let currentZikr = "";
-  let lastMainTab = "tracker";
+let lastMainTab = "tracker";
+let lastMoreSourceTab = "tracker";
 
 const zikrData = {
 subhanallah: {
@@ -4440,6 +4470,9 @@ window.scrollTo(0,0);
   
 let salahSource = "location";
 let salahDayOffset = 0;
+let salahSliding = false;
+let salahTouchStartX = 0;
+let salahTouchEndX = 0;
 
 let salahLocationData = {
 lat: null,
@@ -6028,9 +6061,9 @@ changeSalahDay(1);
 function renderSalahPage(){
 
 bindSalahDateButtons();
+bindSalahSwipeCard();
 
 let selectedDate = getSelectedSalahDate();
-  
 let dateText = selectedDate.toLocaleDateString("en-US", {
 weekday:"long",
 month:"short",
@@ -6063,10 +6096,41 @@ refreshMasjidSalahData();
 }
 
 // =========================
+// BIND SALAH SWIPE CARD
+// =========================
+function bindSalahSwipeCard(){
+
+let card = document.getElementById("salahTimesCard");
+if(!card) return;
+
+if(card.dataset.swipeBound === "yes") return;
+card.dataset.swipeBound = "yes";
+
+card.addEventListener("touchstart", handleSalahSwipeStart, { passive:true });
+card.addEventListener("touchend", handleSalahSwipeEnd, { passive:true });
+
+}
+
+  
+// =========================
 // HANDLE SALAH SWIPE START
 // =========================
 function handleSalahSwipeStart(e){
 if(!e.touches || !e.touches.length) return;
+
+let target = e.target;
+if(
+target &&
+(
+target.id === "salahPrevDayBtn" ||
+target.id === "salahNextDayBtn" ||
+(target.closest && target.closest("#salahPrevDayBtn")) ||
+(target.closest && target.closest("#salahNextDayBtn"))
+)
+){
+return;
+}
+
 salahTouchStartX = e.touches[0].clientX;
 }
 
