@@ -7242,6 +7242,28 @@ function closeSalahSettingsPage(){
   },280);
 }
 
+function openMonthlyPrintFromSettings(){
+
+  // CLOSE SETTINGS PANEL FIRST
+  let settingsOverlay = document.getElementById("salahSettingsOverlay");
+  let settingsCard = document.getElementById("salahSettingsCard");
+
+  if(settingsCard){
+    settingsCard.style.transform = "translateX(100%)";
+  }
+
+  if(settingsOverlay){
+    settingsOverlay.style.display = "none";
+  }
+
+  // WAIT FOR CLOSE ANIMATION
+  setTimeout(function(){
+    openMonthlySalahTimetableActions(); // opens your bottom popup
+  }, 300);
+}
+
+
+  
 // =========================
 // OPEN SALAH SETTINGS FROM MENU
 // =========================
@@ -7298,6 +7320,9 @@ function toggleAsrCalculationDropdown(){
   }
 }
 
+
+
+  
 // =========================
 // SELECT CALCULATION METHOD
 // =========================
@@ -7458,6 +7483,958 @@ function refreshSalahAfterSettingChange(){
   }
 }
 
+// =========================
+// MONTHLY TIMETABLE SHARED SALAH SETTINGS HELPERS
+// =========================
+
+function getMonthlySalahTimetableEffectiveSettings(){
+  let savedMethod = localStorage.getItem("salahCalculationMethod") || "auto";
+  let asr = localStorage.getItem("asrMethod") || "hanafi";
+  let fajr18Enabled = localStorage.getItem("isnaFajr18") === "true";
+
+  let activeLocation = getMonthlySalahTimetableActiveLocation();
+  let countryName = activeLocation && activeLocation.country ? activeLocation.country : "";
+  let resolvedMethod = getResolvedCalculationMethod(countryName);
+  let apiMethod = getAladhanMethodNumber(countryName);
+  let school = asr === "hanafi" ? 1 : 0;
+
+  if(savedMethod !== "auto"){
+    resolvedMethod = savedMethod;
+  }
+
+  return {
+    selectedMethod: savedMethod,
+    resolvedMethod: resolvedMethod,
+    apiMethod: apiMethod,
+    asrMethod: asr,
+    school: school,
+    fajr18Enabled: fajr18Enabled
+  };
+}
+
+
+  
+// =========================
+// MONTHLY TIMETABLE LOCATION HELPER
+// =========================
+function getMonthlySalahTimetableActiveLocation(){
+
+  if(
+    salahSource === "location" &&
+    typeof salahLocationData !== "undefined" &&
+    salahLocationData &&
+    salahLocationData.lat &&
+    salahLocationData.lon
+  ){
+    return {
+      latitude: Number(salahLocationData.lat),
+      longitude: Number(salahLocationData.lon),
+      label: salahLocationData.city || getMonthlySalahTimetableCityName(),
+      country: salahLocationData.country || ""
+    };
+  }
+
+  if(salahSource === "masjid"){
+    let picked = getSelectedSavedSalahLocation();
+
+    if(picked && picked.lat && picked.lon){
+      return {
+        latitude: Number(picked.lat),
+        longitude: Number(picked.lon),
+        label: picked.name || getMonthlySalahTimetableCityName(),
+        country: picked.name || ""
+      };
+    }
+  }
+
+  if(
+    salahSource === "entered" &&
+    typeof salahEnteredLocation !== "undefined" &&
+    salahEnteredLocation &&
+    salahEnteredLocation.lat &&
+    salahEnteredLocation.lon
+  ){
+    return {
+      latitude: Number(salahEnteredLocation.lat),
+      longitude: Number(salahEnteredLocation.lon),
+      label: salahEnteredLocation.locationName || getMonthlySalahTimetableCityName(),
+      country: salahEnteredLocation.query || ""
+    };
+  }
+
+  return null;
+}
+  
+
+// =========================
+// MONTHLY TIMETABLE API URL BUILDER
+// =========================
+function buildMonthlySalahTimetableCalendarUrl(month, year, overrideMethod){
+  let location = getMonthlySalahTimetableActiveLocation();
+  if(!location){
+    return null;
+  }
+
+  let settings = getMonthlySalahTimetableEffectiveSettings();
+  let methodToUse = overrideMethod || settings.apiMethod;
+
+  let url =
+    "https://api.aladhan.com/v1/calendar?" +
+    "latitude=" + encodeURIComponent(location.latitude) +
+    "&longitude=" + encodeURIComponent(location.longitude) +
+    "&method=" + encodeURIComponent(methodToUse) +
+    "&school=" + encodeURIComponent(settings.school) +
+    "&month=" + encodeURIComponent(month) +
+    "&year=" + encodeURIComponent(year) +
+    "&t=" + Date.now();
+
+  return url;
+}
+
+
+
+// =========================
+// MONTHLY TIMETABLE FETCH USING SHARED URL BUILDER
+// =========================
+async function fetchMonthlySalahCalendarFromUrl(month, year, overrideMethod){
+  let url = buildMonthlySalahTimetableCalendarUrl(month, year, overrideMethod);
+
+  if(!url){
+    throw new Error("Monthly timetable URL could not be built");
+  }
+
+  let response = await fetch(url, {
+    method: "GET",
+    cache: "no-store"
+  });
+
+  let data = await response.json();
+
+  if(!data || !data.data || !Array.isArray(data.data)){
+    throw new Error("Monthly timetable data not found");
+  }
+
+  return data.data;
+}  
+
+  // =========================
+// MONTHLY SALAH TIMETABLE FUNCTIONS
+// =========================
+
+// =========================
+// OPEN MONTHLY TIMETABLE ACTION SHEET
+// =========================
+function openMonthlySalahTimetableActions(){
+  let overlay = document.getElementById("monthlySalahActionsOverlay");
+  let sheet = document.getElementById("monthlySalahActionsSheet");
+  let subtitle = document.getElementById("monthlySalahActionSubtitle");
+
+  if(!overlay || !sheet) return;
+
+  let cityName = getMonthlySalahTimetableCityName();
+  let now = new Date();
+  let monthYear = now.toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric"
+  });
+
+  if(subtitle){
+    subtitle.textContent = cityName + " • " + monthYear;
+  }
+
+  overlay.style.display = "block";
+  sheet.style.display = "block";
+
+  setTimeout(function(){
+    sheet.style.opacity = "1";
+    sheet.style.transform = "translateY(0)";
+  },10);
+}
+
+// =========================
+// CLOSE MONTHLY TIMETABLE ACTION SHEET
+// =========================
+function closeMonthlySalahTimetableActions(){
+  let overlay = document.getElementById("monthlySalahActionsOverlay");
+  let sheet = document.getElementById("monthlySalahActionsSheet");
+
+  if(!overlay || !sheet) return;
+
+  sheet.style.opacity = "0";
+  sheet.style.transform = "translateY(30px)";
+
+  setTimeout(function(){
+    overlay.style.display = "none";
+    sheet.style.display = "none";
+  },250);
+}
+
+// =========================
+// PRINT MONTHLY SALAH TIMETABLE
+// =========================
+async function printMonthlySalahTimetable(){
+  closeMonthlySalahTimetableActions();
+
+  let settingsOverlay = document.getElementById("salahSettingsOverlay");
+  let settingsCard = document.getElementById("salahSettingsCard");
+
+  if(settingsCard){
+    settingsCard.style.transform = "translateX(100%)";
+  }
+
+  if(settingsOverlay){
+    settingsOverlay.style.display = "none";
+  }
+
+  await new Promise(function(resolve){
+    setTimeout(resolve, 320);
+  });
+
+  await generateMonthlySalahTimetable("printview");
+}
+
+// =========================
+// DOWNLOAD MONTHLY SALAH TIMETABLE PDF
+// =========================
+async function downloadMonthlySalahTimetablePDF(){
+  closeMonthlySalahTimetableActions();
+  await generateMonthlySalahTimetable("pdf");
+}
+
+// =========================
+// GENERATE MONTHLY SALAH TIMETABLE
+// =========================
+async function generateMonthlySalahTimetable(actionType){
+  try{
+       let location = getMonthlySalahTimetableActiveLocation();
+    let settings = getMonthlySalahTimetableEffectiveSettings();
+
+    if(!location || !location.latitude || !location.longitude){
+      alert("Location not found. Please open Salah page first and make sure your location is loaded.");
+      return;
+    }
+
+    let now = new Date();
+    let month = now.getMonth() + 1;
+    let year = now.getFullYear();
+
+    let baseData = await fetchMonthlySalahCalendarFromUrl(month, year);
+
+    let useFajr18Override =
+      settings.resolvedMethod === "isna" &&
+      settings.fajr18Enabled;
+
+    if(useFajr18Override){
+      let fajrOverrideData = await fetchMonthlySalahCalendarFromUrl(month, year, 13);
+
+      if(Array.isArray(baseData) && Array.isArray(fajrOverrideData)){
+        for(let i = 0; i < baseData.length; i++){
+          if(
+            baseData[i] &&
+            fajrOverrideData[i] &&
+            baseData[i].timings &&
+            fajrOverrideData[i].timings
+          ){
+            baseData[i].timings.Fajr = fajrOverrideData[i].timings.Fajr;
+          }
+        }
+      }
+    }
+
+    buildMonthlySalahPrintTable(baseData, location.label || getMonthlySalahTimetableCityName(), now);
+
+           if(actionType === "printview"){
+      openMonthlySalahPrintPreviewPage();
+    }else{
+      openMonthlySalahPrintPreviewPage();
+    }
+
+  }catch(error){
+    console.error("Monthly Salah timetable error:", error);
+    alert("Could not generate monthly Salah timetable. Please try again.");
+  }
+}
+
+// =========================
+// GET MONTHLY SALAH TIMETABLE STATE
+// =========================
+async function getMonthlySalahTimetableState(){
+
+  let cityName = getMonthlySalahTimetableCityName();
+
+  let latitude = null;
+  let longitude = null;
+
+  // -------------------------
+  // LOCATION: CURRENT GPS
+  // -------------------------
+  if(
+    salahSource === "location" &&
+    typeof salahLocationData !== "undefined" &&
+    salahLocationData &&
+    salahLocationData.lat &&
+    salahLocationData.lon
+  ){
+    latitude = salahLocationData.lat;
+    longitude = salahLocationData.lon;
+    cityName = salahLocationData.city || cityName;
+  }
+
+  // -------------------------
+  // LOCATION: SAVED LOCATION
+  // -------------------------
+  else if(salahSource === "masjid"){
+    let picked = getSelectedSavedSalahLocation();
+    if(picked && picked.lat && picked.lon){
+      latitude = picked.lat;
+      longitude = picked.lon;
+      cityName = picked.name || cityName;
+    }
+  }
+
+  // -------------------------
+  // LOCATION: ENTERED LOCATION
+  // -------------------------
+  else if(
+    salahSource === "entered" &&
+    typeof salahEnteredLocation !== "undefined" &&
+    salahEnteredLocation &&
+    salahEnteredLocation.lat &&
+    salahEnteredLocation.lon
+  ){
+    latitude = salahEnteredLocation.lat;
+    longitude = salahEnteredLocation.lon;
+    cityName = salahEnteredLocation.locationName || cityName;
+  }
+
+  latitude = Number(latitude);
+  longitude = Number(longitude);
+
+  // -------------------------
+  // CALCULATION METHOD
+  // -------------------------
+  let savedMethod = localStorage.getItem("salahCalculationMethod") || "auto";
+  let resolvedMethod = getResolvedCalculationMethod(cityName);
+
+  if(savedMethod === "auto"){
+    resolvedMethod = getResolvedCalculationMethod(cityName);
+  }else{
+    resolvedMethod = savedMethod;
+  }
+
+  let methodNumber = getAladhanMethodNumber(cityName);
+
+  // -------------------------
+  // ASR METHOD
+  // -------------------------
+  let schoolNumber = getAsrMethod() === "hanafi" ? 1 : 0;
+
+  // -------------------------
+  // FAJR 18 OVERRIDE
+  // ONLY FOR ISNA + TOGGLE ON
+  // -------------------------
+  let useFajr18Override =
+    resolvedMethod === "isna" &&
+    getIsnaFajr18Enabled();
+
+  return {
+    cityName: cityName,
+    latitude: latitude,
+    longitude: longitude,
+    methodNumber: methodNumber,
+    schoolNumber: schoolNumber,
+    useFajr18Override: useFajr18Override
+  };
+}
+
+// =========================
+// CHECK FAJR 18 OVERRIDE
+// =========================
+function isFajr18OverrideEnabled(){
+  let possibleValues = [
+    localStorage.getItem("fajr18Toggle"),
+    localStorage.getItem("useFajr18"),
+    localStorage.getItem("useFajr18Override"),
+    localStorage.getItem("fajr18Override")
+  ];
+
+  for(let i = 0; i < possibleValues.length; i++){
+    let value = (possibleValues[i] || "").toString().trim().toLowerCase();
+    if(value === "true" || value === "1" || value === "yes" || value === "on"){
+      return true;
+    }
+  }
+
+  return false;
+}
+
+// =========================
+// GET MONTHLY SALAH CITY NAME
+// =========================
+function getMonthlySalahTimetableCityName(){
+  let cityFromUi = document.getElementById("salahCityName");
+  if(cityFromUi && cityFromUi.textContent.trim()){
+    return cityFromUi.textContent.trim();
+  }
+
+  return (
+    localStorage.getItem("salahCityName") ||
+    localStorage.getItem("savedLocationName") ||
+    "Current Location"
+  );
+}
+
+// =========================
+// FETCH MONTHLY SALAH CALENDAR
+// =========================
+async function fetchMonthlySalahCalendar(options){
+  let url =
+    "https://api.aladhan.com/v1/calendar?" +
+    "latitude=" + encodeURIComponent(options.latitude) +
+    "&longitude=" + encodeURIComponent(options.longitude) +
+    "&method=" + encodeURIComponent(options.method) +
+    "&school=" + encodeURIComponent(options.school) +
+    "&month=" + encodeURIComponent(options.month) +
+    "&year=" + encodeURIComponent(options.year) +
+    "&t=" + Date.now();
+
+  let response = await fetch(url, {
+    method: "GET",
+    cache: "no-store"
+  });
+
+  let data = await response.json();
+
+  if(!data || !data.data || !Array.isArray(data.data)){
+    throw new Error("Monthly timetable data not found");
+  }
+
+  return data.data;
+}
+
+// =========================
+// BUILD MONTHLY PRINT TABLE
+// =========================
+function buildMonthlySalahPrintTable(monthData, cityName, nowDate){
+  let cityEl = document.getElementById("monthlySalahPrintCity");
+  let monthEl = document.getElementById("monthlySalahPrintMonth");
+  let tbody = document.getElementById("monthlySalahPrintTableBody");
+
+  if(!tbody) return;
+
+  if(cityEl){
+    cityEl.textContent = cityName;
+  }
+
+  if(monthEl){
+    monthEl.textContent = nowDate.toLocaleDateString("en-US", {
+      month: "long",
+      year: "numeric"
+    });
+  }
+
+  tbody.innerHTML = "";
+
+  monthData.forEach(function(dayItem, index){
+    let timings = dayItem.timings || {};
+    let gregorian = dayItem.date && dayItem.date.gregorian ? dayItem.date.gregorian : {};
+    let hijri = dayItem.date && dayItem.date.hijri ? dayItem.date.hijri : {};
+    let previousHijri = index > 0 && monthData[index - 1] && monthData[index - 1].date && monthData[index - 1].date.hijri
+      ? monthData[index - 1].date.hijri
+      : null;
+
+    let row = document.createElement("tr");
+
+    if(index % 2 === 0){
+      row.style.background = "#fafafa";
+    }else{
+      row.style.background = "#ffffff";
+    }
+
+       row.innerHTML = `
+      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;width:9%;">${escapeHtml(getShortWeekdayName(gregorian.date))}</td>
+      <td style="border:1px solid #999;padding:5px 3px;text-align:center;font-size:10px;white-space:normal;line-height:1.15;width:14%;">${formatIslamicDateForTable(hijri, previousHijri)}</td>
+      <td style="border:1px solid #999;padding:5px 3px;text-align:center;font-size:10px;white-space:nowrap;width:10%;">${escapeHtml(formatGregorianDateForTable(gregorian.date))}</td>
+      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;">${escapeHtml(cleanSalahTime(timings.Fajr))}</td>
+      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;">${escapeHtml(cleanSalahTime(timings.Sunrise))}</td>
+      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;">${escapeHtml(cleanSalahTime(timings.Dhuhr))}</td>
+      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;">${escapeHtml(cleanSalahTime(timings.Asr))}</td>
+      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;">${escapeHtml(cleanSalahTime(timings.Maghrib))}</td>
+      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;">${escapeHtml(cleanSalahTime(timings.Isha))}</td>
+    `;
+
+    tbody.appendChild(row);
+  });
+}
+
+// =========================
+// OPEN MONTHLY PRINT WINDOW
+// =========================
+function openMonthlySalahPrintPreviewPage(){
+  let printArea = document.getElementById("monthlySalahPrintArea");
+  if(!printArea) return;
+
+  let previewWindow = window.open("", "_blank");
+
+  if(!previewWindow){
+    alert("Popup blocked. Please allow popups and try again.");
+    return;
+  }
+
+  previewWindow.document.write(`
+    <html>
+      <head>
+        <title>Monthly Salah Timetable</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+          body{
+            margin:0;
+            padding:12px 12px 28px 12px;
+            font-family:Arial,sans-serif;
+            color:#111;
+            background:#e9e9ee;
+            -webkit-text-size-adjust:100%;
+            text-size-adjust:100%;
+          }
+
+          .topBar{
+            max-width:210mm;
+            margin:0 auto 10px auto;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:10px;
+            flex-wrap:wrap;
+          }
+
+          .leftBtns,
+          .rightBtns{
+            display:flex;
+            align-items:center;
+            gap:8px;
+          }
+
+          .topTitle{
+            font-size:17px;
+            font-weight:700;
+            color:#111;
+            flex:1;
+            text-align:center;
+          }
+
+          .actionBtn{
+            border:none;
+            border-radius:14px;
+            background:#111;
+            color:white;
+            padding:11px 15px;
+            font-size:15px;
+            font-weight:700;
+            cursor:pointer;
+          }
+
+          .backBtn{
+            border:none;
+            border-radius:14px;
+            background:#dcdce3;
+            color:#111;
+            padding:11px 15px;
+            font-size:15px;
+            font-weight:700;
+            cursor:pointer;
+          }
+
+          .page{
+            width:100%;
+            max-width:190mm;
+            min-height:287mm;
+            margin:0 auto;
+            background:white;
+            padding:5mm 6mm 8mm 6mm;
+            box-sizing:border-box;
+            box-shadow:0 10px 30px rgba(0,0,0,0.10);
+            border-radius:18px;
+          }
+
+          /* =========================
+             DESKTOP PREVIEW FORCE FIX
+          ========================= */
+          .page #monthlySalahPrintCity{
+            font-size:24px !important;
+            font-weight:700 !important;
+            margin-bottom:3px !important;
+            line-height:1.15 !important;
+          }
+
+          .page #monthlySalahPrintMonth{
+            font-size:16px !important;
+            color:#444 !important;
+            font-weight:600 !important;
+            line-height:1.15 !important;
+          }
+
+          .page #monthlySalahPrintTable{
+            width:100% !important;
+            border-collapse:collapse !important;
+            table-layout:auto !important;
+            font-size:11px !important;
+            text-align:center !important;
+          }
+
+          .page #monthlySalahPrintTable th{
+            background:#222 !important;
+            color:white !important;
+            border:1px solid #666 !important;
+            padding:5px 2px !important;
+            font-size:10px !important;
+            white-space:nowrap !important;
+          }
+
+          .page #monthlySalahPrintTable td{
+            border:1px solid #999 !important;
+            padding:5px 2px !important;
+            text-align:center !important;
+            font-size:10px !important;
+            white-space:nowrap !important;
+          }
+
+          /* =========================
+             MOBILE ONLY MONTHLY PRINT PREVIEW FIX
+          ========================= */
+          @media screen and (max-width: 768px){
+            body{
+              padding:12px 12px 20px 12px;
+            }
+
+            .page{
+              max-width:186mm;
+              min-height:auto;
+              padding:4mm 4mm 5mm 4mm;
+              overflow-x:auto;
+              -webkit-overflow-scrolling:touch;
+            }
+
+            .page #monthlySalahPrintCity{
+              font-size:22px !important;
+            }
+
+            .page #monthlySalahPrintMonth{
+              font-size:15px !important;
+            }
+
+            .page #monthlySalahPrintTable{
+              font-size:10px !important;
+            }
+
+            .page #monthlySalahPrintTable th{
+              padding:4px 1px !important;
+              font-size:9px !important;
+            }
+
+            .page #monthlySalahPrintTable td{
+              padding:4px 1px !important;
+              font-size:9px !important;
+            }
+          }
+
+                   @media print{
+            html, body{
+              width:210mm;
+              margin:0;
+              padding:0;
+              background:white;
+              -webkit-text-size-adjust:100%;
+              text-size-adjust:100%;
+              -webkit-print-color-adjust:exact;
+              print-color-adjust:exact;
+            }
+
+            .topBar{
+              display:none !important;
+            }
+
+            .page{
+              width:194mm;
+              max-width:194mm;
+              min-height:auto;
+              margin:0 auto;
+              box-shadow:none;
+              border-radius:0;
+              background:white;
+              padding:5mm 6mm 8mm 6mm;
+              box-sizing:border-box;
+              overflow:visible;
+            }
+
+            @page{
+              size:A4 portrait;
+              margin:8mm;
+            }
+          }
+          @media print and (max-width: 768px){
+            .page{
+              width:100%;
+              padding:4mm 4mm 5mm 4mm;
+            }
+
+            @page{
+              size:A4 portrait;
+              margin:5mm;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <div class="topBar">
+          <div class="leftBtns">
+            <button class="backBtn" onclick="window.close()">← Back</button>
+          </div>
+
+          <div class="topTitle">Monthly Salah Timetable</div>
+
+          <div class="rightBtns">
+            <button class="actionBtn" onclick="window.print()">Print</button>
+          </div>
+        </div>
+
+        <div class="page">
+          ${printArea.innerHTML}
+        </div>
+      </body>
+    </html>
+  `);
+
+  previewWindow.document.close();
+}
+  
+// =========================
+// SAVE MONTHLY TIMETABLE PDF
+// =========================
+async function saveMonthlySalahTimetablePDF(cityName, nowDate){
+  let printArea = document.getElementById("monthlySalahPrintArea");
+  if(!printArea) return;
+
+  let monthLabel = nowDate.toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric"
+  }).replace(/\s+/g, "-");
+
+  let fileName = cityName + "-" + monthLabel + "-Salah-Timetable.pdf";
+
+
+
+  
+  // -------------------------
+  // MAKE TEMP CLONE FOR PDF
+  // -------------------------
+  let cloneWrap = document.createElement("div");
+  cloneWrap.style.position = "fixed";
+  cloneWrap.style.left = "-10000px";
+  cloneWrap.style.top = "0";
+  cloneWrap.style.width = "190mm";
+  cloneWrap.style.background = "#ffffff";
+  cloneWrap.style.padding = "0";
+  cloneWrap.style.margin = "0";
+  cloneWrap.style.opacity = "1";
+  cloneWrap.style.pointerEvents = "none";
+  cloneWrap.style.zIndex = "99999";
+
+  let clone = printArea.cloneNode(true);
+  clone.style.position = "static";
+  clone.style.left = "auto";
+  clone.style.top = "auto";
+  clone.style.width = "190mm";
+  clone.style.opacity = "1";
+  clone.style.pointerEvents = "none";
+  clone.style.zIndex = "auto";
+  clone.style.display = "block";
+  clone.style.background = "#ffffff";
+
+  cloneWrap.appendChild(clone);
+  document.body.appendChild(cloneWrap);
+
+  await new Promise(function(resolve){
+    setTimeout(resolve, 300);
+  });
+
+  let options = {
+    margin: [8, 8, 8, 8],
+    filename: fileName,
+    image: { type: "jpeg", quality: 0.98 },
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff"
+    },
+    jsPDF: {
+      unit: "mm",
+      format: "a4",
+      orientation: "portrait"
+    },
+    pagebreak: { mode: ["avoid-all", "css", "legacy"] }
+  };
+
+  try{
+    await html2pdf().set(options).from(clone).save();
+  }finally{
+    cloneWrap.remove();
+  }
+}
+
+
+async function openMonthlySalahTimetablePDFPreview(cityName, nowDate){
+  let printArea = document.getElementById("monthlySalahPrintArea");
+  if(!printArea) return;
+
+  let monthLabel = nowDate.toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric"
+  }).replace(/\s+/g, "-");
+
+  let fileName = cityName + "-" + monthLabel + "-Salah-Timetable.pdf";
+
+  let cloneWrap = document.createElement("div");
+  cloneWrap.style.position = "fixed";
+  cloneWrap.style.left = "-10000px";
+  cloneWrap.style.top = "0";
+  cloneWrap.style.width = "190mm";
+  cloneWrap.style.minHeight = "277mm";
+  cloneWrap.style.background = "#ffffff";
+  cloneWrap.style.padding = "0";
+  cloneWrap.style.margin = "0";
+  cloneWrap.style.opacity = "1";
+  cloneWrap.style.pointerEvents = "none";
+  cloneWrap.style.zIndex = "99999";
+
+  let clone = printArea.cloneNode(true);
+  clone.style.position = "static";
+  clone.style.left = "auto";
+  clone.style.top = "auto";
+  clone.style.width = "190mm";
+  clone.style.minHeight = "277mm";
+  clone.style.opacity = "1";
+  clone.style.pointerEvents = "none";
+  clone.style.zIndex = "auto";
+  clone.style.display = "block";
+  clone.style.background = "#ffffff";
+
+  cloneWrap.appendChild(clone);
+  document.body.appendChild(cloneWrap);
+
+  await new Promise(function(resolve){
+    setTimeout(resolve, 300);
+  });
+
+  let options = {
+    margin: [8, 8, 8, 8],
+    filename: fileName,
+    image: { type: "jpeg", quality: 0.98 },
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff"
+    },
+    jsPDF: {
+      unit: "mm",
+      format: "a4",
+      orientation: "portrait"
+    },
+    pagebreak: { mode: ["avoid-all", "css", "legacy"] }
+  };
+
+  try{
+    let pdfBlob = await html2pdf().set(options).from(clone).outputPdf("blob");
+    let pdfUrl = URL.createObjectURL(pdfBlob);
+    window.open(pdfUrl, "_blank");
+
+    setTimeout(function(){
+      URL.revokeObjectURL(pdfUrl);
+    }, 60000);
+  }finally{
+    cloneWrap.remove();
+  }
+}
+  
+  
+// =========================
+// CLEAN SALAH TIME
+// =========================
+function cleanSalahTime(timeValue){
+  if(!timeValue) return "-";
+
+  let cleaned = String(timeValue).replace(/\s*\(.+?\)\s*/g, "").trim();
+
+  if(typeof to12Hour === "function"){
+    return to12Hour(cleaned);
+  }
+
+  return cleaned;
+}
+
+// =========================
+// FORMAT ISLAMIC DATE FOR TABLE
+// =========================
+function formatIslamicDateForTable(hijri, previousHijri){
+  if(!hijri) return "-";
+
+  let day = hijri.day || "";
+  let month = hijri.month && hijri.month.en ? hijri.month.en : "";
+  let prevMonth = previousHijri && previousHijri.month && previousHijri.month.en ? previousHijri.month.en : "";
+
+  if(day === "1" || month !== prevMonth){
+    return day + "<br><span style='font-size:8px;font-weight:600;line-height:1.1;display:block;margin-top:1px;'>" + month + "</span>";
+  }
+
+  return day;
+}
+
+// =========================
+// FORMAT GREGORIAN DATE FOR TABLE
+// =========================
+function formatGregorianDateForTable(dateString){
+  if(!dateString) return "-";
+
+  let parts = dateString.split("-");
+  if(parts.length !== 3) return dateString;
+
+  return parts[0];
+}
+
+// =========================
+// GET SHORT WEEKDAY NAME
+// =========================
+function getShortWeekdayName(dateString){
+  if(!dateString) return "-";
+
+  let parts = dateString.split("-");
+  if(parts.length !== 3) return "-";
+
+  let jsDate = new Date(parts[2], Number(parts[1]) - 1, parts[0]);
+
+  return jsDate.toLocaleDateString("en-US", { weekday: "short" });
+}
+
+// =========================
+// ESCAPE HTML
+// =========================
+function escapeHtml(value){
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+// =========================
+// CITY NAME FOR FILE
+// =========================
+function cityNameForFile(cityName){
+  return String(cityName || "Location")
+    .replace(/[\\/:*?"<>|]+/g, "")
+    .replace(/\s+/g, "-")
+    .trim();
+}
   
 // =========================
 // OPEN APP SETTINGS PAGE
@@ -10180,6 +11157,72 @@ gap:12px;
             <div id="asrCheckShafi" style="font-size:28px;font-weight:900;color:#111;opacity:0;">✓</div>
           </button>
 
+               </div>
+      </div>
+
+      <!-- =========================
+           MONTHLY SALAH TIMETABLE CARD
+      ========================= -->
+      <div onclick="openMonthlySalahTimetableActions()" style="
+      background:white;
+      border-radius:22px;
+      padding:16px 18px;
+      margin-top:12px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.08);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      cursor:pointer;
+      -webkit-tap-highlight-color:transparent;
+      ">
+        <div onclick="openMonthlyPrintFromSettings()" style="
+display:flex;
+align-items:center;
+gap:12px;
+cursor:pointer;
+">
+         
+          <div>
+            <div style="
+            font-size:17px;
+            font-weight:800;
+            color:#111;
+            line-height:1.2;
+            ">
+              Open Print View
+            </div>
+          
+          <div style="
+          width:42px;
+          height:42px;
+          border-radius:14px;
+          background:#f4f4f8;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          font-size:20px;
+          ">
+            🖨️
+          </div>
+
+          
+          <div style="
+font-size:13px;
+color:#666;
+margin-top:4px;
+font-weight:600;
+">
+  Monthly timetable for print or PDF
+</div>
+          </div>
+        </div>
+
+        <div style="
+        font-size:18px;
+        color:#999;
+        font-weight:700;
+        ">
+          ›
         </div>
       </div>
 
@@ -10316,7 +11359,160 @@ z-index:10030;
   </div>
 </div>
 
+<!-- =========================
+     MONTHLY SALAH TIMETABLE ACTION SHEET
+========================= -->
+<div id="monthlySalahActionsOverlay" onclick="closeMonthlySalahTimetableActions()" style="
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.30);
+z-index:9998;
+"></div>
 
+<div id="monthlySalahActionsSheet" style="
+display:none;
+position:fixed;
+left:12px;
+right:12px;
+bottom:96px;
+background:#f7f7fb;
+border-radius:28px;
+padding:14px;
+box-shadow:0 18px 40px rgba(0,0,0,0.20);
+z-index:9999;
+transform:translateY(30px);
+opacity:0;
+transition:all 0.25s ease;
+">
+
+  <div style="
+  text-align:center;
+  font-size:17px;
+  font-weight:700;
+  color:#111;
+  margin-bottom:6px;
+  ">
+    Monthly Salah Timetable
+  </div>
+
+  <div id="monthlySalahActionSubtitle" style="
+  text-align:center;
+  font-size:13px;
+  color:#666;
+  margin-bottom:14px;
+  ">
+    Print or save this month as PDF
+  </div>
+
+  <button onclick="printMonthlySalahTimetable()" style="
+  width:100%;
+  border:none;
+  border-radius:18px;
+  background:white;
+  padding:16px;
+  font-size:16px;
+  font-weight:700;
+  color:#111;
+  box-shadow:0 4px 14px rgba(0,0,0,0.06);
+  margin-bottom:10px;
+  cursor:pointer;
+  ">
+    📄 Open PDF
+  </button>
+
+ 
+
+  <button onclick="closeMonthlySalahTimetableActions()" style="
+  width:100%;
+  border:none;
+  border-radius:18px;
+  background:#ececf2;
+  padding:15px;
+  font-size:16px;
+  font-weight:700;
+  color:#444;
+  cursor:pointer;
+  ">
+    Cancel
+  </button>
+</div>
+
+<!-- =========================
+     MONTHLY SALAH HIDDEN PRINT AREA
+========================= -->
+<div id="monthlySalahPrintArea" style="
+position:fixed;
+left:0;
+top:0;
+width:100%;
+max-width:190mm;
+min-height:287mm;
+margin:0 auto;
+background:white;
+padding:5mm 6mm 8mm 6mm;
+box-sizing:border-box;
+color:#111;
+font-family:Arial, sans-serif;
+opacity:0;
+pointer-events:none;
+z-index:-1;
+overflow-x:auto;
+overflow-y:hidden;
+-webkit-overflow-scrolling:touch;
+">
+  <div id="monthlySalahPrintHeader" style="text-align:center;margin-bottom:8px;">
+  <div id="monthlySalahPrintCity" style="
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:3px;
+    line-height:1.15;
+    ">
+      City Name
+    </div>
+
+   <div id="monthlySalahPrintMonth" style="
+    font-size:16px;
+    color:#444;
+    font-weight:600;
+    line-height:1.15;
+    ">
+      Month Year
+    </div>
+  </div>
+
+<table id="monthlySalahPrintTable" style="
+width:100%;
+border-collapse:collapse;
+table-layout:auto;
+font-size:11px;
+text-align:center;
+">
+    <thead>
+      <tr style="background:#222;color:white;">
+        <th style="border:1px solid #666;padding:5px 2px;font-size:10px;white-space:nowrap;">Day</th>
+        <th style="border:1px solid #666;padding:5px 2px;font-size:10px;white-space:nowrap;">Hijri</th>
+        <th style="border:1px solid #666;padding:5px 2px;font-size:10px;white-space:nowrap;">Date</th>
+        <th style="border:1px solid #666;padding:5px 2px;font-size:10px;white-space:nowrap;">Fajr</th>
+        <th style="border:1px solid #666;padding:5px 2px;font-size:10px;white-space:nowrap;">Sunrise</th>
+        <th style="border:1px solid #666;padding:5px 2px;font-size:10px;white-space:nowrap;">Dhuhr</th>
+        <th style="border:1px solid #666;padding:5px 2px;font-size:10px;white-space:nowrap;">Asr</th>
+        <th style="border:1px solid #666;padding:5px 2px;font-size:10px;white-space:nowrap;">Maghrib</th>
+        <th style="border:1px solid #666;padding:5px 2px;font-size:10px;white-space:nowrap;">Isha</th>
+      </tr>
+    </thead>
+    <tbody id="monthlySalahPrintTableBody"></tbody>
+  </table>
+</div>
+
+
+
+  <!-- =========================
+     HTML TO PDF LIBRARY
+========================= -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  
 
 </body>
 </html>
