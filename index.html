@@ -1829,6 +1829,134 @@ Backup file ready. Save it in your Ibadah folder.
 <input type="file" id="backupFileInput" accept=".json" style="display:none;" onchange="handleImportFile(event)">
 
 
+  <!-- =========================
+     MONTH YEAR PICKER OVERLAY
+========================= -->
+<div id="monthlySalahMonthYearOverlay" onclick="closeMonthlySalahMonthYearPicker()" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:rgba(0,0,0,0.35);
+backdrop-filter:blur(6px);
+-webkit-backdrop-filter:blur(6px);
+z-index:12000;
+align-items:flex-end;
+justify-content:center;
+padding:14px;
+box-sizing:border-box;
+">
+
+  <div onclick="event.stopPropagation()" style="
+  width:100%;
+  max-width:460px;
+  background:#f7f7fa;
+  border-radius:28px;
+  padding:18px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.22);
+  ">
+
+    <div style="
+    font-size:24px;
+    font-weight:800;
+    color:#111;
+    margin-bottom:16px;
+    text-align:center;
+    ">
+      Select Month
+    </div>
+
+    <div style="
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-bottom:14px;
+    ">
+      <div>
+        <div style="
+        font-size:14px;
+        font-weight:700;
+        color:#666;
+        margin-bottom:8px;
+        ">
+          Month
+        </div>
+
+        <select id="monthlySalahMonthSelect" style="
+        width:100%;
+        padding:16px 14px;
+        border:none;
+        border-radius:18px;
+        background:white;
+        font-size:17px;
+        font-weight:700;
+        color:#111;
+        box-shadow:0 6px 18px rgba(0,0,0,0.08);
+        outline:none;
+        ">
+        </select>
+      </div>
+
+      <div>
+        <div style="
+        font-size:14px;
+        font-weight:700;
+        color:#666;
+        margin-bottom:8px;
+        ">
+          Year
+        </div>
+
+        <select id="monthlySalahYearSelect" style="
+        width:100%;
+        padding:16px 14px;
+        border:none;
+        border-radius:18px;
+        background:white;
+        font-size:17px;
+        font-weight:700;
+        color:#111;
+        box-shadow:0 6px 18px rgba(0,0,0,0.08);
+        outline:none;
+        ">
+        </select>
+      </div>
+    </div>
+
+    <button onclick="saveMonthlySalahMonthYearPicker()" style="
+    width:100%;
+    padding:18px;
+    border:none;
+    border-radius:22px;
+    background:#111;
+    color:white;
+    font-size:20px;
+    font-weight:800;
+    margin-bottom:10px;
+    cursor:pointer;
+    ">
+      Done
+    </button>
+
+    <button onclick="closeMonthlySalahMonthYearPicker()" style="
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:22px;
+    background:#e9e9ee;
+    color:#666;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+    ">
+      Cancel
+    </button>
+
+  </div>
+</div>
+
 
   
   
@@ -7622,25 +7750,158 @@ async function fetchMonthlySalahCalendarFromUrl(month, year, overrideMethod){
 // =========================
 
 // =========================
+// MONTHLY TIMETABLE SELECTED DATE HELPERS
+// =========================
+function getMonthlySalahSelectedMonthYear(){
+  let now = new Date();
+
+  let savedMonth = Number(window.monthlySalahSelectedMonth);
+  let savedYear = Number(window.monthlySalahSelectedYear);
+
+  if(!savedMonth || savedMonth < 1 || savedMonth > 12){
+    savedMonth = now.getMonth() + 1;
+  }
+
+  if(!savedYear || savedYear < 2000 || savedYear > 2100){
+    savedYear = now.getFullYear();
+  }
+
+  return {
+    month: savedMonth,
+    year: savedYear
+  };
+}
+
+// =========================
+// SET MONTHLY SALAH SELECTED MONTH YEAR
+// =========================
+function setMonthlySalahSelectedMonthYear(month, year){
+  window.monthlySalahSelectedMonth = Number(month);
+  window.monthlySalahSelectedYear = Number(year);
+}
+
+// =========================
+// RESET MONTHLY SALAH SELECTED MONTH YEAR
+// =========================
+function resetMonthlySalahSelectedMonthYear(){
+  window.monthlySalahSelectedMonth = null;
+  window.monthlySalahSelectedYear = null;
+}
+
+
+  
+// =========================
+// GET MONTHLY SALAH MONTH LABEL
+// =========================
+function getMonthlySalahSelectedMonthYearLabel(){
+  let selected = getMonthlySalahSelectedMonthYear();
+
+  let tempDate = new Date(selected.year, selected.month - 1, 1);
+
+  return tempDate.toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric"
+  });
+}
+
+// =========================
+// UPDATE MONTHLY SALAH ACTION SHEET LABELS
+// =========================
+function updateMonthlySalahActionSheetLabels(){
+  let subtitle = document.getElementById("monthlySalahActionSubtitle");
+  let monthValue = document.getElementById("monthlySalahSelectedMonthValue");
+
+  let cityName = getMonthlySalahTimetableCityName();
+  let monthYear = getMonthlySalahSelectedMonthYearLabel();
+
+  if(subtitle){
+    subtitle.textContent = cityName + " • " + monthYear;
+  }
+
+  if(monthValue){
+    monthValue.textContent = monthYear;
+  }
+}
+
+// =========================
+// OPEN MONTH YEAR PICKER
+// =========================
+function openMonthlySalahMonthYearPicker(){
+  let overlay = document.getElementById("monthlySalahMonthYearOverlay");
+  let monthSelect = document.getElementById("monthlySalahMonthSelect");
+  let yearSelect = document.getElementById("monthlySalahYearSelect");
+
+  if(!overlay || !monthSelect || !yearSelect) return;
+
+  let selected = getMonthlySalahSelectedMonthYear();
+  let now = new Date();
+  let currentYear = now.getFullYear();
+
+  monthSelect.innerHTML = `
+    <option value="1">January</option>
+    <option value="2">February</option>
+    <option value="3">March</option>
+    <option value="4">April</option>
+    <option value="5">May</option>
+    <option value="6">June</option>
+    <option value="7">July</option>
+    <option value="8">August</option>
+    <option value="9">September</option>
+    <option value="10">October</option>
+    <option value="11">November</option>
+    <option value="12">December</option>
+  `;
+
+  let yearHtml = "";
+  for(let y = currentYear - 3; y <= currentYear + 5; y++){
+    yearHtml += `<option value="${y}">${y}</option>`;
+  }
+  yearSelect.innerHTML = yearHtml;
+
+  monthSelect.value = String(selected.month);
+  yearSelect.value = String(selected.year);
+
+  overlay.style.display = "flex";
+}
+
+// =========================
+// CLOSE MONTH YEAR PICKER
+// =========================
+function closeMonthlySalahMonthYearPicker(){
+  let overlay = document.getElementById("monthlySalahMonthYearOverlay");
+  if(!overlay) return;
+  overlay.style.display = "none";
+}
+
+// =========================
+// SAVE MONTH YEAR PICKER
+// =========================
+function saveMonthlySalahMonthYearPicker(){
+  let monthSelect = document.getElementById("monthlySalahMonthSelect");
+  let yearSelect = document.getElementById("monthlySalahYearSelect");
+
+  if(!monthSelect || !yearSelect) return;
+
+  let month = parseInt(monthSelect.value, 10);
+  let year = parseInt(yearSelect.value, 10);
+
+  setMonthlySalahSelectedMonthYear(month, year);
+  updateMonthlySalahActionSheetLabels();
+  closeMonthlySalahMonthYearPicker();
+}
+
+  
+// =========================
 // OPEN MONTHLY TIMETABLE ACTION SHEET
 // =========================
 function openMonthlySalahTimetableActions(){
   let overlay = document.getElementById("monthlySalahActionsOverlay");
   let sheet = document.getElementById("monthlySalahActionsSheet");
-  let subtitle = document.getElementById("monthlySalahActionSubtitle");
 
   if(!overlay || !sheet) return;
 
-  let cityName = getMonthlySalahTimetableCityName();
-  let now = new Date();
-  let monthYear = now.toLocaleDateString("en-US", {
-    month: "long",
-    year: "numeric"
-  });
-
-  if(subtitle){
-    subtitle.textContent = cityName + " • " + monthYear;
-  }
+  resetMonthlySalahSelectedMonthYear();
+  updateMonthlySalahActionSheetLabels();
 
   overlay.style.display = "block";
   sheet.style.display = "block";
@@ -7650,7 +7911,6 @@ function openMonthlySalahTimetableActions(){
     sheet.style.transform = "translateY(0)";
   },10);
 }
-
 // =========================
 // CLOSE MONTHLY TIMETABLE ACTION SHEET
 // =========================
@@ -7714,12 +7974,12 @@ async function generateMonthlySalahTimetable(actionType){
       return;
     }
 
-    let now = new Date();
-    let month = now.getMonth() + 1;
-    let year = now.getFullYear();
+           let selected = getMonthlySalahSelectedMonthYear();
+    let selectedDate = new Date(selected.year, selected.month - 1, 1);
+    let month = selected.month;
+    let year = selected.year;
 
     let baseData = await fetchMonthlySalahCalendarFromUrl(month, year);
-
     let useFajr18Override =
       settings.resolvedMethod === "isna" &&
       settings.fajr18Enabled;
@@ -7741,7 +8001,7 @@ async function generateMonthlySalahTimetable(actionType){
       }
     }
 
-    buildMonthlySalahPrintTable(baseData, location.label || getMonthlySalahTimetableCityName(), now);
+     buildMonthlySalahPrintTable(baseData, location.label || getMonthlySalahTimetableCityName(), selectedDate);
 
            if(actionType === "printview"){
       openMonthlySalahPrintPreviewPage();
@@ -7935,7 +8195,7 @@ function buildMonthlySalahPrintTable(monthData, cityName, nowDate){
 
   tbody.innerHTML = "";
 
-  monthData.forEach(function(dayItem, index){
+    monthData.forEach(function(dayItem, index){
     let timings = dayItem.timings || {};
     let gregorian = dayItem.date && dayItem.date.gregorian ? dayItem.date.gregorian : {};
     let hijri = dayItem.date && dayItem.date.hijri ? dayItem.date.hijri : {};
@@ -7951,22 +8211,73 @@ function buildMonthlySalahPrintTable(monthData, cityName, nowDate){
       row.style.background = "#ffffff";
     }
 
-       row.innerHTML = `
-      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;width:9%;">${escapeHtml(getShortWeekdayName(gregorian.date))}</td>
-      <td style="border:1px solid #999;padding:5px 3px;text-align:center;font-size:10px;white-space:normal;line-height:1.15;width:14%;">${formatIslamicDateForTable(hijri, previousHijri)}</td>
-      <td style="border:1px solid #999;padding:5px 3px;text-align:center;font-size:10px;white-space:nowrap;width:10%;">${escapeHtml(formatGregorianDateForTable(gregorian.date))}</td>
-      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;">${escapeHtml(cleanSalahTime(timings.Fajr))}</td>
-      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;">${escapeHtml(cleanSalahTime(timings.Sunrise))}</td>
-      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;">${escapeHtml(cleanSalahTime(timings.Dhuhr))}</td>
-      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;">${escapeHtml(cleanSalahTime(timings.Asr))}</td>
-      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;">${escapeHtml(cleanSalahTime(timings.Maghrib))}</td>
-      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;">${escapeHtml(cleanSalahTime(timings.Isha))}</td>
+   row.innerHTML = `
+      <td style="border:1px solid #999;padding:5px 4px;text-align:center;font-size:10px;white-space:nowrap;width:15%;">${escapeHtml(getShortWeekdayName(gregorian.date))}</td>
+      <td style="border:1px solid #999;padding:5px 3px;text-align:center;font-size:10px;white-space:normal;line-height:1.15;width:12%;">${formatIslamicDateForTable(hijri, previousHijri)}</td>
+      <td style="border:1px solid #999;padding:5px 3px;text-align:center;font-size:10px;white-space:nowrap;width:12%;">${escapeHtml(formatGregorianDateForTable(gregorian.date))}</td>
+      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;width:10.16%;">${escapeHtml(cleanSalahTime(timings.Fajr))}</td>
+      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;width:10.16%;">${escapeHtml(cleanSalahTime(timings.Sunrise))}</td>
+      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;width:10.16%;">${escapeHtml(cleanSalahTime(timings.Dhuhr))}</td>
+      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;width:10.16%;">${escapeHtml(cleanSalahTime(timings.Asr))}</td>
+      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;width:10.16%;">${escapeHtml(cleanSalahTime(timings.Maghrib))}</td>
+      <td style="border:1px solid #999;padding:5px 2px;text-align:center;font-size:10px;white-space:nowrap;width:10.16%;">${escapeHtml(cleanSalahTime(timings.Isha))}</td>
     `;
 
     tbody.appendChild(row);
   });
-}
 
+  applyMonthlySalahTableColumnWidths();}
+  // =========================
+// APPLY MONTHLY TIMETABLE COLUMN WIDTHS
+// =========================
+function applyMonthlySalahTableColumnWidths(){
+  let table = document.getElementById("monthlySalahPrintTable");
+  if(!table) return;
+
+  let rows = table.querySelectorAll("tr");
+
+  rows.forEach(function(row){
+    let cells = row.children;
+    if(!cells || cells.length < 9) return;
+
+    // 1 = Day
+    cells[0].style.width = "15%";
+    cells[0].style.whiteSpace = "nowrap";
+
+    // 2 = Hijri
+    cells[1].style.width = "12%";
+    cells[1].style.whiteSpace = "normal";
+    cells[1].style.lineHeight = "1.15";
+
+    // 3 = Date
+    cells[2].style.width = "12%";
+    cells[2].style.whiteSpace = "nowrap";
+
+    // 4 = Fajr
+    cells[3].style.width = "10.16%";
+    cells[3].style.whiteSpace = "nowrap";
+
+    // 5 = Sunrise
+    cells[4].style.width = "10.16%";
+    cells[4].style.whiteSpace = "nowrap";
+
+    // 6 = Dhuhr
+    cells[5].style.width = "10.16%";
+    cells[5].style.whiteSpace = "nowrap";
+
+    // 7 = Asr
+    cells[6].style.width = "10.16%";
+    cells[6].style.whiteSpace = "nowrap";
+
+    // 8 = Maghrib
+    cells[7].style.width = "10.16%";
+    cells[7].style.whiteSpace = "nowrap";
+
+    // 9 = Isha
+    cells[8].style.width = "10.16%";
+    cells[8].style.whiteSpace = "nowrap";
+  });
+}
 // =========================
 // OPEN MONTHLY PRINT WINDOW
 // =========================
@@ -8073,10 +8384,10 @@ function openMonthlySalahPrintPreviewPage(){
             line-height:1.15 !important;
           }
 
-          .page #monthlySalahPrintTable{
+                   .page #monthlySalahPrintTable{
             width:100% !important;
             border-collapse:collapse !important;
-            table-layout:auto !important;
+            table-layout:fixed !important;
             font-size:11px !important;
             text-align:center !important;
           }
@@ -8365,7 +8676,10 @@ function cleanSalahTime(timeValue){
   let cleaned = String(timeValue).replace(/\s*\(.+?\)\s*/g, "").trim();
 
   if(typeof to12Hour === "function"){
-    return to12Hour(cleaned);
+    let formatted = to12Hour(cleaned);
+
+    formatted = formatted.replace(/\s?(AM|PM)$/i, "");
+    return formatted.trim();
   }
 
   return cleaned;
@@ -8401,7 +8715,7 @@ function formatGregorianDateForTable(dateString){
 }
 
 // =========================
-// GET SHORT WEEKDAY NAME
+// GET FULL WEEKDAY NAME
 // =========================
 function getShortWeekdayName(dateString){
   if(!dateString) return "-";
@@ -8411,7 +8725,7 @@ function getShortWeekdayName(dateString){
 
   let jsDate = new Date(parts[2], Number(parts[1]) - 1, parts[0]);
 
-  return jsDate.toLocaleDateString("en-US", { weekday: "short" });
+  return jsDate.toLocaleDateString("en-US", { weekday: "long" });
 }
 
 // =========================
@@ -11423,6 +11737,49 @@ transition:all 0.25s ease;
 
  
 
+<!-- =========================
+     MONTH SELECT ROW
+========================= -->
+<div onclick="openMonthlySalahMonthYearPicker()" style="
+background:white;
+border-radius:20px;
+padding:16px 18px;
+margin-top:12px;
+margin-bottom:12px;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+display:flex;
+align-items:center;
+justify-content:space-between;
+cursor:pointer;
+-webkit-tap-highlight-color:transparent;
+">
+  <div>
+    <div style="
+    font-size:17px;
+    font-weight:800;
+    color:#111;
+    margin-bottom:4px;
+    ">
+      Month
+    </div>
+
+    <div id="monthlySalahSelectedMonthValue" style="
+    font-size:14px;
+    color:#666;
+    ">
+      April 2026
+    </div>
+  </div>
+
+  <div style="
+  font-size:18px;
+  color:#999;
+  font-weight:700;
+  ">
+    ›
+  </div>
+</div>
+
   <button onclick="closeMonthlySalahTimetableActions()" style="
   width:100%;
   border:none;
@@ -11436,8 +11793,7 @@ transition:all 0.25s ease;
   ">
     Cancel
   </button>
-</div>
-
+</div>  
 <!-- =========================
      MONTHLY SALAH HIDDEN PRINT AREA
 ========================= -->
