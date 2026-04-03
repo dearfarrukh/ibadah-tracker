@@ -401,115 +401,7 @@ overflow:auto;
 padding:15px 15px 110px 15px;
 ">
 
-<!-- TASBIH SETTINGS OVERLAY -->
-<!-- =========================
-     TASBIH SETTINGS OVERLAY
-========================= -->
-<!-- Tasbih Settings Overlay Card -->
-<div id="tasbihSettingsOverlay" onclick="closeTasbihSettings()" style="
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-background:rgba(0,0,0,0.35);
-backdrop-filter:blur(3px);
--webkit-backdrop-filter:blur(3px);
-z-index:8000;
-display:none;
-"></div>
-
-<!-- TASBIH SETTINGS PANEL -->
-<!-- =========================
-     TASBIH SETTINGS DRAWER
-========================= -->
-<div id="tasbihSettingsDrawer" style="
-position:fixed;
-top:0;
-right:-70%;
-width:70%;
-max-width:380px;
-height:100%;
-background:white;
-z-index:8100;
-box-shadow:-10px 0 30px rgba(0,0,0,0.2);
-transition:0.25s;
-padding:20px;
-box-sizing:border-box;
-">
-
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:20px;
-">
-
-<div style="
-font-size:22px;
-font-weight:800;
-">
-Settings
-</div>
-
-<!-- Close Tasbih Settings Button -->
-<button onclick="closeTasbihSettings()" style="
-border:none;
-background:#e9e9ee;
-width:36px;
-height:36px;
-border-radius:10px;
-font-size:18px;
-cursor:pointer;
-">
-✕
-</button>
-
-</div>
-
-<div style="
-font-size:18px;
-font-weight:800;
-margin-bottom:12px;
-color:#111;
-">
-Style
-</div>
-
-<!-- Show Classic Mode Button -->
-<button onclick="showClassicMode()" style="
-width:100%;
-padding:18px;
-border-radius:18px;
-border:none;
-background:#f3f3f3;
-margin-bottom:12px;
-cursor:pointer;
-font-size:20px;
-font-weight:800;
-color:#111;
-text-align:left;
-">
-Classic
-</button>
-
-<!-- Show Dark Night Mode Button -->
-<button onclick="showDarkNightMode()" style="
-width:100%;
-padding:18px;
-border-radius:18px;
-border:none;
-background:#f3f3f3;
-cursor:pointer;
-font-size:20px;
-font-weight:800;
-color:#111;
-text-align:left;
-">
-Dark Night
-</button>
-  
-</div>
+<!-- TASBIH SETTINGS OVERLAY REMOVED - OLD DUPLICATE DRAWER DELETED -->
 
 
 
@@ -747,6 +639,290 @@ touch-action:manipulation;
 
 </div>
 
+
+<!-- =========================
+     ROYAL TASBIH
+========================= -->
+<div id="royalTasbih" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:92px;
+z-index:4600;
+background:url('Images/royal-tasbih-bg.png') center/cover no-repeat;
+overflow:hidden;
+">
+
+  <!-- ROYAL TASBIH HEADER -->
+  <div style="
+  position:absolute;
+  top:18px;
+  left:18px;
+  right:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:6;
+  ">
+
+    <!-- Royal Tasbih Top Button -->
+    <button onclick="handleTasbihTopButton()" style="
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,0.7);
+    background:rgba(255,255,255,0.92);
+    font-size:20px;
+    font-weight:700;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 4px 12px rgba(0,0,0,0.18);
+    color:#111;
+    ">
+      <span id="royalTasbihTopBtnIcon">←</span>
+    </button>
+
+    <!-- Open Tasbih Settings Button -->
+    <button onclick="openTasbihSettings()" style="
+    width:44px;
+    height:44px;
+    border:none;
+    border-radius:14px;
+    background:rgba(255,255,255,0.18);
+    color:white;
+    font-size:22px;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 8px 18px rgba(0,0,0,0.18);
+    ">
+      ⚙️
+    </button>
+
+  </div>
+
+  <!-- ROYAL BISMILLAH RIBBON -->
+  <div style="
+  position:absolute;
+  top:88px;
+  left:50%;
+  transform:translateX(-50%);
+  width:78%;
+  max-width:360px;
+  text-align:center;
+  z-index:5;
+  ">
+
+    
+  
+  <!-- =========================
+     ROYAL TASBIH BISMILLAH
+========================= -->
+<div style="
+font-size:26px;
+font-weight:600;
+color:#d4af37;
+text-align:center;
+
+/* move slightly UP */
+margin-top:-0px;
+
+/* Arabic styling */
+direction:rtl;
+letter-spacing:1.5px;
+line-height:1.6;
+
+/* premium gold glow */
+text-shadow:
+0 0 6px rgba(212,175,55,0.6),
+0 0 12px rgba(212,175,55,0.4);
+">
+بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+</div>
+  </div>
+
+<!-- ROYAL TARGET SELECTOR -->
+<div style="
+position:absolute;
+top:180px;
+left:50%;
+transform:translateX(-50%);
+width:78%;
+max-width:340px;
+z-index:5;
+">
+
+  <div id="royalTasbihModes" style="
+  display:flex;
+  align-items:center;
+  border-radius:999px;
+  overflow:hidden;
+
+  /* LIGHT SLIM GLASS */
+  background:rgba(255,255,255,0.20);
+  backdrop-filter:blur(14px);
+
+  box-shadow:
+  0 4px 10px rgba(0,0,0,0.10);
+
+  padding:2px;
+  gap:2px;
+
+  height:34px;
+  ">
+
+   <!-- 33 -->
+   <button id="royalMode33" onclick="setTasbihMode(33);updateRoyalTasbihUI();" style="
+flex:1;
+height:28px;
+border:none;
+border-radius:999px;
+
+background:rgba(255,255,255,0.45);
+
+color:#d4af37;
+font-size:22px;
+font-weight:900;
+
+cursor:pointer;
+transition:all 0.2s ease;
+">
+33
+</button>
+
+   <!-- 100 -->
+   <button id="royalMode100" onclick="setTasbihMode(100);updateRoyalTasbihUI();" style="
+flex:1;
+height:28px;
+border:none;
+border-radius:999px;
+
+background:rgba(255,255,255,0.45);
+
+color:#d4af37;
+font-size:22px;
+font-weight:900;
+
+cursor:pointer;
+transition:all 0.2s ease;
+">
+100
+</button>
+
+   <!-- INF -->
+   <button id="royalModeInf" onclick="setTasbihMode('inf');updateRoyalTasbihUI();" style="
+flex:1;
+height:28px;
+border:none;
+border-radius:999px;
+
+background:rgba(255,255,255,0.45);
+
+color:#d4af37;
+font-size:25px;
+font-weight:900;
+
+cursor:pointer;
+transition:all 0.2s ease;
+">
+∞
+</button>
+
+  </div>
+</div>
+
+   <!-- ROYAL BIG CIRCLE -->
+  <div onclick="increaseTasbih();updateRoyalTasbihUI();" style="
+  position:absolute;
+  left:50%;
+  top:58%;
+  transform:translate(-50%,-50%);
+  width:270px;
+  height:270px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:5;
+  user-select:none;
+  -webkit-user-select:none;
+  touch-action:manipulation;
+  ">
+
+    <!-- ROYAL PROGRESS BARS -->
+    <div id="royalTasbihProgress" style="
+    position:absolute;
+    width:270px;
+    height:270px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:1;
+    "></div>
+
+    <div style="
+    width:205px;
+    height:205px;
+    border-radius:50%;
+    background:radial-gradient(circle at center, #ffffff 0%, #f7f7f7 70%, #f0f0f0 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:
+      inset 0 2px 8px rgba(255,255,255,0.95),
+      inset 0 -10px 22px rgba(0,0,0,0.08);
+    position:relative;
+    z-index:2;
+    ">
+      <div id="royalTasbihCenterText" style="
+      font-size:44px;
+      font-weight:600;
+      color:#d4af37;
+      letter-spacing:1px;
+      text-align:center;
+      line-height:1;
+      ">
+        0 / 33
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ROYAL RESET BUTTON -->
+  <div style="
+  position:absolute;
+  left:50%;
+  bottom:100px;
+  transform:translateX(-50%);
+  z-index:5;
+  ">
+    <button onclick="resetTasbih();updateRoyalTasbihUI();" style="
+    min-width:140px;
+    height:32px;
+    border:none;
+    border-radius:999px;
+    background:linear-gradient(180deg, #244e9e 0%, #153d88 100%);
+    color:#d4af37;
+    font-size:20px;
+    font-weight:800;
+    padding:0 24px;
+    cursor:pointer;
+    box-shadow:0 8px 18px rgba(0,0,0,0.24);
+    ">
+      Reset
+    </button>
+  </div>
+
+</div>
+
+  
   
 <!-- DARK TARGET POPUP -->
 <!-- =========================
@@ -922,7 +1098,7 @@ outline:3px solid #111;
 </button>
 
 <!-- Style Button Dark Night Button -->
-   <button id="styleBtnDarkNight" onclick="setTasbihStyle('dark')" style="
+<button id="styleBtnDarkNight" onclick="setTasbihStyle('dark')" style="
 width:100%;
 border:none;
 border-radius:20px;
@@ -934,12 +1110,37 @@ cursor:pointer;
 outline:none;
 ">
   <div style="font-size:17px;font-weight:800;color:#111;">Dark Night</div>
-  <div style="font-size:13px;color:#666;margin-top:4px;">New dark sky ring Tasbih style</div>
+  <div style="font-size:13px;color:#666;margin-top:4px;">Dark sky ring Tasbih style</div>
+</button>
+
+<!-- Style Button Royal Tasbih Button -->
+<button id="styleBtnRoyal" onclick="setTasbihStyle('royal')" style="
+width:100%;
+border:none;
+border-radius:20px;
+background:white;
+padding:16px 16px;
+text-align:left;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+cursor:pointer;
+outline:none;
+">
+  <div style="font-size:17px;font-weight:800;color:#111;">Royal Tasbih</div>
+  <div style="font-size:13px;color:#666;margin-top:4px;">Blue gold luxury Tasbih style</div>
 </button>
   </div>
 
 </div>
-  <div style="padding:10px;">
+
+
+  
+ <!-- =========================
+     CLASSIC TASBIH
+========================= -->
+<div id="classicTasbih" style="
+display:block;
+padding:10px;
+">
 
     <!-- TASBIH HEADER -->
 <div style="
@@ -1032,6 +1233,8 @@ height:52px;
 outline:none;
 -webkit-tap-highlight-color:transparent;
 ">
+
+ 
 
 <!-- Set Tasbih Mode Button -->
   <button class="modeBtn" onclick="setTasbihMode(33)" style="font-size:20px;color:#5c4632;">33</button>
@@ -1148,6 +1351,12 @@ Reset
 </div>
 
 </div>
+
+</div>
+
+<!-- =========================
+     ZIKR PAGE
+========================= -->
   
   
   
@@ -2031,6 +2240,63 @@ container.appendChild(bar);
 
 }
 
+  // =========================
+// BUILD ROYAL TASBIH BARS
+// =========================
+function buildRoyalTasbihBars(){
+
+  let container = document.getElementById("royalTasbihProgress");
+  if(!container) return;
+
+  container.innerHTML = "";
+
+  let totalBars = 70;
+  let ringSize = 270;
+  let center = ringSize / 2;
+  let radius = 110;
+  let barWidth = 3;
+  let barHeight = 10;
+
+  let count = parseInt(localStorage.getItem(getTasbihKey()) || 0);
+  let target = localStorage.getItem(getTargetKey()) || 33;
+
+  let filledBars = 0;
+
+  if(target !== "inf" && Number(target) > 0){
+    filledBars = Math.round((count / Number(target)) * totalBars);
+  }
+
+  if(filledBars < 0) filledBars = 0;
+  if(filledBars > totalBars) filledBars = totalBars;
+
+  for(let i = 0; i < totalBars; i++){
+
+    let angle = (i / totalBars) * (Math.PI * 2) - (Math.PI / 2);
+
+    let x = center + Math.cos(angle) * radius;
+   let y = center + Math.sin(angle) * radius;
+
+    let bar = document.createElement("div");
+    bar.style.position = "absolute";
+    bar.style.width = barWidth + "px";
+    bar.style.height = barHeight + "px";
+    bar.style.left = x + "px";
+    bar.style.top = y + "px";
+    bar.style.transform = "translate(-50%,-50%) rotate(" + (angle * 180 / Math.PI + 90) + "deg)";
+    bar.style.borderRadius = "999px";
+
+    if(i < filledBars){
+      bar.style.background = "#34c759";
+      bar.style.boxShadow = "0 0 6px rgba(52,199,89,0.45)";
+    }else{
+      bar.style.background = "rgba(255,255,255,0.30)";
+    }
+
+    container.appendChild(bar);
+  }
+}
+
+
   
 // =========================
 // SET TASBIH MODE
@@ -2053,6 +2319,7 @@ let counter = document.getElementById("tasbihCount");
 if(counter){
 counter.innerText = 0;
 }
+
 let center = document.getElementById("tasbihCenterText");
 if(center){
 center.innerText = "0 / " + (mode === "inf" ? "∞" : mode);
@@ -2075,10 +2342,12 @@ if(mode===33 && modeButtons[0]) modeButtons[0].classList.add("active");
 if(mode===100 && modeButtons[1]) modeButtons[1].classList.add("active");
 if(mode==="inf" && modeButtons[2]) modeButtons[2].classList.add("active");
 
+updateDarkNightNumber();
+updateRoyalTasbihUI();
+
 setTimeout(()=>{ tasbihLock=false; },150);
 
 }
-
 
 // =========================
 // LOAD SALAH
@@ -2551,12 +2820,15 @@ let screen = document.getElementById("tasbihScreen");
 if(screen){
 screen.innerText = count;
 }
+
 let center = document.getElementById("tasbihCenterText");
 if(center){
 center.innerText = count + " / " + target;
 }
 
 buildTasbihBars();
+updateDarkNightNumber();
+updateRoyalTasbihUI();
   
 if(counter){
 counter.classList.remove("glow");
@@ -3001,8 +3273,9 @@ center.innerText = count + " / " + (target === "inf" ? "∞" : target);
 }
 
 buildTasbihBars();
+updateDarkNightNumber();
+updateRoyalTasbihUI();
 }
-
   
 // =========================
 // RESET TASBIH
@@ -3029,7 +3302,9 @@ center.innerText = "0 / " + target;
 
 buildTasbihBars();
 updateDarkNightNumber();
+updateRoyalTasbihUI();
 }
+  
 // ===== ZIKR TASBIH SYSTEM =====
 
 let zikrCount = 0;
@@ -4548,6 +4823,8 @@ if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
 if(bottomNav) bottomNav.style.display = "flex";
 
 updateTasbihTopButton();
+loadTasbih();
+applySavedTasbihStyle();
 window.scrollTo(0,0);
 
 }
@@ -6713,9 +6990,13 @@ function applySavedTasbihStyle(){
 let savedStyle = localStorage.getItem("tasbihStyle") || "classic";
 
 if(savedStyle === "dark"){
-showDarkNightMode();
-}else{
-showClassicMode();
+  showDarkNightMode();
+}
+else if(savedStyle === "royal"){
+  showRoyalMode();
+}
+else{
+  showClassicMode();
 }
 
 }
@@ -6767,65 +7048,214 @@ updateDarkNightNumber();
 closeDarkTargetMenu();
 }
 
+
 // =========================
 // SHOW DARK NIGHT MODE
 // =========================
 function showDarkNightMode(){
 
+let classic = document.getElementById("classicTasbih");
 let dark = document.getElementById("darkNightTasbih");
+let royal = document.getElementById("royalTasbih");
 let drawer = document.getElementById("tasbihSettingsDrawer");
 let overlay = document.getElementById("tasbihSettingsOverlay");
 
-  saveTasbihStyle("dark");
+saveTasbihStyle("dark");
 
-  if(dark){
-dark.style.display = "block";
+if(classic){
+  classic.style.display = "none";
+}
+
+if(dark){
+  dark.style.display = "block";
+}
+
+if(royal){
+  royal.style.display = "none";
 }
 
 if(drawer){
-drawer.style.right = "-70%";
+  drawer.style.right = "-70%";
 }
 
 if(overlay){
-overlay.style.display = "none";
+  overlay.style.display = "none";
 }
 
+updateTasbihStyleButtons("dark");
 updateDarkNightNumber();
 closeDarkTargetMenu();
 
 let savedTarget = localStorage.getItem(getTargetKey()) || 33;
 let darkTargetText = document.getElementById("darkTargetText");
 if(darkTargetText){
-darkTargetText.innerText = savedTarget === "inf" ? "∞" : savedTarget;
+  darkTargetText.innerText = savedTarget === "inf" ? "∞" : savedTarget;
 }
 
 }
+
+
+  
 // =========================
 // SHOW CLASSIC MODE
 // =========================
 function showClassicMode(){
 
+let classic = document.getElementById("classicTasbih");
 let dark = document.getElementById("darkNightTasbih");
+let royal = document.getElementById("royalTasbih");
 let drawer = document.getElementById("tasbihSettingsDrawer");
 let overlay = document.getElementById("tasbihSettingsOverlay");
 
 saveTasbihStyle("classic");
 
+if(classic){
+  classic.style.display = "block";
+}
+
 if(dark){
-dark.style.display = "none";
+  dark.style.display = "none";
+}
+
+if(royal){
+  royal.style.display = "none";
 }
 
 if(drawer){
-drawer.style.right = "-70%";
+  drawer.style.right = "-70%";
 }
 
 if(overlay){
-overlay.style.display = "none";
+  overlay.style.display = "none";
 }
 
+updateTasbihStyleButtons("classic");
 closeDarkTargetMenu();
 
 }
+// =========================
+// SET TASBIH STYLE
+// =========================
+function setTasbihStyle(style){
+  if(style === "dark"){
+    showDarkNightMode();
+    return;
+  }
+
+  if(style === "royal"){
+    showRoyalMode();
+    return;
+  }
+
+  showClassicMode();
+}
+
+// =========================
+// UPDATE TASBIH STYLE BUTTONS
+// =========================
+function updateTasbihStyleButtons(activeStyle){
+  let classicBtn = document.getElementById("styleBtnClassic");
+  let darkBtn = document.getElementById("styleBtnDarkNight");
+  let royalBtn = document.getElementById("styleBtnRoyal");
+
+  if(classicBtn) classicBtn.style.outline = activeStyle === "classic" ? "3px solid #111" : "none";
+  if(darkBtn) darkBtn.style.outline = activeStyle === "dark" ? "3px solid #111" : "none";
+  if(royalBtn) royalBtn.style.outline = activeStyle === "royal" ? "3px solid #111" : "none";
+}
+
+// =========================
+// SHOW ROYAL MODE
+// =========================
+function showRoyalMode(){
+
+  let classic = document.getElementById("classicTasbih");
+  let dark = document.getElementById("darkNightTasbih");
+  let royal = document.getElementById("royalTasbih");
+  let drawer = document.getElementById("tasbihSettingsDrawer");
+  let overlay = document.getElementById("tasbihSettingsOverlay");
+
+  saveTasbihStyle("royal");
+
+  if(classic){
+    classic.style.display = "none";
+  }
+
+  if(dark){
+    dark.style.display = "none";
+  }
+
+  if(royal){
+    royal.style.display = "block";
+  }
+
+  if(drawer){
+    drawer.style.right = "-70%";
+  }
+
+  if(overlay){
+    overlay.style.display = "none";
+  }
+
+  updateTasbihStyleButtons("royal");
+  updateRoyalTasbihUI();
+
+  let royalTopIcon = document.getElementById("royalTasbihTopBtnIcon");
+  let defaultPage = (localStorage.getItem("defaultPage") || "").trim().toLowerCase();
+
+  if(royalTopIcon){
+    royalTopIcon.innerHTML = defaultPage === "tasbih" ? "☰" : "←";
+  }
+
+  closeDarkTargetMenu();
+}
+
+// =========================
+// UPDATE ROYAL TASBIH UI
+// =========================
+function updateRoyalTasbihUI(){
+
+  let count = parseInt(localStorage.getItem(getTasbihKey()) || 0);
+  let target = localStorage.getItem(getTargetKey()) || 33;
+
+  let centerText = document.getElementById("royalTasbihCenterText");
+  if(centerText){
+    centerText.innerText = target === "inf" ? String(count) : (count + " / " + target);
+  }
+
+  let btn33 = document.getElementById("royalMode33");
+  let btn100 = document.getElementById("royalMode100");
+  let btnInf = document.getElementById("royalModeInf");
+
+  // default look for all buttons
+  [btn33, btn100, btnInf].forEach(function(btn){
+    if(!btn) return;
+    btn.style.background = "rgba(255,255,255,0.45)";
+   btn.style.color = "#1a1a1a";
+    btn.style.boxShadow = "none";
+  });
+
+  // selected gold look
+  if(String(target) === "33" && btn33){
+    btn33.style.background = "linear-gradient(180deg, #f5d27a 0%, #d4af37 100%)";
+    btn33.style.color = "#1a1a1a";
+    btn33.style.boxShadow = "0 2px 6px rgba(212,175,55,0.5)";
+  }
+
+  if(String(target) === "100" && btn100){
+    btn100.style.background = "linear-gradient(180deg, #f5d27a 0%, #d4af37 100%)";
+    btn100.style.color = "#1a1a1a";
+    btn100.style.boxShadow = "0 2px 6px rgba(212,175,55,0.5)";
+  }
+
+  if(String(target) === "inf" && btnInf){
+    btnInf.style.background = "linear-gradient(180deg, #f5d27a 0%, #d4af37 100%)";
+    btnInf.style.color = "#1a1a1a";
+    btnInf.style.boxShadow = "0 2px 6px rgba(212,175,55,0.5)";
+  }
+
+  buildRoyalTasbihBars();
+}
+  
 
 // =========================
 // HIDE DARK NIGHT TASBIH
