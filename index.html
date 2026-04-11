@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- =========================
+     QURAN FONT IMPORT
+========================= -->
+<link href="https://fonts.googleapis.com/css2?family=Amiri&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+
+  
 <meta charset="UTF-8">
 <title>Ibadah Tracker</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -282,6 +288,88 @@ color:#555;
 img{
 max-width:100%;
 height:auto;
+}
+
+/* =========================
+   INTERACTIVE QURAN PAGE DRAG CSS
+   ========================= */
+.quranFlipStage{
+position:relative;
+width:100%;
+height:100%;
+overflow:hidden;
+touch-action:pan-y;
+}
+
+.quranFlipTrack{
+position:relative;
+width:100%;
+height:100%;
+}
+
+.quranFlipSheet{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+transform:translateX(0%);
+transition:transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1);
+will-change:transform;
+}
+
+.quranFlipSheet img{
+width:100%;
+height:100%;
+object-fit:contain;
+display:block;
+user-select:none;
+-webkit-user-drag:none;
+pointer-events:none;
+}
+
+.quranFlipShadow{
+position:absolute;
+top:0;
+bottom:0;
+width:18%;
+right:0;
+opacity:0;
+pointer-events:none;
+background:linear-gradient(to left, rgba(0,0,0,0.28), rgba(0,0,0,0));
+transition:opacity 0.18s ease;
+}
+
+.quranFlipSheet.dragging{
+transition:none;
+}
+
+.quranFlipSheet.dragging .quranFlipShadow{
+opacity:1;
+}
+
+.quranFlipUnderPage{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+opacity:0;
+transition:opacity 0.18s ease;
+pointer-events:none;
+}
+
+.quranFlipUnderPage.show{
+opacity:1;
+}
+
+.quranFlipUnderPage img{
+width:100%;
+height:100%;
+object-fit:contain;
+display:block;
+user-select:none;
+-webkit-user-drag:none;
+pointer-events:none;
 }
 
   
@@ -2166,15 +2254,735 @@ box-sizing:border-box;
   </div>
 </div>
 
+</div>
+
+<!-- =========================
+     SIMPLE ARABIC QURAN PAGE
+========================= -->
+<div id="arabicQuranPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:92px;
+z-index:5000;
+background:url('wallpaper.jpg') center/cover no-repeat;
+overflow:auto;
+padding:15px 15px 110px 15px;
+box-sizing:border-box;
+">
+
+  <div style="padding:10px;">
+    <!-- Close Arabic Quran Page Button -->
+    <button onclick="closeArabicQuranPage()" style="
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    border:1px solid #ccc;
+    background:white;
+    font-size:20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    ">
+      ←
+    </button>
+  </div>
+
+  <!-- Arabic Quran Header Card -->
+  <div class="card" style="
+  text-align:center;
+  padding:28px 20px;
+  margin-top:10px;
+  ">
+    <div style="font-size:42px;margin-bottom:10px;">📖</div>
+    <div style="font-size:28px;font-weight:700;">
+      Arabic Quran
+    </div>
+    <div style="font-size:15px;color:#666;margin-top:8px;">
+      Continue reading, browse surahs, or open bookmarks
+    </div>
+  </div>
 
   
-  
+  <div onclick="alert('Resume coming in next step')" style="
+  background:white;
+  border-radius:26px;
+  padding:22px 20px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  margin-top:10px;
+  ">
+
+    <div style="
+    display:flex;
+    align-items:center;
+    gap:14px;
+    min-width:0;
+    ">
+
+      <div style="
+      width:52px;
+      height:52px;
+      border-radius:18px;
+      background:#f2f2f7;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+      flex-shrink:0;
+      ">
+        ▶️
+      </div>
+
+      <div>
+        <div style="
+        font-size:20px;
+        font-weight:800;
+        color:#111;
+        margin-bottom:4px;
+        letter-spacing:-0.2px;
+        ">
+          Resume Reading
+        </div>
+
+        <div style="
+        font-size:14px;
+        color:#666;
+        line-height:1.5;
+        ">
+          Continue from your last reading place
+        </div>
+      </div>
+
+    </div>
+
+    <div style="
+    font-size:24px;
+    color:#b0b0b8;
+    margin-left:14px;
+    flex-shrink:0;
+    ">
+      ›
+    </div>
+
+  </div>
+
+<!-- Surah Index Card -->
+  <div onclick="openSurahIndexPage()" style="
+  background:white;
+  border-radius:26px;
+  padding:22px 20px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  margin-top:14px;
+  ">
+
+    <div style="
+    display:flex;
+    align-items:center;
+    gap:14px;
+    min-width:0;
+    ">
+
+      <div style="
+      width:52px;
+      height:52px;
+      border-radius:18px;
+      background:#f2f2f7;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+      flex-shrink:0;
+      ">
+        📚
+      </div>
+
+      <div>
+        <div style="
+        font-size:20px;
+        font-weight:800;
+        color:#111;
+        margin-bottom:4px;
+        letter-spacing:-0.2px;
+        ">
+          Surah Index
+        </div>
+
+        <div style="
+        font-size:14px;
+        color:#666;
+        line-height:1.5;
+        ">
+          Browse all surahs
+        </div>
+      </div>
+
+    </div>
+
+    <div style="
+    font-size:24px;
+    color:#b0b0b8;
+    margin-left:14px;
+    flex-shrink:0;
+    ">
+      ›
+    </div>
+
+  </div>
+
+  <!-- Bookmarks Card -->
+  <div onclick="alert('Bookmarks coming in next step')" style="
+  background:white;
+  border-radius:26px;
+  padding:22px 20px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  margin-top:14px;
+  ">
+
+    <div style="
+    display:flex;
+    align-items:center;
+    gap:14px;
+    min-width:0;
+    ">
+
+      <div style="
+      width:52px;
+      height:52px;
+      border-radius:18px;
+      background:#f2f2f7;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+      flex-shrink:0;
+      ">
+        🔖
+      </div>
+
+      <div>
+        <div style="
+        font-size:20px;
+        font-weight:800;
+        color:#111;
+        margin-bottom:4px;
+        letter-spacing:-0.2px;
+        ">
+          Bookmarks
+        </div>
+
+        <div style="
+        font-size:14px;
+        color:#666;
+        line-height:1.5;
+        ">
+          View your saved reading places
+        </div>
+      </div>
+
+    </div>
+
+    <div style="
+    font-size:24px;
+    color:#b0b0b8;
+    margin-left:14px;
+    flex-shrink:0;
+    ">
+      ›
+    </div>
+
+  </div>
+
+</div>
+
+
+     
 <!-- =========================
      JAVASCRIPT LOGIC
 ========================= -->
 <script>
 
+// =========================
+// INTERACTIVE QURAN PAGE FLIP SYSTEM
+// =========================
+let quranFlipState = {
+enabled: false,
+stage: null,
+sheet: null,
+underPage: null,
+frontImage: null,
+underImage: null,
+shadow: null,
+startX: 0,
+currentX: 0,
+deltaX: 0,
+dragging: false,
+threshold: 15,
+maxDragPercent: 70,
+onNext: null,
+onPrev: null,
+getNextImageSrc: null,
+getPrevImageSrc: null
+};
 
+// =========================
+// SETUP INTERACTIVE QURAN FLIP
+// =========================
+function setupInteractiveQuranFlip(config){
+
+quranFlipState.stage = config.stage;
+quranFlipState.sheet = config.sheet;
+quranFlipState.underPage = config.underPage;
+quranFlipState.frontImage = config.frontImage;
+quranFlipState.underImage = config.underImage;
+quranFlipState.shadow = config.shadow;
+quranFlipState.onNext = config.onNext;
+quranFlipState.onPrev = config.onPrev;
+quranFlipState.getNextImageSrc = config.getNextImageSrc;
+quranFlipState.getPrevImageSrc = config.getPrevImageSrc;
+quranFlipState.enabled = true;
+
+if(!quranFlipState.stage) return;
+
+if(quranFlipState.stage.dataset.flipReady === "yes") return;
+
+quranFlipState.stage.addEventListener("touchstart", handleQuranFlipStart, {passive:true});
+quranFlipState.stage.addEventListener("touchmove", handleQuranFlipMove, {passive:false});
+quranFlipState.stage.addEventListener("touchend", handleQuranFlipEnd, {passive:true});
+
+quranFlipState.stage.addEventListener("mousedown", handleQuranFlipMouseStart);
+window.addEventListener("mousemove", handleQuranFlipMouseMove);
+window.addEventListener("mouseup", handleQuranFlipMouseEnd);
+
+quranFlipState.stage.dataset.flipReady = "yes";
+
+}
+
+// =========================
+// HANDLE QURAN FLIP START
+// =========================
+function handleQuranFlipStart(e){
+
+if(!quranFlipState.enabled) return;
+
+let point = e.touches ? e.touches[0] : e;
+
+quranFlipState.startX = point.clientX;
+quranFlipState.currentX = point.clientX;
+quranFlipState.deltaX = 0;
+quranFlipState.dragging = true;
+
+if(quranFlipState.sheet){
+quranFlipState.sheet.classList.add("dragging");
+}
+
+if(quranFlipState.underPage){
+quranFlipState.underPage.classList.remove("show");
+}
+
+}
+
+// =========================
+// HANDLE QURAN FLIP MOVE
+// =========================
+function handleQuranFlipMove(e){
+
+if(!quranFlipState.enabled) return;
+if(!quranFlipState.dragging) return;
+
+let point = e.touches ? e.touches[0] : e;
+quranFlipState.currentX = point.clientX;
+quranFlipState.deltaX = quranFlipState.currentX - quranFlipState.startX;
+
+let stageWidth = quranFlipState.stage ? quranFlipState.stage.offsetWidth : 1;
+if(stageWidth < 1) stageWidth = 1;
+
+let dragPercent = (quranFlipState.deltaX / stageWidth) * 100;
+
+if(dragPercent > quranFlipState.maxDragPercent){
+dragPercent = quranFlipState.maxDragPercent;
+}
+
+if(dragPercent < -quranFlipState.maxDragPercent){
+dragPercent = -quranFlipState.maxDragPercent;
+}
+
+if(Math.abs(quranFlipState.deltaX) > 6){
+e.preventDefault();
+}
+
+if(quranFlipState.deltaX < 0){
+let nextSrc = quranFlipState.getNextImageSrc ? quranFlipState.getNextImageSrc() : "";
+if(nextSrc && quranFlipState.underImage){
+quranFlipState.underImage.src = nextSrc;
+if(quranFlipState.underPage){
+quranFlipState.underPage.classList.add("show");
+}
+}
+}
+
+if(quranFlipState.deltaX > 0){
+let prevSrc = quranFlipState.getPrevImageSrc ? quranFlipState.getPrevImageSrc() : "";
+if(prevSrc && quranFlipState.underImage){
+quranFlipState.underImage.src = prevSrc;
+if(quranFlipState.underPage){
+quranFlipState.underPage.classList.add("show");
+}
+}
+}
+
+if(quranFlipState.sheet){
+quranFlipState.sheet.style.transform = "translateX(" + dragPercent + "%)";
+}
+
+}
+
+// =========================
+// HANDLE QURAN FLIP END
+// =========================
+function handleQuranFlipEnd(){
+
+if(!quranFlipState.enabled) return;
+if(!quranFlipState.dragging) return;
+
+quranFlipState.dragging = false;
+
+let stageWidth = quranFlipState.stage ? quranFlipState.stage.offsetWidth : 1;
+if(stageWidth < 1) stageWidth = 1;
+
+let dragPercent = (quranFlipState.deltaX / stageWidth) * 100;
+
+if(quranFlipState.sheet){
+quranFlipState.sheet.classList.remove("dragging");
+}
+
+if(dragPercent <= -quranFlipState.threshold){
+animateQuranFlipNext();
+return;
+}
+
+if(dragPercent >= quranFlipState.threshold){
+animateQuranFlipPrev();
+return;
+}
+
+resetQuranFlipPosition();
+
+}
+
+// =========================
+// HANDLE QURAN FLIP MOUSE START
+// =========================
+function handleQuranFlipMouseStart(e){
+handleQuranFlipStart(e);
+}
+
+// =========================
+// HANDLE QURAN FLIP MOUSE MOVE
+// =========================
+function handleQuranFlipMouseMove(e){
+if(!quranFlipState.dragging) return;
+handleQuranFlipMove(e);
+}
+
+// =========================
+// HANDLE QURAN FLIP MOUSE END
+// =========================
+function handleQuranFlipMouseEnd(){
+if(!quranFlipState.dragging) return;
+handleQuranFlipEnd();
+}
+
+// =========================
+// ANIMATE QURAN FLIP NEXT
+// =========================
+function animateQuranFlipNext(){
+
+if(!quranFlipState.sheet) return;
+
+quranFlipState.sheet.style.transform = "translateX(-100%)";
+
+setTimeout(function(){
+
+if(quranFlipState.onNext){
+quranFlipState.onNext();
+}
+
+if(quranFlipState.sheet){
+quranFlipState.sheet.style.transition = "none";
+quranFlipState.sheet.style.transform = "translateX(0%)";
+}
+
+if(quranFlipState.underPage){
+quranFlipState.underPage.classList.remove("show");
+}
+
+setTimeout(function(){
+if(quranFlipState.sheet){
+quranFlipState.sheet.style.transition = "transform 0.26s ease";
+}
+}, 30);
+
+}, 260);
+
+}
+
+// =========================
+// ANIMATE QURAN FLIP PREV
+// =========================
+function animateQuranFlipPrev(){
+
+if(!quranFlipState.sheet) return;
+
+quranFlipState.sheet.style.transform = "translateX(100%)";
+
+setTimeout(function(){
+
+if(quranFlipState.onPrev){
+quranFlipState.onPrev();
+}
+
+if(quranFlipState.sheet){
+quranFlipState.sheet.style.transition = "none";
+quranFlipState.sheet.style.transform = "translateX(0%)";
+}
+
+if(quranFlipState.underPage){
+quranFlipState.underPage.classList.remove("show");
+}
+
+setTimeout(function(){
+if(quranFlipState.sheet){
+quranFlipState.sheet.style.transition = "transform 0.26s ease";
+}
+}, 30);
+
+}, 260);
+
+}
+
+// =========================
+// RESET QURAN FLIP POSITION
+// =========================
+function resetQuranFlipPosition(){
+
+if(quranFlipState.sheet){
+quranFlipState.sheet.style.transform = "translateX(0%)";
+}
+
+if(quranFlipState.underPage){
+setTimeout(function(){
+if(quranFlipState.underPage){
+quranFlipState.underPage.classList.remove("show");
+}
+}, 180);
+}
+
+}
+
+
+  // =========================
+// MUSHAF PAGE SYSTEM
+// =========================
+
+let currentMushafPage = 1;
+let totalMushafPages = 847;
+
+
+// =========================
+// REAL JUZ PAGE COUNTS
+// =========================
+const juzPageCounts = {
+  1:27,
+  2:28,
+  3:28,
+  4:28,
+  5:28,
+  6:28,
+  7:28,
+  8:28,
+  9:28,
+  10:28,
+  11:28,
+  12:28,
+  13:28,
+  14:28,
+  15:28,
+  16:28,
+  17:28,
+  18:28,
+  19:28,
+  20:26,
+  21:28,
+  22:26,
+  23:28,
+  24:26,
+  25:30,
+  26:30,
+  27:30,
+  28:30,
+  29:32,
+  30:30
+};
+
+// =========================
+// GET REAL JUZ INFO FROM GLOBAL PAGE
+// =========================
+function getRealJuzInfoFromMushafPage(page){
+
+  let runningTotal = 0;
+
+  for(let juzNumber = 1; juzNumber <= 30; juzNumber++){
+
+    let juzCount = juzPageCounts[juzNumber];
+    let juzStart = runningTotal + 1;
+    let juzEnd = runningTotal + juzCount;
+
+    if(page >= juzStart && page <= juzEnd){
+      return {
+        juzNumber: juzNumber,
+        pageInsideJuz: page - runningTotal,
+        juzStart: juzStart,
+        juzEnd: juzEnd
+      };
+    }
+
+    runningTotal += juzCount;
+  }
+
+  return {
+    juzNumber: 1,
+    pageInsideJuz: 1,
+    juzStart: 1,
+    juzEnd: 27
+  };
+}
+
+// =========================
+// BUILD MUSHAF IMAGE PATH
+// =========================
+function buildMushafImagePath(page){
+
+  let info = getRealJuzInfoFromMushafPage(page);
+  let paddedPage = String(info.pageInsideJuz).padStart(2, "0");
+
+  return "QuranPages/juz" + info.juzNumber + "/" + info.juzNumber + "-" + paddedPage + ".png";
+}
+
+// =========================
+// GET NEXT MUSHAF IMAGE SRC
+// =========================
+function getNextMushafImageSrc(){
+
+  let nextPage = currentMushafPage + 1;
+  if(nextPage > totalMushafPages) nextPage = totalMushafPages;
+
+  return buildMushafImagePath(nextPage);
+}
+
+// =========================
+// GET PREV MUSHAF IMAGE SRC
+// =========================
+function getPrevMushafImageSrc(){
+
+  let prevPage = currentMushafPage - 1;
+  if(prevPage < 1) prevPage = 1;
+
+  return buildMushafImagePath(prevPage);
+}
+
+     
+
+// =========================
+// LOAD MUSHAF PAGE
+// =========================
+function loadMushafPage(page){
+
+  if(page < 1) page = 1;
+  if(page > totalMushafPages) page = totalMushafPages;
+
+  currentMushafPage = page;
+
+  let img = document.getElementById("mushafPageImage");
+  let debug = document.getElementById("mushafDebugText");
+
+  if(!img) return;
+
+ let surahNumber = currentQuranSurahNumber || 1;
+let info = getRealJuzInfoFromMushafPage(page);
+let juzNumber = info.juzNumber;
+let pageInsideJuz = info.pageInsideJuz;
+let localPath = buildMushafImagePath(page);
+
+  if(debug){
+    debug.innerText =
+      "Opening Mushaf page " + page +
+      " • Juz " + juzNumber +
+      " • Page " + pageInsideJuz +
+      " • Surah " + surahNumber;
+  }
+
+  img.onload = function(){
+    if(debug){
+      debug.innerText = "Loaded Mushaf: " + localPath;
+    }
+  };
+
+  img.onerror = function(){
+    if(debug){
+      debug.innerText = "Could not load: " + localPath;
+    }
+  };
+
+  img.src = localPath;
+}
+     // Next
+function nextMushafPage(){
+  loadMushafPage(currentMushafPage + 1);
+}
+
+// Prev
+function prevMushafPage(){
+  loadMushafPage(currentMushafPage - 1);
+}
+
+// Open Mushaf Mode
+function openMushafMode(){
+
+  let textCard = document.getElementById("quranReadingTextCard");
+  let mushafView = document.getElementById("mushafPageView");
+
+  if(textCard) textCard.style.display = "none";
+  if(mushafView) mushafView.style.display = "block";
+
+  let startPage = getMushafStartPageForSurah(currentQuranSurahNumber);
+  loadMushafPage(startPage);
+
+}
+// Back to text mode
+function closeMushafMode(){
+
+  document.getElementById("quranReadingTextCard").style.display = "block";
+  document.getElementById("mushafPageView").style.display = "none";
+
+}
 
 
 
@@ -2993,6 +3801,107 @@ localStorage.setItem(key,JSON.stringify(saved));
 updateStreak();
 }
 
+// =========================
+// QURAN 15 SWIPE VARIABLES
+// =========================
+let quranSwipeStartX = 0;
+let quranSwipeEndX = 0;
+let quranSwipeStartY = 0;
+let quranSwipeEndY = 0;
+
+// =========================
+// HANDLE QURAN SWIPE START
+// =========================
+function handleQuranSwipeStart(event){
+
+if(quranReadingSource !== "quran15") return;
+
+let touch = event.touches[0];
+if(!touch) return;
+
+quranSwipeStartX = touch.clientX;
+quranSwipeStartY = touch.clientY;
+quranSwipeEndX = touch.clientX;
+quranSwipeEndY = touch.clientY;
+
+}
+
+// =========================
+// HANDLE QURAN SWIPE MOVE
+// =========================
+function handleQuranSwipeMove(event){
+
+if(quranReadingSource !== "quran15") return;
+
+let touch = event.touches[0];
+if(!touch) return;
+
+quranSwipeEndX = touch.clientX;
+quranSwipeEndY = touch.clientY;
+
+}
+
+// =========================
+// HANDLE QURAN SWIPE END
+// =========================
+function handleQuranSwipeEnd(){
+
+if(quranReadingSource !== "quran15") return;
+
+// stop repeated fast swipes
+if(window.quranSwipeLocked) return;
+
+let diffX = quranSwipeEndX - quranSwipeStartX;
+let diffY = quranSwipeEndY - quranSwipeStartY;
+
+let absX = Math.abs(diffX);
+let absY = Math.abs(diffY);
+
+// require a stronger swipe so it does not change too easily
+if(absX < 80) return;
+
+// ignore mostly vertical movement
+if(absY > absX) return;
+
+// lock one swipe for a moment
+window.quranSwipeLocked = true;
+
+// swipe left = next page
+if(diffX < -80){
+nextMushafPage();
+}
+
+// swipe right = previous page
+else if(diffX > 80){
+prevMushafPage();
+}
+
+// unlock after a short delay
+setTimeout(function(){
+window.quranSwipeLocked = false;
+}, 350);
+
+}
+
+// =========================
+// SETUP QURAN 15 SWIPE
+// =========================
+function setupQuran15Swipe(){
+
+let img = document.getElementById("mushafPageImage");
+if(!img) return;
+
+if(img.dataset.swipeReady === "yes") return;
+
+img.addEventListener("touchstart", handleQuranSwipeStart, {passive:true});
+img.addEventListener("touchmove", handleQuranSwipeMove, {passive:true});
+img.addEventListener("touchend", handleQuranSwipeEnd);
+
+img.dataset.swipeReady = "yes";
+
+}
+
+     
 // =========================
 // PREV DAY
 // =========================
@@ -4155,6 +5064,28 @@ manageTasks();
 
 
 // =========================
+// HIDE ALL QURAN LAYERS
+// =========================
+function hideAllQuranLayers(){
+
+let quranPage = document.getElementById("quranPage");
+let arabicQuranPage = document.getElementById("arabicQuranPage");
+let quran15Page = document.getElementById("quran15Page");
+let quran15SurahPage = document.getElementById("quran15SurahPage");
+let surahIndexPage = document.getElementById("surahIndexPage");
+let quranReadingPage = document.getElementById("quranReadingPage");
+
+if(quranPage) quranPage.style.display = "none";
+if(arabicQuranPage) arabicQuranPage.style.display = "none";
+if(quran15Page) quran15Page.style.display = "none";
+if(quran15SurahPage) quran15SurahPage.style.display = "none";
+if(surahIndexPage) surahIndexPage.style.display = "none";
+if(quranReadingPage) quranReadingPage.style.display = "none";
+
+}
+     
+
+// =========================
 // OPEN TRACKER PAGE
 // =========================
 function openTrackerPage(){
@@ -4173,7 +5104,7 @@ let zikrDetailPage = document.getElementById("zikrDetailPage");
 let floatingMenuBtn = document.getElementById("floatingMenuBtn");
 let bottomNav = document.getElementById("bottomNav");
 
-// CLOSE ALL
+// CLOSE ALL MAIN PAGES
 if(homePage) homePage.style.display = "none";
 if(salahPage) salahPage.style.display = "none";
 if(morePage) morePage.style.display = "none";
@@ -4182,6 +5113,9 @@ if(duaPage) duaPage.style.display = "none";
 if(qiblaPage) qiblaPage.style.display = "none";
 if(zikrPage) zikrPage.style.display = "none";
 if(zikrDetailPage) zikrDetailPage.style.display = "none";
+
+// CLOSE ALL QURAN LAYERS
+hideAllQuranLayers();
 
 // OPEN TRACKER
 if(trackerPage) trackerPage.style.display = "block";
@@ -4192,7 +5126,6 @@ if(bottomNav) bottomNav.style.display = "flex";
 window.scrollTo(0,0);
 
 }
-
 
 // ==============================
 // MAIN PAGE NAVIGATION FUNCTION
@@ -4255,6 +5188,9 @@ if(zikrPage) zikrPage.style.display = "none";
 if(zikrDetailPage) zikrDetailPage.style.display = "none";
 if(qiblaPage) qiblaPage.style.display = "none";
 if(appSettingsPage) appSettingsPage.style.display = "none";
+
+// CLOSE ALL QURAN LAYERS
+hideAllQuranLayers();
 
 if(homePage) homePage.style.display = "block";
 if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
@@ -4445,6 +5381,9 @@ if(tasbihPage) tasbihPage.style.display = "none";
 if(duaPage) duaPage.style.display = "none";
 if(qiblaPage) qiblaPage.style.display = "none";
 
+// CLOSE ALL QURAN LAYERS
+hideAllQuranLayers();
+
 if(morePage) morePage.style.display = "block";
 
 if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
@@ -4602,6 +5541,7 @@ let zikrPage = document.getElementById("zikrPage");
 let tasbihPage = document.getElementById("tasbihPage");
 let duaPage = document.getElementById("duaPage");
 let qiblaPage = document.getElementById("qiblaPage");
+let quranPage = document.getElementById("quranPage");
 let floatingMenuBtn = document.getElementById("floatingMenuBtn");
 let bottomNav = document.getElementById("bottomNav");
 
@@ -4611,6 +5551,7 @@ if(morePage) morePage.style.display = "none";
 if(tasbihPage) tasbihPage.style.display = "none";
 if(duaPage) duaPage.style.display = "none";
 if(qiblaPage) qiblaPage.style.display = "none";
+if(quranPage) quranPage.style.display = "none";
 
 if(zikrPage) zikrPage.style.display = "block";
 
@@ -4789,6 +5730,1135 @@ openTasbihPage();
 }
   
   
+
+// =========================
+// OPEN QURAN FROM MORE
+// =========================
+function openMoreQuranPage(){
+
+lastMainTab = "more";
+openQuranPage();
+
+}
+
+// =========================
+// OPEN ARABIC QURAN PAGE
+// =========================
+function openArabicQuranPage(){
+
+let quranPage = document.getElementById("quranPage");
+let arabicQuranPage = document.getElementById("arabicQuranPage");
+let bottomNav = document.getElementById("bottomNav");
+
+if(quranPage) quranPage.style.display = "none";
+if(arabicQuranPage) arabicQuranPage.style.display = "block";
+if(bottomNav) bottomNav.style.display = "flex";
+
+window.scrollTo(0,0);
+
+}
+
+// =========================
+// CLOSE ARABIC QURAN PAGE
+// =========================
+function closeArabicQuranPage(){
+
+let quranPage = document.getElementById("quranPage");
+let arabicQuranPage = document.getElementById("arabicQuranPage");
+let quran15Page = document.getElementById("quran15Page");
+let surahIndexPage = document.getElementById("surahIndexPage");
+let quranReadingPage = document.getElementById("quranReadingPage");
+let bottomNav = document.getElementById("bottomNav");
+
+if(arabicQuranPage) arabicQuranPage.style.display = "none";
+if(quran15Page) quran15Page.style.display = "none";
+if(surahIndexPage) surahIndexPage.style.display = "none";
+if(quranReadingPage) quranReadingPage.style.display = "none";
+if(quranPage) quranPage.style.display = "block";
+if(bottomNav) bottomNav.style.display = "flex";
+
+window.scrollTo(0,0);
+
+}
+
+     
+// =========================
+// LOAD SURAH INDEX LIST
+// =========================
+async function loadSurahIndexList(){
+
+let loadingCard = document.getElementById("surahIndexLoadingCard");
+let list = document.getElementById("surahIndexList");
+
+if(loadingCard){
+loadingCard.style.display = "block";
+loadingCard.innerText = "Loading surahs...";
+}
+
+if(list){
+list.innerHTML = "";
+}
+
+try{
+
+let response = await fetch("https://api.alquran.cloud/v1/surah");
+let data = await response.json();
+
+if(!data || !data.data || !Array.isArray(data.data)){
+throw new Error("Surah list not loaded");
+}
+
+renderSurahIndexList(data.data);
+
+if(loadingCard){
+loadingCard.style.display = "none";
+}
+
+}catch(error){
+
+if(loadingCard){
+loadingCard.style.display = "block";
+loadingCard.innerText = "Could not load Surah list. Please check internet and try again.";
+}
+
+}
+
+}
+
+// =========================
+// RENDER SURAH INDEX LIST
+// =========================
+function renderSurahIndexList(surahList){
+
+let list = document.getElementById("surahIndexList");
+if(!list) return;
+
+list.innerHTML = "";
+
+surahList.forEach(function(surah){
+
+let row = document.createElement("div");
+
+row.onclick = function(){
+openQuranReadingPage(surah.number, surah.englishName, surah.name);
+};
+
+row.style.background = "white";
+row.style.borderRadius = "24px";
+row.style.padding = "18px 16px";
+row.style.boxShadow = "0 8px 20px rgba(0,0,0,0.06)";
+row.style.display = "flex";
+row.style.alignItems = "center";
+row.style.justifyContent = "space-between";
+row.style.gap = "12px";
+row.style.cursor = "pointer";
+
+row.innerHTML = `
+  <div style="
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-width:0;
+  flex:1;
+  ">
+
+    <div style="
+    width:42px;
+    height:42px;
+    border-radius:14px;
+    background:#f2f2f7;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:15px;
+    font-weight:800;
+    color:#111;
+    flex-shrink:0;
+    ">
+      ${surah.number}
+    </div>
+
+    <div style="
+    min-width:0;
+    flex:1;
+    ">
+      <div style="
+      font-size:17px;
+      font-weight:800;
+      color:#111;
+      margin-bottom:3px;
+      letter-spacing:-0.2px;
+      ">
+        ${surah.englishName}
+      </div>
+
+      <div style="
+      font-size:13px;
+      color:#666;
+      line-height:1.4;
+      ">
+        ${surah.englishNameTranslation}
+      </div>
+    </div>
+
+  </div>
+
+  <div style="
+  font-size:24px;
+  font-weight:700;
+  color:#111;
+  direction:rtl;
+  text-align:right;
+  flex-shrink:0;
+  max-width:42%;
+  line-height:1.4;
+  ">
+    <div style="display:flex;justify-content:space-between;align-items:center;width:100%;">
+  
+  <div style="font-weight:600;font-size:16px;">
+    ${surah.name}
+  </div>
+
+  <div style="font-size:18px;font-weight:700;direction:rtl;">
+    ${surah.nameAr}
+  </div>
+
+</div>
+  </div>
+`;
+
+list.appendChild(row);
+
+});
+
+}
+
+
+
+
+     
+// =========================
+// OPEN SURAH INDEX PAGE
+// =========================
+function openSurahIndexPage(){
+
+let homePage = document.getElementById("homePage");
+let salahPage = document.getElementById("salahPage");
+let trackerPage = document.getElementById("trackerPage");
+let morePage = document.getElementById("morePage");
+
+let quranPage = document.getElementById("quranPage");
+let arabicQuranPage = document.getElementById("arabicQuranPage");
+let quran15Page = document.getElementById("quran15Page");
+let quranReadingPage = document.getElementById("quranReadingPage");
+
+let surahIndexPage = document.getElementById("surahIndexPage");
+let bottomNav = document.getElementById("bottomNav");
+
+// 🔴 HIDE EVERYTHING FIRST
+if(homePage) homePage.style.display = "none";
+if(salahPage) salahPage.style.display = "none";
+if(trackerPage) trackerPage.style.display = "none";
+if(morePage) morePage.style.display = "none";
+
+if(quranPage) quranPage.style.display = "none";
+if(arabicQuranPage) arabicQuranPage.style.display = "none";
+if(quran15Page) quran15Page.style.display = "none";
+if(quranReadingPage) quranReadingPage.style.display = "none";
+
+// ✅ SHOW ONLY SURAH INDEX
+if(surahIndexPage) surahIndexPage.style.display = "block";
+if(bottomNav) bottomNav.style.display = "flex";
+
+window.scrollTo(0,0);
+loadSurahIndexList();
+
+}
+
+
+
+// =========================
+// OPEN 15 LINE QURAN PAGE
+// =========================
+function openQuran15Page(){
+
+let quranPage = document.getElementById("quranPage");
+let quran15Page = document.getElementById("quran15Page");
+let surahIndexPage = document.getElementById("surahIndexPage");
+let quranReadingPage = document.getElementById("quranReadingPage");
+let bottomNav = document.getElementById("bottomNav");
+
+if(quranPage) quranPage.style.display = "none";
+if(surahIndexPage) surahIndexPage.style.display = "none";
+if(quranReadingPage) quranReadingPage.style.display = "none";
+if(quran15Page) quran15Page.style.display = "block";
+if(bottomNav) bottomNav.style.display = "flex";
+
+window.scrollTo(0,0);
+
+}
+
+// =========================
+// CLOSE 15 LINE QURAN PAGE
+// =========================
+function closeQuran15Page(){
+
+let quranPage = document.getElementById("quranPage");
+let quran15Page = document.getElementById("quran15Page");
+let bottomNav = document.getElementById("bottomNav");
+
+if(quran15Page) quran15Page.style.display = "none";
+if(quranPage) quranPage.style.display = "block";
+if(bottomNav) bottomNav.style.display = "flex";
+
+window.scrollTo(0,0);
+
+}
+
+
+
+
+// =========================
+// OPEN 15 LINE SURAH PAGE
+// =========================
+function openQuran15SurahPage(){
+
+let quran15Page = document.getElementById("quran15Page");
+let quran15SurahPage = document.getElementById("quran15SurahPage");
+
+if(quran15Page) quran15Page.style.display = "none";
+if(quran15SurahPage) quran15SurahPage.style.display = "block";
+
+loadQuran15SurahList();
+
+window.scrollTo(0,0);
+
+}
+
+// =========================
+// CLOSE 15 LINE SURAH PAGE
+// =========================
+function closeQuran15SurahPage(){
+
+let quran15Page = document.getElementById("quran15Page");
+let quran15SurahPage = document.getElementById("quran15SurahPage");
+
+if(quran15SurahPage) quran15SurahPage.style.display = "none";
+if(quran15Page) quran15Page.style.display = "block";
+
+window.scrollTo(0,0);
+
+}
+
+
+
+// =========================
+// LOAD 15 LINE SURAH LIST
+// =========================
+function loadQuran15SurahList(){
+
+let container = document.getElementById("quran15SurahList");
+
+if(!container) return;
+
+container.innerHTML = "";
+
+// =========================
+// OPEN JUZ INDEX PAGE
+// =========================
+function openJuzIndexPage(){
+
+let quran15Page = document.getElementById("quran15Page");
+let juzIndexPage = document.getElementById("juzIndexPage");
+
+if(quran15Page) quran15Page.style.display = "none";
+if(juzIndexPage) juzIndexPage.style.display = "block";
+
+loadJuzIndexList();
+
+window.scrollTo(0,0);
+
+}
+
+// =========================
+// CLOSE JUZ INDEX PAGE
+// =========================
+function closeJuzIndexPage(){
+
+let quran15Page = document.getElementById("quran15Page");
+let juzIndexPage = document.getElementById("juzIndexPage");
+
+if(juzIndexPage) juzIndexPage.style.display = "none";
+if(quran15Page) quran15Page.style.display = "block";
+
+window.scrollTo(0,0);
+
+}
+
+
+     // =========================
+// LOAD JUZ INDEX LIST
+// =========================
+function loadJuzIndexList(){
+
+let container = document.getElementById("juzIndexList");
+if(!container) return;
+
+container.innerHTML = "";
+
+for(let juzNumber = 1; juzNumber <= 30; juzNumber++){
+
+let div = document.createElement("div");
+
+div.onclick = function(){
+openJuzFromIndex(juzNumber);
+};
+
+div.style.background = "white";
+div.style.borderRadius = "22px";
+div.style.padding = "18px";
+div.style.display = "flex";
+div.style.alignItems = "center";
+div.style.justifyContent = "space-between";
+div.style.boxShadow = "0 6px 16px rgba(0,0,0,0.06)";
+div.style.cursor = "pointer";
+
+div.innerHTML = `
+<div style="
+display:flex;
+align-items:center;
+gap:14px;
+min-width:0;
+">
+  <div style="
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  background:#f2f2f7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  font-weight:800;
+  color:#111;
+  flex-shrink:0;
+  ">
+    ${juzNumber}
+  </div>
+
+  <div>
+    <div style="
+    font-size:18px;
+    font-weight:800;
+    color:#111;
+    margin-bottom:3px;
+    ">
+      Juz ${juzNumber}
+    </div>
+
+    <div style="
+    font-size:13px;
+    color:#666;
+    ">
+      Open from first page
+    </div>
+  </div>
+</div>
+
+<div style="
+font-size:24px;
+color:#b0b0b8;
+margin-left:14px;
+flex-shrink:0;
+">
+  ›
+</div>
+`;
+
+container.appendChild(div);
+
+}
+
+}
+
+
+
+
+     // =========================
+// OPEN JUZ FROM INDEX
+// =========================
+function openJuzFromIndex(juzNumber){
+
+let startPage = 1;
+
+for(let i = 1; i < juzNumber; i++){
+startPage += juzPageCounts[i] || 0;
+}
+
+let juzIndexPage = document.getElementById("juzIndexPage");
+let quranReadingPage = document.getElementById("quranReadingPage");
+let quranReadingEnglishName = document.getElementById("quranReadingEnglishName");
+let quranReadingArabicName = document.getElementById("quranReadingArabicName");
+let quranReadingMeta = document.getElementById("quranReadingMeta");
+let quranReadingLoadingCard = document.getElementById("quranReadingLoadingCard");
+let quranReadingTextCard = document.getElementById("quranReadingTextCard");
+let mushafPageView = document.getElementById("mushafPageView");
+
+quranReadingSource = "quran15";
+currentQuranSurahNumber = 1;
+
+if(juzIndexPage) juzIndexPage.style.display = "none";
+if(quranReadingPage) quranReadingPage.style.display = "block";
+
+if(quranReadingEnglishName) quranReadingEnglishName.innerText = "Juz " + juzNumber;
+if(quranReadingArabicName) quranReadingArabicName.innerText = "";
+if(quranReadingMeta) quranReadingMeta.innerText = "15 Line Quran";
+
+if(quranReadingLoadingCard) quranReadingLoadingCard.style.display = "none";
+if(quranReadingTextCard) quranReadingTextCard.style.display = "none";
+if(mushafPageView) mushafPageView.style.display = "block";
+
+loadMushafPage(startPage);
+
+setTimeout(function(){
+
+setupInteractiveQuranFlip({
+stage: document.getElementById("quranFlipStage"),
+sheet: document.getElementById("quranFlipSheet"),
+underPage: document.getElementById("quranFlipUnderPage"),
+frontImage: document.getElementById("mushafPageImage"),
+underImage: document.getElementById("quranUnderImage"),
+shadow: document.querySelector("#quranFlipSheet .quranFlipShadow"),
+onNext: function(){
+nextMushafPage();
+},
+onPrev: function(){
+prevMushafPage();
+},
+getNextImageSrc: function(){
+return getNextMushafImageSrc();
+},
+getPrevImageSrc: function(){
+return getPrevMushafImageSrc();
+}
+});
+
+}, 100);
+
+window.scrollTo(0,0);
+
+}
+
+
+
+
+
+     
+
+// =========================
+// FULL 114 SURAH LIST
+// =========================
+let surahs = [
+{num:1, name:"Al-Fatiha", nameAr:"ٱلْفَاتِحَة"},
+{num:2, name:"Al-Baqarah", nameAr:"ٱلْبَقَرَة"},
+{num:3, name:"Aal Imran", nameAr:"آلِ عِمْرَان"},
+{num:4, name:"An-Nisa", nameAr:"ٱلنِّسَاء"},
+{num:5, name:"Al-Ma'idah", nameAr:"ٱلْمَائِدَة"},
+{num:6, name:"Al-An'am", nameAr:"ٱلْأَنْعَام"},
+{num:7, name:"Al-A'raf", nameAr:"ٱلْأَعْرَاف"},
+{num:8, name:"Al-Anfal", nameAr:"ٱلْأَنْفَال"},
+{num:9, name:"At-Tawbah", nameAr:"ٱلتَّوْبَة"},
+{num:10, name:"Yunus", nameAr:"يُونُس"},
+{num:11, name:"Hud", nameAr:"هُود"},
+{num:12, name:"Yusuf", nameAr:"يُوسُف"},
+{num:13, name:"Ar-Ra'd", nameAr:"ٱلرَّعْد"},
+{num:14, name:"Ibrahim", nameAr:"إِبْرَاهِيم"},
+{num:15, name:"Al-Hijr", nameAr:"ٱلْحِجْر"},
+{num:16, name:"An-Nahl", nameAr:"ٱلنَّحْل"},
+{num:17, name:"Al-Isra", nameAr:"ٱلْإِسْرَاء"},
+{num:18, name:"Al-Kahf", nameAr:"ٱلْكَهْف"},
+{num:19, name:"Maryam", nameAr:"مَرْيَم"},
+{num:20, name:"Ta-Ha", nameAr:"طه"},
+{num:21, name:"Al-Anbiya", nameAr:"ٱلْأَنْبِيَاء"},
+{num:22, name:"Al-Hajj", nameAr:"ٱلْحَجّ"},
+{num:23, name:"Al-Mu'minun", nameAr:"ٱلْمُؤْمِنُون"},
+{num:24, name:"An-Nur", nameAr:"ٱلنُّور"},
+{num:25, name:"Al-Furqan", nameAr:"ٱلْفُرْقَان"},
+{num:26, name:"Ash-Shu'ara", nameAr:"ٱلشُّعَرَاء"},
+{num:27, name:"An-Naml", nameAr:"ٱلنَّمْل"},
+{num:28, name:"Al-Qasas", nameAr:"ٱلْقَصَص"},
+{num:29, name:"Al-Ankabut", nameAr:"ٱلْعَنكَبُوت"},
+{num:30, name:"Ar-Rum", nameAr:"ٱلرُّوم"},
+{num:31, name:"Luqman", nameAr:"لُقْمَان"},
+{num:32, name:"As-Sajdah", nameAr:"ٱلسَّجْدَة"},
+{num:33, name:"Al-Ahzab", nameAr:"ٱلْأَحْزَاب"},
+{num:34, name:"Saba", nameAr:"سَبَأ"},
+{num:35, name:"Fatir", nameAr:"فَاطِر"},
+{num:36, name:"Ya-Sin", nameAr:"يس"},
+{num:37, name:"As-Saffat", nameAr:"ٱلصَّافَّات"},
+{num:38, name:"Sad", nameAr:"ص"},
+{num:39, name:"Az-Zumar", nameAr:"ٱلزُّمَر"},
+{num:40, name:"Ghafir", nameAr:"غَافِر"},
+{num:41, name:"Fussilat", nameAr:"فُصِّلَت"},
+{num:42, name:"Ash-Shura", nameAr:"ٱلشُّورَى"},
+{num:43, name:"Az-Zukhruf", nameAr:"ٱلزُّخْرُف"},
+{num:44, name:"Ad-Dukhan", nameAr:"ٱلدُّخَان"},
+{num:45, name:"Al-Jathiyah", nameAr:"ٱلْجَاثِيَة"},
+{num:46, name:"Al-Ahqaf", nameAr:"ٱلْأَحْقَاف"},
+{num:47, name:"Muhammad", nameAr:"مُحَمَّد"},
+{num:48, name:"Al-Fath", nameAr:"ٱلْفَتْح"},
+{num:49, name:"Al-Hujurat", nameAr:"ٱلْحُجُرَات"},
+{num:50, name:"Qaf", nameAr:"ق"},
+{num:51, name:"Adh-Dhariyat", nameAr:"ٱلذَّارِيَات"},
+{num:52, name:"At-Tur", nameAr:"ٱلطُّور"},
+{num:53, name:"An-Najm", nameAr:"ٱلنَّجْم"},
+{num:54, name:"Al-Qamar", nameAr:"ٱلْقَمَر"},
+{num:55, name:"Ar-Rahman", nameAr:"ٱلرَّحْمَٰن"},
+{num:56, name:"Al-Waqi'ah", nameAr:"ٱلْوَاقِعَة"},
+{num:57, name:"Al-Hadid", nameAr:"ٱلْحَدِيد"},
+{num:58, name:"Al-Mujadilah", nameAr:"ٱلْمُجَادِلَة"},
+{num:59, name:"Al-Hashr", nameAr:"ٱلْحَشْر"},
+{num:60, name:"Al-Mumtahanah", nameAr:"ٱلْمُمْتَحِنَة"},
+{num:61, name:"As-Saff", nameAr:"ٱلصَّفّ"},
+{num:62, name:"Al-Jumu'ah", nameAr:"ٱلْجُمُعَة"},
+{num:63, name:"Al-Munafiqun", nameAr:"ٱلْمُنَافِقُون"},
+{num:64, name:"At-Taghabun", nameAr:"ٱلتَّغَابُن"},
+{num:65, name:"At-Talaq", nameAr:"ٱلطَّلَاق"},
+{num:66, name:"At-Tahrim", nameAr:"ٱلتَّحْرِيم"},
+{num:67, name:"Al-Mulk", nameAr:"ٱلْمُلْك"},
+{num:68, name:"Al-Qalam", nameAr:"ٱلْقَلَم"},
+{num:69, name:"Al-Haqqah", nameAr:"ٱلْحَاقَّة"},
+{num:70, name:"Al-Ma'arij", nameAr:"ٱلْمَعَارِج"},
+{num:71, name:"Nuh", nameAr:"نُوح"},
+{num:72, name:"Al-Jinn", nameAr:"ٱلْجِنّ"},
+{num:73, name:"Al-Muzzammil", nameAr:"ٱلْمُزَّمِّل"},
+{num:74, name:"Al-Muddaththir", nameAr:"ٱلْمُدَّثِّر"},
+{num:75, name:"Al-Qiyamah", nameAr:"ٱلْقِيَامَة"},
+{num:76, name:"Al-Insan", nameAr:"ٱلْإِنسَان"},
+{num:77, name:"Al-Mursalat", nameAr:"ٱلْمُرْسَلَات"},
+{num:78, name:"An-Naba", nameAr:"ٱلنَّبَإ"},
+{num:79, name:"An-Nazi'at", nameAr:"ٱلنَّازِعَات"},
+{num:80, name:"Abasa", nameAr:"عَبَسَ"},
+{num:81, name:"At-Takwir", nameAr:"ٱلتَّكْوِير"},
+{num:82, name:"Al-Infitar", nameAr:"ٱلْإِنفِطَار"},
+{num:83, name:"Al-Mutaffifin", nameAr:"ٱلْمُطَفِّفِين"},
+{num:84, name:"Al-Inshiqaq", nameAr:"ٱلْإِنشِقَاق"},
+{num:85, name:"Al-Buruj", nameAr:"ٱلْبُرُوج"},
+{num:86, name:"At-Tariq", nameAr:"ٱلطَّارِق"},
+{num:87, name:"Al-A'la", nameAr:"ٱلْأَعْلَى"},
+{num:88, name:"Al-Ghashiyah", nameAr:"ٱلْغَاشِيَة"},
+{num:89, name:"Al-Fajr", nameAr:"ٱلْفَجْر"},
+{num:90, name:"Al-Balad", nameAr:"ٱلْبَلَد"},
+{num:91, name:"Ash-Shams", nameAr:"ٱلشَّمْس"},
+{num:92, name:"Al-Layl", nameAr:"ٱلَّيْل"},
+{num:93, name:"Ad-Duha", nameAr:"ٱلضُّحَى"},
+{num:94, name:"Ash-Sharh", nameAr:"ٱلشَّرْح"},
+{num:95, name:"At-Tin", nameAr:"ٱلتِّين"},
+{num:96, name:"Al-Alaq", nameAr:"ٱلْعَلَق"},
+{num:97, name:"Al-Qadr", nameAr:"ٱلْقَدْر"},
+{num:98, name:"Al-Bayyinah", nameAr:"ٱلْبَيِّنَة"},
+{num:99, name:"Az-Zalzalah", nameAr:"ٱلزَّلْزَلَة"},
+{num:100, name:"Al-Adiyat", nameAr:"ٱلْعَادِيَات"},
+{num:101, name:"Al-Qari'ah", nameAr:"ٱلْقَارِعَة"},
+{num:102, name:"At-Takathur", nameAr:"ٱلتَّكَاثُر"},
+{num:103, name:"Al-Asr", nameAr:"ٱلْعَصْر"},
+{num:104, name:"Al-Humazah", nameAr:"ٱلْهُمَزَة"},
+{num:105, name:"Al-Fil", nameAr:"ٱلْفِيل"},
+{num:106, name:"Quraysh", nameAr:"قُرَيْش"},
+{num:107, name:"Al-Ma'un", nameAr:"ٱلْمَاعُون"},
+{num:108, name:"Al-Kawthar", nameAr:"ٱلْكَوْثَر"},
+{num:109, name:"Al-Kafirun", nameAr:"ٱلْكَافِرُون"},
+{num:110, name:"An-Nasr", nameAr:"ٱلنَّصْر"},
+{num:111, name:"Al-Masad", nameAr:"ٱلْمَسَد"},
+{num:112, name:"Al-Ikhlas", nameAr:"ٱلْإِخْلَاص"},
+{num:113, name:"Al-Falaq", nameAr:"ٱلْفَلَق"},
+{num:114, name:"An-Nas", nameAr:"ٱلنَّاس"}
+];
+surahs.forEach(surah => {
+
+let div = document.createElement("div");
+
+div.style = `
+background:white;
+border-radius:22px;
+padding:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 6px 16px rgba(0,0,0,0.06);
+cursor:pointer;
+`;
+
+div.innerHTML = `
+<div style="
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+">
+  <div style="min-width:0;flex:1;">
+    <div style="font-size:18px;font-weight:800;color:#111;">
+      ${surah.num}. ${surah.name}
+    </div>
+   
+  </div>
+
+  <div style="
+  font-size:22px;
+  font-weight:700;
+  color:#111;
+  direction:rtl;
+  text-align:right;
+  font-family:'Amiri','Noto Naskh Arabic',serif;
+  flex-shrink:0;
+  ">
+    ${surah.nameAr}
+  </div>
+</div>
+`;
+
+div.onclick = function(){
+  openQuran15PageFromSurah(surah.num, surah.name, surah.nameAr);
+};
+
+container.appendChild(div);
+
+});
+
+}
+     
+
+     
+     
+// =========================
+// CLOSE SURAH INDEX PAGE
+// =========================
+function closeSurahIndexPage(){
+
+let arabicQuranPage = document.getElementById("arabicQuranPage");
+let surahIndexPage = document.getElementById("surahIndexPage");
+let bottomNav = document.getElementById("bottomNav");
+
+if(surahIndexPage) surahIndexPage.style.display = "none";
+if(arabicQuranPage) arabicQuranPage.style.display = "block";
+if(bottomNav) bottomNav.style.display = "flex";
+
+window.scrollTo(0,0);
+
+}
+
+// =========================
+// QURAN SURAH TO MUSHAF PAGE MAP
+// =========================
+// =========================
+// SURAH TO MUSHAF PAGE MAP (FIXED)
+// =========================
+const surahToMushafPageMap = {
+  1: 1,
+  2: 2,
+  3: 67,
+  4: 105,
+  5: 146,
+  6: 176,
+  7: 208,
+  8: 245,
+  9: 259,
+  10: 287,
+  11: 307,
+  12: 327,
+  13: 327,
+  14: 345,
+  15: 354,
+  16: 363,
+  17: 392,
+  18: 407,
+  19: 424,
+  20: 434,
+  21: 448,
+  22: 461,
+  23: 476,
+  24: 486,
+  25: 500,
+  26: 510,
+  27: 524,
+  28: 534,
+  29: 551,
+  30: 561,
+  31: 570,
+  32: 576,
+  33: 580,
+  34: 594,
+  35: 602,
+  36: 610,
+  37: 617,
+  38: 627,
+  39: 634,
+  40: 646,
+  41: 658,
+  42: 667,
+  43: 676,
+  44: 685,
+  45: 690,
+  46: 696,
+  47: 703,
+  48: 709,
+  49: 715,
+  50: 720,
+  51: 724,
+  52: 728,
+  53: 731,
+  54: 735,
+  55: 739,
+  56: 744,
+  57: 749,
+  58: 756,
+  59: 760,
+  60: 765,
+  61: 769,
+  62: 772,
+  63: 774,
+  64: 776,
+  65: 779,
+  66: 782,
+  67: 786,
+  68: 789,
+  69: 793,
+  70: 796,
+  71: 799,
+  72: 802,
+  73: 805,
+  74: 807,
+  75: 810,
+  76: 812,
+  77: 815,
+  78: 818,
+  79: 819,
+  80: 821,
+  81: 823,
+  82: 824,
+  83: 825,
+  84: 827,
+  85: 828,
+  86: 829,
+  87: 830,
+  88: 831,
+  89: 832,
+  90: 834,
+  91: 835,
+  92: 836,
+  93: 837,
+  94: 837,
+  95: 838,
+  96: 837,
+  97: 839,
+  98: 839,
+  99: 840,
+  100: 841,
+  101: 842,
+  102: 842,
+  103: 843,
+  104: 843,
+  105: 843,
+  106: 844,
+  107: 844,
+  108: 845,
+  109: 845,
+  110: 845,
+  111: 846,
+  112: 846,
+  113: 846,
+  114: 847
+};
+     
+// =========================
+// GET MUSHAF START PAGE FOR SURAH
+// =========================
+function getMushafStartPageForSurah(surahNumber){
+  return surahToMushafPageMap[surahNumber] || 1;
+}
+     
+
+
+
+// =========================
+// OPEN 15 LINE QURAN FROM SURAH
+// =========================
+function openQuran15PageFromSurah(surahNumber, surahName, surahArabicName){
+
+quranReadingSource = "quran15";
+currentQuranSurahNumber = surahNumber;
+
+let quran15Page = document.getElementById("quran15Page");
+let quran15SurahPage = document.getElementById("quran15SurahPage");
+let quranReadingPage = document.getElementById("quranReadingPage");
+let quranReadingEnglishName = document.getElementById("quranReadingEnglishName");
+let quranReadingArabicName = document.getElementById("quranReadingArabicName");
+let quranReadingMeta = document.getElementById("quranReadingMeta");
+let quranReadingLoadingCard = document.getElementById("quranReadingLoadingCard");
+let quranReadingTextCard = document.getElementById("quranReadingTextCard");
+let mushafPageView = document.getElementById("mushafPageView");
+
+if(quran15Page) quran15Page.style.display = "none";
+if(quran15SurahPage) quran15SurahPage.style.display = "none";
+if(quranReadingPage) quranReadingPage.style.display = "block";
+
+if(quranReadingEnglishName) quranReadingEnglishName.innerText = surahName || "Surah";
+if(quranReadingArabicName) quranReadingArabicName.innerText = surahArabicName || "";
+if(quranReadingMeta) quranReadingMeta.innerText = "15 Line Quran";
+
+if(quranReadingLoadingCard) quranReadingLoadingCard.style.display = "none";
+if(quranReadingTextCard) quranReadingTextCard.style.display = "none";
+if(mushafPageView) mushafPageView.style.display = "block";
+
+let startPage = getMushafStartPageForSurah(surahNumber);
+loadMushafPage(startPage);
+
+setTimeout(function(){
+
+setupInteractiveQuranFlip({
+stage: document.getElementById("quranFlipStage"),
+sheet: document.getElementById("quranFlipSheet"),
+underPage: document.getElementById("quranFlipUnderPage"),
+frontImage: document.getElementById("mushafPageImage"),
+underImage: document.getElementById("quranUnderImage"),
+shadow: document.querySelector("#quranFlipSheet .quranFlipShadow"),
+onNext: function(){
+prevMushafPage();
+},
+onPrev: function(){
+nextMushafPage();
+},
+getNextImageSrc: function(){
+return getPrevMushafImageSrc();
+},
+getPrevImageSrc: function(){
+return getNextMushafImageSrc();
+}
+});
+
+}, 100);
+
+window.scrollTo(0,0);
+
+}
+
+
+
+
+     
+
+// =========================
+// OPEN QURAN READING PAGE
+// =========================
+function openQuranReadingPage(surahNumber, englishName, arabicName){
+
+quranReadingSource = "arabic";
+currentQuranSurahNumber = surahNumber;
+
+let surahIndexPage = document.getElementById("surahIndexPage");
+let quranReadingPage = document.getElementById("quranReadingPage");
+let loadingCard = document.getElementById("quranReadingLoadingCard");
+let textCard = document.getElementById("quranReadingTextCard");
+let textBox = document.getElementById("quranReadingText");
+let englishNameEl = document.getElementById("quranReadingEnglishName");
+let arabicNameEl = document.getElementById("quranReadingArabicName");
+let metaEl = document.getElementById("quranReadingMeta");
+let mushafPageView = document.getElementById("mushafPageView");
+
+if(surahIndexPage) surahIndexPage.style.display = "none";
+if(quranReadingPage) quranReadingPage.style.display = "block";
+if(mushafPageView) mushafPageView.style.display = "none";
+
+if(englishNameEl) englishNameEl.innerText = englishName || "Surah";
+if(arabicNameEl) arabicNameEl.innerText = arabicName || "";
+if(metaEl) metaEl.innerText = "Arabic text";
+if(textBox) textBox.innerHTML = "";
+
+if(loadingCard){
+loadingCard.style.display = "block";
+loadingCard.innerText = "Loading surah...";
+}
+
+if(textCard){
+textCard.style.display = "none";
+}
+
+window.scrollTo(0,0);
+
+loadQuranSurahText(surahNumber);
+
+}
+
+// =========================
+// LOAD QURAN SURAH TEXT
+// =========================
+async function loadQuranSurahText(surahNumber){
+
+let loadingCard = document.getElementById("quranReadingLoadingCard");
+let textCard = document.getElementById("quranReadingTextCard");
+let textBox = document.getElementById("quranReadingText");
+let metaEl = document.getElementById("quranReadingMeta");
+
+try{
+
+let response = await fetch("https://api.alquran.cloud/v1/surah/" + surahNumber);
+let data = await response.json();
+
+if(!data || !data.data || !data.data.ayahs){
+throw new Error("Surah not loaded");
+}
+
+let surah = data.data;
+let ayahs = surah.ayahs || [];
+
+let fullText = ayahs.map(function(ayah){
+return ayah.text + " <span style='display:inline-block;font-size:18px;color:#6f624d;margin:0 2px;vertical-align:middle;line-height:1;'>۝" + ayah.numberInSurah + "</span>";
+}).join(" ");
+
+if(textBox){
+textBox.innerHTML = fullText;
+}
+
+if(metaEl){
+metaEl.innerText = ayahs.length + " ayahs";
+}
+
+if(loadingCard){
+loadingCard.style.display = "none";
+}
+
+if(textCard){
+textCard.style.display = "block";
+}
+
+}catch(error){
+
+if(loadingCard){
+loadingCard.style.display = "block";
+loadingCard.innerText = "Could not load surah. Please check internet and try again.";
+}
+
+if(textCard){
+textCard.style.display = "none";
+}
+
+}
+
+}
+
+// =========================
+// CLOSE QURAN READING PAGE
+// =========================
+function closeQuranReadingPage(){
+
+let surahIndexPage = document.getElementById("surahIndexPage");
+let quran15SurahPage = document.getElementById("quran15SurahPage");
+let quranReadingPage = document.getElementById("quranReadingPage");
+let quranReadingTextCard = document.getElementById("quranReadingTextCard");
+let mushafPageView = document.getElementById("mushafPageView");
+
+if(quranReadingPage) quranReadingPage.style.display = "none";
+
+if(quranReadingSource === "quran15"){
+  if(quran15SurahPage) quran15SurahPage.style.display = "block";
+  if(quranReadingTextCard) quranReadingTextCard.style.display = "none";
+  if(mushafPageView) mushafPageView.style.display = "none";
+}
+else{
+  if(surahIndexPage) surahIndexPage.style.display = "block";
+  if(quranReadingTextCard) quranReadingTextCard.style.display = "block";
+  if(mushafPageView) mushafPageView.style.display = "none";
+}
+
+window.scrollTo(0,0);
+
+}
+  
+
+  
+// =========================
+// OPEN QURAN PAGE
+// =========================
+function openQuranPage(){
+
+let homePage = document.getElementById("homePage");
+let trackerPage = document.getElementById("trackerPage");
+let salahPage = document.getElementById("salahPage");
+let morePage = document.getElementById("morePage");
+let tasbihPage = document.getElementById("tasbihPage");
+let duaPage = document.getElementById("duaPage");
+let zikrPage = document.getElementById("zikrPage");
+let zikrDetailPage = document.getElementById("zikrDetailPage");
+let qiblaPage = document.getElementById("qiblaPage");
+let quranPage = document.getElementById("quranPage");
+let quran15Page = document.getElementById("quran15Page");
+let surahIndexPage = document.getElementById("surahIndexPage");
+let quranReadingPage = document.getElementById("quranReadingPage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+let bottomNav = document.getElementById("bottomNav");
+     
+if(homePage) homePage.style.display = "none";
+if(trackerPage) trackerPage.style.display = "none";
+if(salahPage) salahPage.style.display = "none";
+if(morePage) morePage.style.display = "none";
+if(tasbihPage) tasbihPage.style.display = "none";
+if(duaPage) duaPage.style.display = "none";
+if(zikrPage) zikrPage.style.display = "none";
+if(zikrDetailPage) zikrDetailPage.style.display = "none";
+if(qiblaPage) qiblaPage.style.display = "none";
+if(quran15Page) quran15Page.style.display = "none";
+if(surahIndexPage) surahIndexPage.style.display = "none";
+if(quranReadingPage) quranReadingPage.style.display = "none";
+
+if(quranPage) quranPage.style.display = "block";
+
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+if(bottomNav) bottomNav.style.display = "flex";
+
+window.scrollTo(0,0);
+
+}
+
+// =========================
+// CLOSE QURAN PAGE
+// =========================
+function closeQuranPage(){
+
+let homePage = document.getElementById("homePage");
+let trackerPage = document.getElementById("trackerPage");
+let morePage = document.getElementById("morePage");
+let quranPage = document.getElementById("quranPage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+let bottomNav = document.getElementById("bottomNav");
+let quran15Page = document.getElementById("quran15Page");
+let surahIndexPage = document.getElementById("surahIndexPage");
+let quranReadingPage = document.getElementById("quranReadingPage");
+
+if(quranPage) quranPage.style.display = "none";
+if(quran15Page) quran15Page.style.display = "none";
+if(surahIndexPage) surahIndexPage.style.display = "none";
+if(quranReadingPage) quranReadingPage.style.display = "none";
+
+if(lastMainTab === "home"){
+if(homePage) homePage.style.display = "block";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+}
+else if(lastMainTab === "more"){
+if(morePage) morePage.style.display = "block";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+}
+else{
+if(trackerPage) trackerPage.style.display = "block";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
+}
+
+if(bottomNav) bottomNav.style.display = "flex";
+
+window.scrollTo(0,0);
+
+}
+
 // =========================
 // OPEN TASBIH PAGE 
 // =========================
@@ -4802,6 +6872,7 @@ let duaPage = document.getElementById("duaPage");
 let zikrPage = document.getElementById("zikrPage");
 let zikrDetailPage = document.getElementById("zikrDetailPage");
 let qiblaPage = document.getElementById("qiblaPage");
+let quranPage = document.getElementById("quranPage");
 let tasbihPage = document.getElementById("tasbihPage");
 let floatingMenuBtn = document.getElementById("floatingMenuBtn");
 let bottomNav = document.getElementById("bottomNav");
@@ -4815,6 +6886,7 @@ if(duaPage) duaPage.style.display = "none";
 if(zikrPage) zikrPage.style.display = "none";
 if(zikrDetailPage) zikrDetailPage.style.display = "none";
 if(qiblaPage) qiblaPage.style.display = "none";
+if(quranPage) quranPage.style.display = "none";
 
 // OPEN TASBIH
 if(tasbihPage) tasbihPage.style.display = "block";
@@ -5384,6 +7456,101 @@ document.getElementById("ishaTime").innerText = "--:--";
 }
 
 // =========================
+// HIGHLIGHT NEXT SALAH ROW
+// =========================
+function highlightNextSalahRow(data){
+
+let rowIds = ["fajrRow","dhuhrRow","asrRow","maghribRow","ishaRow"];
+
+// CLEAR OLD HIGHLIGHT
+rowIds.forEach(function(id){
+let row = document.getElementById(id);
+if(!row) return;
+
+row.style.background = "transparent";
+row.style.border = "none";
+row.style.borderRadius = "0";
+row.style.paddingLeft = "0";
+row.style.paddingRight = "0";
+row.style.boxShadow = "none";
+row.style.transform = "scale(1)";
+});
+
+// no data = stop
+if(!data) return;
+
+// ONLY highlight on TODAY
+let selectedDate = getSelectedSalahDate();
+let today = new Date();
+
+selectedDate.setHours(0,0,0,0);
+today.setHours(0,0,0,0);
+
+if(selectedDate.getTime() !== today.getTime()){
+return;
+}
+
+// helper: convert "5:15 AM" to Date
+function timeTextToDate(timeText){
+if(!timeText) return null;
+
+let parts = String(timeText).trim().split(" ");
+if(parts.length < 2) return null;
+
+let hm = parts[0].split(":");
+if(hm.length < 2) return null;
+
+let hour = parseInt(hm[0], 10);
+let minute = parseInt(hm[1], 10);
+let ampm = parts[1].toUpperCase();
+
+if(ampm === "PM" && hour !== 12) hour += 12;
+if(ampm === "AM" && hour === 12) hour = 0;
+
+let d = new Date();
+d.setHours(hour, minute, 0, 0);
+return d;
+}
+
+let salahList = [
+{id:"fajrRow", time:data.fajr},
+{id:"dhuhrRow", time:data.dhuhr},
+{id:"asrRow", time:data.asr},
+{id:"maghribRow", time:data.maghrib},
+{id:"ishaRow", time:data.isha}
+];
+
+let now = new Date();
+let nextRowId = null;
+
+for(let i = 0; i < salahList.length; i++){
+let salahDate = timeTextToDate(salahList[i].time);
+if(salahDate && salahDate > now){
+nextRowId = salahList[i].id;
+break;
+}
+}
+
+// if all salah passed, highlight Fajr for next cycle
+if(!nextRowId){
+nextRowId = "fajrRow";
+}
+
+let activeRow = document.getElementById(nextRowId);
+if(!activeRow) return;
+
+activeRow.style.background = "rgba(233,233,238,0.58)";
+activeRow.style.border = "1px solid rgba(255,255,255,0.35)";
+activeRow.style.borderRadius = "18px";
+activeRow.style.paddingLeft = "12px";
+activeRow.style.paddingRight = "12px";
+activeRow.style.boxShadow = "0 6px 16px rgba(0,0,0,0.08)";
+activeRow.style.transform = "scale(1.01)";
+
+}
+
+     
+// =========================
 // APPLY SALAH DATA TO SCREEN
 // =========================
 function applySalahDataToScreen(data){
@@ -5403,6 +7570,8 @@ document.getElementById("asrTime").innerText = data.asr;
 document.getElementById("maghribTime").innerText = data.maghrib;
 document.getElementById("sunsetTime").innerText = data.maghrib;
 document.getElementById("ishaTime").innerText = data.isha;
+
+highlightNextSalahRow(data);
 }
 
 async function refreshLocationSalahData(){
@@ -6573,16 +8742,24 @@ let duaPage = document.getElementById("duaPage");
 let qiblaPage = document.getElementById("qiblaPage");
 let zikrPage = document.getElementById("zikrPage");
 let zikrDetailPage = document.getElementById("zikrDetailPage");
+let homePage = document.getElementById("homePage");
+let trackerPage = document.getElementById("trackerPage");
 let floatingMenuBtn = document.getElementById("floatingMenuBtn");
 let bottomNav = document.getElementById("bottomNav");
+
 updateSalahTopButton();
 
+if(homePage) homePage.style.display = "none";
+if(trackerPage) trackerPage.style.display = "none";
 if(morePage) morePage.style.display = "none";
 if(tasbihPage) tasbihPage.style.display = "none";
 if(duaPage) duaPage.style.display = "none";
 if(qiblaPage) qiblaPage.style.display = "none";
 if(zikrPage) zikrPage.style.display = "none";
 if(zikrDetailPage) zikrDetailPage.style.display = "none";
+
+// CLOSE ALL QURAN LAYERS
+hideAllQuranLayers();
 
 if(salahPage) salahPage.style.display = "block";
 
@@ -6599,7 +8776,6 @@ setSalahSource("location");
 
 window.scrollTo(0,0);
 }
-
   
 // =========================
 // CLOSE SALAH PAGE
@@ -10353,6 +12529,19 @@ box-shadow:0 6px 16px rgba(0,0,0,0.08);
 <div style="font-size:15px;font-weight:700;color:#111;">Daily Dhikr</div>
 </div>
 
+<!-- Open Quran Page Card -->
+<div onclick="openMoreQuranPage()" style="
+background:white;
+border-radius:22px;
+padding:18px 10px;
+text-align:center;
+cursor:pointer;
+box-shadow:0 6px 16px rgba(0,0,0,0.08);
+">
+<div style="font-size:28px;margin-bottom:8px;">📖</div>
+<div style="font-size:15px;font-weight:700;color:#111;">Quran</div>
+</div>
+
 <!-- Open Qibla Page Card -->
 <div onclick="document.getElementById('morePage').style.display='none'; openQiblaPage();" style="
 background:white;
@@ -10373,8 +12562,1046 @@ box-shadow:0 6px 16px rgba(0,0,0,0.08);
 </div>
 </div>
 
+<div id="quranPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:92px;
+z-index:5000;
+background:#e9e9ee;
+overflow:auto;
+padding:18px 16px 120px 16px;
+box-sizing:border-box;
+">
 
+  <!-- =========================
+       QURAN PAGE TOP BAR
+  ========================= -->
+  <div style="
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+  ">
+
+    <!-- Close Quran Page Button -->
+    <button onclick="closeQuranPage()" style="
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:1px solid rgba(0,0,0,0.08);
+    background:white;
+    font-size:22px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#111;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    ">
+      ←
+    </button>
+
+    <div style="
+    font-size:22px;
+    font-weight:800;
+    color:#111;
+    letter-spacing:-0.3px;
+    ">
+      Quran
+    </div>
+
+    <div style="width:42px;height:42px;"></div>
+  </div>
+
+  <!-- =========================
+       QURAN PAGE HERO CARD
+  ========================= -->
+  <div style="
+  background:linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 100%);
+  border-radius:30px;
+  padding:28px 22px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  border:1px solid rgba(255,255,255,0.7);
+  margin-bottom:18px;
+  ">
+
+    <div style="
+    font-size:34px;
+    margin-bottom:12px;
+    ">
+      📖
+    </div>
+
+    <div style="
+    font-size:30px;
+    font-weight:800;
+    color:#111;
+    letter-spacing:-0.5px;
+    line-height:1.1;
+    margin-bottom:8px;
+    ">
+      Holy Quran
+    </div>
+
+    <div style="
+    font-size:15px;
+    line-height:1.6;
+    color:#666;
+    max-width:270px;
+    margin:0 auto;
+    ">
+      Continue your daily reading with a clean, peaceful, and premium Quran experience.
+    </div>
+
+  </div>
+
+    <!-- =========================
+       QURAN MAIN ACTION CARDS
+  ========================= -->
+  <div style="
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  ">
+
+    <!-- Arabic Quran Card -->
+    <div onclick="openArabicQuranPage()" style="
+    background:white;
+    border-radius:26px;
+    padding:22px 20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 8px 22px rgba(0,0,0,0.07);
+    border:1px solid rgba(0,0,0,0.03);
+    ">
+
+      <div style="
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+      ">
+
+        <div style="
+        width:52px;
+        height:52px;
+        border-radius:18px;
+        background:#f2f2f7;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:24px;
+        flex-shrink:0;
+        ">
+          🕋
+        </div>
+
+        <div>
+          <div style="
+          font-size:20px;
+          font-weight:800;
+          color:#111;
+          margin-bottom:4px;
+          letter-spacing:-0.2px;
+          ">
+            Arabic Quran
+          </div>
+
+          <div style="
+          font-size:14px;
+          color:#666;
+          line-height:1.5;
+          ">
+            Open Arabic Quran tools
+          </div>
+        </div>
+
+      </div>
+
+      <div style="
+      font-size:24px;
+      color:#b0b0b8;
+      margin-left:14px;
+      flex-shrink:0;
+      ">
+        ›
+      </div>
+
+    </div>
+
+    <!-- 15 LINE QURAN CARD -->
+    <div onclick="openQuran15Page()" style="
+    background:white;
+    border-radius:26px;
+    padding:22px 20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 8px 22px rgba(0,0,0,0.07);
+    border:1px solid rgba(0,0,0,0.03);
+    ">
+
+      <div style="
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+      ">
+
+        <div style="
+        width:52px;
+        height:52px;
+        border-radius:18px;
+        background:#f2f2f7;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:24px;
+        flex-shrink:0;
+        ">
+          📖
+        </div>
+
+        <div>
+          <div style="
+          font-size:20px;
+          font-weight:800;
+          color:#111;
+          margin-bottom:4px;
+          ">
+            15 Line Quran
+          </div>
+
+          <div style="
+          font-size:14px;
+          color:#666;
+          ">
+            Read by pages (Mushaf style)
+          </div>
+        </div>
+
+      </div>
+
+      <div style="
+      font-size:24px;
+      color:#b0b0b8;
+      margin-left:14px;
+      ">
+        ›
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
   
+<!-- =========================
+     SURAH INDEX PAGE
+========================= -->
+<div id="surahIndexPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:92px;
+z-index:5001;
+background:#e9e9ee;
+overflow:auto;
+padding:18px 16px 120px 16px;
+box-sizing:border-box;
+">
+
+  <!-- =========================
+       SURAH INDEX TOP BAR
+  ========================= -->
+  <div style="
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+  ">
+
+    <!-- Close Surah Index Page Button -->
+    <button onclick="closeSurahIndexPage()" style="
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:1px solid rgba(0,0,0,0.08);
+    background:white;
+    font-size:22px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#111;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    ">
+      ←
+    </button>
+
+    <div style="
+    font-size:22px;
+    font-weight:800;
+    color:#111;
+    letter-spacing:-0.3px;
+    ">
+      Surah Index
+    </div>
+
+    <div style="width:42px;height:42px;"></div>
+  </div>
+
+   <!-- =========================
+       QURAN READING HEADER CARD
+  ========================= -->
+  <div style="
+  background:linear-gradient(180deg, #fdfcf8 0%, #f7f3ea 100%);
+  border-radius:30px;
+  padding:22px 18px;
+  text-align:center;
+  box-shadow:0 10px 24px rgba(0,0,0,0.06);
+  border:1px solid rgba(140,120,90,0.10);
+  margin-bottom:16px;
+  ">
+
+    <div style="
+    font-size:26px;
+    font-weight:800;
+    color:#111;
+    margin-bottom:6px;
+    letter-spacing:-0.4px;
+    ">
+      Holy Quran
+    </div>
+
+    <div style="
+    font-size:14px;
+    line-height:1.5;
+    color:#666;
+    ">
+      All surahs in a clean and simple list
+    </div>
+
+  </div>
+
+  <!-- =========================
+       SURAH INDEX LOADING CARD
+  ========================= -->
+  <div id="surahIndexLoadingCard" style="
+  display:block;
+  background:white;
+  border-radius:24px;
+  padding:20px 18px;
+  text-align:center;
+  box-shadow:0 8px 20px rgba(0,0,0,0.06);
+  color:#666;
+  font-size:16px;
+  font-weight:600;
+  margin-bottom:14px;
+  ">
+    Loading surahs...
+  </div>
+
+  <!-- =========================
+       SURAH INDEX LIST
+  ========================= -->
+  <div id="surahIndexList" style="
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  ">
+  </div>
+
+</div>
+
+
+<!-- =========================
+     15 LINE QURAN MAIN PAGE
+========================= -->
+<div id="quran15Page" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:92px;
+z-index:5002;
+background:linear-gradient(180deg, #ece9e1 0%, #e9e9ee 100%);
+overflow:auto;
+padding:18px 16px 120px 16px;
+box-sizing:border-box;
+">
+
+  <!-- =========================
+       15 LINE QURAN TOP BAR
+  ========================= -->
+  <div style="
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+  ">
+
+    <!-- Close 15 Line Quran Page Button -->
+    <button onclick="closeQuran15Page()" style="
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:1px solid rgba(0,0,0,0.08);
+    background:white;
+    font-size:22px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#111;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    ">
+      ←
+    </button>
+
+    <div style="
+    font-size:20px;
+    font-weight:800;
+    color:#111;
+    letter-spacing:-0.3px;
+    ">
+      15 Line Quran
+    </div>
+
+    <div style="width:42px;height:42px;"></div>
+  </div>
+
+  <!-- =========================
+       15 LINE QURAN HERO CARD
+  ========================= -->
+  <div style="
+  background:linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 100%);
+  border-radius:30px;
+  padding:28px 22px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  border:1px solid rgba(255,255,255,0.7);
+  margin-bottom:18px;
+  ">
+
+    <div style="
+    font-size:34px;
+    margin-bottom:12px;
+    ">
+      📖
+    </div>
+
+    <div style="
+    font-size:28px;
+    font-weight:800;
+    color:#111;
+    letter-spacing:-0.5px;
+    line-height:1.1;
+    margin-bottom:8px;
+    ">
+      15 Line Quran
+    </div>
+
+    <div style="
+    font-size:15px;
+    line-height:1.6;
+    color:#666;
+    max-width:280px;
+    margin:0 auto;
+    ">
+      Read page by page with a clean Mushaf style layout.
+    </div>
+
+  </div>
+
+  <!-- =========================
+       15 LINE QURAN OPTION CARDS
+  ========================= -->
+  <div style="
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  ">
+
+    <!-- Continue Reading Card -->
+    <div onclick="alert('Continue Reading coming next step')" style="
+    background:white;
+    border-radius:26px;
+    padding:22px 20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 8px 22px rgba(0,0,0,0.07);
+    border:1px solid rgba(0,0,0,0.03);
+    ">
+      <div style="
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+      ">
+        <div style="
+        width:52px;
+        height:52px;
+        border-radius:18px;
+        background:#f2f2f7;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:24px;
+        flex-shrink:0;
+        ">
+          ▶️
+        </div>
+        <div>
+          <div style="
+          font-size:20px;
+          font-weight:800;
+          color:#111;
+          margin-bottom:4px;
+          ">
+            Continue Reading
+          </div>
+          <div style="
+          font-size:14px;
+          color:#666;
+          ">
+            Open your last saved page
+          </div>
+        </div>
+      </div>
+      <div style="
+      font-size:24px;
+      color:#b0b0b8;
+      margin-left:14px;
+      ">
+        ›
+      </div>
+    </div>
+
+   
+   <!-- Surah List Card -->
+<div onclick="openQuran15SurahPage()" style="
+    background:white;
+    border-radius:26px;
+    padding:22px 20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 8px 22px rgba(0,0,0,0.07);
+    border:1px solid rgba(0,0,0,0.03);
+    ">
+      <div style="
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+      ">
+        <div style="
+        width:52px;
+        height:52px;
+        border-radius:18px;
+        background:#f2f2f7;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:24px;
+        flex-shrink:0;
+        ">
+          📚
+        </div>
+        <div>
+          <div style="
+          font-size:20px;
+          font-weight:800;
+          color:#111;
+          margin-bottom:4px;
+          ">
+            Surah List
+          </div>
+          <div style="
+          font-size:14px;
+          color:#666;
+          ">
+            Open any surah by start page
+          </div>
+        </div>
+      </div>
+      <div style="
+      font-size:24px;
+      color:#b0b0b8;
+      margin-left:14px;
+      ">
+        ›
+      </div>
+    </div>
+
+    <!-- Juz List Card -->
+    <div onclick="openJuzIndexPage()" style="
+    background:white;
+    border-radius:26px;
+    padding:22px 20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 8px 22px rgba(0,0,0,0.07);
+    border:1px solid rgba(0,0,0,0.03);
+    ">
+      <div style="
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+      ">
+        <div style="
+        width:52px;
+        height:52px;
+        border-radius:18px;
+        background:#f2f2f7;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:24px;
+        flex-shrink:0;
+        ">
+          🕌
+        </div>
+        <div>
+          <div style="
+          font-size:20px;
+          font-weight:800;
+          color:#111;
+          margin-bottom:4px;
+          ">
+            Juz List
+          </div>
+          <div style="
+          font-size:14px;
+          color:#666;
+          ">
+            Open from the first page of any juz
+          </div>
+        </div>
+      </div>
+      <div style="
+      font-size:24px;
+      color:#b0b0b8;
+      margin-left:14px;
+      ">
+        ›
+      </div>
+    </div>
+   
+    <!-- Bookmarks Card -->
+    <div onclick="alert('Bookmarks coming next step')" style="
+    background:white;
+    border-radius:26px;
+    padding:22px 20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 8px 22px rgba(0,0,0,0.07);
+    border:1px solid rgba(0,0,0,0.03);
+    ">
+      <div style="
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+      ">
+        <div style="
+        width:52px;
+        height:52px;
+        border-radius:18px;
+        background:#f2f2f7;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:24px;
+        flex-shrink:0;
+        ">
+          🔖
+        </div>
+        <div>
+          <div style="
+          font-size:20px;
+          font-weight:800;
+          color:#111;
+          margin-bottom:4px;
+          ">
+            Bookmarks
+          </div>
+          <div style="
+          font-size:14px;
+          color:#666;
+          ">
+            Open your saved bookmarked pages
+          </div>
+        </div>
+      </div>
+      <div style="
+      font-size:24px;
+      color:#b0b0b8;
+      margin-left:14px;
+      ">
+        ›
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- =========================
+     15 LINE SURAH LIST PAGE
+========================= -->
+<div id="quran15SurahPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:92px;
+z-index:5002;
+background:linear-gradient(180deg, #ece9e1 0%, #e9e9ee 100%);
+overflow:auto;
+padding:18px 16px 120px 16px;
+box-sizing:border-box;
+">
+
+  <!-- =========================
+       TOP BAR
+  ========================= -->
+  <div style="
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+  ">
+
+    <button onclick="closeQuran15SurahPage()" style="
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:1px solid rgba(0,0,0,0.08);
+    background:white;
+    font-size:22px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#111;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    ">
+      ←
+    </button>
+
+    <div style="
+    font-size:20px;
+    font-weight:800;
+    color:#111;
+    ">
+      Surah List
+    </div>
+
+    <div style="width:42px;"></div>
+  </div>
+
+  <!-- =========================
+       SURAH LIST CONTAINER
+  ========================= -->
+  <div id="quran15SurahList" style="
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  ">
+  </div>
+
+</div>
+     
+
+
+     
+  <!-- =========================
+     QURAN READING PAGE
+========================= -->
+<div id="quranReadingPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:92px;
+z-index:5002;
+background:linear-gradient(180deg, #ece9e1 0%, #e9e9ee 100%);
+overflow:auto;
+padding:18px 16px 120px 16px;
+box-sizing:border-box;
+">
+  <!-- =========================
+       QURAN READING MINI TOP BAR
+  ========================= -->
+<div id="quranReadingMiniTopBar" style="
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:74px;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:0 16px;
+background:rgba(233,233,238,0.92);
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+border-radius:0;
+box-shadow:0 1px 0 rgba(0,0,0,0.06);
+border:none;
+z-index:20;
+box-sizing:border-box;
+">
+
+    <!-- Close Quran Reading Page Button -->
+   <button onclick="closeQuranReadingPage()" style="
+position:absolute;
+left:16px;
+top:50%;
+transform:translateY(-50%);
+width:38px;
+height:38px;
+border-radius:50%;
+border:none;
+background:transparent;
+font-size:28px;
+font-weight:500;
+color:#111;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+padding:0;
+box-shadow:none;
+">
+←
+</button>
+
+       <div style="
+    width:100%;
+    min-width:0;
+    text-align:center;
+    padding:0 56px;
+    box-sizing:border-box;
+    ">
+
+      <div id="quranReadingEnglishName" style="
+      font-size:15px;
+      font-weight:800;
+      color:#111;
+      letter-spacing:-0.2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      ">
+        Surah Name
+      </div>
+
+      <div id="quranReadingArabicName" style="
+      font-size:20px;
+      font-weight:700;
+      color:#2c2418;
+      direction:rtl;
+      line-height:1.25;
+      margin-top:2px;
+      font-family:'Amiri','Noto Naskh Arabic',serif;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      ">
+        سورة
+      </div>
+
+      <div id="quranReadingMeta" style="
+      display:none;
+      font-size:12px;
+      line-height:1.4;
+      color:#666;
+      margin-top:2px;
+      ">
+        Arabic text
+      </div>
+
+    </div>
+
+  </div>
+
+
+<!-- =========================
+     QURAN READING LOADING CARD
+========================= -->
+<div id="quranReadingLoadingCard" style="
+display:block;
+background:white;
+border-radius:20px;
+padding:16px 14px;
+text-align:center;
+box-shadow:0 8px 20px rgba(0,0,0,0.06);
+color:#666;
+font-size:15px;
+font-weight:600;
+margin-bottom:10px;
+">
+Loading surah...
+</div>
+
+<!-- =========================
+     QURAN READING TEXT CARD
+========================= -->
+<div id="quranReadingTextCard" style="
+display:none;
+background:linear-gradient(180deg, #fdfcf8 0%, #f8f4ea 100%);
+border-radius:28px;
+padding:22px 18px 24px 18px;
+box-shadow:0 12px 28px rgba(0,0,0,0.06);
+border:1px solid rgba(140,120,90,0.10);
+">
+
+  <div id="quranReadingText" style="
+  font-size:36px;
+  line-height:1.82;
+  color:#1b1712;
+  direction:rtl;
+  text-align:justify;
+  font-weight:600;
+  word-spacing:-1px;
+  letter-spacing:0px;
+  font-family:'Amiri','Noto Naskh Arabic',serif;
+  ">
+  </div>
+
+</div>
+
+<!-- =========================
+     FULL SCREEN 15 LINE MUSHAF VIEW
+========================= -->
+<div id="mushafPageView" style="
+display:none;
+position:absolute;
+top:60px;
+left:0;
+right:0;
+bottom:0;
+overflow:hidden;
+">
+
+  <!-- Full Quran Page Wrapper -->
+  <div style="
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  ">
+
+    <!-- Quran Page Card -->
+<div style="
+width:100%;
+height:calc(100vh - 160px);
+background:white;
+border-radius:12px;
+padding:0;
+box-shadow:none;
+border:none;
+box-sizing:border-box;
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+">
+   <!-- =========================
+     QURAN FLIP STAGE
+========================= -->
+<div class="quranFlipStage" id="quranFlipStage" style="
+width:100%;
+height:100%;
+">
+
+  <div class="quranFlipTrack" style="
+  width:100%;
+  height:100%;
+  ">
+
+    <!-- UNDER PAGE -->
+    <div class="quranFlipUnderPage" id="quranFlipUnderPage">
+      <img id="quranUnderImage" src="" style="
+      width:100%;
+      height:100%;
+      display:block;
+      border-radius:10px;
+      object-fit:cover;
+      object-position:center top;
+      ">
+    </div>
+
+    <!-- CURRENT PAGE -->
+    <div class="quranFlipSheet" id="quranFlipSheet">
+
+      <!-- Mushaf Page Image -->
+      <img id="mushafPageImage" src="" style="
+      width:100%;
+      height:100%;
+      display:block;
+      border-radius:10px;
+      object-fit:cover;
+      object-position:center top;
+      ">
+
+      <div class="quranFlipShadow"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Hidden Debug Text -->
+<div id="mushafDebugText" style="display:none;">
+Mushaf page loading...
+</div>
+    </div>
+
+  </div>
+
+</div>
+</div>
+
+  <!-- Controls -->
+  <div style="
+  display:flex;
+  justify-content:space-between;
+  margin-top:14px;
+  ">
+
+    <!-- removed arrows -->
+  </div>
+
+</div>
+     
+  
+
 <!-- =========================
      DUA PAGE
 ========================= -->
@@ -11398,10 +14625,13 @@ box-shadow:inset 0 0 0 1px rgba(0,0,0,0.03);
   
  <!-- Salah Date Card -->
 <div id="salahDateCard" style="
-background:#e9e9ee;
+background:rgba(255,255,255,0.16);
+backdrop-filter:blur(16px);
+-webkit-backdrop-filter:blur(16px);
+border:1px solid rgba(255,255,255,0.22);
 border-radius:22px;
 padding:14px 12px;
-box-shadow:0 4px 12px rgba(0,0,0,0.08);
+box-shadow:0 8px 22px rgba(0,0,0,0.12);
 margin-bottom:16px;
 width:100%;
 max-width:100%;
@@ -11497,10 +14727,13 @@ height:36px;
 
 <!-- Salah Times Card -->
 <div id="salahTimesCard" style="
-background:rgba(232,234,245,0.96);
+background:rgba(255,255,255,0.14);
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,0.20);
 border-radius:28px;
 padding:24px 18px;
-box-shadow:0 6px 18px rgba(0,0,0,0.10);
+box-shadow:0 10px 26px rgba(0,0,0,0.14);
 margin-bottom:16px;
 transition:transform 0.28s ease, opacity 0.28s ease;
 width:100%;
@@ -11518,12 +14751,13 @@ Salah Times
 </div>
 
 <!-- FAJR -->
-<div style="
+<div id="fajrRow" style="
 display:flex;
 align-items:center;
 justify-content:space-between;
 padding:8px 0;
 border-bottom:1px solid rgba(0,0,0,0.06);
+transition:all 0.25s ease;
 ">
   <div style="display:flex;align-items:center;gap:10px;">
    <div style="
@@ -11570,12 +14804,13 @@ justify-content:center;
 </div>
 
 <!-- DHUHR -->
-<div style="
+<div id="dhuhrRow" style="
 display:flex;
 align-items:center;
 justify-content:space-between;
 padding:8px 0;
 border-bottom:1px solid rgba(0,0,0,0.06);
+transition:all 0.25s ease;
 ">
   <div style="display:flex;align-items:center;gap:10px;">
    <div style="
@@ -11596,12 +14831,13 @@ justify-content:center;
 </div>
 
 <!-- ASR -->
-<div style="
+<div id="asrRow" style="
 display:flex;
 align-items:center;
 justify-content:space-between;
 padding:8px 0;
 border-bottom:1px solid rgba(0,0,0,0.06);
+transition:all 0.25s ease;
 ">
   <div style="display:flex;align-items:center;gap:10px;">
    <div style="
@@ -11621,12 +14857,13 @@ justify-content:center;
 </div>
 
 <!-- MAGHRIB -->
-<div style="
+<div id="maghribRow" style="
 display:flex;
 align-items:center;
 justify-content:space-between;
 padding:8px 0;
 border-bottom:1px solid rgba(0,0,0,0.06);
+transition:all 0.25s ease;
 ">
   <div style="display:flex;align-items:center;gap:10px;">
     <div style="
@@ -11647,11 +14884,12 @@ justify-content:center;
 </div>
 
 <!-- ISHA -->
-<div style="
+<div id="ishaRow" style="
 display:flex;
 align-items:center;
 justify-content:space-between;
 padding:8px 0;
+transition:all 0.25s ease;
 ">
   <div style="display:flex;align-items:center;gap:10px;">
    <div style="
@@ -12225,15 +15463,135 @@ font-weight:600;
     </div>
   </div>
 </div>
-  
-  
+
+</div>
+
+<!-- =========================
+     SIMPLE ARABIC QURAN PAGE
+========================= -->
+<div id="arabicQuranPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:92px;
+z-index:5000;
+background:url('wallpaper.jpg') center/cover no-repeat;
+overflow:auto;
+padding:15px 15px 110px 15px;
+box-sizing:border-box;
+">
+
+  <div style="padding:10px;">
+    <!-- Close Arabic Quran Page Button -->
+    <button onclick="closeArabicQuranPage()" style="
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    border:1px solid #ccc;
+    background:white;
+    font-size:20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    ">
+      ←
+    </button>
+  </div>
+
+  <!-- Arabic Quran Header Card -->
+  <div class="card" style="
+  text-align:center;
+  padding:28px 20px;
+  margin-top:10px;
+  ">
+    <div style="font-size:42px;margin-bottom:10px;">📖</div>
+    <div style="font-size:28px;font-weight:700;">
+      Arabic Quran
+    </div>
+    <div style="font-size:15px;color:#666;margin-top:8px;">
+      New page is working
+    </div>
+  </div>
+
+
+  <div onclick="alert('Resume coming in next step')" style="
+  background:white;
+  border-radius:26px;
+  padding:22px 20px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  margin-top:10px;
+  ">
+
+    <div style="
+    display:flex;
+    align-items:center;
+    gap:14px;
+    min-width:0;
+    ">
+
+      <div style="
+      width:52px;
+      height:52px;
+      border-radius:18px;
+      background:#f2f2f7;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+      flex-shrink:0;
+      ">
+        ▶️
+      </div>
+
+      <div>
+        <div style="
+        font-size:20px;
+        font-weight:800;
+        color:#111;
+        margin-bottom:4px;
+        letter-spacing:-0.2px;
+        ">
+          Resume Reading
+        </div>
+
+        <div style="
+        font-size:14px;
+        color:#666;
+        line-height:1.5;
+        ">
+          Continue from your last reading place
+        </div>
+      </div>
+
+    </div>
+
+    <div style="
+    font-size:24px;
+    color:#b0b0b8;
+    margin-left:14px;
+    flex-shrink:0;
+    ">
+      ›
+    </div>
+
+  </div>
+
+</div>
+
 <!-- =========================
      JAVASCRIPT LOGIC
 ========================= -->
-  <script>
+<script>
 // service worker removed for now
 </script>
-
 
 
 
