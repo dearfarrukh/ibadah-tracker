@@ -7188,7 +7188,43 @@ countdownEl.innerText = "00:00:00";
 }
 
 
-  
+  // =========================
+// OPEN QAZA PAGE
+// =========================
+function openQazaPage(){
+
+let morePage = document.getElementById("morePage");
+let qazaPage = document.getElementById("qazaPage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+let bottomNav = document.getElementById("bottomNav");
+
+if(morePage) morePage.style.display = "none";
+if(qazaPage) qazaPage.style.display = "block";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+if(bottomNav) bottomNav.style.display = "flex";
+
+window.scrollTo(0,0);
+
+}
+
+// =========================
+// CLOSE QAZA PAGE
+// =========================
+function closeQazaPage(){
+
+let morePage = document.getElementById("morePage");
+let qazaPage = document.getElementById("qazaPage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+let bottomNav = document.getElementById("bottomNav");
+
+if(qazaPage) qazaPage.style.display = "none";
+if(morePage) morePage.style.display = "block";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+if(bottomNav) bottomNav.style.display = "flex";
+
+window.scrollTo(0,0);
+
+}
 
   
 // =========================
@@ -15674,6 +15710,70 @@ box-sizing:border-box;
 
     </div>
 
+     <!-- =========================
+     QAZA TRACKER CARD
+========================= -->
+<div onclick="openQazaPage()" style="
+background:white;
+border-radius:26px;
+padding:22px 20px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:space-between;
+box-shadow:0 8px 22px rgba(0,0,0,0.07);
+border:1px solid rgba(0,0,0,0.03);
+margin-top:14px;
+">
+
+  <div style="
+  display:flex;
+  align-items:center;
+  gap:14px;
+  ">
+    
+    <div style="
+    width:52px;
+    height:52px;
+    border-radius:18px;
+    background:#f2f2f7;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    ">
+      📿
+    </div>
+
+    <div>
+      <div style="
+      font-size:20px;
+      font-weight:800;
+      color:#111;
+      ">
+        Qaza Tracker
+      </div>
+
+      <div style="
+      font-size:14px;
+      color:#666;
+      margin-top:4px;
+      ">
+        Track your missed prayers
+      </div>
+    </div>
+
+  </div>
+
+  <div style="
+  font-size:20px;
+  color:#aaa;
+  ">
+    ›
+  </div>
+
+</div>
+
     <!-- 15 LINE QURAN CARD -->
     <div onclick="openQuran15Page()" style="
     background:white;
@@ -19091,6 +19191,66 @@ box-sizing:border-box;
   </div>
 </div>
 
+
+<!-- =========================
+     QAZA TRACKER PAGE
+========================= -->
+<div id="qazaPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:92px;
+z-index:10002;
+background:#e9e9ee;
+overflow:auto;
+padding:20px 16px 120px 16px;
+box-sizing:border-box;
+">
+
+<!-- TOP BAR -->
+<div style="
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-bottom:20px;
+">
+
+<!-- BACK BUTTON -->
+<button onclick="closeQazaPage()" style="
+width:42px;
+height:42px;
+border-radius:50%;
+border:none;
+background:white;
+font-size:22px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+">
+←
+</button>
+
+<!-- TITLE -->
+<div style="
+font-size:20px;
+font-weight:800;
+color:#111;
+">
+Qaza Tracker
+</div>
+
+<div style="width:42px;"></div>
+
+</div>
+
+</div>
+
+
+     
      
 </body>
 </html>
