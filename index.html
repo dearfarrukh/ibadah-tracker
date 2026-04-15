@@ -290,6 +290,24 @@ max-width:100%;
 height:auto;
 }
 
+
+
+@keyframes slideUpZikr {
+  from {
+    transform:translateY(100%);
+    opacity:0;
+  }
+  to {
+    transform:translateY(0);
+    opacity:1;
+  }
+}
+
+
+
+
+     
+
 /* =========================
    INTERACTIVE QURAN PAGE DRAG CSS
    ========================= */
@@ -1442,12 +1460,7 @@ Reset
 
 </div>
 
-<!-- =========================
-     ZIKR PAGE
-========================= -->
-  
-  
-  
+
 
 
 
@@ -1460,84 +1473,1114 @@ position:fixed;
 top:0;
 left:0;
 right:0;
-bottom:0;
+bottom:92px;
 z-index:5000;
-background:url('wallpaper.jpg') center/cover no-repeat;
+background:linear-gradient(180deg, #ece9e1 0%, #e9e9ee 100%);
 overflow:auto;
-padding:15px;
+padding:18px 16px 120px 16px;
+box-sizing:border-box;
 ">
 
-<div style="padding:10px;">
-<!-- Close Zikr Page Button -->
-<button onclick="closeZikrPage()" style="
-width:36px;
-height:36px;
-border-radius:50%;
-border:1px solid #ccc;
+  <!-- =========================
+       ZIKR PAGE TOP BAR
+  ========================= -->
+  <div style="
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+  ">
+
+    <!-- Close Zikr Page Button -->
+    <button onclick="closeZikrPage()" style="
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:1px solid rgba(0,0,0,0.08);
+    background:white;
+    font-size:22px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#111;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    ">
+      ←
+    </button>
+
+    <div style="
+    font-size:20px;
+    font-weight:800;
+    color:#111;
+    letter-spacing:-0.3px;
+    ">
+      Daily Dhikr
+    </div>
+
+    <div style="width:42px;height:42px;"></div>
+  </div>
+
+  <!-- =========================
+       ZIKR HERO CARD
+  ========================= -->
+  <div style="
+  background:linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 100%);
+  border-radius:30px;
+  padding:28px 22px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  border:1px solid rgba(255,255,255,0.7);
+  margin-bottom:18px;
+  ">
+
+    <div style="
+    font-size:34px;
+    margin-bottom:12px;
+    ">
+      🌿
+    </div>
+
+    <div style="
+    font-size:28px;
+    font-weight:800;
+    color:#111;
+    letter-spacing:-0.5px;
+    line-height:1.1;
+    margin-bottom:8px;
+    ">
+      Daily Dhikr
+    </div>
+
+    <div style="
+    font-size:15px;
+    line-height:1.6;
+    color:#666;
+    max-width:280px;
+    margin:0 auto;
+    ">
+      Choose your dhikr and continue with a calm, clean iOS-style experience.
+    </div>
+
+  </div>
+
+  <!-- =========================
+       ZIKR OPTION CARDS
+  ========================= -->
+  <div style="
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  ">
+
+   <!-- SubhanAllah Zikr Card -->
+<div onclick="openZikrDetail('subhanallah')" style="
 background:white;
-font-size:20px;
+border-radius:26px;
+padding:18px 16px;
 cursor:pointer;
 display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+box-shadow:0 8px 22px rgba(0,0,0,0.07);
+border:1px solid rgba(0,0,0,0.03);
+">
+
+  <!-- Left Progress Ring -->
+  <div id="zikrCardRing-subhanallah" style="
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  flex-shrink:0;
+  position:relative;
+  background:conic-gradient(#34c759 0deg, #34c759 0deg, #e9e9ee 0deg, #e9e9ee 360deg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  ">
+    <div id="zikrCardRingText-subhanallah" style="
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    font-weight:800;
+    color:#666;
+    ">
+      0
+    </div>
+  </div>
+
+  <!-- Center Text -->
+  <div style="
+  flex:1;
+  min-width:0;
+  ">
+
+    <div style="
+    font-size:19px;
+    font-weight:800;
+    color:#111;
+    line-height:1.2;
+    margin-bottom:4px;
+    ">
+      SubhanAllahi wa bihamdihi
+    </div>
+
+    <div style="
+    font-size:15px;
+    color:#666;
+    font-family:'Amiri','Noto Naskh Arabic',serif;
+    direction:rtl;
+    line-height:1.5;
+    margin-bottom:6px;
+    ">
+      سُبْحَانَ اللَّهِ وَبِحَمْدِهِ
+    </div>
+
+    <div id="zikrCardProgressText-subhanallah" style="
+    font-size:13px;
+    font-weight:700;
+    color:#8a8a8a;
+    ">
+      0 / 33
+    </div>
+
+  </div>
+
+  <!-- Right Actions -->
+  <div style="
+  width:50px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-shrink:0;
+  ">
+
+    <!-- Zikr Menu Button -->
+    <button onclick="event.stopPropagation();openZikrTargetPopup('subhanallah')" style="
+    width:34px;
+    height:34px;
+    border:none;
+    border-radius:50%;
+    background:#f2f2f7;
+    color:#666;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    ">
+      ⋮
+    </button>
+
+    <!-- Start Zikr Button -->
+    <button onclick="event.stopPropagation();openZikrDetail('subhanallah')" style="
+    width:38px;
+    height:38px;
+    border:none;
+    border-radius:50%;
+    background:#111;
+    color:white;
+    font-size:16px;
+    font-weight:800;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 6px 14px rgba(0,0,0,0.16);
+    ">
+      ▶
+    </button>
+
+  </div>
+
+</div>
+
+       
+<!-- Hawqala Zikr Card -->
+<div onclick="openZikrDetail('hawqala')" style="
+background:white;
+border-radius:26px;
+padding:18px 16px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+box-shadow:0 8px 22px rgba(0,0,0,0.07);
+border:1px solid rgba(0,0,0,0.03);
+">
+
+  <!-- Left Progress Ring -->
+  <div id="zikrCardRing-hawqala" style="
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  flex-shrink:0;
+  position:relative;
+  background:conic-gradient(#34c759 0deg, #34c759 0deg, #e9e9ee 0deg, #e9e9ee 360deg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  ">
+    <div id="zikrCardRingText-hawqala" style="
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    font-weight:800;
+    color:#666;
+    ">
+      0
+    </div>
+  </div>
+
+  <!-- Center Text -->
+  <div style="
+  flex:1;
+  min-width:0;
+  ">
+
+    <div style="
+    font-size:19px;
+    font-weight:800;
+    color:#111;
+    line-height:1.2;
+    margin-bottom:4px;
+    ">
+      La hawla wa la quwwata illa billah
+    </div>
+
+    <div style="
+    font-size:15px;
+    color:#666;
+    font-family:'Amiri','Noto Naskh Arabic',serif;
+    direction:rtl;
+    line-height:1.5;
+    margin-bottom:6px;
+    ">
+      لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللّٰهِ
+    </div>
+
+    <div id="zikrCardProgressText-hawqala" style="
+    font-size:13px;
+    font-weight:700;
+    color:#8a8a8a;
+    ">
+      0 / 33
+    </div>
+
+  </div>
+
+  <!-- Right Actions -->
+  <div style="
+  width:50px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-shrink:0;
+  ">
+
+    <!-- Zikr Menu Button -->
+    <button onclick="event.stopPropagation();openZikrTargetPopup('hawqala')" style="
+    width:34px;
+    height:34px;
+    border:none;
+    border-radius:50%;
+    background:#f2f2f7;
+    color:#666;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    ">
+      ⋮
+    </button>
+
+    <!-- Start Zikr Button -->
+    <button onclick="event.stopPropagation();openZikrDetail('hawqala')" style="
+    width:38px;
+    height:38px;
+    border:none;
+    border-radius:50%;
+    background:#111;
+    color:white;
+    font-size:16px;
+    font-weight:800;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 6px 14px rgba(0,0,0,0.16);
+    ">
+      ▶
+    </button>
+
+  </div>
+
+</div>
+ 
+  
+  <!-- Alhamdulillah Zikr Card -->
+<div onclick="openZikrDetail('alhamdulillah')" style="
+background:white;
+border-radius:26px;
+padding:18px 16px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+box-shadow:0 8px 22px rgba(0,0,0,0.07);
+border:1px solid rgba(0,0,0,0.03);
+">
+
+  <!-- Left Progress Ring -->
+  <div id="zikrCardRing-alhamdulillah" style="
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  flex-shrink:0;
+  position:relative;
+  background:conic-gradient(#34c759 0deg, #34c759 0deg, #e9e9ee 0deg, #e9e9ee 360deg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  ">
+    <div id="zikrCardRingText-alhamdulillah" style="
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    font-weight:800;
+    color:#666;
+    ">
+      0
+    </div>
+  </div>
+
+  <!-- Center Text -->
+  <div style="
+  flex:1;
+  min-width:0;
+  ">
+
+    <div style="
+    font-size:19px;
+    font-weight:800;
+    color:#111;
+    line-height:1.2;
+    margin-bottom:4px;
+    ">
+      Alhamdulillah
+    </div>
+
+    <div style="
+    font-size:15px;
+    color:#666;
+    font-family:'Amiri','Noto Naskh Arabic',serif;
+    direction:rtl;
+    line-height:1.5;
+    margin-bottom:6px;
+    ">
+      ٱلْحَمْدُ لِلَّٰهِ
+    </div>
+
+    <div id="zikrCardProgressText-alhamdulillah" style="
+    font-size:13px;
+    font-weight:700;
+    color:#8a8a8a;
+    ">
+      0 / 33
+    </div>
+
+  </div>
+
+  <!-- Right Actions -->
+  <div style="
+  width:50px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-shrink:0;
+  ">
+
+    <!-- Zikr Menu Button -->
+    <button onclick="event.stopPropagation();openZikrTargetPopup('alhamdulillah')" style="
+    width:34px;
+    height:34px;
+    border:none;
+    border-radius:50%;
+    background:#f2f2f7;
+    color:#666;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    ">
+      ⋮
+    </button>
+
+    <!-- Start Zikr Button -->
+    <button onclick="event.stopPropagation();openZikrDetail('alhamdulillah')" style="
+    width:38px;
+    height:38px;
+    border:none;
+    border-radius:50%;
+    background:#111;
+    color:white;
+    font-size:16px;
+    font-weight:800;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 6px 14px rgba(0,0,0,0.16);
+    ">
+      ▶
+    </button>
+
+  </div>
+
+</div>
+  
+  
+  </div>
+
+
+     
+
+
+<!-- =========================
+     CUSTOM ZIKR LIST
+========================= -->
+<div id="customZikrList" style="
+display:flex;
+flex-direction:column;
+gap:16px;
+margin-top:18px;
+"></div>
+
+<!-- =========================
+     ZIKR FLOATING ACTION BUTTONS
+========================= -->
+<div style="
+position:fixed;
+left:0;
+right:0;
+bottom:150px;
+z-index:99999;
+pointer-events:none;
+">
+
+  <!-- Reset All Zikr Button -->
+  <button onclick="openResetAllZikrPopup()" style="
+  position:absolute;
+  left:5%;
+  width:56px;
+  height:56px;
+  border:none;
+  border-radius:50%;
+  background:rgba(255,255,255,0.96);
+  color:#111;
+  font-size:26px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 10px 24px rgba(0,0,0,0.14);
+  border:1px solid rgba(0,0,0,0.05);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:auto;
+  ">
+    ↻
+  </button>
+
+  <!-- Add Custom Zikr Button -->
+     
+  <button onclick="openAddCustomZikrPopup()" style="
+  position:absolute;
+  right:5%;
+  width:56px;
+  height:56px;
+  border:none;
+  border-radius:50%;
+  background:#111;
+  color:white;
+  font-size:30px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 10px 24px rgba(0,0,0,0.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:auto;
+  ">
+    ＋
+  </button>
+
+</div>
+
+
+     <!-- =========================
+     RESET ALL ZIKR POPUP
+========================= -->
+<div id="resetAllZikrPopup" onclick="closeResetAllZikrPopup()" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:rgba(0,0,0,0.35);
+backdrop-filter:blur(8px);
+-webkit-backdrop-filter:blur(8px);
+z-index:6395;
 align-items:center;
 justify-content:center;
+padding:20px;
+box-sizing:border-box;
 ">
-←
+
+  <div onclick="event.stopPropagation()" style="
+  width:100%;
+  max-width:340px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,248,250,0.96) 100%);
+  border-radius:30px;
+  padding:24px 20px 18px 20px;
+  box-shadow:0 22px 50px rgba(0,0,0,0.20);
+  border:1px solid rgba(255,255,255,0.7);
+  text-align:center;
+  ">
+
+    <div style="
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    background:#f2f2f7;
+    color:#111;
+    font-size:28px;
+    font-weight:800;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 14px auto;
+    ">
+      ↻
+    </div>
+
+    <div style="
+    font-size:22px;
+    font-weight:800;
+    color:#111;
+    margin-bottom:8px;
+    letter-spacing:-0.3px;
+    ">
+      Reset all zikr counts?
+    </div>
+
+    <div style="
+    font-size:15px;
+    line-height:1.6;
+    color:#666;
+    margin-bottom:18px;
+    ">
+      This will reset all built-in and custom zikr counts to 0.<br>
+      Your saved targets will stay the same.
+    </div>
+
+    <button onclick="confirmResetAllZikr()" style="
+    width:100%;
+    border:none;
+    border-radius:18px;
+    padding:16px;
+    margin-bottom:10px;
+    background:#111;
+    color:white;
+    font-size:18px;
+    font-weight:800;
+    cursor:pointer;
+    ">
+      Reset All
+    </button>
+
+    <button onclick="closeResetAllZikrPopup()" style="
+    width:100%;
+    border:none;
+    border-radius:18px;
+    padding:14px;
+    background:#f2f2f7;
+    color:#666;
+    font-size:17px;
+    font-weight:700;
+    cursor:pointer;
+    ">
+      Cancel
+    </button>
+
+  </div>
+</div>
+     <!-- =========================
+     EDIT CUSTOM ZIKR POPUP
+========================= -->
+<div id="editCustomZikrPopup" onclick="closeEditCustomZikrPopup()" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:rgba(0,0,0,0.35);
+backdrop-filter:blur(6px);
+z-index:6001;
+align-items:center;
+justify-content:center;
+padding:20px;
+">
+
+  <div onclick="event.stopPropagation()" style="
+  width:100%;
+  max-width:340px;
+  background:white;
+  border-radius:28px;
+  padding:20px;
+  box-shadow:0 18px 40px rgba(0,0,0,0.2);
+  ">
+
+    <div style="
+    font-size:20px;
+    font-weight:800;
+    text-align:center;
+    margin-bottom:12px;
+    ">
+      Edit Zikr
+    </div>
+
+    <!-- English -->
+    <input id="editCustomZikrEnglishInput" placeholder="English name" style="
+width:100%;
+box-sizing:border-box;
+padding:14px;
+border-radius:16px;
+border:none;
+background:#f2f2f7;
+margin-bottom:10px;
+font-size:16px;
+">
+
+    <!-- Arabic -->
+    <textarea id="editCustomZikrArabicInput" placeholder="Arabic (optional)" style="
+width:100%;
+box-sizing:border-box;
+padding:14px;
+border-radius:16px;
+border:none;
+background:#f2f2f7;
+margin-bottom:10px;
+font-size:18px;
+direction:auto;
+text-align:left;
+min-height:80px;
+"></textarea>
+
+    <!-- Target -->
+    <input id="editCustomZikrTargetInput" type="number" placeholder="Target (33)" style="
+width:100%;
+box-sizing:border-box;
+padding:14px;
+border-radius:16px;
+border:none;
+background:#f2f2f7;
+margin-bottom:14px;
+font-size:16px;
+">
+
+    <!-- Update -->
+    <button onclick="updateCustomZikr()" style="
+width:100%;
+padding:16px;
+border-radius:18px;
+border:none;
+background:#111;
+color:white;
+font-size:18px;
+font-weight:900;
+margin-bottom:10px;
+letter-spacing:-0.2px;
+">
+      Update
+    </button>
+
+    <!-- Cancel -->
+    <button onclick="closeEditCustomZikrPopup()" style="
+width:100%;
+padding:16px;
+border-radius:18px;
+border:none;
+background:#f2f2f7;
+color:#444;
+font-size:17px;
+font-weight:800;
+letter-spacing:-0.2px;
+">
+      Cancel
+    </button>
+
+  </div>
+</div>
+
+<!-- =========================
+     ADD CUSTOM ZIKR POPUP
+========================= -->
+<div id="addCustomZikrPopup" onclick="closeAddCustomZikrPopup()" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:rgba(0,0,0,0.35);
+backdrop-filter:blur(6px);
+z-index:6000;
+align-items:center;
+justify-content:center;
+padding:20px;
+">
+
+  <div onclick="event.stopPropagation()" style="
+  width:100%;
+  max-width:340px;
+  background:white;
+  border-radius:28px;
+  padding:20px;
+  box-shadow:0 18px 40px rgba(0,0,0,0.2);
+  ">
+
+    <div style="
+    font-size:20px;
+    font-weight:800;
+    text-align:center;
+    margin-bottom:12px;
+    ">
+      Add Your Zikr
+    </div>
+
+    <!-- English -->
+   <input id="customZikrEnglishInput" placeholder="English name" style="
+width:100%;
+box-sizing:border-box;
+padding:14px;
+border-radius:16px;
+border:none;
+background:#f2f2f7;
+margin-bottom:10px;
+font-size:16px;
+">
+    <!-- Arabic -->
+<textarea id="customZikrArabicInput" placeholder="Arabic (optional)" style="
+width:100%;
+box-sizing:border-box;
+padding:14px;
+border-radius:16px;
+border:none;
+background:#f2f2f7;
+margin-bottom:10px;
+font-size:18px;
+direction:auto;
+text-align:left;
+min-height:80px;
+"></textarea>
+
+    <!-- Target -->
+   <input id="customZikrTargetInput" type="number" placeholder="Target (33)" style="
+width:100%;
+box-sizing:border-box;
+padding:14px;
+border-radius:16px;
+border:none;
+background:#f2f2f7;
+margin-bottom:14px;
+font-size:16px;
+">
+    <!-- Save -->
+   <button onclick="saveNewCustomZikr()" style="
+width:100%;
+padding:16px;
+border-radius:18px;
+border:none;
+background:#111;
+color:white;
+font-size:18px;
+font-weight:900;
+margin-bottom:10px;
+letter-spacing:-0.2px;
+">
+  Save
 </button>
-</div>
 
-<div class="card" style="
-text-align:center;
-padding:28px 20px;
-margin-top:10px;
+    <!-- Cancel -->
+  <button onclick="closeAddCustomZikrPopup()" style="
+width:100%;
+padding:16px;
+border-radius:18px;
+border:none;
+background:#f2f2f7;
+color:#444;
+font-size:17px;
+font-weight:800;
+letter-spacing:-0.2px;
 ">
-<div style="font-size:42px;margin-bottom:10px;">🌿</div>
-<div style="font-size:28px;font-weight:700;">
-Daily Dhikr
+  Cancel
+</button>
+  </div>
 </div>
-<div style="font-size:15px;color:#666;margin-top:8px;">
-Choose a dhikr
-</div>
+     </div>
+
+
+<!-- =========================
+     TARGET REACHED POPUP
+========================= -->
+<div id="zikrTargetReachedPopup" onclick="event.stopPropagation()" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:rgba(0,0,0,0.35);
+backdrop-filter:blur(6px);
+-webkit-backdrop-filter:blur(6px);
+z-index:99999;
+align-items:flex-end;
+justify-content:center;
+padding:20px;
+box-sizing:border-box;
+">
+
+  <div onclick="event.stopPropagation()" style="
+  width:100%;
+  max-width:420px;
+  margin:0 auto;
+  background:white;
+  border-radius:28px;
+  padding:22px 20px 20px 20px;
+  box-shadow:0 -10px 40px rgba(0,0,0,0.2);
+  text-align:center;
+  animation:slideUpZikr 0.35s ease;
+  ">
+
+    <div style="
+    font-size:22px;
+    font-weight:900;
+    color:#f5b301;
+    margin-bottom:6px;
+    ">
+      Target Reached!
+    </div>
+
+    <div id="zikrReachedMessage" style="
+    font-size:15px;
+    color:#666;
+    margin-bottom:6px;
+    ">
+      Mashallah you have completed
+    </div>
+
+    <div id="zikrReachedName" style="
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:16px;
+    ">
+    </div>
+
+    <div style="
+    display:flex;
+    gap:10px;
+    ">
+
+      <button onclick="continueAfterTarget()" style="
+      flex:1;
+      padding:14px;
+      border-radius:16px;
+      border:none;
+      background:#f2f2f7;
+      font-weight:800;
+      font-size:16px;
+      ">
+        Continue
+      </button>
+
+      <button onclick="resetAfterTarget()" style="
+      flex:1;
+      padding:14px;
+      border-radius:16px;
+      border:none;
+      background:#f5b301;
+      color:white;
+      font-weight:900;
+      font-size:16px;
+      ">
+        Reset
+      </button>
+
+    </div>
+
+  </div>
 </div>
 
-<!-- Open Zikr Detail Card -->
-<div class="card" onclick="openZikrDetail('subhanallah')" style="
-cursor:pointer;
-display:flex;
-justify-content:space-between;
+     
+<!-- =========================
+     ZIKR TARGET POPUP
+========================= -->
+<div id="zikrTargetPopup" onclick="closeZikrTargetPopup()" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:rgba(0,0,0,0.35);
+backdrop-filter:blur(6px);
+-webkit-backdrop-filter:blur(6px);
+z-index:6500;
 align-items:center;
+justify-content:center;
+padding:20px;
+box-sizing:border-box;
 ">
-<div>
-<div style="font-size:17px;font-weight:700;margin-bottom:4px;">
-SubhanAllahi wa bihamdihi
-</div>
-<div style="font-size:14px;color:#666;">
-سُبْحَانَ اللَّهِ وَبِحَمْدِهِ
-</div>
-</div>
-<div style="font-size:24px;opacity:0.5;">›</div>
+
+  <div onclick="event.stopPropagation()" style="
+  width:100%;
+  max-width:320px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.92) 100%);
+  border-radius:30px;
+  padding:22px 18px 18px 18px;
+  box-shadow:0 18px 40px rgba(0,0,0,0.18);
+  border:1px solid rgba(255,255,255,0.7);
+  ">
+
+    <div style="
+    font-size:22px;
+    font-weight:800;
+    color:#111;
+    text-align:center;
+    margin-bottom:8px;
+    ">
+      Edit Target
+    </div>
+
+    <div id="zikrTargetPopupTitle" style="
+    font-size:14px;
+    color:#666;
+    text-align:center;
+    margin-bottom:18px;
+    line-height:1.5;
+    ">
+      Select target
+    </div>
+
+    <button onclick="saveZikrCardTarget(33)" style="
+    width:100%;
+    border:none;
+    border-radius:18px;
+    padding:16px;
+    margin-bottom:10px;
+    background:#111;
+    color:white;
+    font-size:20px;
+    font-weight:800;
+    cursor:pointer;
+    ">
+      33
+    </button>
+
+    <button onclick="saveZikrCardTarget(100)" style="
+    width:100%;
+    border:none;
+    border-radius:18px;
+    padding:16px;
+    margin-bottom:10px;
+    background:#e9e9ee;
+    color:#111;
+    font-size:20px;
+    font-weight:800;
+    cursor:pointer;
+    ">
+      100
+    </button>
+
+    <!-- Custom Target Input -->
+    <input id="zikrCustomTargetInput" type="number" min="1" placeholder="Enter custom target" style="
+    width:100%;
+    border:none;
+    border-radius:18px;
+    padding:16px;
+    margin-bottom:10px;
+    background:#f2f2f7;
+    color:#111;
+    font-size:18px;
+    font-weight:700;
+    box-sizing:border-box;
+    outline:none;
+    ">
+
+    <button onclick="saveCustomZikrCardTarget()" style="
+    width:100%;
+    border:none;
+    border-radius:18px;
+    padding:16px;
+    margin-bottom:10px;
+    background:#e9e9ee;
+    color:#111;
+    font-size:18px;
+    font-weight:800;
+    cursor:pointer;
+    ">
+      Save Custom Target
+    </button>
+
+    <button onclick="closeZikrTargetPopup()" style="
+    width:100%;
+    border:none;
+    border-radius:18px;
+    padding:14px;
+    background:#f5f5f7;
+    color:#666;
+    font-size:17px;
+    font-weight:700;
+    cursor:pointer;
+    ">
+      Cancel
+    </button>
+
+  </div>
 </div>
 
-<!-- Open Zikr Detail Card -->
-<div class="card" onclick="openZikrDetail('hawqala')" style="
-cursor:pointer;
-display:flex;
-justify-content:space-between;
-align-items:center;
-">
-<div>
-<div style="font-size:17px;font-weight:700;margin-bottom:4px;">
-La hawla wa la quwwata illa billah
-</div>
-<div style="font-size:14px;color:#666;">
-لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللّٰهِ
-</div>
-</div>
-<div style="font-size:24px;opacity:0.5;">›</div>
-</div>
-
-</div>
-
-
+     
 <!-- =========================
      ZIKR DETAIL PAGE
 ========================= -->
@@ -1557,21 +2600,26 @@ padding:15px;
 <div style="padding:10px;">
 <!-- Close Zikr Detail Button -->
 <button onclick="closeZikrDetail()" style="
-width:36px;
-height:36px;
+width:42px;
+height:42px;
 border-radius:50%;
-border:1px solid #ccc;
+border:1px solid rgba(0,0,0,0.08);
 background:white;
-font-size:20px;
+font-size:22px;
 cursor:pointer;
 display:flex;
 align-items:center;
 justify-content:center;
+color:#111;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
 ">
 ←
 </button>
 </div>
 
+<!-- =========================
+     ZIKR DETAIL FULL CARD (FIXED)
+========================= -->
 <div class="card" style="
 background:white;
 border-radius:24px;
@@ -1581,40 +2629,85 @@ text-align:center;
 box-shadow:0 10px 25px rgba(0,0,0,0.08);
 ">
 
-<div id="zikrHadithText" style="
-font-size:18px;
-line-height:1.8;
-margin-bottom:26px;
-color:#111;
-">
-</div>
+  <!-- =========================
+       ZIKR DETAIL TITLE BLOCK
+  ========================= -->
+  <div style="
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:22px;
+  ">
 
-<div id="zikrArabicText" style="
-font-size:42px;
-font-weight:700;
-color:#6fa37a;
-line-height:1.7;
-margin-bottom:26px;
-">
-</div>
+    <div id="zikrEnglishTitle" style="
+    font-size:26px;
+    font-weight:800;
+    color:#111;
+    line-height:1.2;
+    letter-spacing:-0.4px;
+    margin-bottom:10px;
+    ">
+    </div>
 
-<div id="zikrMeaningText" style="
-font-size:19px;
-line-height:1.8;
-margin-bottom:18px;
-">
-</div>
+    <div id="zikrTargetBadge" style="
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:76px;
+    min-height:34px;
+    padding:0 14px;
+    border-radius:999px;
+    background:#f2f2f7;
+    color:#111;
+    font-size:15px;
+    font-weight:800;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,0.04);
+    ">
+      Target 33
+    </div>
 
-<div id="zikrRefText" style="
-margin-top:12px;
-padding-top:12px;
-border-top:1px solid #e5e5e5;
-font-size:14px;
-color:#666;
-line-height:1.7;
-">
-</div>
+  </div>
 
+  <!-- Hadith -->
+  <div id="zikrHadithText" style="
+  font-size:18px;
+  line-height:1.8;
+  margin-bottom:26px;
+  color:#111;
+  ">
+  </div>
+
+  <!-- Arabic -->
+  <div id="zikrArabicText" style="
+  font-size:42px;
+  font-weight:700;
+  color:#6fa37a;
+  line-height:1.7;
+  margin-bottom:26px;
+  ">
+  </div>
+
+  <!-- Meaning -->
+  <div id="zikrMeaningText" style="
+  font-size:19px;
+  line-height:1.8;
+  margin-bottom:18px;
+  ">
+  </div>
+
+  <!-- Reference -->
+  <div id="zikrRefText" style="
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid #e5e5e5;
+  font-size:14px;
+  color:#666;
+  line-height:1.7;
+  ">
+  </div>
+
+</div>
 <!-- Increase Zikr Tasbih Card -->
 <div onclick="increaseZikrTasbih()" style="
 background:rgba(255,255,255,0.78);
@@ -1637,54 +2730,7 @@ justify-content:center;
 margin-bottom:28px;
 ">
 
-<!-- Zikr Modes Card -->
-<div id="zikrModes" onclick="event.stopPropagation()" style="
-display:flex;
-background:rgba(0,0,0,0.08);
-border-radius:18px;
-overflow:hidden;
-height:44px;
-min-width:220px;
-">
 
-<!-- Zikr33 Button -->
-<button id="zikr33Btn" onclick="setZikrMode(33)" style="
-flex:1;
-border:none;
-background:transparent;
-font-size:20px;
-font-weight:700;
-cursor:pointer;
-">
-33
-</button>
-
-<!-- Zikr100 Button -->
-<button id="zikr100Btn" onclick="setZikrMode(100)" style="
-flex:1;
-border:none;
-background:#34c759;
-color:white;
-font-size:20px;
-font-weight:700;
-cursor:pointer;
-">
-100
-</button>
-
-<!-- Zikr Inf Button -->
-<button id="zikrInfBtn" onclick="setZikrMode('inf')" style="
-flex:1;
-border:none;
-background:transparent;
-font-size:24px;
-font-weight:700;
-cursor:pointer;
-">
-∞
-</button>
-
-</div>
 
 </div>
 
@@ -4888,37 +5934,57 @@ updateRoyalTasbihUI();
 
 let zikrCount = 0;
 let zikrTarget = 100;
+let zikrContinuePastTarget = false;
 
 // =========================
 // UPDATE ZIKR DISPLAY
 // =========================
 function updateZikrDisplay(){
 
-let targetText = zikrTarget === "inf" ? "∞" : zikrTarget;
-document.getElementById("zikrCountText").innerText = zikrCount + " / " + targetText;
+let countTextEl = document.getElementById("zikrCountText");
+let btn33 = document.getElementById("zikr33Btn");
+let btn100 = document.getElementById("zikr100Btn");
+let btnInf = document.getElementById("zikrInfBtn");
 
-document.getElementById("zikr33Btn").style.background = "transparent";
-document.getElementById("zikr33Btn").style.color = "black";
+if(countTextEl){
+  countTextEl.innerText = zikrCount + " / " + zikrTarget;
 
-document.getElementById("zikr100Btn").style.background = "transparent";
-document.getElementById("zikr100Btn").style.color = "black";
-
-document.getElementById("zikrInfBtn").style.background = "transparent";
-document.getElementById("zikrInfBtn").style.color = "black";
-
-if(zikrTarget === 33){
-document.getElementById("zikr33Btn").style.background = "#34c759";
-document.getElementById("zikr33Btn").style.color = "white";
+  if(zikrTarget !== "inf" && zikrCount >= zikrTarget){
+    countTextEl.style.color = "#f5b301";
+  }else{
+    countTextEl.style.color = "#5f946b";
+  }
 }
 
-if(zikrTarget === 100){
-document.getElementById("zikr100Btn").style.background = "#34c759";
-document.getElementById("zikr100Btn").style.color = "white";
+if(btn33){
+  btn33.style.background = "transparent";
+  btn33.style.color = "black";
 }
 
-if(zikrTarget === "inf"){
-document.getElementById("zikrInfBtn").style.background = "#34c759";
-document.getElementById("zikrInfBtn").style.color = "white";
+if(btn100){
+  btn100.style.background = "transparent";
+  btn100.style.color = "black";
+}
+
+if(btnInf){
+  btnInf.style.display = "none";
+  btnInf.style.background = "transparent";
+  btnInf.style.color = "black";
+}
+
+if(zikrTarget === 33 && btn33){
+  btn33.style.background = "#34c759";
+  btn33.style.color = "white";
+}
+
+if(zikrTarget === 100 && btn100){
+  btn100.style.background = "#34c759";
+  btn100.style.color = "white";
+}
+
+let badgeEl = document.getElementById("zikrTargetBadge");
+if(badgeEl){
+  badgeEl.innerText = "Target " + zikrTarget;
 }
 
 }
@@ -4930,7 +5996,19 @@ function setZikrMode(mode){
 
 zikrTarget = mode;
 zikrCount = 0;
+
+if(currentZikr){
+  localStorage.setItem(getZikrCardTargetKey(currentZikr), String(mode));
+  localStorage.setItem(getZikrCardCountKey(currentZikr), "0");
+}
+
+let badgeEl = document.getElementById("zikrTargetBadge");
+if(badgeEl){
+  badgeEl.innerText = "Target " + mode;
+}
+
 updateZikrDisplay();
+updateSingleZikrCardUI(currentZikr);
 
 }
 
@@ -4940,14 +6018,25 @@ updateZikrDisplay();
 function increaseZikrTasbih(){
 
 if(zikrTarget === "inf"){
-zikrCount++;
-}else{
-if(zikrCount < zikrTarget){
-zikrCount++;
+  zikrCount++;
 }
+else if(zikrCount < zikrTarget){
+  zikrCount++;
+
+  if(zikrCount === zikrTarget){
+    showZikrTargetReached();
+  }
+}
+else if(zikrContinuePastTarget){
+  zikrCount++;
+}
+
+if(currentZikr){
+  localStorage.setItem(getZikrCardCountKey(currentZikr), String(zikrCount));
 }
 
 updateZikrDisplay();
+updateSingleZikrCardUI(currentZikr);
 
 if(isVibrationEnabled()){
 clickSound.currentTime = 0;
@@ -4960,13 +6049,90 @@ navigator.vibrate(30);
 
 }
 
+
+
+
+
+// =========================
+// SHOW TARGET REACHED POPUP
+// =========================
+function showZikrTargetReached(){
+
+  let popup = document.getElementById("zikrTargetReachedPopup");
+  let msg = document.getElementById("zikrReachedMessage");
+  let name = document.getElementById("zikrReachedName");
+
+  if(msg){
+    msg.innerText = "Mashallah you have completed " + zikrTarget;
+  }
+
+  if(name){
+    name.innerText = getZikrDisplayTitle(currentZikr);
+  }
+
+  if(popup){
+    popup.style.display = "flex";
+  }
+
+  // make counter yellow
+  let countEl = document.getElementById("zikrCountText");
+  if(countEl){
+    countEl.style.color = "#f5b301";
+  }
+}
+
+// =========================
+// CONTINUE AFTER TARGET
+// =========================
+function continueAfterTarget(){
+
+  zikrContinuePastTarget = true;
+
+  let popup = document.getElementById("zikrTargetReachedPopup");
+  if(popup){
+    popup.style.display = "none";
+  }
+}
+
+// =========================
+// RESET AFTER TARGET
+// =========================
+function resetAfterTarget(){
+
+  zikrCount = 0;
+  zikrContinuePastTarget = false;
+
+  localStorage.setItem(getZikrCardCountKey(currentZikr), "0");
+
+  updateZikrDisplay();
+
+  let popup = document.getElementById("zikrTargetReachedPopup");
+  if(popup){
+    popup.style.display = "none";
+  }
+
+  let countEl = document.getElementById("zikrCountText");
+  if(countEl){
+    countEl.style.color = "#5f946b";
+  }
+
+  updateAllZikrCardUI();
+}
+
+     
 // =========================
 // RESET ZIKR TASBIH
 // =========================
 function resetZikrTasbih(){
 
 zikrCount = 0;
+
+if(currentZikr){
+  localStorage.setItem(getZikrCardCountKey(currentZikr), "0");
+}
+
 updateZikrDisplay();
+updateSingleZikrCardUI(currentZikr);
 
 }
   
@@ -6167,6 +7333,693 @@ let currentZikr = "";
 let lastMainTab = "tracker";
 let lastMoreSourceTab = "tracker";
 
+// =========================
+// OPEN ADD CUSTOM ZIKR POPUP
+// =========================
+function openAddCustomZikrPopup(){
+
+  let popup = document.getElementById("addCustomZikrPopup");
+  let englishInput = document.getElementById("customZikrEnglishInput");
+  let arabicInput = document.getElementById("customZikrArabicInput");
+  let targetInput = document.getElementById("customZikrTargetInput");
+
+  if(englishInput) englishInput.value = "";
+  if(arabicInput) arabicInput.value = "";
+  if(targetInput) targetInput.value = "33";
+
+  if(popup){
+    popup.style.display = "flex";
+  }
+}
+
+// =========================
+// CLOSE ADD CUSTOM ZIKR POPUP
+// =========================
+function closeAddCustomZikrPopup(){
+  let popup = document.getElementById("addCustomZikrPopup");
+  if(popup){
+    popup.style.display = "none";
+  }
+}
+
+
+
+     // =========================
+// EDITING CUSTOM ZIKR ID
+// =========================
+let editingCustomZikrId = "";
+
+// =========================
+// OPEN EDIT CUSTOM ZIKR POPUP
+// =========================
+function openEditCustomZikrPopup(id){
+
+  editingCustomZikrId = id;
+
+  let item = getCustomZikrById(id);
+  if(!item) return;
+
+  let popup = document.getElementById("editCustomZikrPopup");
+  let englishInput = document.getElementById("editCustomZikrEnglishInput");
+  let arabicInput = document.getElementById("editCustomZikrArabicInput");
+  let targetInput = document.getElementById("editCustomZikrTargetInput");
+
+  if(englishInput) englishInput.value = item.englishName || "";
+  if(arabicInput) arabicInput.value = item.arabicText || "";
+  if(targetInput) targetInput.value = item.target || 33;
+
+  if(popup){
+    popup.style.display = "flex";
+  }
+}
+
+// =========================
+// CLOSE EDIT CUSTOM ZIKR POPUP
+// =========================
+function closeEditCustomZikrPopup(){
+  let popup = document.getElementById("editCustomZikrPopup");
+  if(popup){
+    popup.style.display = "none";
+  }
+}
+
+// =========================
+// UPDATE CUSTOM ZIKR
+// =========================
+function updateCustomZikr(){
+
+  if(!editingCustomZikrId) return;
+
+  let englishInput = document.getElementById("editCustomZikrEnglishInput");
+  let arabicInput = document.getElementById("editCustomZikrArabicInput");
+  let targetInput = document.getElementById("editCustomZikrTargetInput");
+
+  if(!englishInput || !arabicInput || !targetInput) return;
+
+  let englishName = englishInput.value.trim();
+  let arabicText = arabicInput.value.trim();
+  let target = parseInt(targetInput.value, 10);
+
+  if(!englishName){
+    alert("Please enter English name");
+    return;
+  }
+
+  if(!arabicText){
+    arabicText = "";
+  }
+
+  if(!target || target < 1){
+    alert("Please enter a valid target");
+    return;
+  }
+
+  let customList = getCustomZikrList();
+
+  customList = customList.map(function(item){
+    if(item.id === editingCustomZikrId){
+      return {
+        id: item.id,
+        englishName: englishName,
+        arabicText: arabicText,
+        target: target
+      };
+    }
+    return item;
+  });
+
+  saveCustomZikrList(customList);
+
+  localStorage.setItem(getZikrCardTargetKey(editingCustomZikrId), String(target));
+
+  closeEditCustomZikrPopup();
+  renderCustomZikrCards();
+  updateAllZikrCardUI();
+
+  if(currentZikr === editingCustomZikrId){
+    openZikrDetail(editingCustomZikrId);
+  }
+}
+
+// =========================
+// OPEN RESET ALL ZIKR POPUP
+// =========================
+function openResetAllZikrPopup(){
+  let popup = document.getElementById("resetAllZikrPopup");
+  if(popup){
+    popup.style.display = "flex";
+  }
+}
+
+// =========================
+// CLOSE RESET ALL ZIKR POPUP
+// =========================
+function closeResetAllZikrPopup(){
+  let popup = document.getElementById("resetAllZikrPopup");
+  if(popup){
+    popup.style.display = "none";
+  }
+}
+
+// =========================
+// CONFIRM RESET ALL ZIKR
+// =========================
+function confirmResetAllZikr(){
+
+  localStorage.setItem(getZikrCardCountKey("subhanallah"), "0");
+  localStorage.setItem(getZikrCardCountKey("hawqala"), "0");
+  localStorage.setItem(getZikrCardCountKey("alhamdulillah"), "0");
+
+  let customList = getCustomZikrList();
+
+  customList.forEach(function(item){
+    localStorage.setItem(getZikrCardCountKey(item.id), "0");
+  });
+
+  if(currentZikr){
+    zikrCount = 0;
+    updateZikrDisplay();
+  }
+
+  renderCustomZikrCards();
+  updateAllZikrCardUI();
+  closeResetAllZikrPopup();
+}
+
+
+     
+     // =========================
+// GET CUSTOM ZIKR STORAGE KEY
+// =========================
+function getCustomZikrStorageKey(){
+  return "custom-zikr-list";
+}
+
+// =========================
+// GET CUSTOM ZIKR LIST
+// =========================
+function getCustomZikrList(){
+
+  let saved = localStorage.getItem(getCustomZikrStorageKey());
+
+  if(!saved) return [];
+
+  try{
+    let parsed = JSON.parse(saved);
+    return Array.isArray(parsed) ? parsed : [];
+  }catch(error){
+    return [];
+  }
+}
+
+// =========================
+// SAVE CUSTOM ZIKR LIST
+// =========================
+function saveCustomZikrList(list){
+  localStorage.setItem(getCustomZikrStorageKey(), JSON.stringify(list));
+}
+
+// =========================
+// CREATE CUSTOM ZIKR ID
+// =========================
+function createCustomZikrId(){
+  return "custom_" + Date.now();
+}
+
+// =========================
+// IS CUSTOM ZIKR
+// =========================
+function isCustomZikr(name){
+  return String(name).indexOf("custom_") === 0;
+}
+
+// =========================
+// ESCAPE HTML
+// =========================
+function escapeHtml(text){
+  return String(text || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+// =========================
+// GET CUSTOM ZIKR BY ID
+// =========================
+function getCustomZikrById(id){
+
+  let list = getCustomZikrList();
+
+  return list.find(function(item){
+    return item.id === id;
+  }) || null;
+}
+
+// =========================
+// SAVE NEW CUSTOM ZIKR
+// =========================
+function saveNewCustomZikr(){
+
+  let englishInput = document.getElementById("customZikrEnglishInput");
+  let arabicInput = document.getElementById("customZikrArabicInput");
+  let targetInput = document.getElementById("customZikrTargetInput");
+
+  if(!englishInput || !arabicInput || !targetInput) return;
+
+  let englishName = englishInput.value.trim();
+  let arabicText = arabicInput.value.trim();
+  let target = parseInt(targetInput.value, 10);
+
+  if(!englishName){
+    alert("Please enter English name");
+    return;
+  }
+
+ // Arabic is optional
+if(!arabicText){
+  arabicText = "";
+}
+
+  if(!target || target < 1){
+    alert("Please enter a valid target");
+    return;
+  }
+
+  let customList = getCustomZikrList();
+
+  let newItem = {
+    id: createCustomZikrId(),
+    englishName: englishName,
+    arabicText: arabicText,
+    target: target
+  };
+
+  customList.push(newItem);
+  saveCustomZikrList(customList);
+
+  localStorage.setItem(getZikrCardTargetKey(newItem.id), String(target));
+  localStorage.setItem(getZikrCardCountKey(newItem.id), "0");
+
+  closeAddCustomZikrPopup();
+  renderCustomZikrCards();
+  updateAllZikrCardUI();
+}
+
+// =========================
+// RENDER CUSTOM ZIKR CARDS
+// =========================
+function renderCustomZikrCards(){
+
+  let container = document.getElementById("customZikrList");
+  if(!container) return;
+
+  let customList = getCustomZikrList();
+
+  container.innerHTML = "";
+
+  if(!customList.length){
+    return;
+  }
+
+  let openCardController = null;
+
+  customList.forEach(function(item){
+
+    let swipeWrap = document.createElement("div");
+    swipeWrap.style.position = "relative";
+    swipeWrap.style.width = "100%";
+    swipeWrap.style.borderRadius = "24px";
+    swipeWrap.style.overflow = "hidden";
+    swipeWrap.style.marginBottom = "0px";
+    swipeWrap.style.touchAction = "pan-y";
+
+    let deleteBack = document.createElement("div");
+    deleteBack.style.position = "absolute";
+    deleteBack.style.top = "0";
+    deleteBack.style.right = "0";
+    deleteBack.style.bottom = "0";
+    deleteBack.style.width = "96px";
+    deleteBack.style.background = "linear-gradient(180deg,#ff453a 0%, #ff3b30 100%)";
+    deleteBack.style.display = "flex";
+    deleteBack.style.alignItems = "center";
+    deleteBack.style.justifyContent = "center";
+    deleteBack.style.color = "white";
+    deleteBack.style.fontSize = "16px";
+    deleteBack.style.fontWeight = "800";
+    deleteBack.style.letterSpacing = "-0.2px";
+    deleteBack.style.borderRadius = "24px";
+    deleteBack.style.userSelect = "none";
+    deleteBack.style.webkitUserSelect = "none";
+    deleteBack.style.boxShadow = "inset 0 0 0 1px rgba(255,255,255,0.10)";
+    deleteBack.innerText = "Delete";
+
+    let card = document.createElement("div");
+
+    card.style.position = "relative";
+    card.style.background = "white";
+    card.style.borderRadius = "26px";
+    card.style.padding = "18px 16px";
+    card.style.cursor = "pointer";
+    card.style.display = "flex";
+    card.style.alignItems = "center";
+    card.style.justifyContent = "space-between";
+    card.style.gap = "12px";
+    card.style.boxShadow = "0 8px 22px rgba(0,0,0,0.07)";
+    card.style.border = "1px solid rgba(0,0,0,0.03)";
+    card.style.transform = "translateX(0px)";
+    card.style.transition = "transform 0.28s cubic-bezier(0.22, 1, 0.36, 1)";
+    card.style.willChange = "transform";
+
+    card.innerHTML = `
+      <div id="zikrCardRing-${item.id}" style="
+      width:52px;
+      height:52px;
+      border-radius:50%;
+      flex-shrink:0;
+      position:relative;
+      background:conic-gradient(#34c759 0deg, #34c759 0deg, #e9e9ee 0deg, #e9e9ee 360deg);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      ">
+        <div id="zikrCardRingText-${item.id}" style="
+        width:38px;
+        height:38px;
+        border-radius:50%;
+        background:white;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:14px;
+        font-weight:800;
+        color:#666;
+        ">
+          0
+        </div>
+      </div>
+
+      <div style="
+      flex:1;
+      min-width:0;
+      ">
+
+        <div style="
+        font-size:19px;
+        font-weight:800;
+        color:#111;
+        line-height:1.2;
+        margin-bottom:4px;
+        ">
+          ${escapeHtml(item.englishName)}
+        </div>
+
+       ${item.arabicText ? `
+<div style="
+font-size:15px;
+color:#666;
+font-family:'Amiri','Noto Naskh Arabic',serif;
+direction:rtl;
+line-height:1.5;
+margin-bottom:6px;
+">
+  ${escapeHtml(item.arabicText)}
+</div>
+` : ``}
+
+        <div id="zikrCardProgressText-${item.id}" style="
+        font-size:13px;
+        font-weight:700;
+        color:#8a8a8a;
+        ">
+          0 / ${item.target}
+        </div>
+
+      </div>
+
+      <div style="
+      width:50px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-shrink:0;
+      ">
+
+        <button onclick="event.stopPropagation();openZikrTargetPopup('${item.id}')" style="
+        width:34px;
+        height:34px;
+        border:none;
+        border-radius:50%;
+        background:#f2f2f7;
+        color:#666;
+        font-size:18px;
+        font-weight:700;
+        cursor:pointer;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        ">
+          ⋮
+        </button>
+
+        <button onclick="event.stopPropagation();openZikrDetail('${item.id}')" style="
+        width:38px;
+        height:38px;
+        border:none;
+        border-radius:50%;
+        background:#111;
+        color:white;
+        font-size:16px;
+        font-weight:800;
+        cursor:pointer;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        box-shadow:0 6px 14px rgba(0,0,0,0.16);
+        ">
+          ▶
+        </button>
+
+      </div>
+    `;
+
+    let startX = 0;
+    let startY = 0;
+    let deltaX = 0;
+    let isDragging = false;
+    let isHorizontalSwipe = false;
+    let didMove = false;
+    let fullSwipeTriggered = false;
+    let isOpen = false;
+
+    let openX = -96;
+    let halfOpenThreshold = -48;
+    let fullSwipeThreshold = -118;
+    let maxDrag = -138;
+
+    function setCardX(x){
+      card.style.transform = "translateX(" + x + "px)";
+    }
+
+    function closeThisCard(){
+      card.style.transition = "transform 0.28s cubic-bezier(0.22, 1, 0.36, 1)";
+      setCardX(0);
+      isOpen = false;
+
+      if(openCardController && openCardController.card === card){
+        openCardController = null;
+      }
+    }
+
+    function openThisCard(){
+      if(openCardController && openCardController.card !== card){
+        openCardController.close();
+      }
+
+      card.style.transition = "transform 0.28s cubic-bezier(0.22, 1, 0.36, 1)";
+      setCardX(openX);
+      isOpen = true;
+
+      openCardController = {
+        card: card,
+        close: closeThisCard
+      };
+    }
+
+    function deleteThisCustomZikr(){
+      let list = getCustomZikrList();
+
+      list = list.filter(function(zikrItem){
+        return zikrItem.id !== item.id;
+      });
+
+      saveCustomZikrList(list);
+
+      localStorage.removeItem(getZikrCardCountKey(item.id));
+      localStorage.removeItem(getZikrCardTargetKey(item.id));
+
+      renderCustomZikrCards();
+      updateAllZikrCardUI();
+    }
+
+    function askDeleteCustomZikr(){
+      let ok = confirm('Delete zikr "' + (item.englishName || "Custom Zikr") + '"?');
+
+      if(ok){
+        deleteThisCustomZikr();
+      }else{
+        closeThisCard();
+      }
+    }
+
+    deleteBack.onclick = function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      askDeleteCustomZikr();
+    };
+
+    card.onclick = function(e){
+      if(didMove || fullSwipeTriggered){
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+
+      if(isOpen){
+        closeThisCard();
+        return;
+      }
+
+      openZikrDetail(item.id);
+    };
+
+    swipeWrap.addEventListener("touchstart", function(e){
+      let touch = e.touches[0];
+      if(!touch) return;
+
+      startX = touch.clientX;
+      startY = touch.clientY;
+      deltaX = isOpen ? openX : 0;
+      isDragging = true;
+      isHorizontalSwipe = false;
+      didMove = false;
+      fullSwipeTriggered = false;
+
+      card.style.transition = "none";
+
+      if(openCardController && openCardController.card !== card){
+        openCardController.close();
+      }
+    }, {passive:true});
+
+    swipeWrap.addEventListener("touchmove", function(e){
+      if(!isDragging) return;
+
+      let touch = e.touches[0];
+      if(!touch) return;
+
+      let moveX = touch.clientX - startX;
+      let moveY = touch.clientY - startY;
+
+      if(!isHorizontalSwipe){
+        if(Math.abs(moveX) > 8 && Math.abs(moveX) > Math.abs(moveY)){
+          isHorizontalSwipe = true;
+        }else{
+          return;
+        }
+      }
+
+      e.preventDefault();
+      didMove = true;
+
+      let nextX = (isOpen ? openX : 0) + moveX;
+
+      if(nextX > 0){
+        nextX = nextX * 0.18;
+      }
+
+      if(nextX < maxDrag){
+        nextX = maxDrag;
+      }
+
+      setCardX(nextX);
+      deltaX = nextX;
+    }, {passive:false});
+
+    swipeWrap.addEventListener("touchend", function(){
+      if(!isDragging) return;
+
+      isDragging = false;
+      card.style.transition = "transform 0.28s cubic-bezier(0.22, 1, 0.36, 1)";
+
+      if(!isHorizontalSwipe){
+        didMove = false;
+        return;
+      }
+
+      if(deltaX <= fullSwipeThreshold){
+        fullSwipeTriggered = true;
+        setCardX(openX);
+
+        setTimeout(function(){
+          askDeleteCustomZikr();
+
+          setTimeout(function(){
+            fullSwipeTriggered = false;
+          }, 120);
+        }, 110);
+
+        return;
+      }
+
+      if(deltaX <= halfOpenThreshold){
+        openThisCard();
+      }else{
+        closeThisCard();
+      }
+
+      setTimeout(function(){
+        didMove = false;
+      }, 60);
+    });
+
+    swipeWrap.appendChild(deleteBack);
+    swipeWrap.appendChild(card);
+    container.appendChild(swipeWrap);
+  });
+}
+// =========================
+// GET ZIKR DISPLAY TITLE
+// =========================
+function getZikrDisplayTitle(name){
+
+  if(name === "subhanallah"){
+    return "SubhanAllahi wa bihamdihi";
+  }
+
+  if(name === "hawqala"){
+    return "La hawla wa la quwwata illa billah";
+  }
+
+  if(name === "alhamdulillah"){
+    return "Alhamdulillah";
+  }
+
+  let customItem = getCustomZikrById(name);
+
+  if(customItem){
+    return customItem.englishName || "Custom Zikr";
+  }
+
+  return name;
+}
+
+
+
+     
 const zikrData = {
 subhanallah: {
 hadith: `نبی صلی اللہ علیہ وآلہ وسلم نے فرمایا:
@@ -6183,8 +8036,192 @@ arabic: `لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللّ
 meaning: `گناہ سے بچنے کی ہمت ہے نہ نیکی کرنے کی طاقت مگر
 اللہ ہی کی توفیق سے۔`,
 ref: `صحیح البخاری، الادب المفرد، باب قول: لا حول ولا قوة إلا بالله<br>حدیث: 6409`
+},
+alhamdulillah: {
+hadith: `رسول اللہ ﷺ نے فرمایا:
+"الطُّهُورُ شَطْرُ الإِيمَانِ، وَالْحَمْدُ لِلَّهِ تَمْلأُ الْمِيزَانَ"`,
+arabic: `ٱلْحَمْدُ لِلَّٰهِ`,
+meaning: `تمام تعریفیں اللہ ہی کے لیے ہیں۔`,
+ref: `صحیح مسلم، کتاب الطہارة، حدیث: 223`
 }
 };
+
+     // =========================
+// ZIKR CARD TARGET POPUP STATE
+// =========================
+let currentZikrTargetEdit = "";
+
+// =========================
+// GET ZIKR CARD COUNT KEY
+// =========================
+function getZikrCardCountKey(name){
+  return "zikr-card-count-" + name;
+}
+
+// =========================
+// GET ZIKR CARD COUNT
+// =========================
+function getZikrCardCount(name){
+  return parseInt(localStorage.getItem(getZikrCardCountKey(name)) || "0", 10);
+}
+
+
+
+// =========================
+// GET ZIKR CARD TARGET KEY
+// =========================
+function getZikrCardTargetKey(name){
+  return "zikr-card-target-" + name;
+}
+
+// =========================
+// GET ZIKR CARD TARGET
+// =========================
+function getZikrCardTarget(name){
+  return localStorage.getItem(getZikrCardTargetKey(name)) || "33";
+}
+
+// =========================
+// OPEN ZIKR TARGET POPUP
+// =========================
+function openZikrTargetPopup(name){
+
+  if(isCustomZikr(name)){
+    openEditCustomZikrPopup(name);
+    return;
+  }
+
+  currentZikrTargetEdit = name;
+
+  let popup = document.getElementById("zikrTargetPopup");
+  let title = document.getElementById("zikrTargetPopupTitle");
+  let input = document.getElementById("zikrCustomTargetInput");
+
+  if(title){
+    title.innerText = getZikrDisplayTitle(name);
+  }
+
+  if(input){
+    input.value = "";
+  }
+
+  if(popup){
+    popup.style.display = "flex";
+  }
+}
+
+// =========================
+// CLOSE ZIKR TARGET POPUP
+// =========================
+function closeZikrTargetPopup(){
+  let popup = document.getElementById("zikrTargetPopup");
+  if(popup){
+    popup.style.display = "none";
+  }
+}
+
+// =========================
+// SAVE ZIKR CARD TARGET
+// =========================
+function saveZikrCardTarget(value){
+
+  if(!currentZikrTargetEdit) return;
+
+  localStorage.setItem(getZikrCardTargetKey(currentZikrTargetEdit), String(value));
+
+  updateSingleZikrCardUI(currentZikrTargetEdit);
+  closeZikrTargetPopup();
+}
+
+// =========================
+// SAVE CUSTOM ZIKR CARD TARGET
+// =========================
+function saveCustomZikrCardTarget(){
+
+  if(!currentZikrTargetEdit) return;
+
+  let input = document.getElementById("zikrCustomTargetInput");
+  if(!input) return;
+
+  let value = parseInt(input.value, 10);
+
+  if(!value || value < 1){
+    alert("Please enter a valid target number");
+    return;
+  }
+
+  localStorage.setItem(getZikrCardTargetKey(currentZikrTargetEdit), String(value));
+
+  updateSingleZikrCardUI(currentZikrTargetEdit);
+  closeZikrTargetPopup();
+}
+
+// =========================
+// UPDATE SINGLE ZIKR CARD UI
+// =========================
+function updateSingleZikrCardUI(name){
+
+  let target = parseInt(getZikrCardTarget(name), 10);
+  let count = getZikrCardCount(name);
+
+  let progressText = document.getElementById("zikrCardProgressText-" + name);
+  let ringText = document.getElementById("zikrCardRingText-" + name);
+  let ring = document.getElementById("zikrCardRing-" + name);
+
+  if(!target || target < 1){
+    target = 33;
+  }
+
+ if(count < 0){
+  count = 0;
+}
+
+let progressCount = count;
+
+if(progressCount > target){
+  progressCount = target;
+}
+
+let progressDeg = (progressCount / target) * 360;
+
+  if(progressText){
+    progressText.innerText = count + " / " + target;
+  }
+
+  if(ringText){
+    if(count >= target){
+      ringText.innerText = "✓";
+      ringText.style.color = "#34c759";
+      ringText.style.fontSize = "20px";
+      ringText.style.fontWeight = "900";
+    }else{
+      ringText.innerText = count;
+      ringText.style.color = "#666";
+      ringText.style.fontSize = "14px";
+      ringText.style.fontWeight = "800";
+    }
+  }
+
+  if(ring){
+    ring.style.background =
+      "conic-gradient(#34c759 0deg, #34c759 " + progressDeg + "deg, #e9e9ee " + progressDeg + "deg, #e9e9ee 360deg)";
+  }
+}
+
+// =========================
+// UPDATE ALL ZIKR CARD UI
+// =========================
+function updateAllZikrCardUI(){
+  updateSingleZikrCardUI("subhanallah");
+  updateSingleZikrCardUI("hawqala");
+  updateSingleZikrCardUI("alhamdulillah");
+
+  let customList = getCustomZikrList();
+
+  customList.forEach(function(item){
+    updateSingleZikrCardUI(item.id);
+  });
+}
 
 
   // =========================
@@ -6239,6 +8276,9 @@ if(zikrPage) zikrPage.style.display = "block";
 if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
 if(bottomNav) bottomNav.style.display = "flex";
 
+renderCustomZikrCards();
+updateAllZikrCardUI();
+
 window.scrollTo(0,0);
 
 }
@@ -6283,30 +8323,85 @@ window.scrollTo(0,0);
 function openZikrDetail(name){
 
 currentZikr = name;
-zikrCount = 0;
-zikrTarget = 100;
+
+zikrCount = getZikrCardCount(name);
+zikrTarget = parseInt(getZikrCardTarget(name), 10);
+
+if(!zikrTarget || zikrTarget < 1){
+  zikrTarget = 33;
+}
+
+if(zikrTarget !== "inf" && zikrCount > zikrTarget){
+  zikrContinuePastTarget = true;
+}else{
+  zikrContinuePastTarget = false;
+}
+
 updateZikrDisplay();
 
-let data = zikrData[name];
+let data = null;
+
+if(isCustomZikr(name)){
+
+  let customItem = getCustomZikrById(name);
+
+  if(!customItem){
+    alert("Custom zikr not found");
+    return;
+  }
+
+  data = {
+    hadith: "Your custom zikr",
+    arabic: escapeHtml(customItem.arabicText),
+    meaning: escapeHtml(customItem.englishName),
+    ref: "Added by you"
+  };
+
+}else{
+  data = zikrData[name];
+}
+
 if(!data) return;
 
-document.getElementById("zikrHadithText").innerHTML = data.hadith;
-document.getElementById("zikrArabicText").innerHTML = data.arabic;
-document.getElementById("zikrMeaningText").innerHTML = data.meaning;
-document.getElementById("zikrRefText").innerHTML = data.ref;
+let englishTitle = getZikrDisplayTitle(name);
+
+let titleEl = document.getElementById("zikrEnglishTitle");
+if(titleEl){
+  titleEl.innerText = englishTitle;
+}
+
+let badgeEl = document.getElementById("zikrTargetBadge");
+if(badgeEl){
+  badgeEl.innerText = "Target " + zikrTarget;
+}
+
+document.getElementById("zikrHadithText").innerHTML = data.hadith || "";
+let arabicEl = document.getElementById("zikrArabicText");
+
+if(arabicEl){
+  if(data.arabic){
+    arabicEl.style.display = "block";
+    arabicEl.innerHTML = data.arabic;
+  }else{
+    arabicEl.style.display = "none";
+  }
+}
+document.getElementById("zikrMeaningText").innerHTML = data.meaning || "";
+document.getElementById("zikrRefText").innerHTML = data.ref || "";
 
 document.getElementById("zikrPage").style.display = "none";
 document.getElementById("zikrDetailPage").style.display = "block";
 
 window.scrollTo(0,0);
 }
-
+     
 // =========================
 // CLOSE ZIKR DETAIL
 // =========================
 function closeZikrDetail(){
 document.getElementById("zikrDetailPage").style.display = "none";
 document.getElementById("zikrPage").style.display = "block";
+updateAllZikrCardUI();
 window.scrollTo(0,0);
 }
 // =========================
