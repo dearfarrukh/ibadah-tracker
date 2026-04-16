@@ -1219,6 +1219,24 @@ outline:none;
   <div style="font-size:13px;color:#666;margin-top:4px;">Dark sky ring Tasbih style</div>
 </button>
 
+<!-- Style Button Finger Ring Tasbih Button -->
+<button id="styleBtnFingerRing" onclick="setTasbihStyle('fingerRing')" style="
+width:100%;
+border:none;
+border-radius:20px;
+background:white;
+padding:16px 16px;
+text-align:left;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+cursor:pointer;
+outline:none;
+">
+  <div style="font-size:17px;font-weight:800;color:#111;">Finger Ring Tasbih</div>
+  <div style="font-size:13px;color:#666;margin-top:4px;">Digital tally counter front face style</div>
+</button>
+
+
+       
 <!-- Style Button Royal Tasbih Button -->
 <button id="styleBtnRoyal" onclick="setTasbihStyle('royal')" style="
 width:100%;
@@ -1239,6 +1257,285 @@ outline:none;
 </div>
 
 
+
+<!-- =========================
+     FINGER RING TASBIH
+========================= -->
+<div id="fingerRingTasbih" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:92px;
+z-index:4650;
+background:linear-gradient(180deg, #eef1f6 0%, #e9e9ee 100%);
+overflow:hidden;
+">
+
+  <!-- FINGER RING TASBIH HEADER -->
+  <div style="
+  position:absolute;
+  top:2.5%;
+  left:4%;
+  right:4%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:8;
+  ">
+
+    <!-- Finger Ring Tasbih Top Button -->
+    <button onclick="handleTasbihTopButton()" style="
+    width:11%;
+    aspect-ratio:1/1;
+    min-width:40px;
+    min-height:40px;
+    max-width:44px;
+    max-height:44px;
+    border-radius:50%;
+    border:1px solid rgba(0,0,0,0.08);
+    background:white;
+    font-size:20px;
+    font-weight:700;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#111;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    ">
+      <span id="fingerRingTasbihTopBtnIcon">←</span>
+    </button>
+
+    <!-- Open Tasbih Settings Button -->
+    <button onclick="openTasbihSettings()" style="
+    width:12%;
+    aspect-ratio:1/1;
+    min-width:42px;
+    min-height:42px;
+    max-width:46px;
+    max-height:46px;
+    border:none;
+    border-radius:14px;
+    background:rgba(255,255,255,0.92);
+    color:#111;
+    font-size:22px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 6px 18px rgba(0,0,0,0.10);
+    ">
+      ⚙️
+    </button>
+
+  </div>
+
+  <!-- FINGER RING DEVICE BODY -->
+  <div style="
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:74%;
+  max-width:320px;
+  aspect-ratio:0.78/1;
+  background:linear-gradient(180deg, #54b9ff 0%, #2398ef 100%);
+  border-radius:18% 18% 22% 22%;
+  box-shadow:
+  inset 0 8px 16px rgba(255,255,255,0.35),
+  inset 0 -10px 18px rgba(0,0,0,0.12),
+  0 18px 32px rgba(0,0,0,0.18);
+  z-index:3;
+  ">
+
+    <!-- DEVICE WHITE SIDE BUMP -->
+    <div style="
+    position:absolute;
+    left:-12%;
+    top:16%;
+    width:26%;
+    height:64%;
+    background:linear-gradient(180deg, #ffffff 0%, #f0f3f8 100%);
+    border-radius:55% 0 0 55%;
+    box-shadow:inset -4px 0 8px rgba(0,0,0,0.06);
+    z-index:1;
+    "></div>
+
+    <!-- DEVICE TOP DISPLAY FRAME -->
+    <div style="
+    position:absolute;
+    top:8%;
+    left:11%;
+    width:78%;
+    height:24%;
+    background:linear-gradient(180deg, #5f646b 0%, #2f3338 100%);
+    border-radius:16px;
+    box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.18),
+    0 6px 14px rgba(0,0,0,0.16);
+    padding:4%;
+    box-sizing:border-box;
+    z-index:4;
+    ">
+
+      <!-- TALLY COUNTER LABEL -->
+      <div style="
+      text-align:center;
+      font-size:10px;
+      font-weight:800;
+      color:rgba(255,255,255,0.78);
+      letter-spacing:1px;
+      margin-bottom:4%;
+      ">
+        TALLY COUNTER
+      </div>
+
+      <!-- DIGITAL SCREEN -->
+      <div id="fingerRingDigitalScreen" style="
+      width:100%;
+      height:68%;
+      background:linear-gradient(180deg, #edf1eb 0%, #dce3d8 100%);
+      border-radius:10px;
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      padding:0 8%;
+      box-sizing:border-box;
+      box-shadow:
+      inset 0 2px 4px rgba(0,0,0,0.16),
+      inset 0 -1px 2px rgba(255,255,255,0.5);
+      font-family:'Courier New', monospace;
+      font-size:44px;
+      font-weight:900;
+      letter-spacing:4px;
+      color:#2d3230;
+      ">
+        0
+      </div>
+    </div>
+
+    <!-- COUNT / RESET LABELS -->
+    <div style="
+    position:absolute;
+    top:35%;
+    left:12%;
+    right:12%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:4;
+    ">
+
+      <div style="
+      font-size:13px;
+      font-weight:800;
+      color:white;
+      letter-spacing:1px;
+      text-shadow:0 1px 2px rgba(0,0,0,0.12);
+      ">
+        COUNT
+      </div>
+
+      <div style="
+      font-size:13px;
+      font-weight:800;
+      color:white;
+      letter-spacing:1px;
+      text-shadow:0 1px 2px rgba(0,0,0,0.12);
+      ">
+        RESET
+      </div>
+    </div>
+
+    <!-- BIG MAIN COUNT RING -->
+    <div onclick="increaseTasbih()" style="
+    position:absolute;
+    left:50%;
+    bottom:11%;
+    transform:translateX(-50%);
+    width:39%;
+    aspect-ratio:1/1;
+    border-radius:50%;
+    background:linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+    border:5px solid #2f3f4b;
+    box-shadow:
+    inset 0 4px 8px rgba(255,255,255,0.8),
+    inset 0 -6px 10px rgba(0,0,0,0.12),
+    0 8px 16px rgba(0,0,0,0.18);
+    cursor:pointer;
+    z-index:5;
+    "></div>
+
+    <!-- SMALL RESET BUTTON -->
+    <button onclick="resetTasbih()" style="
+    position:absolute;
+    right:10%;
+    bottom:19%;
+    width:11%;
+    aspect-ratio:1/1;
+    min-width:26px;
+    min-height:26px;
+    max-width:34px;
+    max-height:34px;
+    border:none;
+    border-radius:50%;
+    background:linear-gradient(180deg, #ffffff 0%, #eef3f8 100%);
+    box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.8),
+    inset 0 -3px 5px rgba(0,0,0,0.10),
+    0 4px 10px rgba(0,0,0,0.16);
+    cursor:pointer;
+    z-index:6;
+    "></button>
+
+    <!-- SELECTED ZIKR NAME -->
+    <div id="fingerRingSelectedZikrName" style="
+    position:absolute;
+    left:50%;
+    top:67%;
+    transform:translateX(-50%);
+    width:78%;
+    text-align:center;
+    font-size:16px;
+    font-weight:800;
+    color:white;
+    letter-spacing:0.2px;
+    text-shadow:0 1px 2px rgba(0,0,0,0.16);
+    z-index:6;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    ">
+      Tasbih
+    </div>
+
+    <!-- SELECTED ZIKR PROGRESS -->
+    <div id="fingerRingSelectedZikrProgress" style="
+    position:absolute;
+    left:50%;
+    top:74%;
+    transform:translateX(-50%);
+    text-align:center;
+    font-size:14px;
+    font-weight:800;
+    color:rgba(255,255,255,0.92);
+    letter-spacing:0.3px;
+    z-index:6;
+    ">
+      0 / 33
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+     
+     
   
  <!-- =========================
      CLASSIC TASBIH
