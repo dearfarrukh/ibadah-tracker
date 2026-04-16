@@ -14717,6 +14717,9 @@ closeDarkTargetMenu();
 // SET TASBIH STYLE
 // =========================
 function setTasbihStyle(style){
+
+  localStorage.setItem("tasbihStyle", style);
+
   if(style === "dark"){
     showDarkNightMode();
     return;
@@ -14724,6 +14727,11 @@ function setTasbihStyle(style){
 
   if(style === "royal"){
     showRoyalMode();
+    return;
+  }
+
+  if(style === "fingerRing"){
+    showFingerRingMode();
     return;
   }
 
