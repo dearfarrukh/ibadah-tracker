@@ -14797,6 +14797,22 @@ function showRoyalMode(){
   closeDarkTargetMenu();
 }
 
+     // =========================
+// SHOW FINGER RING MODE
+// =========================
+function showFingerRingMode(){
+
+  let classicTasbih = document.getElementById("classicTasbih");
+  let darkNightTasbih = document.getElementById("darkNightTasbih");
+  let royalTasbih = document.getElementById("royalTasbih");
+  let fingerRingTasbih = document.getElementById("fingerRingTasbih");
+
+  if(classicTasbih) classicTasbih.style.display = "none";
+  if(darkNightTasbih) darkNightTasbih.style.display = "none";
+  if(royalTasbih) royalTasbih.style.display = "none";
+  if(fingerRingTasbih) fingerRingTasbih.style.display = "block";
+}
+
 // =========================
 // UPDATE ROYAL TASBIH UI
 // =========================
