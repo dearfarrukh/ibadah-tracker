@@ -423,11 +423,13 @@ background:#000;
 ========================= -->
 <div style="
 display:flex;
+flex-direction:column;
 align-items:center;
-justify-content:flex-start;
-gap:12px;
+justify-content:center;
+gap:6px;
 margin-bottom:10px;
-padding-left:4px;
+padding-left:0;
+width:100%;
 ">
 
   <img src="Images/Icons/QuranTracker.png" style="
@@ -5715,8 +5717,540 @@ if(content){
 
 }
 
+// =========================
+// 16 LINE QURAN VARIABLES
+// =========================
+let currentQuran16PageNumber = 1;
+let totalQuran16Pages = 549;
 
-     
+// =========================
+// 16 LINE SURAH TO PAGE MAP
+// index page number minus 1
+// =========================
+const surahToQuran16PageMap = {
+  1: 1,
+  2: 2,
+  3: 45,
+  4: 69,
+  5: 96,
+  6: 115,
+  7: 136,
+  8: 159,
+  9: 168,
+  10: 187,
+  11: 199,
+  12: 212,
+  13: 224,
+  14: 230,
+  15: 235,
+  16: 240,
+  17: 254,
+  18: 264,
+  19: 275,
+  20: 281,
+  21: 290,
+  22: 299,
+  23: 308,
+  24: 315,
+  25: 324,
+  26: 333,
+  27: 339,
+  28: 347,
+  29: 357,
+  30: 364,
+  31: 370,
+  32: 373,
+  33: 376,
+  34: 385,
+  35: 391,
+  36: 396,
+  37: 401,
+  38: 408,
+  39: 412,
+  40: 420,
+  41: 429,
+  42: 434,
+  43: 440,
+  44: 446,
+  45: 448,
+  46: 452,
+  47: 456,
+  48: 460,
+  49: 463,
+  50: 466,
+  51: 468,
+  52: 471,
+  53: 473,
+  54: 475,
+  55: 478,
+  56: 481,
+  57: 484,
+  58: 488,
+  59: 491,
+  60: 495,
+  61: 497,
+  62: 499,
+  63: 500,
+  64: 502,
+  65: 504,
+  66: 506,
+  67: 508,
+  68: 510,
+  69: 512,
+  70: 514,
+  71: 516,
+  72: 518,
+  73: 520,
+  74: 521,
+  75: 523,
+  76: 524,
+  77: 526,
+  78: 528,
+  79: 529,
+  80: 530,
+  81: 532,
+  82: 532,
+  83: 533,
+  84: 534,
+  85: 535,
+  86: 536,
+  87: 537,
+  88: 537,
+  89: 538,
+  90: 539,
+  91: 540,
+  92: 540,
+  93: 541,
+  94: 541,
+  95: 542,
+  96: 542,
+  97: 543,
+  98: 543,
+  99: 544,
+  100: 544,
+  101: 545,
+  102: 545,
+  103: 545,
+  104: 545,
+  105: 546,
+  106: 546,
+  107: 546,
+  108: 546,
+  109: 547,
+  110: 547,
+  111: 547,
+  112: 547,
+  113: 548,
+  114: 548
+};
+
+// =========================
+// GET 16 LINE IMAGE PATH
+// =========================
+function getQuran16ImagePath(page){
+  return "16linequranpages/" + page + ".jpg";
+}
+
+// =========================
+// OPEN 16 LINE QURAN PAGE
+// =========================
+function openQuran16Page(){
+
+  let quranPage = document.getElementById("quranPage");
+  let quran16Page = document.getElementById("quran16Page");
+  let quran16ReadingPage = document.getElementById("quran16ReadingPage");
+  let arabicQuranPage = document.getElementById("arabicQuranPage");
+  let quran15Page = document.getElementById("quran15Page");
+  let quran15SurahPage = document.getElementById("quran15SurahPage");
+  let quranReadingPage = document.getElementById("quranReadingPage");
+  let surahIndexPage = document.getElementById("surahIndexPage");
+  let quran15BookmarkPage = document.getElementById("quran15BookmarkPage");
+  let bottomNav = document.getElementById("bottomNav");
+
+  if(quranPage) quranPage.style.display = "none";
+  if(arabicQuranPage) arabicQuranPage.style.display = "none";
+  if(quran15Page) quran15Page.style.display = "none";
+  if(quran15SurahPage) quran15SurahPage.style.display = "none";
+  if(quranReadingPage) quranReadingPage.style.display = "none";
+  if(surahIndexPage) surahIndexPage.style.display = "none";
+  if(quran15BookmarkPage) quran15BookmarkPage.style.display = "none";
+  if(quran16ReadingPage) quran16ReadingPage.style.display = "none";
+
+  if(quran16Page) quran16Page.style.display = "block";
+  if(bottomNav) bottomNav.style.display = "flex";
+
+  window.scrollTo(0,0);
+}
+
+// =========================
+// CLOSE 16 LINE QURAN PAGE
+// =========================
+function closeQuran16Page(){
+
+  let quranPage = document.getElementById("quranPage");
+  let quran16Page = document.getElementById("quran16Page");
+  let bottomNav = document.getElementById("bottomNav");
+
+  if(quran16Page) quran16Page.style.display = "none";
+  if(quranPage) quranPage.style.display = "block";
+  if(bottomNav) bottomNav.style.display = "flex";
+
+  window.scrollTo(0,0);
+}
+
+// =========================
+// OPEN 16 LINE PAGE NUMBER
+// =========================
+function openQuran16PageNumber(page){
+
+  if(page < 1) page = 1;
+  if(page > totalQuran16Pages) page = totalQuran16Pages;
+
+  let quranPage = document.getElementById("quranPage");
+  let quran16Page = document.getElementById("quran16Page");
+  let quran16ReadingPage = document.getElementById("quran16ReadingPage");
+  let arabicQuranPage = document.getElementById("arabicQuranPage");
+  let quran15Page = document.getElementById("quran15Page");
+  let quran15SurahPage = document.getElementById("quran15SurahPage");
+  let quranReadingPage = document.getElementById("quranReadingPage");
+  let surahIndexPage = document.getElementById("surahIndexPage");
+  let quran15BookmarkPage = document.getElementById("quran15BookmarkPage");
+  let bottomNav = document.getElementById("bottomNav");
+
+  if(quranPage) quranPage.style.display = "none";
+  if(arabicQuranPage) arabicQuranPage.style.display = "none";
+  if(quran15Page) quran15Page.style.display = "none";
+  if(quran15SurahPage) quran15SurahPage.style.display = "none";
+  if(quranReadingPage) quranReadingPage.style.display = "none";
+  if(surahIndexPage) surahIndexPage.style.display = "none";
+  if(quran15BookmarkPage) quran15BookmarkPage.style.display = "none";
+  if(quran16Page) quran16Page.style.display = "none";
+
+  if(quran16ReadingPage) quran16ReadingPage.style.display = "block";
+  if(bottomNav) bottomNav.style.display = "flex";
+
+  currentQuran16PageNumber = page;
+  localStorage.setItem("lastQuran16Page", String(page));
+
+  loadQuran16Page(page);
+
+  window.scrollTo(0,0);
+}
+
+// =========================
+// LOAD 16 LINE PAGE
+// =========================
+function loadQuran16Page(page){
+
+  if(page < 1) page = 1;
+  if(page > totalQuran16Pages) page = totalQuran16Pages;
+
+  currentQuran16PageNumber = page;
+
+  let img = document.getElementById("quran16PageImage");
+  let meta = document.getElementById("quran16ReadingMeta");
+
+  if(meta){
+    meta.innerText = "Page " + page;
+  }
+
+  if(!img){
+    alert("quran16PageImage not found");
+    return;
+  }
+
+  img.src = getQuran16ImagePath(page);
+
+  localStorage.setItem("lastQuran16Page", String(page));
+}
+
+// =========================
+// NEXT 16 LINE PAGE
+// =========================
+function nextQuran16Page(){
+  if(currentQuran16PageNumber >= totalQuran16Pages) return;
+  loadQuran16Page(currentQuran16PageNumber + 1);
+}
+
+// =========================
+// PREVIOUS 16 LINE PAGE
+// =========================
+function prevQuran16Page(){
+  if(currentQuran16PageNumber <= 1) return;
+  loadQuran16Page(currentQuran16PageNumber - 1);
+}
+
+// =========================
+// CLOSE 16 LINE READING PAGE
+// =========================
+function closeQuran16ReadingPage(){
+
+  let quran16ReadingPage = document.getElementById("quran16ReadingPage");
+  let quran16Page = document.getElementById("quran16Page");
+  let bottomNav = document.getElementById("bottomNav");
+
+  if(quran16ReadingPage) quran16ReadingPage.style.display = "none";
+  if(quran16Page) quran16Page.style.display = "block";
+  if(bottomNav) bottomNav.style.display = "flex";
+
+  window.scrollTo(0,0);
+}
+
+// =========================
+// RESUME 16 LINE READING
+// =========================
+function resumeQuran16Reading(){
+
+  let lastPage = parseInt(localStorage.getItem("lastQuran16Page") || "0");
+
+  if(!lastPage || lastPage < 1){
+    alert("No previous 16 line reading found");
+    return;
+  }
+
+  openQuran16PageNumber(lastPage);
+}
+
+// =========================
+// QURAN 16 SURAH DATA
+// =========================
+const quran16SurahData = [
+  {num:1,en:"Al-Fatihah",ar:"الفاتحة"},
+  {num:2,en:"Al-Baqarah",ar:"البقرة"},
+  {num:3,en:"Aal-Imran",ar:"آل عمران"},
+  {num:4,en:"An-Nisa",ar:"النساء"},
+  {num:5,en:"Al-Ma'idah",ar:"المائدة"},
+  {num:6,en:"Al-An'am",ar:"الأنعام"},
+  {num:7,en:"Al-A'raf",ar:"الأعراف"},
+  {num:8,en:"Al-Anfal",ar:"الأنفال"},
+  {num:9,en:"At-Tawbah",ar:"التوبة"},
+  {num:10,en:"Yunus",ar:"يونس"},
+  {num:11,en:"Hud",ar:"هود"},
+  {num:12,en:"Yusuf",ar:"يوسف"},
+  {num:13,en:"Ar-Ra'd",ar:"الرعد"},
+  {num:14,en:"Ibrahim",ar:"إبراهيم"},
+  {num:15,en:"Al-Hijr",ar:"الحجر"},
+  {num:16,en:"An-Nahl",ar:"النحل"},
+  {num:17,en:"Al-Isra",ar:"الإسراء"},
+  {num:18,en:"Al-Kahf",ar:"الكهف"},
+  {num:19,en:"Maryam",ar:"مريم"},
+  {num:20,en:"Ta-Ha",ar:"طه"},
+  {num:21,en:"Al-Anbiya",ar:"الأنبياء"},
+  {num:22,en:"Al-Hajj",ar:"الحج"},
+  {num:23,en:"Al-Mu'minun",ar:"المؤمنون"},
+  {num:24,en:"An-Nur",ar:"النور"},
+  {num:25,en:"Al-Furqan",ar:"الفرقان"},
+  {num:26,en:"Ash-Shu'ara",ar:"الشعراء"},
+  {num:27,en:"An-Naml",ar:"النمل"},
+  {num:28,en:"Al-Qasas",ar:"القصص"},
+  {num:29,en:"Al-Ankabut",ar:"العنكبوت"},
+  {num:30,en:"Ar-Rum",ar:"الروم"},
+  {num:31,en:"Luqman",ar:"لقمان"},
+  {num:32,en:"As-Sajdah",ar:"السجدة"},
+  {num:33,en:"Al-Ahzab",ar:"الأحزاب"},
+  {num:34,en:"Saba",ar:"سبأ"},
+  {num:35,en:"Fatir",ar:"فاطر"},
+  {num:36,en:"Ya-Sin",ar:"يس"},
+  {num:37,en:"As-Saffat",ar:"الصافات"},
+  {num:38,en:"Sad",ar:"ص"},
+  {num:39,en:"Az-Zumar",ar:"الزمر"},
+  {num:40,en:"Ghafir",ar:"غافر"},
+  {num:41,en:"Fussilat",ar:"فصلت"},
+  {num:42,en:"Ash-Shura",ar:"الشورى"},
+  {num:43,en:"Az-Zukhruf",ar:"الزخرف"},
+  {num:44,en:"Ad-Dukhan",ar:"الدخان"},
+  {num:45,en:"Al-Jathiyah",ar:"الجاثية"},
+  {num:46,en:"Al-Ahqaf",ar:"الأحقاف"},
+  {num:47,en:"Muhammad",ar:"محمد"},
+  {num:48,en:"Al-Fath",ar:"الفتح"},
+  {num:49,en:"Al-Hujurat",ar:"الحجرات"},
+  {num:50,en:"Qaf",ar:"ق"},
+  {num:51,en:"Adh-Dhariyat",ar:"الذاريات"},
+  {num:52,en:"At-Tur",ar:"الطور"},
+  {num:53,en:"An-Najm",ar:"النجم"},
+  {num:54,en:"Al-Qamar",ar:"القمر"},
+  {num:55,en:"Ar-Rahman",ar:"الرحمن"},
+  {num:56,en:"Al-Waqi'ah",ar:"الواقعة"},
+  {num:57,en:"Al-Hadid",ar:"الحديد"},
+  {num:58,en:"Al-Mujadilah",ar:"المجادلة"},
+  {num:59,en:"Al-Hashr",ar:"الحشر"},
+  {num:60,en:"Al-Mumtahanah",ar:"الممتحنة"},
+  {num:61,en:"As-Saff",ar:"الصف"},
+  {num:62,en:"Al-Jumu'ah",ar:"الجمعة"},
+  {num:63,en:"Al-Munafiqun",ar:"المنافقون"},
+  {num:64,en:"At-Taghabun",ar:"التغابن"},
+  {num:65,en:"At-Talaq",ar:"الطلاق"},
+  {num:66,en:"At-Tahrim",ar:"التحريم"},
+  {num:67,en:"Al-Mulk",ar:"الملك"},
+  {num:68,en:"Al-Qalam",ar:"القلم"},
+  {num:69,en:"Al-Haqqah",ar:"الحاقة"},
+  {num:70,en:"Al-Ma'arij",ar:"المعارج"},
+  {num:71,en:"Nuh",ar:"نوح"},
+  {num:72,en:"Al-Jinn",ar:"الجن"},
+  {num:73,en:"Al-Muzzammil",ar:"المزمل"},
+  {num:74,en:"Al-Muddaththir",ar:"المدثر"},
+  {num:75,en:"Al-Qiyamah",ar:"القيامة"},
+  {num:76,en:"Al-Insan",ar:"الإنسان"},
+  {num:77,en:"Al-Mursalat",ar:"المرسلات"},
+  {num:78,en:"An-Naba",ar:"النبأ"},
+  {num:79,en:"An-Nazi'at",ar:"النازعات"},
+  {num:80,en:"Abasa",ar:"عبس"},
+  {num:81,en:"At-Takwir",ar:"التكوير"},
+  {num:82,en:"Al-Infitar",ar:"الإنفطار"},
+  {num:83,en:"Al-Mutaffifin",ar:"المطففين"},
+  {num:84,en:"Al-Inshiqaq",ar:"الإنشقاق"},
+  {num:85,en:"Al-Buruj",ar:"البروج"},
+  {num:86,en:"At-Tariq",ar:"الطارق"},
+  {num:87,en:"Al-A'la",ar:"الأعلى"},
+  {num:88,en:"Al-Ghashiyah",ar:"الغاشية"},
+  {num:89,en:"Al-Fajr",ar:"الفجر"},
+  {num:90,en:"Al-Balad",ar:"البلد"},
+  {num:91,en:"Ash-Shams",ar:"الشمس"},
+  {num:92,en:"Al-Layl",ar:"الليل"},
+  {num:93,en:"Ad-Duhaa",ar:"الضحى"},
+  {num:94,en:"Ash-Sharh",ar:"الشرح"},
+  {num:95,en:"At-Tin",ar:"التين"},
+  {num:96,en:"Al-Alaq",ar:"العلق"},
+  {num:97,en:"Al-Qadr",ar:"القدر"},
+  {num:98,en:"Al-Bayyinah",ar:"البينة"},
+  {num:99,en:"Az-Zalzalah",ar:"الزلزلة"},
+  {num:100,en:"Al-Adiyat",ar:"العاديات"},
+  {num:101,en:"Al-Qari'ah",ar:"القارعة"},
+  {num:102,en:"At-Takathur",ar:"التكاثر"},
+  {num:103,en:"Al-Asr",ar:"العصر"},
+  {num:104,en:"Al-Humazah",ar:"الهمزة"},
+  {num:105,en:"Al-Fil",ar:"الفيل"},
+  {num:106,en:"Quraysh",ar:"قريش"},
+  {num:107,en:"Al-Ma'un",ar:"الماعون"},
+  {num:108,en:"Al-Kawthar",ar:"الكوثر"},
+  {num:109,en:"Al-Kafirun",ar:"الكافرون"},
+  {num:110,en:"An-Nasr",ar:"النصر"},
+  {num:111,en:"Al-Masad",ar:"المسد"},
+  {num:112,en:"Al-Ikhlas",ar:"الإخلاص"},
+  {num:113,en:"Al-Falaq",ar:"الفلق"},
+  {num:114,en:"An-Nas",ar:"الناس"},
+];
+
+// =========================
+// OPEN 16 LINE SURAH PAGE
+// =========================
+function openQuran16SurahPage(){
+
+  let quran16Page = document.getElementById("quran16Page");
+  let quran16SurahPage = document.getElementById("quran16SurahPage");
+  let quran16ReadingPage = document.getElementById("quran16ReadingPage");
+  let bottomNav = document.getElementById("bottomNav");
+
+  if(quran16Page) quran16Page.style.display = "none";
+  if(quran16ReadingPage) quran16ReadingPage.style.display = "none";
+  if(quran16SurahPage) quran16SurahPage.style.display = "block";
+  if(bottomNav) bottomNav.style.display = "flex";
+
+  renderQuran16SurahList();
+  window.scrollTo(0,0);
+}
+
+// =========================
+// CLOSE 16 LINE SURAH PAGE
+// =========================
+function closeQuran16SurahPage(){
+
+  let quran16Page = document.getElementById("quran16Page");
+  let quran16SurahPage = document.getElementById("quran16SurahPage");
+  let bottomNav = document.getElementById("bottomNav");
+
+  if(quran16SurahPage) quran16SurahPage.style.display = "none";
+  if(quran16Page) quran16Page.style.display = "block";
+  if(bottomNav) bottomNav.style.display = "flex";
+
+  window.scrollTo(0,0);
+}
+
+// =========================
+// RENDER 16 LINE SURAH LIST
+// =========================
+function renderQuran16SurahList(){
+
+  let container = document.getElementById("quran16SurahList");
+  if(!container) return;
+
+  container.innerHTML = "";
+
+  quran16SurahData.forEach(function(surah){
+
+    let startPage = surahToQuran16PageMap[surah.num] || 1;
+    let displayPage = startPage + 1;
+
+    let card = document.createElement("div");
+    card.onclick = function(){
+      openQuran16FromSurah(surah.num);
+    };
+
+    card.style.cssText = `
+    background:white;
+    border-radius:26px;
+    padding:18px 16px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    box-shadow:0 8px 22px rgba(0,0,0,0.07);
+    border:1px solid rgba(0,0,0,0.03);
+    `;
+
+    card.innerHTML = `
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:18px;font-weight:800;color:#111;line-height:1.2;margin-bottom:6px;">${surah.num}. ${surah.en}</div>
+        <div style="font-size:20px;color:#666;font-family:'Amiri','Noto Naskh Arabic',serif;direction:rtl;line-height:1.5;">${surah.ar}</div>
+      </div>
+      <div style="min-width:64px;text-align:right;flex-shrink:0;">
+        <div style="font-size:12px;font-weight:700;color:#8a8a8a;margin-bottom:4px;">Page</div>
+        <div style="font-size:22px;font-weight:800;color:#111;">${displayPage}</div>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+// =========================
+// OPEN 16 LINE SURAH PROMPT
+// =========================
+function openQuran16SurahPrompt(){
+
+  let surahNumber = prompt("Enter Surah number (1 to 114)");
+
+  if(surahNumber === null) return;
+
+  surahNumber = parseInt(surahNumber);
+
+  if(!surahNumber || surahNumber < 1 || surahNumber > 114){
+    alert("Please enter a valid Surah number from 1 to 114");
+    return;
+  }
+
+  openQuran16FromSurah(surahNumber);
+}
+
+// =========================
+// OPEN 16 LINE FROM SURAH
+// =========================
+function openQuran16FromSurah(surahNumber){
+
+  let startPage = surahToQuran16PageMap[surahNumber];
+
+  if(!startPage){
+    alert("Surah mapping not found");
+    return;
+  }
+
+  openQuran16PageNumber(startPage);
+}
+
+
+
+
      
 
 // =========================
@@ -11116,7 +11650,7 @@ window.scrollTo(0,0);
 
 }
 
-     // =========================
+// =========================
 // CLOSE 15 LINE QURAN PAGE
 // =========================
 function closeQuran15Page(){
@@ -11132,102 +11666,6 @@ if(bottomNav) bottomNav.style.display = "flex";
 window.scrollTo(0,0);
 
 }
-
-// =========================
-// OPEN 16 LINE QURAN MAIN PAGE
-// =========================
-function openQuran16MainPage(){
-
-  let arabicQuranPage = document.getElementById("arabicQuranPage");
-  let quran15Page = document.getElementById("quran15Page");
-  let quran16MainPage = document.getElementById("quran16MainPage");
-  let quranReadingPage = document.getElementById("quranReadingPage");
-  let juzIndexPage = document.getElementById("juzIndexPage");
-  let surahIndexPage = document.getElementById("surahIndexPage");
-  let quran15BookmarkPage = document.getElementById("quran15BookmarkPage");
-  let bottomNav = document.getElementById("bottomNav");
-
-  if(arabicQuranPage) arabicQuranPage.style.display = "none";
-  if(quran15Page) quran15Page.style.display = "none";
-  if(quranReadingPage) quranReadingPage.style.display = "none";
-  if(juzIndexPage) juzIndexPage.style.display = "none";
-  if(surahIndexPage) surahIndexPage.style.display = "none";
-  if(quran15BookmarkPage) quran15BookmarkPage.style.display = "none";
-
-  if(quran16MainPage) quran16MainPage.style.display = "block";
-  if(bottomNav) bottomNav.style.display = "flex";
-
-  window.scrollTo(0,0);
-}
-
-// =========================
-// CLOSE 16 LINE QURAN MAIN PAGE
-// =========================
-function closeQuran16MainPage(){
-
-  let arabicQuranPage = document.getElementById("arabicQuranPage");
-  let quran16MainPage = document.getElementById("quran16MainPage");
-  let bottomNav = document.getElementById("bottomNav");
-
-  if(quran16MainPage) quran16MainPage.style.display = "none";
-  if(arabicQuranPage) arabicQuranPage.style.display = "block";
-  if(bottomNav) bottomNav.style.display = "flex";
-
-  window.scrollTo(0,0);
-}
-
-
-// =========================
-// 16 LINE QURAN SHARED READER FUNCTIONS
-// =========================
-function openQuran16ContinueReading(){
-
-  let quran16MainPage = document.getElementById("quran16MainPage");
-  if(quran16MainPage) quran16MainPage.style.display = "none";
-
-  resumeQuran15Reading();
-}
-
-function openQuran16SurahListPage(){
-
-  let quran16MainPage = document.getElementById("quran16MainPage");
-  let surahIndexPage = document.getElementById("surahIndexPage");
-  let bottomNav = document.getElementById("bottomNav");
-
-  if(quran16MainPage) quran16MainPage.style.display = "none";
-  if(surahIndexPage) surahIndexPage.style.display = "block";
-  if(bottomNav) bottomNav.style.display = "flex";
-
-  window.scrollTo(0,0);
-  loadSurahIndexList();
-}
-
-function openQuran16JuzListPage(){
-
-  let quran16MainPage = document.getElementById("quran16MainPage");
-  let juzIndexPage = document.getElementById("juzIndexPage");
-  let bottomNav = document.getElementById("bottomNav");
-
-  if(quran16MainPage) quran16MainPage.style.display = "none";
-  if(juzIndexPage) juzIndexPage.style.display = "block";
-  if(bottomNav) bottomNav.style.display = "flex";
-
-  window.scrollTo(0,0);
-  loadJuzIndexList();
-}
-
-function openQuran16BookmarksPage(){
-
-  let quran16MainPage = document.getElementById("quran16MainPage");
-  if(quran16MainPage) quran16MainPage.style.display = "none";
-
-  openQuran15BookmarkPage();
-}
-     
-
-
-
-
 
 
 
@@ -19061,6 +19499,82 @@ box-sizing:border-box;
 
     </div>
 
+
+
+
+
+<!-- 16 LINE QURAN CARD -->
+<div onclick="openQuran16Page()" style="
+background:white;
+border-radius:26px;
+padding:22px 20px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:space-between;
+box-shadow:0 8px 22px rgba(0,0,0,0.07);
+border:1px solid rgba(0,0,0,0.03);
+">
+
+  <div style="
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-width:0;
+  ">
+
+    <div style="
+    width:52px;
+    height:52px;
+    border-radius:18px;
+    background:#f2f2f7;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    flex-shrink:0;
+    ">
+      📘
+    </div>
+
+    <div>
+      <div style="
+      font-size:20px;
+      font-weight:800;
+      color:#111;
+      margin-bottom:4px;
+      letter-spacing:-0.2px;
+      ">
+        16 Line Quran
+      </div>
+
+      <div style="
+      font-size:14px;
+      color:#666;
+      line-height:1.5;
+      ">
+        Open separate 16 line reader
+      </div>
+    </div>
+
+  </div>
+
+  <div style="
+  font-size:24px;
+  color:#b0b0b8;
+  margin-left:14px;
+  flex-shrink:0;
+  ">
+    ›
+  </div>
+
+</div>
+
+
+
+
+
+       
     <!-- 15 LINE QURAN CARD -->
     <div onclick="openQuran15Page()" style="
     background:white;
@@ -19127,79 +19641,8 @@ box-sizing:border-box;
 
   </div>
 
-<!-- 16 LINE QURAN CARD -->
-<div onclick="openQuran16MainPage()" style="
-background:white;
-border-radius:26px;
-padding:22px 20px;
-cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:space-between;
-box-shadow:0 8px 22px rgba(0,0,0,0.07);
-border:1px solid rgba(0,0,0,0.03);
-margin-top:16px;
-">
-
-  <div style="
-  display:flex;
-  align-items:center;
-  gap:14px;
-  min-width:0;
-  ">
-
-    <div style="
-    width:52px;
-    height:52px;
-    border-radius:18px;
-    background:#f2f2f7;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:24px;
-    flex-shrink:0;
-    ">
-      📖
-    </div>
-
-    <div>
-      <div style="
-      font-size:20px;
-      font-weight:800;
-      color:#111;
-      margin-bottom:4px;
-      ">
-        16 Line Quran
-      </div>
-
-      <div style="
-      font-size:14px;
-      color:#666;
-      ">
-        Read 16 line Mushaf
-      </div>
-    </div>
-
-  </div>
-
-  <div style="
-  font-size:24px;
-  color:#b0b0b8;
-  margin-left:14px;
-  ">
-    ›
-  </div>
-
 </div>
 
-     
-</div>
-
-
-
-
-
-     
    <!-- =========================
      JUZ INDEX PAGE (CLEAN)
 ========================= -->
@@ -19230,7 +19673,7 @@ box-sizing:border-box;
     <!-- CLOSE JUZ PAGE BUTTON -->
     <button onclick="closeJuzIndexPage()" style="
     position:absolute;
-    left:0;
+    left:20;
     width:42px;
     height:42px;
     border-radius:50%;
@@ -19435,10 +19878,11 @@ box-sizing:border-box;
   </div>
 
 </div>
+
 <!-- =========================
      16 LINE QURAN MAIN PAGE
 ========================= -->
-<div id="quran16MainPage" style="
+<div id="quran16Page" style="
 display:none;
 position:fixed;
 top:0;
@@ -19465,7 +19909,7 @@ box-sizing:border-box;
   ">
 
     <!-- Close 16 Line Quran Page Button -->
-    <button onclick="closeQuran16MainPage()" style="
+    <button onclick="closeQuran16Page()" style="
     width:42px;
     height:42px;
     border-radius:50%;
@@ -19511,7 +19955,7 @@ box-sizing:border-box;
     font-size:34px;
     margin-bottom:12px;
     ">
-      📖
+      📘
     </div>
 
     <div style="
@@ -19532,7 +19976,7 @@ box-sizing:border-box;
     max-width:280px;
     margin:0 auto;
     ">
-      Continue reading, open surah list, juz list, or bookmarks.
+      Clean separate reader with its own page system.
     </div>
 
   </div>
@@ -19546,8 +19990,8 @@ box-sizing:border-box;
   gap:16px;
   ">
 
-    <!-- Continue Reading Card -->
-    <div onclick="openQuran16ContinueReading()" style="
+    <!-- Resume Reading Card -->
+    <div onclick="resumeQuran16Reading()" style="
     background:white;
     border-radius:26px;
     padding:22px 20px;
@@ -19558,7 +20002,12 @@ box-sizing:border-box;
     box-shadow:0 8px 22px rgba(0,0,0,0.07);
     border:1px solid rgba(0,0,0,0.03);
     ">
-      <div style="display:flex;align-items:center;gap:14px;min-width:0;">
+      <div style="
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+      ">
         <div style="
         width:52px;
         height:52px;
@@ -19573,19 +20022,33 @@ box-sizing:border-box;
           ▶️
         </div>
         <div>
-          <div style="font-size:20px;font-weight:800;color:#111;margin-bottom:4px;">
-            Continue Reading
+          <div style="
+          font-size:20px;
+          font-weight:800;
+          color:#111;
+          margin-bottom:4px;
+          ">
+            Resume Reading
           </div>
-          <div style="font-size:14px;color:#666;">
-            Continue from your last page
+          <div style="
+          font-size:14px;
+          color:#666;
+          ">
+            Continue from your last 16 line page
           </div>
         </div>
       </div>
-      <div style="font-size:24px;color:#b0b0b8;margin-left:14px;">›</div>
+      <div style="
+      font-size:24px;
+      color:#b0b0b8;
+      margin-left:14px;
+      ">
+        ›
+      </div>
     </div>
 
-    <!-- Surah List Card -->
-    <div onclick="openQuran16SurahListPage()" style="
+    <!-- Surah Number Card -->
+    <div onclick="openQuran16SurahPage()" style="
     background:white;
     border-radius:26px;
     padding:22px 20px;
@@ -19596,7 +20059,12 @@ box-sizing:border-box;
     box-shadow:0 8px 22px rgba(0,0,0,0.07);
     border:1px solid rgba(0,0,0,0.03);
     ">
-      <div style="display:flex;align-items:center;gap:14px;min-width:0;">
+      <div style="
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+      ">
         <div style="
         width:52px;
         height:52px;
@@ -19611,19 +20079,33 @@ box-sizing:border-box;
           📚
         </div>
         <div>
-          <div style="font-size:20px;font-weight:800;color:#111;margin-bottom:4px;">
-            Surah List
+          <div style="
+          font-size:20px;
+          font-weight:800;
+          color:#111;
+          margin-bottom:4px;
+          ">
+            Open by Surah
           </div>
-          <div style="font-size:14px;color:#666;">
-            Browse all surahs
+          <div style="
+          font-size:14px;
+          color:#666;
+          ">
+            Enter Surah number from 1 to 114
           </div>
         </div>
       </div>
-      <div style="font-size:24px;color:#b0b0b8;margin-left:14px;">›</div>
+      <div style="
+      font-size:24px;
+      color:#b0b0b8;
+      margin-left:14px;
+      ">
+        ›
+      </div>
     </div>
 
-    <!-- Juz List Card -->
-    <div onclick="openQuran16JuzListPage()" style="
+    <!-- Open First Page Card -->
+    <div onclick="openQuran16PageNumber(1)" style="
     background:white;
     border-radius:26px;
     padding:22px 20px;
@@ -19634,7 +20116,12 @@ box-sizing:border-box;
     box-shadow:0 8px 22px rgba(0,0,0,0.07);
     border:1px solid rgba(0,0,0,0.03);
     ">
-      <div style="display:flex;align-items:center;gap:14px;min-width:0;">
+      <div style="
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+      ">
         <div style="
         width:52px;
         height:52px;
@@ -19646,61 +20133,560 @@ box-sizing:border-box;
         font-size:24px;
         flex-shrink:0;
         ">
-          🕌
+          📖
         </div>
         <div>
-          <div style="font-size:20px;font-weight:800;color:#111;margin-bottom:4px;">
-            Juz List
+          <div style="
+          font-size:20px;
+          font-weight:800;
+          color:#111;
+          margin-bottom:4px;
+          ">
+            Open From Page 1
           </div>
-          <div style="font-size:14px;color:#666;">
-            Open by juz number
+          <div style="
+          font-size:14px;
+          color:#666;
+          ">
+            Start from the beginning
           </div>
         </div>
       </div>
-      <div style="font-size:24px;color:#b0b0b8;margin-left:14px;">›</div>
-    </div>
-
-    <!-- Bookmarks Card -->
-    <div onclick="openQuran16BookmarksPage()" style="
-    background:white;
-    border-radius:26px;
-    padding:22px 20px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    box-shadow:0 8px 22px rgba(0,0,0,0.07);
-    border:1px solid rgba(0,0,0,0.03);
-    ">
-      <div style="display:flex;align-items:center;gap:14px;min-width:0;">
-        <div style="
-        width:52px;
-        height:52px;
-        border-radius:18px;
-        background:#f2f2f7;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        font-size:24px;
-        flex-shrink:0;
-        ">
-          🔖
-        </div>
-        <div>
-          <div style="font-size:20px;font-weight:800;color:#111;margin-bottom:4px;">
-            Bookmarks
-          </div>
-          <div style="font-size:14px;color:#666;">
-            View saved bookmarks
-          </div>
-        </div>
+      <div style="
+      font-size:24px;
+      color:#b0b0b8;
+      margin-left:14px;
+      ">
+        ›
       </div>
-      <div style="font-size:24px;color:#b0b0b8;margin-left:14px;">›</div>
     </div>
 
   </div>
 
 </div>
+
+
+<!-- =========================
+     16 LINE QURAN SURAH PAGE
+========================= -->
+<div id="quran16SurahPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:92px;
+z-index:5003;
+background:linear-gradient(180deg, #ece9e1 0%, #e9e9ee 100%);
+overflow:auto;
+padding:18px 16px 120px 16px;
+box-sizing:border-box;
+">
+
+  <!-- =========================
+       16 LINE SURAH TOP BAR
+  ========================= -->
+  <div style="
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+  ">
+
+    <button onclick="closeQuran16SurahPage()" style="
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:1px solid rgba(0,0,0,0.08);
+    background:white;
+    font-size:22px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#111;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    ">
+      ←
+    </button>
+
+    <div style="
+    font-size:20px;
+    font-weight:800;
+    color:#111;
+    letter-spacing:-0.3px;
+    ">
+      Surah Index
+    </div>
+
+    <div style="width:42px;height:42px;"></div>
+  </div>
+
+  <div id="quran16SurahList" style="
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  "></div>
+
+</div>
+
+<!-- =========================
+     16 LINE QURAN READING PAGE
+========================= -->
+<div id="quran16ReadingPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:92px;
+z-index:5003;
+background:#000;
+overflow:hidden;
+box-sizing:border-box;
+">
+
+  <!-- =========================
+       16 LINE READING TOP BAR
+  ========================= -->
+  <div style="
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:60px;
+  z-index:20;
+  background:rgba(255,255,255,0.96);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 16px rgba(0,0,0,0.08);
+  ">
+
+    <!-- Close 16 Line Reader Button -->
+    <button onclick="closeQuran16ReadingPage()" style="
+    position:absolute;
+    left:28px;
+    top:50%;
+    transform:translateY(-50%);
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    border:none;
+    background:transparent;
+    font-size:28px;
+    font-weight:500;
+    color:#111;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    padding:0;
+    ">
+      ←
+    </button>
+
+    <div style="
+    width:100%;
+    min-width:0;
+    text-align:center;
+    padding:0 56px;
+    box-sizing:border-box;
+    ">
+
+      <div style="
+      font-size:15px;
+      font-weight:800;
+      color:#111;
+      letter-spacing:-0.2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      ">
+        16 Line Quran
+      </div>
+
+      <div id="quran16ReadingMeta" style="
+      font-size:12px;
+      line-height:1.4;
+      color:#666;
+      margin-top:2px;
+      ">
+        Page 1
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- =========================
+       16 LINE IMAGE AREA
+  ========================= -->
+  <div style="
+  position:absolute;
+  top:60px;
+  left:0;
+  right:0;
+  bottom:78px;
+  overflow:hidden;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  ">
+
+    <img id="quran16PageImage" src="" style="
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    object-position:center center;
+    display:block;
+    background:#000;
+    ">
+
+  </div>
+
+  <!-- =========================
+       16 LINE BOTTOM BUTTONS
+  ========================= -->
+  <div style="
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:78px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 16px 18px 16px;
+  box-sizing:border-box;
+  background:rgba(20,20,20,0.96);
+  ">
+
+    <button onclick="prevQuran16Page()" style="
+    flex:1;
+    height:48px;
+    border:none;
+    border-radius:18px;
+    background:#1f1f1f;
+    color:white;
+    font-size:17px;
+    font-weight:800;
+    cursor:pointer;
+    ">
+      Previous
+    </button>
+
+    <button onclick="nextQuran16Page()" style="
+    flex:1;
+    height:48px;
+    border:none;
+    border-radius:18px;
+    background:white;
+    color:#111;
+    font-size:17px;
+    font-weight:800;
+    cursor:pointer;
+    ">
+      Next
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     16 LINE QURAN MAIN PAGE
+========================= -->
+<div id="quran16Page" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:92px;
+z-index:5002;
+background:linear-gradient(180deg, #ece9e1 0%, #e9e9ee 100%);
+overflow:auto;
+padding:18px 16px 120px 16px;
+box-sizing:border-box;
+">
+
+  <!-- =========================
+       16 LINE QURAN TOP BAR
+  ========================= -->
+  <div style="
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+  padding-left:60px;
+  box-sizing:border-box;
+  ">
+
+    <!-- Close 16 Line Quran Page Button -->
+    <button onclick="closeQuran16Page()" style="
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:1px solid rgba(0,0,0,0.08);
+    background:white;
+    font-size:22px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#111;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    ">
+      ←
+    </button>
+
+    <div style="
+    font-size:20px;
+    font-weight:800;
+    color:#111;
+    letter-spacing:-0.3px;
+    ">
+      16 Line Quran
+    </div>
+
+    <div style="width:42px;height:42px;"></div>
+  </div>
+
+  <!-- =========================
+       16 LINE QURAN HERO CARD
+  ========================= -->
+  <div style="
+  background:linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 100%);
+  border-radius:30px;
+  padding:28px 22px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  border:1px solid rgba(255,255,255,0.7);
+  margin-bottom:18px;
+  ">
+
+    <div style="
+    font-size:34px;
+    margin-bottom:12px;
+    ">
+      📘
+    </div>
+
+    <div style="
+    font-size:28px;
+    font-weight:800;
+    color:#111;
+    letter-spacing:-0.5px;
+    line-height:1.1;
+    margin-bottom:8px;
+    ">
+      16 Line Quran
+    </div>
+
+    <div style="
+    font-size:15px;
+    line-height:1.6;
+    color:#666;
+    max-width:280px;
+    margin:0 auto;
+    ">
+      Separate reader for 16 line Quran pages.
+    </div>
+
+  </div>
+
+  <!-- =========================
+       16 LINE QURAN OPTION CARDS
+  ========================= -->
+  <div style="
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  ">
+
+    <!-- Resume Reading Card -->
+    <div onclick="resumeQuran16Reading()" style="
+    background:white;
+    border-radius:26px;
+    padding:22px 20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 8px 22px rgba(0,0,0,0.07);
+    border:1px solid rgba(0,0,0,0.03);
+    ">
+      <div style="
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+      ">
+        <div style="
+        width:52px;
+        height:52px;
+        border-radius:18px;
+        background:#f2f2f7;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:24px;
+        flex-shrink:0;
+        ">
+          ▶️
+        </div>
+        <div>
+          <div style="
+          font-size:20px;
+          font-weight:800;
+          color:#111;
+          margin-bottom:4px;
+          ">
+            Resume Reading
+          </div>
+          <div style="
+          font-size:14px;
+          color:#666;
+          ">
+            Continue from your last 16 line page
+          </div>
+        </div>
+      </div>
+      <div style="
+      font-size:24px;
+      color:#b0b0b8;
+      margin-left:14px;
+      ">
+        ›
+      </div>
+    </div>
+
+    <!-- Open by Surah Card -->
+    <div onclick="openQuran16SurahPage()" style="
+    background:white;
+    border-radius:26px;
+    padding:22px 20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 8px 22px rgba(0,0,0,0.07);
+    border:1px solid rgba(0,0,0,0.03);
+    ">
+      <div style="
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+      ">
+        <div style="
+        width:52px;
+        height:52px;
+        border-radius:18px;
+        background:#f2f2f7;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:24px;
+        flex-shrink:0;
+        ">
+          📚
+        </div>
+        <div>
+          <div style="
+          font-size:20px;
+          font-weight:800;
+          color:#111;
+          margin-bottom:4px;
+          ">
+            Open by Surah
+          </div>
+          <div style="
+          font-size:14px;
+          color:#666;
+          ">
+            Enter Surah number from 1 to 114
+          </div>
+        </div>
+      </div>
+      <div style="
+      font-size:24px;
+      color:#b0b0b8;
+      margin-left:14px;
+      ">
+        ›
+      </div>
+    </div>
+
+    <!-- Open First Page Card -->
+    <div onclick="openQuran16PageNumber(1)" style="
+    background:white;
+    border-radius:26px;
+    padding:22px 20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 8px 22px rgba(0,0,0,0.07);
+    border:1px solid rgba(0,0,0,0.03);
+    ">
+      <div style="
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+      ">
+        <div style="
+        width:52px;
+        height:52px;
+        border-radius:18px;
+        background:#f2f2f7;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:24px;
+        flex-shrink:0;
+        ">
+          📖
+        </div>
+        <div>
+          <div style="
+          font-size:20px;
+          font-weight:800;
+          color:#111;
+          margin-bottom:4px;
+          ">
+            Open From Page 1
+          </div>
+          <div style="
+          font-size:14px;
+          color:#666;
+          ">
+            Start from the beginning
+          </div>
+        </div>
+      </div>
+      <div style="
+      font-size:24px;
+      color:#b0b0b8;
+      margin-left:14px;
+      ">
+        ›
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+     
+     
 
 <!-- =========================
      15 LINE QURAN MAIN PAGE
