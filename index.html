@@ -315,37 +315,51 @@ height:auto;
 position:relative;
 width:100%;
 height:100%;
+margin:0;
+padding:0;
 overflow:hidden;
 touch-action:pan-y;
+background:#000;
+box-sizing:border-box;
 }
 
 .quranFlipTrack{
 position:relative;
 width:100%;
 height:100%;
+margin:0;
+padding:0;
+background:#000;
+box-sizing:border-box;
 }
 
 .quranFlipSheet{
 position:absolute;
 top:0;
 left:0;
+right:0;
+bottom:0;
 width:100%;
 height:100%;
+margin:0;
+padding:0;
 transform:translateX(0%);
 transition:transform 0.32s cubic-bezier(0.22, 0.61, 0.36, 1);
 will-change:transform;
+background:#000;
 }
 
 .quranFlipSheet img{
 width:100%;
 height:100%;
 object-fit:contain;
+object-position:center center;
 display:block;
 user-select:none;
 -webkit-user-drag:none;
 pointer-events:none;
+background:#000;
 }
-
 .quranFlipShadow{
 position:absolute;
 top:0;
@@ -384,12 +398,13 @@ opacity:1;
 width:100%;
 height:100%;
 object-fit:contain;
+object-position:center center;
 display:block;
 user-select:none;
 -webkit-user-drag:none;
 pointer-events:none;
+background:#000;
 }
-
   
 
   
@@ -5301,6 +5316,8 @@ box-sizing:border-box;
   align-items:center;
   justify-content:space-between;
   margin-bottom:18px;
+  padding-left:60px;
+  box-sizing:border-box;
   ">
 
     <!-- Close Arabic Quran Page Button -->
@@ -5578,8 +5595,8 @@ padding:18px 16px 120px 16px;
 box-sizing:border-box;
 ">
 
-  <!-- Top Back Button -->
-  <div style="padding:10px;">
+ <!-- Top Back Button -->
+  <div style="padding:10px 10px 10px 60px;">
     <button onclick="closeQuran15BookmarkPage()" style="
     width:38px;
     height:38px;
@@ -5653,6 +5670,53 @@ box-sizing:border-box;
 // =========================
 let currentQuranSurahNumber = 1;
 let quranReadingSource = "";
+     let quranReaderTopBarVisible = false;
+
+
+     // =========================
+// TOGGLE QURAN READER TOP BAR
+// =========================
+function toggleQuranReaderTopBar(){
+
+let topBar = document.getElementById("quranReaderMiniTopBar");
+let content = document.getElementById("quranReaderContent");
+
+if(!topBar || !content) return;
+
+quranReaderTopBarVisible = !quranReaderTopBarVisible;
+
+if(quranReaderTopBarVisible){
+  topBar.style.top = "0";
+  content.style.paddingTop = "74px";
+}
+else{
+  topBar.style.top = "-74px";
+  content.style.paddingTop = "0";
+}
+}
+
+// =========================
+// RESET QURAN READER TOP BAR
+// =========================
+function resetQuranReaderTopBar(){
+
+let topBar = document.getElementById("quranReaderMiniTopBar");
+let content = document.getElementById("quranReaderContent");
+
+quranReaderTopBarVisible = false;
+
+if(topBar){
+  topBar.style.top = "-74px";
+}
+
+if(content){
+  content.style.paddingTop = "0";
+}
+
+}
+
+
+     
      
 
 // =========================
@@ -5749,7 +5813,7 @@ function openSavedQuran15Bookmark(bookmarkId){
   if(mushafPageView) mushafPageView.style.display = "block";
 
   loadMushafPage(page);
-
+resetQuranReaderTopBar();
   setTimeout(function(){
     setupInteractiveQuranFlip({
       stage: document.getElementById("quranFlipStage"),
@@ -6627,7 +6691,7 @@ if(quranReadingMeta) quranReadingMeta.innerText = "15 Line Quran";
   if(mushafPageView) mushafPageView.style.display = "block";
 
   loadMushafPage(lastPage);
-
+resetQuranReaderTopBar();
   setTimeout(function(){
 
     if(lastSource === "juz"){
@@ -11052,7 +11116,7 @@ window.scrollTo(0,0);
 
 }
 
-// =========================
+     // =========================
 // CLOSE 15 LINE QURAN PAGE
 // =========================
 function closeQuran15Page(){
@@ -11068,6 +11132,102 @@ if(bottomNav) bottomNav.style.display = "flex";
 window.scrollTo(0,0);
 
 }
+
+// =========================
+// OPEN 16 LINE QURAN MAIN PAGE
+// =========================
+function openQuran16MainPage(){
+
+  let arabicQuranPage = document.getElementById("arabicQuranPage");
+  let quran15Page = document.getElementById("quran15Page");
+  let quran16MainPage = document.getElementById("quran16MainPage");
+  let quranReadingPage = document.getElementById("quranReadingPage");
+  let juzIndexPage = document.getElementById("juzIndexPage");
+  let surahIndexPage = document.getElementById("surahIndexPage");
+  let quran15BookmarkPage = document.getElementById("quran15BookmarkPage");
+  let bottomNav = document.getElementById("bottomNav");
+
+  if(arabicQuranPage) arabicQuranPage.style.display = "none";
+  if(quran15Page) quran15Page.style.display = "none";
+  if(quranReadingPage) quranReadingPage.style.display = "none";
+  if(juzIndexPage) juzIndexPage.style.display = "none";
+  if(surahIndexPage) surahIndexPage.style.display = "none";
+  if(quran15BookmarkPage) quran15BookmarkPage.style.display = "none";
+
+  if(quran16MainPage) quran16MainPage.style.display = "block";
+  if(bottomNav) bottomNav.style.display = "flex";
+
+  window.scrollTo(0,0);
+}
+
+// =========================
+// CLOSE 16 LINE QURAN MAIN PAGE
+// =========================
+function closeQuran16MainPage(){
+
+  let arabicQuranPage = document.getElementById("arabicQuranPage");
+  let quran16MainPage = document.getElementById("quran16MainPage");
+  let bottomNav = document.getElementById("bottomNav");
+
+  if(quran16MainPage) quran16MainPage.style.display = "none";
+  if(arabicQuranPage) arabicQuranPage.style.display = "block";
+  if(bottomNav) bottomNav.style.display = "flex";
+
+  window.scrollTo(0,0);
+}
+
+
+// =========================
+// 16 LINE QURAN SHARED READER FUNCTIONS
+// =========================
+function openQuran16ContinueReading(){
+
+  let quran16MainPage = document.getElementById("quran16MainPage");
+  if(quran16MainPage) quran16MainPage.style.display = "none";
+
+  resumeQuran15Reading();
+}
+
+function openQuran16SurahListPage(){
+
+  let quran16MainPage = document.getElementById("quran16MainPage");
+  let surahIndexPage = document.getElementById("surahIndexPage");
+  let bottomNav = document.getElementById("bottomNav");
+
+  if(quran16MainPage) quran16MainPage.style.display = "none";
+  if(surahIndexPage) surahIndexPage.style.display = "block";
+  if(bottomNav) bottomNav.style.display = "flex";
+
+  window.scrollTo(0,0);
+  loadSurahIndexList();
+}
+
+function openQuran16JuzListPage(){
+
+  let quran16MainPage = document.getElementById("quran16MainPage");
+  let juzIndexPage = document.getElementById("juzIndexPage");
+  let bottomNav = document.getElementById("bottomNav");
+
+  if(quran16MainPage) quran16MainPage.style.display = "none";
+  if(juzIndexPage) juzIndexPage.style.display = "block";
+  if(bottomNav) bottomNav.style.display = "flex";
+
+  window.scrollTo(0,0);
+  loadJuzIndexList();
+}
+
+function openQuran16BookmarksPage(){
+
+  let quran16MainPage = document.getElementById("quran16MainPage");
+  if(quran16MainPage) quran16MainPage.style.display = "none";
+
+  openQuran15BookmarkPage();
+}
+     
+
+
+
+
 
 
 
@@ -11460,7 +11620,7 @@ if(quranReadingTextCard) quranReadingTextCard.style.display = "none";
 if(mushafPageView) mushafPageView.style.display = "block";
 
 loadMushafPage(startPage);
-
+resetQuranReaderTopBar();
 setTimeout(function(){
 
 setupInteractiveQuranFlip({
@@ -11688,7 +11848,7 @@ if(mushafPageView) mushafPageView.style.display = "block";
 
 let startPage = getMushafStartPageForSurah(surahNumber);
 loadMushafPage(startPage);
-
+resetQuranReaderTopBar();
 setTimeout(function(){
 
 setupInteractiveQuranFlip({
@@ -11891,7 +12051,7 @@ textCard.style.display = "none";
 }
 
 window.scrollTo(0,0);
-
+resetQuranReaderTopBar();
 loadQuranSurahText(surahNumber);
 
 }
@@ -11964,6 +12124,7 @@ let quranReadingPage = document.getElementById("quranReadingPage");
 let quranReadingTextCard = document.getElementById("quranReadingTextCard");
 let mushafPageView = document.getElementById("mushafPageView");
 
+resetQuranReaderTopBar();
 if(quranReadingPage) quranReadingPage.style.display = "none";
 
 let juzIndexPage = document.getElementById("juzIndexPage");
@@ -18741,12 +18902,15 @@ box-sizing:border-box;
   <!-- =========================
        QURAN PAGE TOP BAR
   ========================= -->
-  <div style="
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:18px;
-  ">
+<div style="
+display:flex;
+align-items:center;
+justify-content:flex-start;
+margin-bottom:18px;
+padding-left:60px;
+gap:12px;
+box-sizing:border-box;
+">
 
     <!-- Close Quran Page Button -->
     <button onclick="closeQuranPage()" style="
@@ -18963,8 +19127,79 @@ box-sizing:border-box;
 
   </div>
 
+<!-- 16 LINE QURAN CARD -->
+<div onclick="openQuran16MainPage()" style="
+background:white;
+border-radius:26px;
+padding:22px 20px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:space-between;
+box-shadow:0 8px 22px rgba(0,0,0,0.07);
+border:1px solid rgba(0,0,0,0.03);
+margin-top:16px;
+">
+
+  <div style="
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-width:0;
+  ">
+
+    <div style="
+    width:52px;
+    height:52px;
+    border-radius:18px;
+    background:#f2f2f7;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    flex-shrink:0;
+    ">
+      📖
+    </div>
+
+    <div>
+      <div style="
+      font-size:20px;
+      font-weight:800;
+      color:#111;
+      margin-bottom:4px;
+      ">
+        16 Line Quran
+      </div>
+
+      <div style="
+      font-size:14px;
+      color:#666;
+      ">
+        Read 16 line Mushaf
+      </div>
+    </div>
+
+  </div>
+
+  <div style="
+  font-size:24px;
+  color:#b0b0b8;
+  margin-left:14px;
+  ">
+    ›
+  </div>
+
 </div>
 
+     
+</div>
+
+
+
+
+
+     
    <!-- =========================
      JUZ INDEX PAGE (CLEAN)
 ========================= -->
@@ -18983,13 +19218,14 @@ box-sizing:border-box;
 ">
 
   <!-- JUZ PAGE TOP BAR -->
-  <div style="
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  margin-bottom:18px;
-  ">
+ <div style="
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-bottom:18px;
+padding-left:60px;
+box-sizing:border-box;
+">
 
     <!-- CLOSE JUZ PAGE BUTTON -->
     <button onclick="closeJuzIndexPage()" style="
@@ -19098,12 +19334,14 @@ box-sizing:border-box;
   <!-- =========================
        SURAH INDEX TOP BAR
   ========================= -->
-  <div style="
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:18px;
-  ">
+ <div style="
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-bottom:18px;
+padding-left:60px;
+box-sizing:border-box;
+">
 
     <!-- Close Surah Index Page Button -->
     <button onclick="closeSurahIndexPage()" style="
@@ -19197,7 +19435,272 @@ box-sizing:border-box;
   </div>
 
 </div>
+<!-- =========================
+     16 LINE QURAN MAIN PAGE
+========================= -->
+<div id="quran16MainPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:92px;
+z-index:5002;
+background:linear-gradient(180deg, #ece9e1 0%, #e9e9ee 100%);
+overflow:auto;
+padding:18px 16px 120px 16px;
+box-sizing:border-box;
+">
 
+  <!-- =========================
+       16 LINE QURAN TOP BAR
+  ========================= -->
+  <div style="
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+  padding-left:60px;
+  box-sizing:border-box;
+  ">
+
+    <!-- Close 16 Line Quran Page Button -->
+    <button onclick="closeQuran16MainPage()" style="
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:1px solid rgba(0,0,0,0.08);
+    background:white;
+    font-size:22px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#111;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    ">
+      ←
+    </button>
+
+    <div style="
+    font-size:20px;
+    font-weight:800;
+    color:#111;
+    letter-spacing:-0.3px;
+    ">
+      16 Line Quran
+    </div>
+
+    <div style="width:42px;height:42px;"></div>
+  </div>
+
+  <!-- =========================
+       16 LINE QURAN HERO CARD
+  ========================= -->
+  <div style="
+  background:linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 100%);
+  border-radius:30px;
+  padding:28px 22px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  border:1px solid rgba(255,255,255,0.7);
+  margin-bottom:18px;
+  ">
+
+    <div style="
+    font-size:34px;
+    margin-bottom:12px;
+    ">
+      📖
+    </div>
+
+    <div style="
+    font-size:28px;
+    font-weight:800;
+    color:#111;
+    letter-spacing:-0.5px;
+    line-height:1.1;
+    margin-bottom:8px;
+    ">
+      16 Line Quran
+    </div>
+
+    <div style="
+    font-size:15px;
+    line-height:1.6;
+    color:#666;
+    max-width:280px;
+    margin:0 auto;
+    ">
+      Continue reading, open surah list, juz list, or bookmarks.
+    </div>
+
+  </div>
+
+  <!-- =========================
+       16 LINE QURAN OPTION CARDS
+  ========================= -->
+  <div style="
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  ">
+
+    <!-- Continue Reading Card -->
+    <div onclick="openQuran16ContinueReading()" style="
+    background:white;
+    border-radius:26px;
+    padding:22px 20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 8px 22px rgba(0,0,0,0.07);
+    border:1px solid rgba(0,0,0,0.03);
+    ">
+      <div style="display:flex;align-items:center;gap:14px;min-width:0;">
+        <div style="
+        width:52px;
+        height:52px;
+        border-radius:18px;
+        background:#f2f2f7;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:24px;
+        flex-shrink:0;
+        ">
+          ▶️
+        </div>
+        <div>
+          <div style="font-size:20px;font-weight:800;color:#111;margin-bottom:4px;">
+            Continue Reading
+          </div>
+          <div style="font-size:14px;color:#666;">
+            Continue from your last page
+          </div>
+        </div>
+      </div>
+      <div style="font-size:24px;color:#b0b0b8;margin-left:14px;">›</div>
+    </div>
+
+    <!-- Surah List Card -->
+    <div onclick="openQuran16SurahListPage()" style="
+    background:white;
+    border-radius:26px;
+    padding:22px 20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 8px 22px rgba(0,0,0,0.07);
+    border:1px solid rgba(0,0,0,0.03);
+    ">
+      <div style="display:flex;align-items:center;gap:14px;min-width:0;">
+        <div style="
+        width:52px;
+        height:52px;
+        border-radius:18px;
+        background:#f2f2f7;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:24px;
+        flex-shrink:0;
+        ">
+          📚
+        </div>
+        <div>
+          <div style="font-size:20px;font-weight:800;color:#111;margin-bottom:4px;">
+            Surah List
+          </div>
+          <div style="font-size:14px;color:#666;">
+            Browse all surahs
+          </div>
+        </div>
+      </div>
+      <div style="font-size:24px;color:#b0b0b8;margin-left:14px;">›</div>
+    </div>
+
+    <!-- Juz List Card -->
+    <div onclick="openQuran16JuzListPage()" style="
+    background:white;
+    border-radius:26px;
+    padding:22px 20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 8px 22px rgba(0,0,0,0.07);
+    border:1px solid rgba(0,0,0,0.03);
+    ">
+      <div style="display:flex;align-items:center;gap:14px;min-width:0;">
+        <div style="
+        width:52px;
+        height:52px;
+        border-radius:18px;
+        background:#f2f2f7;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:24px;
+        flex-shrink:0;
+        ">
+          🕌
+        </div>
+        <div>
+          <div style="font-size:20px;font-weight:800;color:#111;margin-bottom:4px;">
+            Juz List
+          </div>
+          <div style="font-size:14px;color:#666;">
+            Open by juz number
+          </div>
+        </div>
+      </div>
+      <div style="font-size:24px;color:#b0b0b8;margin-left:14px;">›</div>
+    </div>
+
+    <!-- Bookmarks Card -->
+    <div onclick="openQuran16BookmarksPage()" style="
+    background:white;
+    border-radius:26px;
+    padding:22px 20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 8px 22px rgba(0,0,0,0.07);
+    border:1px solid rgba(0,0,0,0.03);
+    ">
+      <div style="display:flex;align-items:center;gap:14px;min-width:0;">
+        <div style="
+        width:52px;
+        height:52px;
+        border-radius:18px;
+        background:#f2f2f7;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:24px;
+        flex-shrink:0;
+        ">
+          🔖
+        </div>
+        <div>
+          <div style="font-size:20px;font-weight:800;color:#111;margin-bottom:4px;">
+            Bookmarks
+          </div>
+          <div style="font-size:14px;color:#666;">
+            View saved bookmarks
+          </div>
+        </div>
+      </div>
+      <div style="font-size:24px;color:#b0b0b8;margin-left:14px;">›</div>
+    </div>
+
+  </div>
+
+</div>
 
 <!-- =========================
      15 LINE QURAN MAIN PAGE
@@ -19221,11 +19724,13 @@ box-sizing:border-box;
   <!-- =========================
        15 LINE QURAN TOP BAR
   ========================= -->
-  <div style="
+<div style="
   display:flex;
   align-items:center;
   justify-content:space-between;
   margin-bottom:18px;
+  padding-left:60px;
+  box-sizing:border-box;
   ">
 
     <!-- Close 15 Line Quran Page Button -->
@@ -19563,12 +20068,14 @@ box-sizing:border-box;
   <!-- =========================
        TOP BAR
   ========================= -->
-  <div style="
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:18px;
-  ">
+ <div style="
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-bottom:18px;
+padding-left:60px;
+box-sizing:border-box;
+">
 
     <button onclick="closeQuran15SurahPage()" style="
     width:42px;
@@ -19613,7 +20120,8 @@ box-sizing:border-box;
 
 
      
-  <!-- =========================
+ 
+<!-- =========================
      QURAN READING PAGE
 ========================= -->
 <div id="quranReadingPage" style="
@@ -19623,134 +20131,130 @@ top:0;
 left:0;
 right:0;
 bottom:92px;
-z-index:5002;
-background:linear-gradient(180deg, #ece9e1 0%, #e9e9ee 100%);
-overflow:auto;
-padding:100px 16px 120px 16px;
+z-index:5003;
+background:#000;
+overflow:hidden;
+padding:0;
 box-sizing:border-box;
 ">
-  <!-- =========================
-       QURAN READING MINI TOP BAR
-  ========================= -->
-<div id="quranReadingMiniTopBar" style="
-position:fixed;
+
+  <!-- TAP AREA WRAP -->
+<div id="quranReaderShell" style="
+position:absolute;
 top:0;
+left:0;
+right:0;
+bottom:0;
+overflow:hidden;
+background:#000;
+touch-action:manipulation;
+">
+
+   <!-- MINI TOP BAR -->
+<div id="quranReaderMiniTopBar" style="
+position:absolute;
+top:-74px;
 left:0;
 right:0;
 height:74px;
 display:flex;
-align-items:center;
-justify-content:center;
-padding:0 16px;
-background:rgba(233,233,238,0.92);
-backdrop-filter:blur(18px);
--webkit-backdrop-filter:blur(18px);
-border-radius:0;
-box-shadow:0 1px 0 rgba(0,0,0,0.06);
-border:none;
-z-index:20;
+align-items:flex-end;
+justify-content:space-between;
+padding:0 16px 12px 68px;
 box-sizing:border-box;
+background:rgba(20,20,20,0.92);
+backdrop-filter:blur(16px);
+-webkit-backdrop-filter:blur(16px);
+z-index:30;
+transition:top 0.28s ease;
 ">
 
-    <!-- Close Quran Reading Page Button -->
-   <button onclick="closeQuranReadingPage()" style="
-position:absolute;
-left:16px;
-top:50%;
-transform:translateY(-50%);
-width:38px;
-height:38px;
-border-radius:50%;
-border:none;
-background:transparent;
-font-size:28px;
-font-weight:500;
-color:#111;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-padding:0;
-box-shadow:none;
-">
-←
-</button>
+  <!-- Close Quran Reading Page Button -->
+  <button onclick="event.stopPropagation();closeQuranReadingPage()" style="
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:50%;
+  background:rgba(255,255,255,0.96);
+  color:#111;
+  font-size:22px;
+  font-weight:700;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 12px rgba(0,0,0,0.18);
+  flex-shrink:0;
+  ">
+    ←
+  </button>
 
-       <div style="
-    width:100%;
-    min-width:0;
-    text-align:center;
-    padding:0 56px;
-    box-sizing:border-box;
-    ">
+  <!-- Open Bookmark Popup Button -->
+  <button onclick="event.stopPropagation();openBookmarkPopup()" style="
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:50%;
+  background:rgba(255,255,255,0.96);
+  color:#111;
+  font-size:18px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 12px rgba(0,0,0,0.18);
+  flex-shrink:0;
+  ">
+    🔖
+  </button>
 
-      <div id="quranReadingEnglishName" style="
-      font-size:15px;
-      font-weight:800;
+</div>
+
+      <!-- Close Quran Reading Button -->
+      <button onclick="event.stopPropagation();closeQuranReadingPage()" style="
+      width:42px;
+      height:42px;
+      border:none;
+      border-radius:50%;
+      background:rgba(255,255,255,0.96);
       color:#111;
-      letter-spacing:-0.2px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      ">
-        Surah Name
-      </div>
-
-      <div id="quranReadingArabicName" style="
-      font-size:20px;
+      font-size:22px;
       font-weight:700;
-      color:#2c2418;
-      direction:rtl;
-      line-height:1.25;
-      margin-top:2px;
-      font-family:'Amiri','Noto Naskh Arabic',serif;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 4px 12px rgba(0,0,0,0.18);
       ">
-        سورة
-      </div>
+        ←
+      </button>
 
-      <div id="quranReadingMeta" style="
-      display:none;
-      font-size:12px;
-      line-height:1.4;
-      color:#666;
-      margin-top:2px;
-      ">
-        Arabic text
-      </div>
-
-            <!-- =========================
-     QURAN BOOKMARK BUTTON
-========================= -->
-<button onclick="openBookmarkPopup()" style="
-position:absolute;
-right:16px;
-top:50%;
-transform:translateY(-50%);
-width:38px;
-height:38px;
-border-radius:50%;
-border:none;
-background:rgba(255,255,255,0.92);
-backdrop-filter:blur(10px);
--webkit-backdrop-filter:blur(10px);
-font-size:18px;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-padding:0;
-box-shadow:0 2px 8px rgba(0,0,0,0.08);
-color:#111;
-">
-🔖
-</button>
     </div>
 
-  </div>
+    <!-- READING CONTENT HOLDER -->
+<div id="quranReaderContent" onclick="toggleQuranReaderTopBar()" style="
+position:absolute;
+top:0;
+left:0;
+right:0;
+bottom:0;
+width:100%;
+height:100%;
+background:#000;
+transition:padding-top 0.28s ease;
+overflow:hidden;
+box-sizing:border-box;
+padding-top:0;
+">
 
+      <!-- PUT YOUR EXISTING QURAN READING INNER CONTENT BELOW THIS LINE -->
+
+ <!-- OLD QURAN READING MINI TOP BAR REMOVED -->
+<div style="display:none;">
+  <div id="quranReadingEnglishName">Surah Name</div>
+  <div id="quranReadingArabicName">سورة</div>
+  <div id="quranReadingMeta">Arabic text</div>
+</div>
 
 <!-- =========================
      QURAN READING LOADING CARD
@@ -19802,12 +20306,14 @@ border:1px solid rgba(140,120,90,0.10);
 ========================= -->
 <div id="mushafPageView" style="
 display:none;
-position:absolute;
-top:60px;
-left:0;
-right:0;
-bottom:0;
+position:relative;
+width:100%;
+height:100%;
+margin:0;
+padding:0;
+background:#000;
 overflow:hidden;
+box-sizing:border-box;
 ">
 
   <!-- Full Quran Page Wrapper -->
@@ -19879,6 +20385,12 @@ height:100%;
   </div>
 
 </div>
+
+
+
+      </div>
+
+  </div>
 
 <!-- Hidden Debug Text -->
 <div id="mushafDebugText" style="display:none;">
