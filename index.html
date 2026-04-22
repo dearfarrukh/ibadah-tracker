@@ -221,8 +221,9 @@ justify-content:space-around;
 align-items:center;
 font-size:13px;
 font-weight:600;
-z-index:999;
+z-index:12000;
 box-shadow:0 -2px 10px rgba(0,0,0,0.05);
+}dow:0 -2px 10px rgba(0,0,0,0.05);
 }
 
 .navItem{
@@ -5313,17 +5314,20 @@ box-sizing:border-box;
   <!-- =========================
        ARABIC QURAN TOP BAR
   ========================= -->
-  <div style="
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:18px;
-  padding-left:60px;
-  box-sizing:border-box;
-  ">
+ <div style="
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
+margin-bottom:18px;
+height:52px;
+box-sizing:border-box;
+">
 
     <!-- Close Arabic Quran Page Button -->
     <button onclick="closeArabicQuranPage()" style="
+position:absolute;
+left:0;
     width:42px;
     height:42px;
     border-radius:50%;
@@ -5340,16 +5344,19 @@ box-sizing:border-box;
       ←
     </button>
 
-    <div style="
-    font-size:20px;
-    font-weight:800;
-    color:#111;
-    letter-spacing:-0.3px;
-    ">
-      Arabic Quran
-    </div>
+   <div style="
+position:absolute;
+left:50%;
+transform:translateX(-50%);
+font-size:20px;
+font-weight:800;
+color:#111;
+letter-spacing:-0.3px;
+">
+  Arabic Quran
+</div>
 
-    <div style="width:42px;height:42px;"></div>
+   
   </div>
 
   <!-- =========================
@@ -5851,6 +5858,33 @@ function getQuran16ImagePath(page){
   return "16linequranpages/" + page + ".jpg";
 }
 
+
+// =========================
+// GET NEXT 16 LINE IMAGE SRC
+// =========================
+function getNextQuran16ImageSrc(){
+
+  let nextPage = currentQuran16PageNumber + 1;
+  if(nextPage > totalQuran16Pages) nextPage = totalQuran16Pages;
+
+  return getQuran16ImagePath(nextPage);
+}
+
+// =========================
+// GET PREV 16 LINE IMAGE SRC
+// =========================
+function getPrevQuran16ImageSrc(){
+
+  let prevPage = currentQuran16PageNumber - 1;
+  if(prevPage < 1) prevPage = 1;
+
+  return getQuran16ImagePath(prevPage);
+}
+
+
+
+     
+
 // =========================
 // OPEN 16 LINE QURAN PAGE
 // =========================
@@ -5934,9 +5968,33 @@ function openQuran16PageNumber(page){
 
   loadQuran16Page(page);
 
+  setTimeout(function(){
+    setupInteractiveQuranFlip({
+      stage: document.getElementById("quran16FlipStage"),
+      sheet: document.getElementById("quran16FlipSheet"),
+      underPage: document.getElementById("quran16FlipUnderPage"),
+      frontImage: document.getElementById("quran16PageImage"),
+      underImage: document.getElementById("quran16UnderImage"),
+      shadow: document.querySelector("#quran16FlipSheet .quranFlipShadow"),
+
+      // Arabic feeling like your 15 line reader
+      onNext: function(){
+        prevQuran16Page();
+      },
+      onPrev: function(){
+        nextQuran16Page();
+      },
+      getNextImageSrc: function(){
+        return getPrevQuran16ImageSrc();
+      },
+      getPrevImageSrc: function(){
+        return getNextQuran16ImageSrc();
+      }
+    });
+  }, 100);
+
   window.scrollTo(0,0);
 }
-
 // =========================
 // LOAD 16 LINE PAGE
 // =========================
@@ -5980,6 +6038,39 @@ function prevQuran16Page(){
   loadQuran16Page(currentQuran16PageNumber - 1);
 }
 
+// =========================
+// QURAN 16 SWIPE VARIABLES
+// =========================
+let quran16SwipeStartX = 0;
+let quran16SwipeEndX = 0;
+let quran16SwipeStartY = 0;
+let quran16SwipeEndY = 0;
+
+
+
+
+
+
+// =========================
+// SETUP QURAN 16 SWIPE
+// =========================
+function setupQuran16Swipe(){
+
+  let swipeArea = document.getElementById("quran16SwipeArea");
+  if(!swipeArea) return;
+
+  if(swipeArea.dataset.swipeReady === "yes") return;
+
+  swipeArea.addEventListener("touchstart", handleQuran16SwipeStart, { passive:true });
+  swipeArea.addEventListener("touchmove", handleQuran16SwipeMove, { passive:true });
+  swipeArea.addEventListener("touchend", handleQuran16SwipeEnd);
+
+  swipeArea.dataset.swipeReady = "yes";
+}
+
+
+
+     
 // =========================
 // CLOSE 16 LINE READING PAGE
 // =========================
@@ -9474,9 +9565,7 @@ manageTasks();
 }
 
 
-// =========================
-// HIDE ALL QURAN LAYERS
-// =========================
+
 // =========================
 // HIDE ALL QURAN LAYERS
 // =========================
@@ -9490,6 +9579,10 @@ let surahIndexPage = document.getElementById("surahIndexPage");
 let quranReadingPage = document.getElementById("quranReadingPage");
 let quran15BookmarkPage = document.getElementById("quran15BookmarkPage");
 
+let quran16Page = document.getElementById("quran16Page");
+let quran16SurahPage = document.getElementById("quran16SurahPage");
+let quran16ReadingPage = document.getElementById("quran16ReadingPage");
+
 if(quranPage) quranPage.style.display = "none";
 if(arabicQuranPage) arabicQuranPage.style.display = "none";
 if(quran15Page) quran15Page.style.display = "none";
@@ -9497,6 +9590,10 @@ if(quran15SurahPage) quran15SurahPage.style.display = "none";
 if(surahIndexPage) surahIndexPage.style.display = "none";
 if(quranReadingPage) quranReadingPage.style.display = "none";
 if(quran15BookmarkPage) quran15BookmarkPage.style.display = "none";
+
+if(quran16Page) quran16Page.style.display = "none";
+if(quran16SurahPage) quran16SurahPage.style.display = "none";
+if(quran16ReadingPage) quran16ReadingPage.style.display = "none";
 
 }
      
@@ -11159,6 +11256,10 @@ if(quranPage) quranPage.style.display = "none";
 if(zikrPage) zikrPage.style.display = "block";
 
 if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+
+let handle = document.getElementById("menuHandle");
+if(handle) handle.style.display = "none";
+
 if(bottomNav) bottomNav.style.display = "flex";
 
 renderCustomZikrCards();
@@ -12635,6 +12736,10 @@ hideAllQuranLayers();
 if(quranPage) quranPage.style.display = "block";
 
 if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+
+let handle = document.getElementById("menuHandle");
+if(handle) handle.style.display = "none";
+
 if(bottomNav) bottomNav.style.display = "flex";
 
 window.scrollTo(0,0);
@@ -12715,6 +12820,10 @@ if(quranPage) quranPage.style.display = "none";
 if(tasbihPage) tasbihPage.style.display = "block";
 
 if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+
+let handle = document.getElementById("menuHandle");
+if(handle) handle.style.display = "none";
+
 if(bottomNav) bottomNav.style.display = "flex";
 
 updateTasbihTopButton();
@@ -15101,6 +15210,12 @@ updateTasbihStyleButtons("dark");
 updateDarkNightNumber();
 closeDarkTargetMenu();
 
+// Hide menu handle in Tasbih
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+
+let handle = document.getElementById("menuHandle");
+if(handle) handle.style.display = "none";
 let savedTarget = localStorage.getItem(getTargetKey()) || 33;
 let darkTargetText = document.getElementById("darkTargetText");
 if(darkTargetText){
@@ -15147,7 +15262,16 @@ if(overlay){
 updateTasbihStyleButtons("classic");
 closeDarkTargetMenu();
 
+// Hide menu handle in Tasbih
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+
+let handle = document.getElementById("menuHandle");
+if(handle) handle.style.display = "none";
+
 }
+
+     
 // =========================
 // SET TASBIH STYLE
 // =========================
@@ -15221,7 +15345,14 @@ function showRoyalMode(){
     royalTopIcon.innerHTML = defaultPage === "tasbih" ? "☰" : "←";
   }
 
-  closeDarkTargetMenu();
+ closeDarkTargetMenu();
+
+// Hide menu handle in Tasbih
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+
+let handle = document.getElementById("menuHandle");
+if(handle) handle.style.display = "none";
 }
 
 // =========================
@@ -17437,8 +17568,8 @@ let salahWeatherObserver = null;
    APPLY SALAH WEATHER BACKGROUND IMAGE
 ========================= */
 function applySalahWeatherBackground(bgType){
-  const salahPage = document.getElementById("salahPage");
-  if(!salahPage) return;
+  const bgLayer = document.getElementById("salahBgLayer");
+  if(!bgLayer) return;
 
   let imagePath = "Images/weather-cloudy.jpg";
 
@@ -17452,11 +17583,11 @@ function applySalahWeatherBackground(bgType){
 
   console.log("Applying Salah weather background:", bgType, imagePath);
 
-  salahPage.style.background =
+  bgLayer.style.background =
     "linear-gradient(rgba(8,12,20,0.18), rgba(8,12,20,0.18)), url('" + imagePath + "') center center / cover no-repeat";
-  salahPage.style.backgroundColor = "#0f172a";
 }
 
+     
 /* =========================
    CONVERT WEATHER CODE TO SIMPLE BACKGROUND TYPE
 ========================= */
@@ -19341,43 +19472,48 @@ box-sizing:border-box;
        QURAN PAGE TOP BAR
   ========================= -->
 <div style="
+position:relative;
 display:flex;
 align-items:center;
-justify-content:flex-start;
+justify-content:center;
 margin-bottom:18px;
-padding-left:60px;
-gap:12px;
+height:52px;
 box-sizing:border-box;
 ">
 
     <!-- Close Quran Page Button -->
-    <button onclick="closeQuranPage()" style="
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    border:1px solid rgba(0,0,0,0.08);
-    background:white;
-    font-size:22px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#111;
-    box-shadow:0 4px 12px rgba(0,0,0,0.08);
-    ">
+   <button onclick="closeQuranPage()" style="
+position:absolute;
+left:0;
+width:42px;
+height:42px;
+border-radius:50%;
+border:1px solid rgba(0,0,0,0.08);
+background:white;
+font-size:22px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#111;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+">
       ←
     </button>
 
-    <div style="
-    font-size:22px;
-    font-weight:800;
-    color:#111;
-    letter-spacing:-0.3px;
-    ">
-      Quran
-    </div>
+   <div style="
+position:absolute;
+left:50%;
+transform:translateX(-50%);
+font-size:22px;
+font-weight:800;
+color:#111;
+letter-spacing:-0.3px;
+">
+  Quran
+</div>
 
-    <div style="width:42px;height:42px;"></div>
+  
   </div>
 
   <!-- =========================
@@ -19899,17 +20035,20 @@ box-sizing:border-box;
   <!-- =========================
        16 LINE QURAN TOP BAR
   ========================= -->
-  <div style="
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:18px;
-  padding-left:60px;
-  box-sizing:border-box;
-  ">
+ <div style="
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
+margin-bottom:18px;
+height:52px;
+box-sizing:border-box;
+">
 
     <!-- Close 16 Line Quran Page Button -->
-    <button onclick="closeQuran16Page()" style="
+   <button onclick="closeQuran16Page()" style="
+position:absolute;
+left:0;
     width:42px;
     height:42px;
     border-radius:50%;
@@ -19926,16 +20065,19 @@ box-sizing:border-box;
       ←
     </button>
 
-    <div style="
-    font-size:20px;
-    font-weight:800;
-    color:#111;
-    letter-spacing:-0.3px;
-    ">
-      16 Line Quran
-    </div>
+  <div style="
+position:absolute;
+left:50%;
+transform:translateX(-50%);
+font-size:20px;
+font-weight:800;
+color:#111;
+letter-spacing:-0.3px;
+">
+  16 Line Quran
+</div>
 
-    <div style="width:42px;height:42px;"></div>
+    
   </div>
 
   <!-- =========================
@@ -20253,14 +20395,16 @@ box-sizing:border-box;
   position:absolute;
   top:0;
   left:0;
-  right:0;
-  height:60px;
+  width:100%;
+  height:8%;
+  min-height:56px;
   z-index:20;
   background:rgba(255,255,255,0.96);
   display:flex;
   align-items:center;
   justify-content:center;
   box-shadow:0 6px 16px rgba(0,0,0,0.08);
+  box-sizing:border-box;
   ">
 
     <!-- Close 16 Line Reader Button -->
@@ -20319,80 +20463,104 @@ box-sizing:border-box;
 
   </div>
 
+ 
+  
   <!-- =========================
        16 LINE IMAGE AREA
   ========================= -->
   <div style="
   position:absolute;
-  top:60px;
+  top:8%;
   left:0;
-  right:0;
-  bottom:78px;
-  overflow:hidden;
+  width:100%;
+  height:92%;
   background:#000;
+  overflow:hidden;
+  box-sizing:border-box;
   display:flex;
   align-items:center;
   justify-content:center;
   ">
 
-    <img id="quran16PageImage" src="" style="
+    <!-- Full Quran Page Wrapper -->
+    <div style="
     width:100%;
     height:100%;
-    object-fit:contain;
-    object-position:center center;
-    display:block;
-    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
     ">
+
+      <!-- Quran Page Card -->
+      <div style="
+      width:100%;
+      height:100%;
+      background:white;
+      border-radius:0;
+      padding:0;
+      box-shadow:none;
+      border:none;
+      box-sizing:border-box;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      ">
+
+        <!-- =========================
+             QURAN 16 FLIP STAGE
+        ========================= -->
+        <div class="quranFlipStage" id="quran16FlipStage" style="
+        width:100%;
+        height:100%;
+        ">
+
+          <div class="quranFlipTrack" style="
+          width:100%;
+          height:100%;
+          ">
+
+            <!-- UNDER PAGE -->
+            <div class="quranFlipUnderPage" id="quran16FlipUnderPage">
+              <img id="quran16UnderImage" src="" style="
+              width:100%;
+              height:100%;
+              display:block;
+              object-fit:cover;
+              object-position:center top;
+              ">
+            </div>
+
+            <!-- CURRENT PAGE -->
+            <div class="quranFlipSheet" id="quran16FlipSheet">
+
+              <!-- 16 Line Quran Page Image -->
+              <img id="quran16PageImage" src="" style="
+              width:100%;
+              height:100%;
+              display:block;
+              object-fit:cover;
+              object-position:center top;
+              user-select:none;
+              -webkit-user-select:none;
+              -webkit-user-drag:none;
+              pointer-events:none;
+              ">
+
+              <div class="quranFlipShadow"></div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
 
   </div>
 
-  <!-- =========================
-       16 LINE BOTTOM BUTTONS
-  ========================= -->
-  <div style="
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  height:78px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:12px 16px 18px 16px;
-  box-sizing:border-box;
-  background:rgba(20,20,20,0.96);
-  ">
-
-    <button onclick="prevQuran16Page()" style="
-    flex:1;
-    height:48px;
-    border:none;
-    border-radius:18px;
-    background:#1f1f1f;
-    color:white;
-    font-size:17px;
-    font-weight:800;
-    cursor:pointer;
-    ">
-      Previous
-    </button>
-
-    <button onclick="nextQuran16Page()" style="
-    flex:1;
-    height:48px;
-    border:none;
-    border-radius:18px;
-    background:white;
-    color:#111;
-    font-size:17px;
-    font-weight:800;
-    cursor:pointer;
-    ">
-      Next
-    </button>
-
-  </div>
 
 </div>
 
@@ -20711,16 +20879,18 @@ box-sizing:border-box;
        15 LINE QURAN TOP BAR
   ========================= -->
 <div style="
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:18px;
-  padding-left:60px;
-  box-sizing:border-box;
-  ">
-
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
+margin-bottom:18px;
+height:52px;
+box-sizing:border-box;
+">
     <!-- Close 15 Line Quran Page Button -->
-    <button onclick="closeQuran15Page()" style="
+   <button onclick="closeQuran15Page()" style="
+position:absolute;
+left:0;
     width:42px;
     height:42px;
     border-radius:50%;
@@ -20737,16 +20907,18 @@ box-sizing:border-box;
       ←
     </button>
 
-    <div style="
-    font-size:20px;
-    font-weight:800;
-    color:#111;
-    letter-spacing:-0.3px;
-    ">
-      15 Line Quran
-    </div>
-
-    <div style="width:42px;height:42px;"></div>
+ <div style="
+position:absolute;
+left:50%;
+transform:translateX(-50%);
+font-size:20px;
+font-weight:800;
+color:#111;
+letter-spacing:-0.3px;
+">
+  15 Line Quran
+</div>
+     
   </div>
 
   <!-- =========================
@@ -22142,6 +22314,7 @@ z-index:5000;
   <img loading="lazy" src="yaseen-6.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
 
 </div>
+
 <!-- =========================
      SALAH PAGE
 ========================= -->
@@ -22156,69 +22329,89 @@ left:0;
 right:0;
 bottom:92px;
 z-index:5000;
-background:url('wallpaper.jpg') center/cover no-repeat;
 overflow:hidden;
 padding:0;
 -webkit-overflow-scrolling:touch;
+background:none;
 ">
 
-<div style="
-position:sticky;
-top:0;
-z-index:50;
-padding:15px 15px 6px 15px;
-background:linear-gradient(to bottom, rgba(0,0,0,0.18), rgba(0,0,0,0));
-">
+  <!-- SALAH BACKGROUND LAYER -->
+  <div id="salahBgLayer" style="
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  background:url('wallpaper.jpg') center/cover no-repeat;
+  transition:background 0.4s ease;
+  "></div>
 
-<div style="
-display:flex;
-justify-content:flex-end;
-align-items:center;
-padding:10px 0 4px 0;
-">
-
-
-
-   <!-- SETTINGS BUTTON -->
-<!-- Open Salah Settings Page Button -->
-  <button onclick="openSalahSettingsPage()" style="
-  width:40px;
-  height:40px;
-  border-radius:50%;
-  border:1px solid #d6d6d6;
-  background:white;
-  font-size:20px;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 3px 10px rgba(0,0,0,0.12);
-  ">
-  ⚙️
-  </button>
-
-</div>
-  
-<!-- SALAH PAGE CONTENT WRAP -->
-<div style="
-width:100%;
-max-width:none;
-margin:0;
-padding:0 14px 16px 14px;
-box-sizing:border-box;
-">
-
+  <!-- SALAH CONTENT LAYER -->
   <div style="
-  text-align:center;
-  margin-top:6px;
-  margin-bottom:16px;
-  text-shadow:0 1px 3px rgba(0,0,0,0.35);
+  position:relative;
+  z-index:1;
+  height:100%;
+  overflow:auto;
+  -webkit-overflow-scrolling:touch;
   ">
 
+    <!-- SALAH TOP AREA -->
+    <div style="
+    position:sticky;
+    top:0;
+    z-index:50;
+    padding:15px 15px 6px 15px;
+    background:linear-gradient(to bottom, rgba(0,0,0,0.18), rgba(0,0,0,0));
+    ">
 
-    <!-- =========================
-     SALAH CITY NAME (CLICK TO CHANGE LOCATION)
-========================= -->
+      <div style="
+      display:flex;
+      justify-content:flex-end;
+      align-items:center;
+      padding:10px 0 4px 0;
+      ">
+
+        <!-- SETTINGS BUTTON -->
+        <button onclick="openSalahSettingsPage()" style="
+        width:40px;
+        height:40px;
+        border-radius:50%;
+        border:1px solid #d6d6d6;
+        background:white;
+        font-size:20px;
+        cursor:pointer;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        box-shadow:0 3px 10px rgba(0,0,0,0.12);
+        ">
+          ⚙️
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- SALAH PAGE CONTENT WRAP -->
+    <div style="
+    width:100%;
+    max-width:none;
+    margin:0;
+    padding:0 14px 16px 14px;
+    box-sizing:border-box;
+    ">
+
+      <div style="
+      text-align:center;
+      margin-top:6px;
+      margin-bottom:16px;
+      text-shadow:0 1px 3px rgba(0,0,0,0.35);
+      ">
+
+     
+
+ 
 <!-- =========================
      SALAH CITY CLICK WRAPPER (FIXED CLICK AREA)
 ========================= -->
