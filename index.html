@@ -6636,6 +6636,48 @@ function updateFullQuranDownloadButtonsUI(){
 
 
 // =========================
+// RESET OFFLINE DOWNLOADS
+// =========================
+async function resetOfflineDownloads(){
+
+  let confirmDelete = confirm("Remove all downloaded Quran files?");
+
+  if(!confirmDelete) return;
+
+  try{
+
+    if("caches" in window){
+      let cacheNames = await caches.keys();
+
+      for(let cacheName of cacheNames){
+
+        // Only delete runtime cache (Quran downloads)
+        if(cacheName === "ibadah-runtime-v1"){
+          await caches.delete(cacheName);
+        }
+      }
+    }
+
+    // reset local flags
+    localStorage.removeItem("juz30OfflineDownloaded");
+    localStorage.removeItem("quran16FullDownloaded");
+    localStorage.removeItem("quran15FullDownloaded");
+
+    // update UI
+    updateJuz30DownloadButtonUI();
+    updateFullQuranDownloadButtonsUI();
+
+    alert("Offline Quran downloads removed");
+
+  }catch(error){
+    console.log("Reset failed:", error);
+    alert("Failed to remove downloads");
+  }
+}
+
+
+     
+// =========================
 // DOWNLOAD JUZ 30 TEST
 // =========================
 async function downloadJuz30Test(){
@@ -23952,7 +23994,30 @@ overflow:auto;
         ">
         Juz 30 Test
         </button>
+<!-- =========================
+     RESET OFFLINE DOWNLOADS
+========================= -->
+<button onclick="resetOfflineDownloads()" style="
+width:100%;
+padding:14px 16px;
+margin-top:14px;
+border:none;
+border-radius:16px;
+background:#ffe5e5;
+color:#c62828;
+font-size:16px;
+font-weight:700;
+text-align:left;
+box-shadow:0 3px 8px rgba(0,0,0,0.05);
+cursor:pointer;
+">
+Reset Offline Downloads
+</button>
 
+
+
+
+           
       </div>
 
     </div>
