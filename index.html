@@ -16582,11 +16582,47 @@ document.getElementById("sideMenuOverlay").style.display = "none";
 }
 
 // =========================
-// REFRESH APP
+// STRONG REFRESH APP
 // =========================
-function refreshApp(){
-closeSideMenu();
-location.reload();
+async function refreshApp(){
+
+  closeSideMenu();
+
+  try{
+
+    // Save important localStorage data automatically stays safe.
+    // This refresh only clears app update cache, not your saved data.
+
+    if("serviceWorker" in navigator){
+      let registrations = await navigator.serviceWorker.getRegistrations();
+
+      for(let registration of registrations){
+        await registration.unregister();
+      }
+    }
+
+    if("caches" in window){
+      let cacheNames = await caches.keys();
+
+      for(let cacheName of cacheNames){
+
+        // DO NOT delete runtime cache because Quran downloads are saved there
+        if(cacheName !== "ibadah-runtime-v1"){
+          await caches.delete(cacheName);
+        }
+
+      }
+    }
+
+    let freshUrl = window.location.pathname + "?refresh=" + Date.now();
+    window.location.replace(freshUrl);
+
+  }catch(error){
+
+    console.log("Strong refresh failed:", error);
+    window.location.reload(true);
+
+  }
 }
 
 // =========================
