@@ -16,6 +16,95 @@
 <link rel="manifest" href="manifest.webmanifest">
 <style>
 
+/* =========================
+   GLOBAL FIXED TOP BAR CSS
+========================= */
+.app-top-bar{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:8%;
+  min-height:58px;
+  max-height:76px;
+  z-index:13000;
+  background:rgba(233,233,238,0.96);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-sizing:border-box;
+  padding:env(safe-area-inset-top) 5% 0 5%;
+  border-bottom:1px solid rgba(0,0,0,0.08);
+  box-shadow:0 8px 22px rgba(0,0,0,0.08);
+}
+
+ .app-top-bar-back{
+  position:absolute;
+  left:4%;
+  bottom:10px;
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:50%;
+  background:white;
+  color:#111;
+  font-size:24px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 12px rgba(0,0,0,0.10);
+  cursor:pointer;
+  z-index:13001;
+}
+
+
+
+/* =========================
+   GLOBAL TOP BAR RIGHT BUTTON
+========================= */
+.app-top-bar-right{
+  position:absolute;
+  right:4%;
+  bottom:10px;
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:50%;
+  background:white;
+  color:#111;
+  font-size:21px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 12px rgba(0,0,0,0.10);
+  cursor:pointer;
+  z-index:13001;
+}
+     
+
+.app-top-bar-spacer{
+  width:42px;
+  height:42px;
+}    
+
+.app-top-bar-title{
+  font-size:20px;
+  font-weight:800;
+  color:#111;
+  text-align:center;
+  letter-spacing:-0.3px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:82%;
+}
+
+
+     
 body{
 font-family:-apple-system,BlinkMacSystemFont;
 margin:0;
@@ -84,6 +173,38 @@ transform:translateX(20px);
 box-shadow:0 -2px 10px rgba(0,0,0,0.05);
 }
   
+
+     
+/* =========================
+   TRACKER SURAH PDF IOS STYLE
+========================= */
+.tracker-surah-pdf-page{
+  background:linear-gradient(180deg, #f7f7fa 0%, #e9e9ee 100%) !important;
+  overflow:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:90px 4% 40px 4% !important;
+  box-sizing:border-box;
+}
+
+.tracker-surah-pdf-list{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.tracker-surah-pdf-img{
+  width:100%;
+  display:block;
+  border-radius:22px;
+  background:white;
+  box-shadow:0 8px 24px rgba(0,0,0,0.12);
+}     
+     
+     
+     
+     
+     
 .card{
 background:rgba(255,255,255,0.6);
 backdrop-filter:blur(20px);
@@ -563,7 +684,7 @@ bottom:92px;
 z-index:4000;
 background:url('wallpaper.jpg') center/cover no-repeat;
 overflow:auto;
-padding:15px 15px 110px 15px;
+padding:90px 4% 110px 4%;
 ">
 
 <!-- TASBIH SETTINGS OVERLAY REMOVED - OLD DUPLICATE DRAWER DELETED -->
@@ -575,7 +696,7 @@ padding:15px 15px 110px 15px;
 <div id="darkNightTasbih" style="
 display:none;
 position:fixed;
-top:0;
+top:8%;
 left:0;
 right:0;
 bottom:92px;
@@ -584,57 +705,7 @@ background:url('Images/dark-tasbih-bg.jpg') center/cover no-repeat;
 overflow:hidden;
 ">
 
-<!-- DARK NIGHT HEADER -->
-<div style="
-position:absolute;
-top:20px;
-left:20px;
-right:20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-z-index:5;
-">
 
-<!-- BACK BUTTON -->
-<!-- Tasbih Top Button -->
-<button id="tasbihTopBtn" onclick="handleTasbihTopButton()" style="
-width:38px;
-height:38px;
-border-radius:50%;
-border:1px solid #d6d6d6;
-background:white;
-font-size:20px;
-font-weight:700;
-cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:center;
-box-shadow:0 3px 10px rgba(0,0,0,0.12);
-">
-<span id="tasbihTopBtnIcon">←</span>
-</button>
-
-<!-- SETTINGS BUTTON -->
-<!-- Open Tasbih Settings Button -->
-<button onclick="openTasbihSettings()" style="
-width:44px;
-height:44px;
-border:none;
-border-radius:14px;
-background:rgba(255,255,255,0.15);
-color:white;
-font-size:22px;
-backdrop-filter:blur(10px);
-cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:center;
-">
-⚙️
-</button>
-
-</div>
 
 <!-- TARGET + RESET -->
 <div style="
@@ -811,7 +882,7 @@ touch-action:manipulation;
 <div id="royalTasbih" style="
 display:none;
 position:fixed;
-top:0;
+top:8%;
 left:0;
 right:0;
 bottom:92px;
@@ -820,58 +891,6 @@ background:url('Images/royal-tasbih-bg.png') center/cover no-repeat;
 overflow:hidden;
 ">
 
-  <!-- ROYAL TASBIH HEADER -->
-  <div style="
-  position:absolute;
-  top:18px;
-  left:18px;
-  right:18px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  z-index:6;
-  ">
-
-    <!-- Royal Tasbih Top Button -->
-    <button onclick="handleTasbihTopButton()" style="
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    border:1px solid rgba(255,255,255,0.7);
-    background:rgba(255,255,255,0.92);
-    font-size:20px;
-    font-weight:700;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:0 4px 12px rgba(0,0,0,0.18);
-    color:#111;
-    ">
-      <span id="royalTasbihTopBtnIcon">←</span>
-    </button>
-
-    <!-- Open Tasbih Settings Button -->
-    <button onclick="openTasbihSettings()" style="
-    width:44px;
-    height:44px;
-    border:none;
-    border-radius:14px;
-    background:rgba(255,255,255,0.18);
-    color:white;
-    font-size:22px;
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:0 8px 18px rgba(0,0,0,0.18);
-    ">
-      ⚙️
-    </button>
-
-  </div>
 
    <!-- ROYAL BISMILLAH RIBBON -->
   <div style="
@@ -1307,53 +1326,7 @@ display:block;
 padding:10px;
 ">
 
-    <!-- TASBIH HEADER -->
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:10px 4px 20px 4px;
-">
-
-<!-- BACK BUTTON -->
-<!-- Back Button -->
-<button onclick="closeTasbihPage()" style="
-width:40px;
-height:40px;
-border-radius:50%;
-border:1px solid #ccc;
-background:white;
-font-size:20px;
-cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:center;
-">
-←
-</button>
-
-<!-- SETTINGS BUTTON -->
-<!-- Open Tasbih Settings Button -->
-<button onclick="openTasbihSettings()" style="
-width:44px;
-height:44px;
-border:none;
-border-radius:14px;
-background:rgba(255,255,255,0.75);
-backdrop-filter:blur(12px);
--webkit-backdrop-filter:blur(12px);
-box-shadow:0 6px 18px rgba(0,0,0,0.10);
-font-size:22px;
-cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:center;
-color:#111;
-">
-⚙️
-</button>
-
-</div>
+ 
 
  <div class="card" style="
 text-align:center;
@@ -1536,84 +1509,13 @@ bottom:92px;
 z-index:5000;
 background:linear-gradient(180deg, #ece9e1 0%, #e9e9ee 100%);
 overflow:auto;
-padding:18px 16px 120px 16px;
+padding:90px 4% 120px 4%;
 box-sizing:border-box;
 ">
 
-  <!-- =========================
-       ZIKR PAGE TOP BAR
-  ========================= -->
-  <div style="
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:18px;
-  ">
+ 
 
-    <!-- Close Zikr Page Button -->
-    <button onclick="closeZikrPage()" style="
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    border:1px solid rgba(0,0,0,0.08);
-    background:white;
-    font-size:22px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#111;
-    box-shadow:0 4px 12px rgba(0,0,0,0.08);
-    ">
-      ←
-    </button>
 
-    <div style="
-    font-size:20px;
-    font-weight:800;
-    color:#111;
-    letter-spacing:-0.3px;
-    ">
-      Daily Dhikr
-    </div>
-
-    <div style="width:42px;height:42px;"></div>
-  </div>
-
-  <!-- =========================
-       ZIKR HERO CARD
-  ========================= -->
-  <div style="
-  background:linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 100%);
-  border-radius:30px;
-  padding:28px 22px;
-  text-align:center;
-  box-shadow:0 10px 30px rgba(0,0,0,0.08);
-  border:1px solid rgba(255,255,255,0.7);
-  margin-bottom:18px;
-  ">
-
-    <div style="
-    font-size:34px;
-    margin-bottom:12px;
-    ">
-      🌿
-    </div>
-
-    <div style="
-    font-size:28px;
-    font-weight:800;
-    color:#111;
-    letter-spacing:-0.5px;
-    line-height:1.1;
-    margin-bottom:8px;
-    ">
-      Daily Dhikr
-    </div>
-
-   
-
-  </div>
 
   <!-- =========================
        ZIKR OPTION CARDS
@@ -3107,7 +3009,7 @@ bottom:92px;
 z-index:10002;
 background:#e9e9ee;
 overflow:auto;
-padding:20px 16px 120px 16px;
+padding:90px 4% 120px 4%;
 box-sizing:border-box;
 
 /* STOP ZOOM */
@@ -3117,59 +3019,6 @@ user-select: none;
 -webkit-tap-highlight-color: transparent;
 ">
 
-  <!-- TOP BAR -->
-  <div style="
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:18px;
-  ">
-
-    <!-- Close Qaza Page Button -->
-    <button onclick="closeQazaPage()" style="
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    border:1px solid rgba(0,0,0,0.08);
-    background:white;
-    font-size:22px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    box-shadow:0 4px 12px rgba(0,0,0,0.08);
-    ">
-      ←
-    </button>
-
-    <!-- Qaza Page Title -->
-    <div style="
-    font-size:20px;
-    font-weight:800;
-    color:#111;
-    ">
-      Qaza Tracker
-    </div>
-
-  <!-- Qaza Lock Button -->
-<button id="qazaLockToggleBtn" onclick="toggleQazaLockState()" style="
-width:42px;
-height:42px;
-border-radius:50%;
-border:1px solid rgba(0,0,0,0.08);
-background:white;
-color:#111;
-font-size:18px;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-box-shadow:0 4px 12px rgba(0,0,0,0.08);
-flex-shrink:0;
-">
-  🔒
-</button>
-  </div>
 
   <!-- SEGMENT -->
   <div style="
@@ -11434,6 +11283,113 @@ handle.style.display = show ? "flex" : "none";
 
 }
 
+
+     // =========================
+// GLOBAL TOP BAR VISIBILITY
+// =========================
+function setAppTopBarVisibility(show){
+
+  let appTopBar = document.getElementById("appTopBar");
+  if(!appTopBar) return;
+
+  appTopBar.style.display = show ? "flex" : "none";
+
+}
+
+
+// =========================
+// GLOBAL TOP BAR BACK ACTION
+// =========================
+let appTopBarBackAction = null;
+
+
+// =========================
+// SET GLOBAL TOP BAR BACK BUTTON
+// =========================
+function setAppTopBarBackButton(show, action){
+
+  let backBtn = document.getElementById("appTopBarBackBtn");
+  if(!backBtn) return;
+
+  backBtn.style.display = show ? "flex" : "none";
+  appTopBarBackAction = action || null;
+
+}
+
+
+// =========================
+// HANDLE GLOBAL TOP BAR BACK
+// =========================
+function handleAppTopBarBack(){
+
+  if(typeof appTopBarBackAction === "function"){
+    appTopBarBackAction();
+  }
+
+}
+
+     
+
+// =========================
+// GLOBAL TOP BAR TITLE
+// =========================
+function setAppTopBarTitle(title){
+
+  let appTopBarTitle = document.getElementById("appTopBarTitle");
+  if(!appTopBarTitle) return;
+
+  appTopBarTitle.innerText = title || "";
+
+}
+
+
+
+// =========================
+// GLOBAL TOP BAR RIGHT ACTION
+// =========================
+let appTopBarRightAction = null;
+
+
+// =========================
+// SET GLOBAL TOP BAR RIGHT BUTTON
+// =========================
+function setAppTopBarRightButton(show, text, action){
+
+  let rightBtn = document.getElementById("appTopBarRightBtn");
+  if(!rightBtn) return;
+
+  rightBtn.style.display = show ? "flex" : "none";
+  rightBtn.innerHTML = text || "";
+  appTopBarRightAction = action || null;
+
+  // RESET STYLE EVERY TIME
+  // This prevents Qaza red/green lock color from staying on Tasbih settings button.
+  rightBtn.style.background = "white";
+  rightBtn.style.color = "#111";
+  rightBtn.style.border = "none";
+  rightBtn.style.boxShadow = "0 4px 12px rgba(0,0,0,0.10)";
+  rightBtn.style.opacity = "1";
+
+}
+
+
+// =========================
+// HANDLE GLOBAL TOP BAR RIGHT BUTTON
+// =========================
+function handleAppTopBarRightButton(){
+
+  if(typeof appTopBarRightAction === "function"){
+    appTopBarRightAction();
+  }
+
+}
+
+
+
+
+
+     
+
 // =========================
 // BOTTOM NAV VISIBILITY
 // =========================
@@ -11502,6 +11458,8 @@ setMainMenuHandleVisibility(false);
 // =========================
 function openTrackerPage(){
 
+if(isSideMenuOpen) return;
+     
 closeBookmarkPopup();
 
 lastMainTab = "tracker";
@@ -11560,7 +11518,7 @@ openTrackerPage();
 // OPEN HOME PAGE
 // =========================
 function openHomePage(){
-
+if(isSideMenuOpen) return;
 closeBookmarkPopup();
 
 let homePage = document.getElementById("homePage");
@@ -11727,6 +11685,8 @@ countdownEl.innerText = "00:00:00";
 // =========================
 function openMorePage(){
 
+if(isSideMenuOpen) return;
+
 closeBookmarkPopup();
 
 let homePage = document.getElementById("homePage");
@@ -11781,6 +11741,10 @@ window.scrollTo(0,0);
 // =========================
 function hideAllAppPages(){
 
+setAppTopBarVisibility(false);
+setAppTopBarTitle("");
+
+     
   let pageIds = [
     "homePage",
     "salahPage",
@@ -11845,27 +11809,52 @@ function toggleQazaLockState(){
 // =========================
 function updateQazaLockButtonUI(){
 
-  let btn = document.getElementById("qazaLockToggleBtn");
-  if(!btn) return;
+  let oldBtn = document.getElementById("qazaLockToggleBtn");
+  let topBarBtn = document.getElementById("appTopBarRightBtn");
 
   let isLocked = getQazaLockState();
 
-  if(isLocked){
-    btn.innerText = "🔒";
-    btn.style.background = "#FF3B30";
-    btn.style.color = "white";
-    btn.style.border = "1px solid rgba(255,59,48,0.25)";
-    btn.style.boxShadow = "0 6px 14px rgba(255,59,48,0.28)";
-  }else{
-    btn.innerText = "🔓";
-    btn.style.background = "#34C759";
-    btn.style.color = "white";
-    btn.style.border = "1px solid rgba(0,0,0,0.08)";
-    btn.style.boxShadow = "0 6px 14px rgba(52,199,89,0.35)";
+  // OLD QAZA LOCK BUTTON
+  // This only works if the old Qaza top bar button still exists.
+  if(oldBtn){
+
+    if(isLocked){
+      oldBtn.innerText = "🔒";
+      oldBtn.style.background = "#FF3B30";
+      oldBtn.style.color = "white";
+      oldBtn.style.border = "1px solid rgba(255,59,48,0.25)";
+      oldBtn.style.boxShadow = "0 6px 14px rgba(255,59,48,0.28)";
+    }else{
+      oldBtn.innerText = "🔓";
+      oldBtn.style.background = "#34C759";
+      oldBtn.style.color = "white";
+      oldBtn.style.border = "1px solid rgba(0,0,0,0.08)";
+      oldBtn.style.boxShadow = "0 6px 14px rgba(52,199,89,0.35)";
+    }
+
   }
+
+  // GLOBAL TOP BAR LOCK BUTTON
+  // This is the new lock button on the right side of the global top bar.
+  if(topBarBtn){
+
+    if(isLocked){
+      topBarBtn.innerHTML = "🔒";
+      topBarBtn.style.background = "#FF3B30";
+      topBarBtn.style.color = "white";
+      topBarBtn.style.border = "1px solid rgba(255,59,48,0.25)";
+      topBarBtn.style.boxShadow = "0 6px 14px rgba(255,59,48,0.28)";
+    }else{
+      topBarBtn.innerHTML = "🔓";
+      topBarBtn.style.background = "#34C759";
+      topBarBtn.style.color = "white";
+      topBarBtn.style.border = "1px solid rgba(0,0,0,0.08)";
+      topBarBtn.style.boxShadow = "0 6px 14px rgba(52,199,89,0.35)";
+    }
+
+  }
+
 }
-
-
 
      // =========================
 // UPDATE QAZA TOTAL INPUTS LOCK STATE
@@ -11890,12 +11879,14 @@ function updateQazaTotalInputsLockState(){
 
   });
 
-  qazaButtons.forEach(function(btn){
+   qazaButtons.forEach(function(btn){
 
     if(isLocked){
       btn.style.opacity = "0.45";
       btn.style.cursor = "not-allowed";
-      btn.style.pointerEvents = "none";
+
+      // Keep button tappable so we can show the unlock popup
+      btn.style.pointerEvents = "auto";
     }else{
       btn.style.opacity = "1";
       btn.style.cursor = "pointer";
@@ -11940,24 +11931,33 @@ function unlockQazaEditingFromPopup(){
 
 
 // =========================
-// QAZA LOCKED INPUT TAP HANDLER
+// QAZA LOCKED CONTROL TAP HANDLER
 // =========================
 document.addEventListener("click", function(e){
 
   let target = e.target;
   if(!target) return;
 
-  if(target.classList && target.classList.contains("qazaTotalInput")){
+  let isTotalInput = target.classList && target.classList.contains("qazaTotalInput");
+  let isAdjustButton = target.classList && target.classList.contains("qazaAdjustBtn");
+
+  if(isTotalInput || isAdjustButton){
 
     if(getQazaLockState()){
       e.preventDefault();
-      target.blur();
+      e.stopPropagation();
+
+      if(isTotalInput){
+        target.blur();
+      }
+
       openQazaLockRequiredPopup();
+      return false;
     }
 
   }
-});
 
+}, true);
 
      
 
@@ -11966,30 +11966,40 @@ document.addEventListener("click", function(e){
 // =========================
 function openQazaPage(){
 
-  closeBookmarkPopup();
+hideAllAppPages();
 
-  lastMainTab = "more";
-  lastMoreSourceTab = "more";
+let qazaPage = document.getElementById("qazaPage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
 
-  let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+if(qazaPage) qazaPage.style.display = "block";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+
+setBottomNavVisibility(true);
+setMainMenuHandleVisibility(false);
+
+setAppTopBarVisibility(true);
+setAppTopBarTitle("Qaza Tracker");
+setAppTopBarBackButton(true, function(){
+  closeQazaPage();
+});
+setAppTopBarRightButton(true, "🔒", function(){
+  toggleQazaLockState();
+});
+
+showQazaPrayerTab();
+loadFajrData();
+loadDhuhrData();
+loadAsrData();
+loadMaghribData();
+loadIshaData();
+loadWitrData();
+updateQazaProgressTabUI();
+updateQazaLockButtonUI();
 
 
-  hideAllAppPages();
+window.scrollTo(0,0);
 
-  let qazaPage = document.getElementById("qazaPage");
-  if(qazaPage) qazaPage.style.display = "block";
-
-  if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-  setBottomNavVisibility(true);
-
-  showQazaPrayerTab();
-  loadFajrData();
-  updateQazaProgressTabUI();
-  updateQazaLockButtonUI();
-  updateQazaTotalInputsLockState();
-  window.scrollTo(0,0);
 }
-
 
 // =========================
 // AUTO LOCK WHEN QAZA PAGE HIDES
@@ -12012,22 +12022,60 @@ function autoLockQazaIfHidden(){
 // =========================
 function closeQazaPage(){
 
-  // 🔒 AUTO LOCK WHEN LEAVING QAZA PAGE
-  setQazaLockState(true);
+// 🔒 AUTO LOCK WHEN LEAVING QAZA PAGE
+setQazaLockState(true);
 
-  let qazaPage = document.getElementById("qazaPage");
-  let morePage = document.getElementById("morePage");
-  let floatingMenuBtn = document.getElementById("floatingMenuBtn");
- 
+let qazaPage = document.getElementById("qazaPage");
+let homePage = document.getElementById("homePage");
+let trackerPage = document.getElementById("trackerPage");
+let salahPage = document.getElementById("salahPage");
+let morePage = document.getElementById("morePage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
 
-  if(qazaPage) qazaPage.style.display = "none";
-  if(morePage) morePage.style.display = "block";
+if(qazaPage) qazaPage.style.display = "none";
 
+setAppTopBarVisibility(false);
+setAppTopBarBackButton(false, null);
+setAppTopBarRightButton(false, "", null);
+
+if(homePage) homePage.style.display = "none";
+if(trackerPage) trackerPage.style.display = "none";
+if(salahPage) salahPage.style.display = "none";
+if(morePage) morePage.style.display = "none";
+
+if(lastMainTab === "home"){
+
+  if(homePage) homePage.style.display = "block";
   if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-    setBottomNavVisibility(true);
+  setMainMenuHandleVisibility(true);
 
-  window.scrollTo(0,0);
+}else if(lastMainTab === "more"){
+
+  if(morePage) morePage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+  setMainMenuHandleVisibility(false);
+
+}else if(lastMainTab === "salah"){
+
+  if(salahPage) salahPage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
+  setMainMenuHandleVisibility(true);
+
+}else{
+
+  if(trackerPage) trackerPage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
+  setMainMenuHandleVisibility(true);
+  lastMainTab = "tracker";
+
 }
+
+setBottomNavVisibility(true);
+
+window.scrollTo(0,0);
+
+}
+     
 // =========================
 // SHOW QAZA PRAYER TAB
 // =========================
@@ -12097,29 +12145,88 @@ function showQazaProgressTab(){
 // =========================
 function openDuaPage(){
 
+duaOpenedFromPage = getCurrentMainPageForDua();
+
 hideAllAppPages();
 
-document.getElementById("duaPage").style.display = "block";
-document.getElementById("floatingMenuBtn").style.display = "none";
+let duaPage = document.getElementById("duaPage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+
+if(duaPage) duaPage.style.display = "block";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+
+setBottomNavVisibility(true);
+setMainMenuHandleVisibility(false);
+
+setAppTopBarVisibility(true);
+setAppTopBarTitle("Dua");
+setAppTopBarBackButton(true, function(){
+  closeDuaPage();
+});
 
 window.scrollTo(0,0);
 
 }
 
+
+     
 // =========================
 // CLOSE DUA PAGE
 // =========================
 function closeDuaPage(){
-document.getElementById("duaPage").style.display = "none";
 
-if(lastMainTab === "more"){
-document.getElementById("morePage").style.display = "block";
-document.getElementById("floatingMenuBtn").style.display = "none";
+let duaPage = document.getElementById("duaPage");
+let homePage = document.getElementById("homePage");
+let salahPage = document.getElementById("salahPage");
+let trackerPage = document.getElementById("trackerPage");
+let morePage = document.getElementById("morePage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+
+if(duaPage) duaPage.style.display = "none";
+
+setAppTopBarVisibility(false);
+setAppTopBarBackButton(false, null);
+
+if(homePage) homePage.style.display = "none";
+if(salahPage) salahPage.style.display = "none";
+if(trackerPage) trackerPage.style.display = "none";
+if(morePage) morePage.style.display = "none";
+
+if(duaOpenedFromPage === "home"){
+
+  if(homePage) homePage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
+  lastMainTab = "home";
+
+}else if(duaOpenedFromPage === "salah"){
+
+  if(salahPage) salahPage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
+  lastMainTab = "salah";
+
+}else if(duaOpenedFromPage === "more"){
+
+  if(morePage) morePage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+  lastMainTab = "more";
+
 }else{
-document.getElementById("floatingMenuBtn").style.display = "flex";
+
+  if(trackerPage) trackerPage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
+  lastMainTab = "tracker";
+
+}
+
+setBottomNavVisibility(true);
+setMainMenuHandleVisibility(true);
+
+if(duaOpenedFromPage === "more"){
+  setMainMenuHandleVisibility(false);
 }
 
 window.scrollTo(0,0);
+
 }
 
 // =========================
@@ -12155,7 +12262,36 @@ window.open("https://qiblafinder.withgoogle.com/","_blank");
 let currentZikr = "";
 let lastMainTab = "tracker";
 let lastMoreSourceTab = "tracker";
+let duaOpenedFromPage = "tracker";
 
+// =========================
+// GET CURRENT MAIN PAGE FOR DUA
+// =========================
+function getCurrentMainPageForDua(){
+
+  let homePage = document.getElementById("homePage");
+  let salahPage = document.getElementById("salahPage");
+  let trackerPage = document.getElementById("trackerPage");
+  let morePage = document.getElementById("morePage");
+
+  if(homePage && homePage.style.display !== "none"){
+    return "home";
+  }
+
+  if(salahPage && salahPage.style.display !== "none"){
+    return "salah";
+  }
+
+  if(morePage && morePage.style.display !== "none"){
+    return "more";
+  }
+
+  if(trackerPage && trackerPage.style.display !== "none"){
+    return "tracker";
+  }
+
+  return lastMainTab || "tracker";
+}
 // =========================
 // OPEN ADD CUSTOM ZIKR POPUP
 // =========================
@@ -13272,6 +13408,13 @@ if(zikrPage) zikrPage.style.display = "block";
 if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
 
 setBottomNavVisibility(true);
+setMainMenuHandleVisibility(false);
+
+setAppTopBarVisibility(true);
+setAppTopBarTitle("Daily Dhikr");
+setAppTopBarBackButton(true, function(){
+  closeZikrPage();
+});
 
 renderCustomZikrCards();
 updateAllZikrCardUI();
@@ -13287,23 +13430,47 @@ window.scrollTo(0,0);
 function closeZikrPage(){
 
 let homePage = document.getElementById("homePage");
+let trackerPage = document.getElementById("trackerPage");
+let salahPage = document.getElementById("salahPage");
 let zikrPage = document.getElementById("zikrPage");
 let morePage = document.getElementById("morePage");
 let floatingMenuBtn = document.getElementById("floatingMenuBtn");
 
-
 if(zikrPage) zikrPage.style.display = "none";
 
+setAppTopBarVisibility(false);
+setAppTopBarBackButton(false, null);
+
+if(homePage) homePage.style.display = "none";
+if(trackerPage) trackerPage.style.display = "none";
+if(salahPage) salahPage.style.display = "none";
+if(morePage) morePage.style.display = "none";
+
 if(lastMainTab === "home"){
-if(homePage) homePage.style.display = "block";
-if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-}
-else if(lastMainTab === "more"){
-if(morePage) morePage.style.display = "block";
-if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-}
-else{
-if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
+
+  if(homePage) homePage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+  setMainMenuHandleVisibility(false);
+
+}else if(lastMainTab === "more"){
+
+  if(morePage) morePage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+  setMainMenuHandleVisibility(false);
+
+}else if(lastMainTab === "salah"){
+
+  if(salahPage) salahPage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
+  setMainMenuHandleVisibility(true);
+
+}else{
+
+  if(trackerPage) trackerPage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
+  setMainMenuHandleVisibility(true);
+  lastMainTab = "tracker";
+
 }
 
 setBottomNavVisibility(true);
@@ -13401,24 +13568,42 @@ updateAllZikrCardUI();
 window.scrollTo(0,0);
 }
 // =========================
+// GET TRACKER SURAH TITLE
+// =========================
+function getTrackerSurahTitle(id){
+
+  let titles = {
+    waqiyaPage: "Surah Waqiya",
+    mulkPage: "Surah Mulk",
+    rehmanPage: "Surah Rahman",
+    sajdahPage: "Surah Sajdah",
+    taghabunPage: "Surah Taghabun",
+    last22Page: "Last 22 Surahs",
+    ikhlasPage: "Surah Ikhlas",
+    yaseenPage: "Surah Yaseen"
+  };
+
+  return titles[id] || "Surah PDF";
+
+}
+
+
+// =========================
 // OPEN WAQIYA PAGE
 // =========================
 function openWaqiyaPage(){
 
-document.getElementById("waqiyaPage").style.display = "block";
-document.getElementById("floatingMenuBtn").style.display = "none";
-window.scrollTo(0,0);
+  openSurahPage("waqiyaPage");
 
 }
+
 
 // =========================
 // CLOSE WAQIYA PAGE
 // =========================
 function closeWaqiyaPage(){
 
-document.getElementById("waqiyaPage").style.display = "none";
-document.getElementById("floatingMenuBtn").style.display = "flex";
-window.scrollTo(0,0);
+  closeSurahPage("waqiyaPage");
 
 }
 
@@ -13426,20 +13611,47 @@ window.scrollTo(0,0);
 // =========================
 // OPEN SURAH PAGE
 // =========================
- function openSurahPage(id){
-document.getElementById(id).style.display = "block";
-document.getElementById("floatingMenuBtn").style.display = "none";
-window.scrollTo(0,0);
+function openSurahPage(id){
+
+  hideAllQuranLayers();
+
+  let page = document.getElementById(id);
+  let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+
+  if(page) page.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+
+ setAppTopBarVisibility(true);
+setAppTopBarTitle(getTrackerSurahTitle(id));
+setAppTopBarBackButton(true, function(){
+  closeSurahPage(id);
+});
+
+  setBottomNavVisibility(false);
+  setMainMenuHandleVisibility(false);
+
+  window.scrollTo(0,0);
+
 }
+
 
 // =========================
 // CLOSE SURAH PAGE
 // =========================
 function closeSurahPage(id){
-document.getElementById(id).style.display = "none";
-document.getElementById("floatingMenuBtn").style.display = "flex";
-window.scrollTo(0,0);
+
+  let page = document.getElementById(id);
+
+  if(page) page.style.display = "none";
+
+ setAppTopBarVisibility(false);
+setAppTopBarTitle("");
+setAppTopBarBackButton(false, null);
+
+  openTrackerPage();
+
 }
+
 
 
 
@@ -14763,28 +14975,33 @@ window.scrollTo(0,0);
 }
 
 // =========================
-// OPEN TASBIH PAGE 
+// OPEN TASBIH PAGE
 // =========================
 function openTasbihPage(){
-
-closeBookmarkPopup();
 
 let tasbihPage = document.getElementById("tasbihPage");
 let floatingMenuBtn = document.getElementById("floatingMenuBtn");
 
-
 hideAllAppPages();
 
-// OPEN TASBIH
 if(tasbihPage) tasbihPage.style.display = "block";
-
 if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
 
 setBottomNavVisibility(true);
+setMainMenuHandleVisibility(false);
 
-updateTasbihTopButton();
-loadTasbih();
+setAppTopBarVisibility(true);
+setAppTopBarTitle("Tasbih");
+setAppTopBarBackButton(true, function(){
+  closeTasbihPage();
+});
+setAppTopBarRightButton(true, "⚙️", function(){
+  openTasbihSettings();
+});
+
 applySavedTasbihStyle();
+updateTasbihTopButton();
+
 window.scrollTo(0,0);
 
 }
@@ -14796,26 +15013,52 @@ window.scrollTo(0,0);
 // =========================
 function closeTasbihPage(){
 
+let tasbihPage = document.getElementById("tasbihPage");
 let homePage = document.getElementById("homePage");
 let trackerPage = document.getElementById("trackerPage");
+let salahPage = document.getElementById("salahPage");
 let morePage = document.getElementById("morePage");
-let tasbihPage = document.getElementById("tasbihPage");
 let floatingMenuBtn = document.getElementById("floatingMenuBtn");
 
+closeTasbihSettings();
+closeDarkTargetMenu();
 
 if(tasbihPage) tasbihPage.style.display = "none";
 
+setAppTopBarVisibility(false);
+setAppTopBarBackButton(false, null);
+setAppTopBarRightButton(false, "", null);
+
+if(homePage) homePage.style.display = "none";
+if(trackerPage) trackerPage.style.display = "none";
+if(salahPage) salahPage.style.display = "none";
+if(morePage) morePage.style.display = "none";
+
 if(lastMainTab === "home"){
-if(homePage) homePage.style.display = "block";
-if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-}
-else if(lastMainTab === "more"){
-if(morePage) morePage.style.display = "block";
-if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-}
-else{
-if(trackerPage) trackerPage.style.display = "block";
-if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
+
+  if(homePage) homePage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+  setMainMenuHandleVisibility(true);
+
+}else if(lastMainTab === "more"){
+
+  if(morePage) morePage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+  setMainMenuHandleVisibility(false);
+
+}else if(lastMainTab === "salah"){
+
+  if(salahPage) salahPage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
+  setMainMenuHandleVisibility(true);
+
+}else{
+
+  if(trackerPage) trackerPage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
+  setMainMenuHandleVisibility(true);
+  lastMainTab = "tracker";
+
 }
 
 setBottomNavVisibility(true);
@@ -14823,7 +15066,6 @@ setBottomNavVisibility(true);
 window.scrollTo(0,0);
 
 }
-
 
 
 
@@ -16621,6 +16863,8 @@ changeSalahDay(-1);  // swipe right = previous day
 // =========================
 function openSalahPage(){
 
+if(isSideMenuOpen) return;   
+     
 closeBookmarkPopup();
 
 lastMainTab = "salah";
@@ -16664,6 +16908,12 @@ returnToDefaultPage();
 }
 
 // =========================
+// SIDE MENU STATE
+// =========================
+let isSideMenuOpen = false;
+
+
+// =========================
 // TOGGLE SIDE MENU
 // =========================
 function toggleSideMenu(){
@@ -16672,6 +16922,8 @@ let menu = document.getElementById("sideMenu");
 let overlay = document.getElementById("sideMenuOverlay");
 let handleIcon = document.getElementById("menuHandleIcon");
 
+if(!menu) return;
+
 // always keep MENU text
 if(handleIcon) handleIcon.innerHTML = "M<br>E<br>N<br>U";
 
@@ -16679,22 +16931,32 @@ if(menu.style.left === "0px"){
 
 menu.style.left = "-100%";
 if(overlay) overlay.style.display = "none";
+isSideMenuOpen = false;
 
 }else{
 
 menu.style.left = "0px";
 if(overlay) overlay.style.display = "block";
+isSideMenuOpen = true;
 
 }
 
 }
+
 
 // =========================
 // CLOSE SIDE MENU
 // =========================
 function closeSideMenu(){
-document.getElementById("sideMenu").style.left = "-280px";
-document.getElementById("sideMenuOverlay").style.display = "none";
+
+let menu = document.getElementById("sideMenu");
+let overlay = document.getElementById("sideMenuOverlay");
+
+if(menu) menu.style.left = "-280px";
+if(overlay) overlay.style.display = "none";
+
+isSideMenuOpen = false;
+
 }
 
 // =========================
@@ -19357,12 +19619,16 @@ localStorage.setItem("appSettingsReturnPage", "zikr");
 localStorage.setItem("appSettingsReturnPage", "more");
 }
 
-if(appSettingsPage) appSettingsPage.style.display = "block";
-     updateJuz30DownloadButtonUI();
-     updateFullQuranDownloadButtonsUI();
-window.scrollTo(0,0);
-}
+setBottomNavVisibility(false);
 
+if(appSettingsPage) appSettingsPage.style.display = "block";
+
+updateJuz30DownloadButtonUI();
+updateFullQuranDownloadButtonsUI();
+
+window.scrollTo(0,0);
+
+}
 
 
   
@@ -21332,8 +21598,22 @@ box-shadow:0 10px 24px rgba(0,0,0,0.08);
 
 
 
+<!-- =========================
+     GLOBAL FIXED TOP BAR
+========================= -->
+<div id="appTopBar" class="app-top-bar" style="display:none;">
 
+  <button id="appTopBarBackBtn" class="app-top-bar-back" onclick="handleAppTopBarBack()" style="display:none;">
+    ←
+  </button>
 
+  <div id="appTopBarTitle" class="app-top-bar-title"></div>
+
+  <button id="appTopBarRightBtn" class="app-top-bar-right" onclick="handleAppTopBarRightButton()" style="display:none;">
+    ⚙️
+  </button>
+
+</div>
 
   
 <!-- =========================
@@ -23785,55 +24065,154 @@ left:0;
 right:0;
 bottom:0;
 z-index:10001;
-background:url('wallpaper.jpg') center/cover no-repeat;
+background:linear-gradient(180deg, #f7f7fa 0%, #e9e9ee 100%);
 overflow:auto;
-padding:15px;
+-webkit-overflow-scrolling:touch;
+padding:90px 4% 120px 4%;
+box-sizing:border-box;
 ">
 
-<div style="padding:10px;">
-<!-- Close Dua Page Button -->
-<button onclick="closeDuaPage()" style="
-width:36px;
-height:36px;
-border-radius:50%;
-border:1px solid #ccc;
-background:white;
-font-size:20px;
-cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:center;
-">
-←
-</button>
+ 
+  <!-- =========================
+       DUA HERO CARD
+  ========================= -->
+  <div style="
+  width:100%;
+  background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.88) 100%);
+  border-radius:30px;
+  padding:28px 6%;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  border:1px solid rgba(255,255,255,0.75);
+  box-sizing:border-box;
+  margin-bottom:18px;
+  ">
+
+    <div style="
+    font-size:38px;
+    margin-bottom:12px;
+    ">
+      🤲
+    </div>
+
+    <div style="
+    font-size:28px;
+    font-weight:900;
+    color:#111;
+    letter-spacing:-0.6px;
+    line-height:1.1;
+    margin-bottom:8px;
+    ">
+      Masnoon Duas
+    </div>
+
+    <div style="
+    width:86%;
+    margin:0 auto;
+    font-size:15px;
+    line-height:1.6;
+    color:#666;
+    font-weight:600;
+    ">
+      Read important duas with a clean and simple layout.
+    </div>
+
+  </div>
+
+  <!-- =========================
+       DUA LIST SECTION TITLE
+  ========================= -->
+  <div style="
+  font-size:13px;
+  font-weight:800;
+  color:#777;
+  letter-spacing:0.6px;
+  text-transform:uppercase;
+  margin:0 0 10px 2%;
+  ">
+    Available Duas
+  </div>
+
+  <!-- =========================
+       ISTIKHARA DUA CARD
+  ========================= -->
+  <div onclick="openDuaViewer('istikhara')" style="
+  width:100%;
+  background:white;
+  border-radius:26px;
+  padding:18px 5%;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  box-sizing:border-box;
+  margin-bottom:14px;
+  ">
+
+    <div style="
+    display:flex;
+    align-items:center;
+    gap:14px;
+    min-width:0;
+    flex:1;
+    ">
+
+      <div style="
+      width:54px;
+      height:54px;
+      border-radius:18px;
+      background:#f2f2f7;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:26px;
+      flex-shrink:0;
+      ">
+        📿
+      </div>
+
+      <div style="
+      min-width:0;
+      flex:1;
+      ">
+
+        <div style="
+        font-size:19px;
+        font-weight:850;
+        color:#111;
+        line-height:1.2;
+        margin-bottom:5px;
+        ">
+          Istikhara Dua
+        </div>
+
+        <div style="
+        font-size:14px;
+        font-weight:600;
+        color:#666;
+        line-height:1.4;
+        ">
+          Dua for seeking guidance
+        </div>
+
+      </div>
+
+    </div>
+
+    <div style="
+    font-size:28px;
+    color:#b0b0b8;
+    flex-shrink:0;
+    ">
+      ›
+    </div>
+
+  </div>
+
 </div>
-
-<div class="card">
-
-<h2 style="margin:0;font-size:24px;font-weight:800;text-align:center;">
-📿 Masnoon Duas
-</h2>
-
-</div>
-
-<!-- Open Dua Viewer Card -->
-<div class="card" onclick="openDuaViewer('istikhara')" style="cursor:pointer;margin-top:15px;">
-
-<div style="display:flex;justify-content:space-between;align-items:center;">
-
-<div style="font-weight:600;font-size:17px;">
-Istikhara Dua
-</div>
-
-<div style="font-size:24px;opacity:0.5;">
-›
-</div>
-
-</div>
-
-</div>
-
-
 
 
 
@@ -24302,7 +24681,7 @@ box-shadow:0 4px 12px rgba(0,0,0,0.06);
 <!-- =========================
      WAQIYA PAGE
 ========================= -->
-  <div id="waqiyaPage" style="
+  <div id="waqiyaPage" class="tracker-surah-pdf-page" style="
 display:none;
 position:fixed;
 top:0;
@@ -24312,35 +24691,13 @@ bottom:0;
 z-index:5000;
 background:url('wallpaper.jpg') center/cover no-repeat;
 overflow:auto;
-padding:15px;
+padding:90px 4% 40px 4%;
+box-sizing:border-box;
 ">
 
-  <div style="padding:10px;">
-<!-- Close Waqiya Page Button -->
-    <button onclick="closeWaqiyaPage()" style="
-    width:36px;
-    height:36px;
-    border-radius:50%;
-    border:1px solid #ccc;
-    background:white;
-    font-size:20px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    ">
-    ←
-    </button>
-  </div>
+   <!-- Old back button removed because global top bar now has back button -->
 
-  <div class="card" style="
-  text-align:center;
-  padding:20px;
-  margin-top:10px;
-  ">
-    <div style="font-size:28px;font-weight:700;">Surah Waqiya</div>
-    <div style="font-size:14px;color:#666;margin-top:6px;">PDF View</div>
-  </div>
+       
 
   <div style="
   display:flex;
@@ -24388,7 +24745,7 @@ padding:15px;
 <!-- =========================
      MULK PAGE
 ========================= -->
-<div id="mulkPage" style="
+<div id="mulkPage" class="tracker-surah-pdf-page" style="
 display:none;
 position:fixed;
 top:0;
@@ -24397,19 +24754,12 @@ right:0;
 bottom:0;
 background:url('wallpaper.jpg') center/cover no-repeat;
 overflow:auto;
-padding:15px;
+padding:90px 4% 40px 4%;
+box-sizing:border-box;
 z-index:5000;
 ">
 
-<!-- Close Surah Page Button -->
-<button onclick="closeSurahPage('mulkPage')" style="
-width:36px;
-height:36px;
-border-radius:50%;
-border:1px solid #ccc;
-background:white;
-font-size:20px;
-">←</button>
+<!-- Old back button removed (using global top bar back button) -->
 
 <img src="mulk-1.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
 <img src="mulk-2.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
@@ -24421,7 +24771,7 @@ font-size:20px;
 <!-- =========================
      REHMAN PAGE
 ========================= -->
-<div id="rehmanPage" style="
+<div id="rehmanPage" class="tracker-surah-pdf-page" style="
 display:none;
 position:fixed;
 top:0;
@@ -24430,19 +24780,12 @@ right:0;
 bottom:0;
 background:url('wallpaper.jpg') center/cover no-repeat;
 overflow:auto;
-padding:15px;
+padding:90px 4% 40px 4%;
+box-sizing:border-box;
 z-index:5000;
 ">
 
-<!-- Close Surah Page Button -->
-<button onclick="closeSurahPage('rehmanPage')" style="
-width:36px;
-height:36px;
-border-radius:50%;
-border:1px solid #ccc;
-background:white;
-font-size:20px;
-">←</button>
+<!-- Old back button removed (using global top bar back button) -->
 
 <img src="rehman-1.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
 <img src="rehman-2.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
@@ -24455,7 +24798,7 @@ font-size:20px;
 <!-- =========================
      SAJDAH PAGE
 ========================= -->
-<div id="sajdahPage" style="
+<div id="sajdahPage" class="tracker-surah-pdf-page" style="
 display:none;
 position:fixed;
 top:0;
@@ -24464,19 +24807,12 @@ right:0;
 bottom:0;
 background:url('wallpaper.jpg') center/cover no-repeat;
 overflow:auto;
-padding:15px;
+padding:90px 4% 40px 4%;
+box-sizing:border-box;
 z-index:5000;
 ">
 
-<!-- Close Surah Page Button -->
-<button onclick="closeSurahPage('sajdahPage')" style="
-width:36px;
-height:36px;
-border-radius:50%;
-border:1px solid #ccc;
-background:white;
-font-size:20px;
-">←</button>
+<!-- Old back button removed (using global top bar back button) -->
 
 <img src="sajdah-1.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
 <img src="sajdah-2.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
@@ -24490,7 +24826,7 @@ font-size:20px;
 <!-- =========================
      TAGHABUN PAGE
 ========================= -->
-<div id="taghabunPage" style="
+<div id="taghabunPage" class="tracker-surah-pdf-page" style="
 display:none;
 position:fixed;
 top:0;
@@ -24499,19 +24835,12 @@ right:0;
 bottom:0;
 background:url('wallpaper.jpg') center/cover no-repeat;
 overflow:auto;
-padding:15px;
+padding:90px 4% 40px 4%;
+box-sizing:border-box;
 z-index:5000;
 ">
 
-<!-- Close Surah Page Button -->
-<button onclick="closeSurahPage('taghabunPage')" style="
-width:36px;
-height:36px;
-border-radius:50%;
-border:1px solid #ccc;
-background:white;
-font-size:20px;
-">←</button>
+<!-- Old back button removed (using global top bar back button) -->
 
 <img src="taghabun-1.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
 <img src="taghabun-2.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
@@ -24524,7 +24853,7 @@ font-size:20px;
 <!-- =========================
      LAST22 PAGE
 ========================= -->
-<div id="last22Page" style="
+<div id="last22Page" class="tracker-surah-pdf-page" style="
 display:none;
 position:fixed;
 top:0;
@@ -24533,19 +24862,12 @@ right:0;
 bottom:0;
 background:url('wallpaper.jpg') center/cover no-repeat;
 overflow:auto;
-padding:15px;
+padding:90px 4% 40px 4%;
+box-sizing:border-box;
 z-index:5000;
 ">
 
-<!-- Close Surah Page Button -->
-<button onclick="closeSurahPage('last22Page')" style="
-width:36px;
-height:36px;
-border-radius:50%;
-border:1px solid #ccc;
-background:white;
-font-size:20px;
-">←</button>
+<!-- Old back button removed (using global top bar back button) -->
 
 <img src="last22-1.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
 <img src="last22-2.jpg" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
@@ -24560,8 +24882,7 @@ font-size:20px;
 
 <!-- =========================
      IKHLAS PAGE
-========================= -->
-<div id="ikhlasPage" style="
+========================= --><div id="ikhlasPage" class="tracker-surah-pdf-page" style="
 display:none;
 position:fixed;
 top:0;
@@ -24570,19 +24891,12 @@ right:0;
 bottom:0;
 background:url('wallpaper.jpg') center/cover no-repeat;
 overflow:auto;
-padding:15px;
+padding:90px 4% 40px 4%;
+box-sizing:border-box;
 z-index:5000;
 ">
 
-<!-- Close Surah Page Button -->
-<button onclick="closeSurahPage('ikhlasPage')" style="
-width:36px;
-height:36px;
-border-radius:50%;
-border:1px solid #ccc;
-background:white;
-font-size:20px;
-">←</button>
+<!-- Old back button removed (using global top bar back button) -->
 
 <img src="Surah Ikhlas.jpg" style="
 width:100%;
@@ -24631,7 +24945,7 @@ font-size:20px;
 <!-- =========================
      YASEEN PAGE
 ========================= -->
- <div id="yaseenPage" style="
+<div id="yaseenPage" class="tracker-surah-pdf-page" style="
 display:none;
 position:fixed;
 top:0;
@@ -24641,21 +24955,12 @@ bottom:0;
 background:url('wallpaper.jpg') center/cover no-repeat;
 overflow:auto;
 -webkit-overflow-scrolling:touch;
-padding:15px;
+padding:90px 4% 40px 4%;
+box-sizing:border-box;
 z-index:5000;
 ">
 
-<!-- Close Surah Page Button -->
-  <button onclick="closeSurahPage('yaseenPage')" style="
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  border:1px solid #ccc;
-  background:white;
-  font-size:20px;
-  ">
-    ←
-  </button>
+<!-- Old back button removed (using global top bar back button) -->
 
   <img loading="lazy" src="yaseen-1.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
   <img loading="lazy" src="yaseen-2.png" style="width:100%;display:block;margin-top:10px;border-radius:22px;">
