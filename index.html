@@ -11512,6 +11512,91 @@ openTrackerPage();
 
 }
 
+// =========================
+// LOAD QURAN AYAT OF THE DAY
+// =========================
+async function loadQuranAyatOfTheDay(){
+
+let arabicBox = document.getElementById("quranAyatArabic");
+let urduBox = document.getElementById("quranAyatUrdu");
+let refBox = document.getElementById("quranAyatReference");
+let statusBox = document.getElementById("quranAyatStatus");
+
+if(!arabicBox || !urduBox || !refBox || !statusBox) return;
+
+let today = new Date();
+let start = new Date(today.getFullYear(), 0, 0);
+let diff = today - start;
+let oneDay = 1000 * 60 * 60 * 24;
+let dayNumber = Math.floor(diff / oneDay);
+
+// Quran has 6236 ayahs
+let ayahNumber = (dayNumber % 6236) + 1;
+
+let savedAyah = localStorage.getItem("quranAyatOfTheDaySaved");
+
+try{
+
+  statusBox.innerText = "Online";
+
+  let arabicUrl = "https://api.alquran.cloud/v1/ayah/" + ayahNumber + "/quran-uthmani";
+  let urduUrl = "https://api.alquran.cloud/v1/ayah/" + ayahNumber + "/ur.jalandhry";
+
+  let arabicResponse = await fetch(arabicUrl);
+  let urduResponse = await fetch(urduUrl);
+
+  if(!arabicResponse.ok || !urduResponse.ok){
+    throw new Error("Ayah loading failed");
+  }
+
+  let arabicData = await arabicResponse.json();
+  let urduData = await urduResponse.json();
+
+  let arabicAyah = arabicData.data.text;
+  let urduAyah = urduData.data.text;
+  let surahEnglish = arabicData.data.surah.englishName;
+  let surahNumber = arabicData.data.surah.number;
+  let ayahInSurah = arabicData.data.numberInSurah;
+
+  arabicBox.innerText = arabicAyah;
+  urduBox.innerText = urduAyah;
+  refBox.innerText = "Surah " + surahEnglish + " " + surahNumber + ":" + ayahInSurah;
+
+  let ayahToSave = {
+    arabic: arabicAyah,
+    urdu: urduAyah,
+    reference: "Surah " + surahEnglish + " " + surahNumber + ":" + ayahInSurah,
+    savedDate: today.toDateString()
+  };
+
+  localStorage.setItem("quranAyatOfTheDaySaved", JSON.stringify(ayahToSave));
+
+}catch(error){
+
+  if(savedAyah){
+
+    let oldAyah = JSON.parse(savedAyah);
+
+    arabicBox.innerText = oldAyah.arabic;
+    urduBox.innerText = oldAyah.urdu;
+    refBox.innerText = oldAyah.reference;
+    statusBox.innerText = "Saved";
+
+  }else{
+
+    arabicBox.innerText = "Connect to internet once to load Quran Ayat of the Day.";
+    urduBox.innerText = "Quran Ayat of the Day لوڈ کرنے کے لیے ایک بار انٹرنیٹ سے کنیکٹ کریں۔";
+    refBox.innerText = "Offline";
+    statusBox.innerText = "Offline";
+
+  }
+
+}
+
+}
+
+
+     
 
 
   // =========================
@@ -11532,6 +11617,7 @@ setMainMenuHandleVisibility(true);
 
 lastMainTab = "home";
 updateHomePageSalahSummary();
+loadQuranAyatOfTheDay();
 window.scrollTo(0,0);
 
 }
@@ -12135,9 +12221,61 @@ function showQazaProgressTab(){
 
 
 
+// =========================
+// OPEN IMAN PAGE
+// =========================
+function openImanPage(){
+
+let duaPage = document.getElementById("duaPage");
+let imanPage = document.getElementById("imanPage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+
+if(duaPage) duaPage.style.display = "none";
+if(imanPage) imanPage.style.display = "block";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+
+setBottomNavVisibility(false);
+setMainMenuHandleVisibility(false);
+
+setAppTopBarVisibility(true);
+setAppTopBarTitle("Iman Mujmal & Mufassal");
+setAppTopBarBackButton(true, function(){
+  closeImanPage();
+});
+
+window.scrollTo(0,0);
+
+}
 
 
 
+
+// =========================
+// CLOSE IMAN PAGE
+// =========================
+function closeImanPage(){
+
+let duaPage = document.getElementById("duaPage");
+let imanPage = document.getElementById("imanPage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+
+if(imanPage) imanPage.style.display = "none";
+if(duaPage) duaPage.style.display = "block";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+
+setBottomNavVisibility(true);
+setMainMenuHandleVisibility(false);
+
+// RESTORE DUA PAGE TOP BAR
+setAppTopBarVisibility(true);
+setAppTopBarTitle("Dua");
+setAppTopBarBackButton(true, function(){
+  closeDuaPage();
+});
+
+window.scrollTo(0,0);
+
+}
 
      
   
@@ -13523,7 +13661,7 @@ if(lastMainTab === "home"){
 
   if(homePage) homePage.style.display = "block";
   if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-  setMainMenuHandleVisibility(false);
+  setMainMenuHandleVisibility(true);
 
 }else if(lastMainTab === "more"){
 
@@ -15031,6 +15169,7 @@ if(quranReadingPage) quranReadingPage.style.display = "none";
 if(lastMainTab === "home"){
 if(homePage) homePage.style.display = "block";
 if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+setMainMenuHandleVisibility(true);
 }
 else if(lastMainTab === "more"){
 if(morePage) morePage.style.display = "block";
@@ -17311,7 +17450,7 @@ if(duaPage) duaPage.style.display = "none";
 if(duaViewerPage) duaViewerPage.style.display = "block";
 if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
 
-setBottomNavVisibility(true);
+setBottomNavVisibility(false);
 setMainMenuHandleVisibility(false);
 
 setAppTopBarVisibility(true);
@@ -18035,6 +18174,7 @@ if(document.readyState === "loading"){
   setAsrToggleUI();
   openSelectedDefaultPage();
   updateHomePageSalahSummary();
+  loadQuranAyatOfTheDay();
   startSalahWeatherBackgroundWatcher();
 });
 }else{
@@ -18043,8 +18183,8 @@ if(document.readyState === "loading"){
   setAsrToggleUI();
   openSelectedDefaultPage();
   updateHomePageSalahSummary();
+  loadQuranAyatOfTheDay();
 }
-
 })();
 
 
@@ -19754,27 +19894,47 @@ window.scrollTo(0,0);
 function closeAppSettingsPage(){
 
 let appSettingsPage = document.getElementById("appSettingsPage");
-let defaultPage = localStorage.getItem("defaultPage") || "tracker";
+let returnPage = localStorage.getItem("appSettingsReturnPage") || "more";
 
 if(appSettingsPage) appSettingsPage.style.display = "none";
 
-// go to selected home page
-if(defaultPage === "salah"){
+// ALWAYS SHOW BOTTOM NAV AGAIN WHEN LEAVING APP SETTINGS
+setBottomNavVisibility(true);
+
+// RETURN TO THE PAGE YOU CAME FROM
+if(returnPage === "salah"){
 openSalahPage();
 }
-else if(defaultPage === "tasbih"){
+else if(returnPage === "tasbih"){
 openTasbihPage();
 }
-else if(defaultPage === "home"){
+else if(returnPage === "dua"){
+openDuaPage();
+}
+else if(returnPage === "qibla"){
+openQiblaPage();
+}
+else if(returnPage === "zikr"){
+openZikrPage();
+}
+else if(returnPage === "zikrDetail"){
+if(typeof openZikrPage === "function") openZikrPage();
+}
+else if(returnPage === "home"){
 openHomePage();
 }
-else{
+else if(returnPage === "tracker"){
 openTrackerPage();
 }
-
-window.scrollTo(0,0);
+else{
+openMorePage();
 }
 
+setBottomNavVisibility(true);
+
+window.scrollTo(0,0);
+
+}
 
 // =========================
 // GET DEFAULT PAGE LABEL
@@ -21650,7 +21810,7 @@ box-shadow:0 10px 24px rgba(0,0,0,0.08);
 
       <div style="
       display:grid;
-      grid-template-columns:repeat(4,1fr);
+      grid-template-columns:repeat(3,1fr);
       gap:10px;
       ">
 
@@ -21693,22 +21853,98 @@ box-shadow:0 10px 24px rgba(0,0,0,0.08);
           <div style="font-size:13px;font-weight:700;color:#111;">Dua</div>
         </div>
 
-        <!-- DAILY ZIKR SHORTCUT -->
-        <div onclick="openHomeZikrPage()" style="
-        background:#f8f8fa;
-        border-radius:22px;
-        padding:16px 8px;
-        text-align:center;
-        cursor:pointer;
-        box-shadow:inset 0 0 0 1px rgba(0,0,0,0.04);
-        ">
-          <div style="font-size:24px;margin-bottom:8px;">✨</div>
-          <div style="font-size:13px;font-weight:700;color:#111;">Daily Zikr</div>
-        </div>
-
+        
       </div>
     </div>
 
+    <!-- =========================
+         QURAN AYAT OF THE DAY CARD
+    ========================= -->
+    <div id="quranAyatOfTheDayCard" style="
+    width:100%;
+    background:white;
+    border-radius:28px;
+    padding:20px 5%;
+    margin:8px 0 70px 0;
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
+    border:1px solid rgba(0,0,0,0.04);
+    box-sizing:border-box;
+    ">
+
+      <div style="
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:14px;
+      ">
+
+        <div style="
+        font-size:20px;
+        font-weight:900;
+        color:#111;
+        letter-spacing:-0.3px;
+        ">
+          Quran Ayat of the Day
+        </div>
+
+        <div id="quranAyatStatus" style="
+        font-size:12px;
+        font-weight:800;
+        color:#777;
+        background:#f2f2f7;
+        padding:7px 10px;
+        border-radius:999px;
+        white-space:nowrap;
+        ">
+          Loading
+        </div>
+
+      </div>
+
+      <div id="quranAyatArabic" style="
+      direction:rtl;
+      text-align:right;
+      font-family:'Amiri','Noto Naskh Arabic',serif;
+      font-size:25px;
+      line-height:2.1;
+      font-weight:600;
+      color:#111;
+      margin-bottom:16px;
+      ">
+        Loading ayah...
+      </div>
+
+      <div id="quranAyatUrdu" style="
+      direction:rtl;
+      text-align:right;
+      font-family:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq','Noto Naskh Arabic',serif;
+      font-size:18px;
+      line-height:2.1;
+      font-weight:600;
+      color:#333;
+      background:#f7f7fa;
+      border-radius:20px;
+      padding:14px;
+      box-sizing:border-box;
+      margin-bottom:14px;
+      ">
+        براہ کرم انتظار کریں...
+      </div>
+
+      <div id="quranAyatReference" style="
+      font-size:14px;
+      font-weight:800;
+      color:#666;
+      text-align:left;
+      ">
+        Quran
+      </div>
+
+    </div>
+
+
+     
   </div>
 </div>
 
@@ -24328,6 +24564,89 @@ box-sizing:border-box;
 
   </div>
 
+
+<!-- =========================
+     IMAN MUJMAL & MUFASSAL DUA CARD
+========================= -->
+<div onclick="openImanPage()" style="
+width:100%;
+background:white;
+border-radius:26px;
+padding:18px 5%;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:14px;
+box-shadow:0 8px 22px rgba(0,0,0,0.07);
+border:1px solid rgba(0,0,0,0.03);
+box-sizing:border-box;
+margin-bottom:14px;
+">
+
+  <div style="
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-width:0;
+  flex:1;
+  ">
+
+    <div style="
+    width:54px;
+    height:54px;
+    border-radius:18px;
+    background:#f2f2f7;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:26px;
+    flex-shrink:0;
+    ">
+      ☝️
+    </div>
+
+    <div style="
+    min-width:0;
+    flex:1;
+    ">
+
+      <div style="
+      font-size:19px;
+      font-weight:850;
+      color:#111;
+      line-height:1.2;
+      margin-bottom:5px;
+      ">
+        Iman Mujmal & Mufassal
+      </div>
+
+      <div style="
+      font-size:14px;
+      font-weight:600;
+      color:#666;
+      line-height:1.4;
+      ">
+        ایمان مجمل اور ایمان مفصل
+      </div>
+
+    </div>
+
+  </div>
+
+  <div style="
+  font-size:28px;
+  color:#b0b0b8;
+  flex-shrink:0;
+  ">
+    ›
+  </div>
+
+</div>
+
+
+
+     
   <!-- =========================
        AYATUL KURSI DUA CARD
   ========================= -->
@@ -24409,6 +24728,290 @@ box-sizing:border-box;
 
 </div>
 
+
+
+<!-- =========================
+     IMAN MUJMAL & MUFASSAL PAGE
+========================= -->
+<div id="imanPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+z-index:10002;
+background:linear-gradient(180deg, #f7f7fa 0%, #e9e9ee 100%);
+overflow:auto;
+-webkit-overflow-scrolling:touch;
+padding:90px 4% 120px 4%;
+box-sizing:border-box;
+">
+
+ 
+
+  <!-- =========================
+       IMAN MUJMAL CARD
+  ========================= -->
+  <div style="
+  background:white;
+  border-radius:28px;
+  padding:22px 5%;
+  margin-bottom:16px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  box-sizing:border-box;
+  ">
+
+    <div style="
+    font-size:22px;
+    font-weight:900;
+    color:#111;
+    margin-bottom:16px;
+    text-align:center;
+    ">
+      ایمان مجمل
+    </div>
+
+    <div style="
+    font-family:'Amiri','Noto Naskh Arabic',serif;
+    direction:rtl;
+    text-align:right;
+    font-size:28px;
+    line-height:2.1;
+    color:#111;
+    font-weight:600;
+    margin-bottom:16px;
+    ">
+      اٰمَنْتُ بِاللہِ کَمَا ھُوَ بِاَسْمَآئِہٖ وَصِفَاتِہٖ وَقَبِلْتُ جَمِیْعَ اَحْکَامِہٖ اِقْرَارٌم بِاللِّسَانِ وَتَصْدِیْقٌ بِالْقَلْبِ
+    </div>
+
+    <div style="
+    font-family:'Noto Naskh Arabic','Amiri',serif;
+    direction:rtl;
+    text-align:right;
+    font-size:21px;
+    line-height:2;
+    color:#111;
+    background:#f7f7fa;
+    border-radius:20px;
+    padding:16px;
+    box-sizing:border-box;
+    ">
+      میں اللہ پر ایمان لایا جیسا کہ وہ اپنے ناموں اور صفات کے ساتھ ہے، اور میں نے اس کے تمام احکام قبول کیے، زبان سے اقرار کیا اور دل سے تصدیق کی۔
+    </div>
+
+  </div>
+
+  <!-- =========================
+       IMAN MUFASSAL CARD
+  ========================= -->
+  <div style="
+  background:white;
+  border-radius:28px;
+  padding:22px 5%;
+  margin-bottom:16px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  box-sizing:border-box;
+  ">
+
+    <div style="
+    font-size:22px;
+    font-weight:900;
+    color:#111;
+    margin-bottom:16px;
+    text-align:center;
+    ">
+      ایمان مفصل
+    </div>
+
+    <div style="
+    font-family:'Amiri','Noto Naskh Arabic',serif;
+    direction:rtl;
+    text-align:right;
+    font-size:28px;
+    line-height:2.1;
+    color:#111;
+    font-weight:600;
+    margin-bottom:16px;
+    ">
+      اٰمَنْتُ بِاللہِ وَمَلَائِکَتِہٖ وَکُتُبِہٖ وَرُسُلِہٖ وَالْیَوْمِ الْاٰخِرِ وَالْقَدْرِ خَیْرِہٖ وَشَرِّہٖ مِنَ اللہِ تَعَالٰی وَالْبَعْثِ بَعْدَ الْمَوْتِ
+    </div>
+
+    <div style="
+    font-family:'Noto Naskh Arabic','Amiri',serif;
+    direction:rtl;
+    text-align:right;
+    font-size:21px;
+    line-height:2;
+    color:#111;
+    background:#f7f7fa;
+    border-radius:20px;
+    padding:16px;
+    box-sizing:border-box;
+    ">
+      ایمان لایا میں اللہ پر، اس کے فرشتوں پر، اس کی کتابوں پر، اس کے رسولوں پر، قیامت کے دن پر، اور اس بات پر کہ اچھی اور بری تقدیر اللہ تعالیٰ کی طرف سے ہے، اور موت کے بعد دوبارہ اٹھائے جانے پر بھی ایمان لایا۔
+    </div>
+
+  </div>
+
+</div>
+<!-- END IMAN MUJMAL & MUFASSAL PAGE -->
+
+
+<!-- =========================
+     IMAN MUJMAL & MUFASSAL PAGE
+========================= -->
+<div id="imanPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+z-index:10002;
+background:linear-gradient(180deg, #f7f7fa 0%, #e9e9ee 100%);
+overflow:auto;
+-webkit-overflow-scrolling:touch;
+padding:90px 4% 120px 4%;
+box-sizing:border-box;
+">
+
+  <!-- =========================
+       IMAN PAGE BACK BUTTON
+  ========================= -->
+  <button onclick="closeImanPage()" style="
+  position:fixed;
+  top:18px;
+  left:4%;
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:50%;
+  background:white;
+  font-size:24px;
+  font-weight:700;
+  color:#111;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 12px rgba(0,0,0,0.10);
+  z-index:10003;
+  ">
+    ←
+  </button>
+
+  <!-- =========================
+       IMAN MUJMAL CARD
+  ========================= -->
+  <div style="
+  background:white;
+  border-radius:28px;
+  padding:22px 5%;
+  margin-bottom:16px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  box-sizing:border-box;
+  ">
+
+    <div style="
+    font-size:22px;
+    font-weight:900;
+    color:#111;
+    margin-bottom:16px;
+    text-align:center;
+    ">
+      ایمان مجمل
+    </div>
+
+    <div style="
+    font-family:'Amiri','Noto Naskh Arabic',serif;
+    direction:rtl;
+    text-align:right;
+    font-size:28px;
+    line-height:2.1;
+    color:#111;
+    font-weight:600;
+    margin-bottom:16px;
+    ">
+      اٰمَنْتُ بِاللہِ کَمَا ھُوَ بِاَسْمَآئِہٖ وَصِفَاتِہٖ وَقَبِلْتُ جَمِیْعَ اَحْکَامِہٖ اِقْرَارٌم بِاللِّسَانِ وَتَصْدِیْقٌ بِالْقَلْبِ
+    </div>
+
+    <div style="
+    font-family:'Noto Naskh Arabic','Amiri',serif;
+    direction:rtl;
+    text-align:right;
+    font-size:21px;
+    line-height:2;
+    color:#111;
+    background:#f7f7fa;
+    border-radius:20px;
+    padding:16px;
+    box-sizing:border-box;
+    ">
+      میں اللہ پر ایمان لایا جیسا کہ وہ اپنے ناموں اور صفات کے ساتھ ہے، اور میں نے اس کے تمام احکام قبول کیے، زبان سے اقرار کیا اور دل سے تصدیق کی۔
+    </div>
+
+  </div>
+
+  <!-- =========================
+       IMAN MUFASSAL CARD
+  ========================= -->
+  <div style="
+  background:white;
+  border-radius:28px;
+  padding:22px 5%;
+  margin-bottom:16px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  box-sizing:border-box;
+  ">
+
+    <div style="
+    font-size:22px;
+    font-weight:900;
+    color:#111;
+    margin-bottom:16px;
+    text-align:center;
+    ">
+      ایمان مفصل
+    </div>
+
+    <div style="
+    font-family:'Amiri','Noto Naskh Arabic',serif;
+    direction:rtl;
+    text-align:right;
+    font-size:28px;
+    line-height:2.1;
+    color:#111;
+    font-weight:600;
+    margin-bottom:16px;
+    ">
+      اٰمَنْتُ بِاللہِ وَمَلَائِکَتِہٖ وَکُتُبِہٖ وَرُسُلِہٖ وَالْیَوْمِ الْاٰخِرِ وَالْقَدْرِ خَیْرِہٖ وَشَرِّہٖ مِنَ اللہِ تَعَالٰی وَالْبَعْثِ بَعْدَ الْمَوْتِ
+    </div>
+
+    <div style="
+    font-family:'Noto Naskh Arabic','Amiri',serif;
+    direction:rtl;
+    text-align:right;
+    font-size:21px;
+    line-height:2;
+    color:#111;
+    background:#f7f7fa;
+    border-radius:20px;
+    padding:16px;
+    box-sizing:border-box;
+    ">
+      ایمان لایا میں اللہ پر، اس کے فرشتوں پر، اس کی کتابوں پر، اس کے رسولوں پر، قیامت کے دن پر، اور اس بات پر کہ اچھی اور بری تقدیر اللہ تعالیٰ کی طرف سے ہے، اور موت کے بعد دوبارہ اٹھائے جانے پر بھی ایمان لایا۔
+    </div>
+
+  </div>
+
+</div>
+<!-- END IMAN MUJMAL & MUFASSAL PAGE -->
+     
 
 <!-- =========================
      AYATUL KURSI PAGE
