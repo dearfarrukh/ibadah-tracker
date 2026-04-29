@@ -6249,6 +6249,17 @@ let currentQuran16PageNumber = 1;
 let totalQuran16Pages = 549;
 
 // =========================
+// 16 LINE QURAN BACK DESTINATION
+// =========================
+let quran16BackDestination = "quran16Page";
+
+// =========================
+// TRACKER TO 16 LINE SHORTCUT MEMORY
+// =========================
+let quran16OpenedFromTrackerShortcut = false;
+
+     
+// =========================
 // 16 LINE SURAH TO PAGE MAP
 // index page number minus 1
 // =========================
@@ -6754,7 +6765,7 @@ function getPrevQuran16ImageSrc(){
 // OPEN 16 LINE QURAN PAGE
 // =========================
 function openQuran16Page(){
-
+quran16BackDestination = "quran16Page";
   let quranPage = document.getElementById("quranPage");
   let quran16Page = document.getElementById("quran16Page");
   let quran16ReadingPage = document.getElementById("quran16ReadingPage");
@@ -6793,6 +6804,8 @@ function closeQuran16Page(){
   if(quran16Page) quran16Page.style.display = "none";
   if(quranPage) quranPage.style.display = "block";
   setBottomNavVisibility(true);
+
+   restoreTrackerMenuHandleAfterQuranShortcut();
 
   window.scrollTo(0,0);
 }
@@ -6988,26 +7001,59 @@ function setupQuran16Swipe(){
 }
 
 
+// =========================
+// RESTORE TRACKER MENU HANDLE AFTER QURAN SHORTCUT
+// =========================
+function restoreTrackerMenuHandleAfterQuranShortcut(){
 
+  if(!quran16OpenedFromTrackerShortcut) return;
+
+  let trackerPage = document.getElementById("trackerPage");
+
+  if(trackerPage && trackerPage.style.display === "block"){
+    setMainMenuHandleVisibility(true);
+    quran16OpenedFromTrackerShortcut = false;
+  }
+
+}
+
+     
      
 // =========================
 // CLOSE 16 LINE READING PAGE
 // =========================
 function closeQuran16ReadingPage(){
 
+  resetQuran16ReadingTopBar();
+
+  // =========================
+  // RETURN TO TRACKER IF OPENED FROM TRACKER SHORTCUT
+  // =========================
+  if(quran16BackDestination === "tracker"){
+
+    quran16BackDestination = "quran16Page";
+
+    if(typeof openTrackerPage === "function"){
+      openTrackerPage();
+      return;
+    }
+
+  }
+
+  // =========================
+  // NORMAL 16 LINE BACK BEHAVIOR
+  // =========================
   let quran16ReadingPage = document.getElementById("quran16ReadingPage");
   let quran16Page = document.getElementById("quran16Page");
-  
-
-  resetQuran16ReadingTopBar();
 
   if(quran16ReadingPage) quran16ReadingPage.style.display = "none";
   if(quran16Page) quran16Page.style.display = "block";
- setBottomNavVisibility(true);
+
+  setBottomNavVisibility(true);
+  setMainMenuHandleVisibility(false);
 
   window.scrollTo(0,0);
 }
-
 // =========================
 // HANDLE 16 LINE READING PAGE TAP
 // =========================
@@ -10000,7 +10046,24 @@ ${task.name}
 </span>
 
 ${isSurah(task.name) ?
+'<div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">'
++
 '<span onclick="event.stopPropagation();handleTaskClick(\''+task.name+'\')" style="background:#007aff;color:white;padding:4px 8px;border-radius:10px;font-size:10px;font-weight:700;cursor:pointer;letter-spacing:0.5px;flex-shrink:0;">📄 PDF</span>'
++
+(
+  task.name === "Surah Mulk" ||
+  task.name === "Surah Sajdah" ||
+  task.name === "Surah Yaseen" ||
+  task.name === "Surah Rehman" ||
+  task.name === "Surah Taghabun" ||
+  task.name === "Surah Waqiya" ||
+  task.name === "Surah Ikhlas" ||
+  task.name === "Surah Ad Duha to Surah Al Nas"
+  ? '<span onclick="event.stopPropagation();openTrackerQuran16Shortcut(\''+task.name+'\')" style="background:transparent;color:#111;width:24px;height:24px;border-radius:0;font-size:20px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">📖</span>'
+  : ''
+)
++
+'</div>'
 : ''}
 
 </div>
@@ -10689,6 +10752,95 @@ tasbihLock = false;
 function isSurah(name){
     return name.includes("Surah");
 }
+
+
+
+
+
+// =========================
+// OPEN TRACKER QURAN 16 SHORTCUT
+// =========================
+function openTrackerQuran16Shortcut(name){
+
+  let surahNumber = null;
+
+  // =========================
+  // TRACKER SURAH TO 16 LINE SURAH NUMBER
+  // =========================
+  if(name === "Surah Mulk"){
+    surahNumber = 67;
+  }
+
+  if(name === "Surah Sajdah"){
+    surahNumber = 32;
+  }
+
+  if(name === "Surah Yaseen"){
+    surahNumber = 36;
+  }
+
+  if(name === "Surah Rehman"){
+    surahNumber = 55;
+  }
+
+  if(name === "Surah Taghabun"){
+    surahNumber = 64;
+  }
+
+  if(name === "Surah Waqiya"){
+    surahNumber = 56;
+  }
+
+  if(name === "Surah Ikhlas"){
+    surahNumber = 112;
+  }
+
+  // Opens Surah Ad-Duha, then user can continue until Surah An-Nas
+  if(name === "Surah Ad Duha to Surah Al Nas"){
+    surahNumber = 93;
+  }
+
+  if(!surahNumber){
+    alert("16 Line shortcut not ready for this Surah yet.");
+    return;
+  }
+
+  if(typeof surahToQuran16PageMap !== "undefined" && typeof openQuran16PageNumber === "function"){
+
+    let page = surahToQuran16PageMap[surahNumber];
+
+    if(page){
+
+            // Remember this Quran reader was opened from Tracker shortcut
+        quran16OpenedFromTrackerShortcut = true;
+
+        // Hide menu handle before opening Quran reader
+        setMainMenuHandleVisibility(false);
+
+        // Close side menu if it is open
+        if(typeof closeSideMenu === "function"){
+          closeSideMenu();
+        }
+
+        // Tell 16 Line Quran back button to return to Tracker
+quran16BackDestination = "tracker";
+
+// Open 16 Line Quran page
+openQuran16PageNumber(page);
+         
+      // Force hide menu handle again after page opens
+      setMainMenuHandleVisibility(false);
+
+      return;
+    }
+
+  }
+
+  alert("16 Line shortcut could not open.");
+}
+
+
+     
 // =========================
 // HANDLE TASK CLICK
 // =========================
@@ -15595,8 +15747,9 @@ if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
 
 setBottomNavVisibility(true);
 
-window.scrollTo(0,0);
+  restoreTrackerMenuHandleAfterQuranShortcut();
 
+  window.scrollTo(0,0);
 }
 
 // =========================
