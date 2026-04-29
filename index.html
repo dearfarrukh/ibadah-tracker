@@ -5427,8 +5427,8 @@ letter-spacing:-0.3px;
   gap:16px;
   ">
 
-    <!-- Continue Reading Card -->
-    <div onclick="alert('Resume coming in next step')" style="
+  <!-- Continue Reading Card -->
+<div onclick="resumeArabicQuranReading()" style="
     background:white;
     border-radius:26px;
     padding:22px 20px;
@@ -5541,8 +5541,8 @@ letter-spacing:-0.3px;
       </div>
     </div>
 
-    <!-- Bookmarks Card -->
-    <div onclick="alert('Arabic bookmarks next step')" style="
+   <!-- Bookmarks Card -->
+<div onclick="openArabicQuranBookmarkPage()" style="
     background:white;
     border-radius:26px;
     padding:22px 20px;
@@ -5601,6 +5601,130 @@ letter-spacing:-0.3px;
   </div>
 
 </div>
+
+
+<!-- =========================
+     ARABIC QURAN BOOKMARK PAGE
+========================= -->
+<div id="arabicQuranBookmarkPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:92px;
+z-index:5003;
+background:linear-gradient(180deg, #ece9e1 0%, #e9e9ee 100%);
+overflow:auto;
+padding:18px 4% 120px 4%;
+box-sizing:border-box;
+">
+
+  <!-- =========================
+       ARABIC QURAN BOOKMARK TOP BAR
+  ========================= -->
+  <div style="
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:56px;
+  margin-bottom:14px;
+  box-sizing:border-box;
+  ">
+
+    <button onclick="closeArabicQuranBookmarkPage()" style="
+    position:absolute;
+    left:0;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:none;
+    background:white;
+    font-size:22px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 4px 10px rgba(0,0,0,0.08);
+    cursor:pointer;
+    color:#111;
+    ">
+      ←
+    </button>
+
+    <div style="
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:20px;
+    font-weight:800;
+    color:#111;
+    letter-spacing:-0.3px;
+    text-align:center;
+    white-space:nowrap;
+    ">
+      Bookmarks
+    </div>
+
+  </div>
+
+  <!-- =========================
+       ARABIC QURAN BOOKMARK HERO CARD
+  ========================= -->
+  <div style="
+  background:linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 100%);
+  border-radius:30px;
+  padding:28px 22px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  border:1px solid rgba(255,255,255,0.7);
+  margin-bottom:18px;
+  ">
+
+    <div style="
+    font-size:34px;
+    margin-bottom:12px;
+    ">
+      🔖
+    </div>
+
+    <div style="
+    font-size:28px;
+    font-weight:800;
+    color:#111;
+    letter-spacing:-0.5px;
+    line-height:1.1;
+    margin-bottom:8px;
+    ">
+      Arabic Quran Bookmarks
+    </div>
+
+    <div style="
+    font-size:15px;
+    line-height:1.6;
+    color:#666;
+    max-width:280px;
+    margin:0 auto;
+    ">
+      Your saved Arabic Quran reading places
+    </div>
+
+  </div>
+
+  <!-- =========================
+       ARABIC QURAN BOOKMARK LIST
+  ========================= -->
+  <div id="arabicQuranBookmarkList" style="
+  margin-top:12px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  "></div>
+
+</div>
+
+
+     
 
 <!-- =========================
      16 LINE JUZ PAGE
@@ -7797,6 +7921,25 @@ function saveQuran16Bookmark(){
   }
 
   let savedBookmarks = JSON.parse(localStorage.getItem("quranBookmarks") || "[]");
+
+  // =========================
+  // STOP DUPLICATE 16 LINE QURAN BOOKMARK
+  // =========================
+  let duplicateBookmark = savedBookmarks.some(function(savedBookmark){
+
+    return (
+      savedBookmark.type === "16line" &&
+      Number(savedBookmark.page) === Number(page)
+    );
+
+  });
+
+  if(duplicateBookmark){
+    alert("This 16 Line Quran page is already bookmarked.");
+    closeQuran16BookmarkPopup();
+    return;
+  }
+
   let now = new Date();
 
   let bookmarkItem = {
@@ -7819,6 +7962,220 @@ function saveQuran16Bookmark(){
 }
 
 
+// =========================
+// RESUME ARABIC QURAN READING
+// =========================
+function resumeArabicQuranReading(){
+
+  let surahNumber = parseInt(localStorage.getItem("lastArabicQuranSurahNumber") || "0");
+  let englishName = localStorage.getItem("lastArabicQuranEnglishName") || "";
+  let arabicName = localStorage.getItem("lastArabicQuranArabicName") || "";
+
+  if(!surahNumber || surahNumber < 1 || surahNumber > 114){
+    alert("No previous Arabic Quran reading found");
+    return;
+  }
+
+  openQuranReadingPage(surahNumber, englishName || "Surah", arabicName || "");
+}
+
+
+// =========================
+// OPEN ARABIC QURAN BOOKMARK PAGE
+// =========================
+function openArabicQuranBookmarkPage(){
+
+  let arabicQuranPage = document.getElementById("arabicQuranPage");
+  let surahIndexPage = document.getElementById("surahIndexPage");
+  let quranReadingPage = document.getElementById("quranReadingPage");
+  let arabicQuranBookmarkPage = document.getElementById("arabicQuranBookmarkPage");
+
+  if(arabicQuranPage) arabicQuranPage.style.display = "none";
+  if(surahIndexPage) surahIndexPage.style.display = "none";
+  if(quranReadingPage) quranReadingPage.style.display = "none";
+
+  if(arabicQuranBookmarkPage) arabicQuranBookmarkPage.style.display = "block";
+
+  setBottomNavVisibility(true);
+  loadArabicQuranBookmarkList();
+
+  window.scrollTo(0,0);
+}
+
+
+// =========================
+// CLOSE ARABIC QURAN BOOKMARK PAGE
+// =========================
+function closeArabicQuranBookmarkPage(){
+
+  let arabicQuranPage = document.getElementById("arabicQuranPage");
+  let arabicQuranBookmarkPage = document.getElementById("arabicQuranBookmarkPage");
+
+  if(arabicQuranBookmarkPage) arabicQuranBookmarkPage.style.display = "none";
+  if(arabicQuranPage) arabicQuranPage.style.display = "block";
+
+  setBottomNavVisibility(true);
+
+  window.scrollTo(0,0);
+}
+
+
+// =========================
+// LOAD ARABIC QURAN BOOKMARK LIST
+// =========================
+function loadArabicQuranBookmarkList(){
+
+  let container = document.getElementById("arabicQuranBookmarkList");
+  if(!container) return;
+
+  let allBookmarks = JSON.parse(localStorage.getItem("quranBookmarks") || "[]");
+
+  let bookmarks = allBookmarks.filter(function(item){
+    return item.type === "arabic";
+  });
+
+  container.innerHTML = "";
+
+  if(!bookmarks.length){
+    container.innerHTML = `
+      <div style="
+      background:white;
+      border-radius:24px;
+      padding:22px 18px;
+      text-align:center;
+      box-shadow:0 8px 22px rgba(0,0,0,0.07);
+      color:#666;
+      font-size:15px;
+      font-weight:600;
+      ">
+        No Arabic Quran bookmarks saved yet
+      </div>
+    `;
+    return;
+  }
+
+  bookmarks.forEach(function(bookmark){
+
+    let card = document.createElement("div");
+
+    card.onclick = function(){
+      openSavedArabicQuranBookmark(bookmark.id);
+    };
+
+    card.style.background = "white";
+    card.style.borderRadius = "24px";
+    card.style.padding = "18px 16px";
+    card.style.boxShadow = "0 8px 22px rgba(0,0,0,0.07)";
+    card.style.border = "1px solid rgba(0,0,0,0.03)";
+    card.style.cursor = "pointer";
+
+    card.innerHTML = `
+      <div style="
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      ">
+        <div style="min-width:0;flex:1;">
+          <div style="
+          font-size:18px;
+          font-weight:800;
+          color:#111;
+          margin-bottom:4px;
+          ">
+            ${bookmark.name || "Bookmark"}
+          </div>
+
+          <div style="
+          font-size:14px;
+          color:#444;
+          margin-bottom:4px;
+          ">
+            ${bookmark.surah || "Arabic Quran"}
+          </div>
+
+          <div style="
+          font-size:12px;
+          color:#999;
+          ">
+            ${bookmark.createdAtText || ""}
+          </div>
+        </div>
+
+        <div style="
+        font-size:22px;
+        color:#b0b0b8;
+        flex-shrink:0;
+        ">
+          🔖
+        </div>
+      </div>
+    `;
+
+    container.appendChild(card);
+
+  });
+}
+
+
+// =========================
+// OPEN SAVED ARABIC QURAN BOOKMARK
+// =========================
+function openSavedArabicQuranBookmark(bookmarkId){
+
+  let allBookmarks = JSON.parse(localStorage.getItem("quranBookmarks") || "[]");
+
+  let bookmark = allBookmarks.find(function(item){
+    return String(item.id) === String(bookmarkId);
+  });
+
+  if(!bookmark){
+    alert("Bookmark not found");
+    return;
+  }
+
+  if(bookmark.type !== "arabic"){
+    alert("This is not an Arabic Quran bookmark");
+    return;
+  }
+
+  let surahNumber = parseInt(bookmark.surahNumber || "0");
+
+  if(!surahNumber && bookmark.surah && typeof quran16SurahData !== "undefined"){
+    let matchedSurah = quran16SurahData.find(function(surah){
+      return String(surah.en).toLowerCase() === String(bookmark.surah).toLowerCase();
+    });
+
+    if(matchedSurah){
+      surahNumber = matchedSurah.num;
+    }
+  }
+
+  if(!surahNumber || surahNumber < 1 || surahNumber > 114){
+    alert("Saved Surah not found in this bookmark");
+    return;
+  }
+
+  let arabicQuranBookmarkPage = document.getElementById("arabicQuranBookmarkPage");
+  let arabicQuranPage = document.getElementById("arabicQuranPage");
+  let surahIndexPage = document.getElementById("surahIndexPage");
+  let quranReadingPage = document.getElementById("quranReadingPage");
+
+  if(arabicQuranBookmarkPage) arabicQuranBookmarkPage.style.display = "none";
+  if(arabicQuranPage) arabicQuranPage.style.display = "none";
+  if(surahIndexPage) surahIndexPage.style.display = "none";
+  if(quranReadingPage) quranReadingPage.style.display = "block";
+
+  setBottomNavVisibility(true);
+
+  openQuranReadingPage(
+    surahNumber,
+    bookmark.surah || "Surah",
+    ""
+  );
+}
+
+     
      
 
 // =========================
@@ -11411,6 +11768,7 @@ function hideAllQuranLayers(){
 let quranLayerIds = [
   "quranPage",
   "arabicQuranPage",
+  "arabicQuranBookmarkPage",
   "quran15Page",
   "quran15SurahPage",
   "surahIndexPage",
@@ -14955,10 +15313,57 @@ function saveBookmark(){
     return;
   }
 
-  let savedBookmarks = JSON.parse(localStorage.getItem("quranBookmarks") || "[]");
+   let savedBookmarks = JSON.parse(localStorage.getItem("quranBookmarks") || "[]");
+
+   // =========================
+  // STOP DUPLICATE 15 LINE QURAN BOOKMARK
+  // =========================
+  if(bookmarkType === "15line"){
+
+    let duplicateBookmark = savedBookmarks.some(function(savedBookmark){
+
+      return (
+        savedBookmark.type === "15line" &&
+        Number(savedBookmark.page) === Number(bookmarkPage)
+      );
+
+    });
+
+    if(duplicateBookmark){
+      alert("This 15 Line Quran page is already bookmarked.");
+      closeBookmarkPopup();
+      return;
+    }
+
+  }
+
+  // =========================
+  // STOP DUPLICATE ARABIC QURAN BOOKMARK
+  // =========================
+  if(bookmarkType === "arabic"){
+
+    let duplicateArabicBookmark = savedBookmarks.some(function(savedBookmark){
+
+      return (
+        savedBookmark.type === "arabic" &&
+        Number(savedBookmark.surahNumber) === Number(currentQuranSurahNumber)
+      );
+
+    });
+
+    if(duplicateArabicBookmark){
+      alert("This Arabic Quran Surah is already bookmarked.");
+      closeBookmarkPopup();
+      return;
+    }
+
+  }
 
   let now = new Date();
 
+   // =========================
+  // CREATE BOOKMARK ITEM
+  // =========================
   let bookmarkItem = {
     id: Date.now(),
     type: bookmarkType,
@@ -14966,6 +15371,7 @@ function saveBookmark(){
     surah: surahName,
     juz: juzName,
     page: bookmarkPage,
+    surahNumber: bookmarkType === "arabic" ? currentQuranSurahNumber : null,
     createdAt: now.toISOString(),
     createdAtText: now.toLocaleString()
   };
@@ -14987,6 +15393,13 @@ function openQuranReadingPage(surahNumber, englishName, arabicName){
 
 quranReadingSource = "arabic";
 currentQuranSurahNumber = surahNumber;
+
+// =========================
+// SAVE LAST ARABIC QURAN READING
+// =========================
+localStorage.setItem("lastArabicQuranSurahNumber", String(surahNumber));
+localStorage.setItem("lastArabicQuranEnglishName", englishName || "Surah");
+localStorage.setItem("lastArabicQuranArabicName", arabicName || "");
 
 let surahIndexPage = document.getElementById("surahIndexPage");
 let quranReadingPage = document.getElementById("quranReadingPage");
