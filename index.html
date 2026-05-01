@@ -1788,7 +1788,137 @@ border:1px solid rgba(0,0,0,0.03);
   </div>
 
 </div>
- 
+
+       <!-- Farghi Rizq Zikr Card -->
+<div onclick="openZikrDetail('farghirizq')" style="
+background:white;
+border-radius:26px;
+padding:18px 16px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+box-shadow:0 8px 22px rgba(0,0,0,0.07);
+border:1px solid rgba(0,0,0,0.03);
+">
+
+  <!-- Left Progress Ring -->
+  <div id="zikrCardRing-farghirizq" style="
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  flex-shrink:0;
+  position:relative;
+  background:conic-gradient(#34c759 0deg, #34c759 0deg, #e9e9ee 0deg, #e9e9ee 360deg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  ">
+    <div id="zikrCardRingText-farghirizq" style="
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    font-weight:800;
+    color:#666;
+    ">
+      0
+    </div>
+  </div>
+
+  <!-- Center Text -->
+  <div style="
+  flex:1;
+  min-width:0;
+  ">
+
+    <div style="
+    font-size:19px;
+    font-weight:800;
+    color:#111;
+    line-height:1.2;
+    margin-bottom:4px;
+    ">
+      Farghi Rizq
+    </div>
+
+    <div style="
+    font-size:15px;
+    color:#666;
+    font-family:'Amiri','Noto Naskh Arabic',serif;
+    direction:rtl;
+    line-height:1.5;
+    margin-bottom:6px;
+    ">
+      رَبَّنَا أَنزِلْ عَلَيْنَا مَائِدَةً
+    </div>
+
+    <div id="zikrCardProgressText-farghirizq" style="
+    font-size:13px;
+    font-weight:700;
+    color:#8a8a8a;
+    ">
+      0 / 33
+    </div>
+
+  </div>
+
+  <!-- Right Actions -->
+  <div style="
+  width:50px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-shrink:0;
+  ">
+
+    <!-- Zikr Menu Button -->
+    <button onclick="event.stopPropagation();openZikrCardMenu('farghirizq', event)" style="
+    width:34px;
+    height:34px;
+    border:none;
+    border-radius:50%;
+    background:#f2f2f7;
+    color:#666;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    ">
+      ⋮
+    </button>
+
+    <!-- Start Zikr Button -->
+    <button onclick="event.stopPropagation();openZikrDetail('farghirizq')" style="
+    width:38px;
+    height:38px;
+    border:none;
+    border-radius:50%;
+    background:#111;
+    color:white;
+    font-size:16px;
+    font-weight:800;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 6px 14px rgba(0,0,0,0.16);
+    ">
+      ▶
+    </button>
+
+  </div>
+
+</div>
   
   <!-- Alhamdulillah Zikr Card -->
 <div onclick="openZikrDetail('alhamdulillah')" style="
@@ -12729,7 +12859,39 @@ function showQazaProgressTab(){
   }
 }
 
+// =========================
+// OPEN FARGHI RIZQ PAGE
+// =========================
+function openFarghiRizqPage(){
 
+let duaPage = document.getElementById("duaPage");
+let farghiRizqPage = document.getElementById("farghiRizqPage");
+let bottomNav = document.getElementById("bottomNav");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+
+// hide all main app pages first
+if(typeof hideAllAppPages === "function"){
+hideAllAppPages();
+}
+
+// keep dua page hidden
+if(duaPage) duaPage.style.display = "none";
+
+// show only Farghi Rizq page
+if(farghiRizqPage) farghiRizqPage.style.display = "block";
+
+// no bottom bar inside dua detail page
+if(bottomNav) bottomNav.style.display = "none";
+
+// no menu button inside dua detail page
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+
+window.scrollTo(0,0);
+
+}
+
+
+     
 
 // =========================
 // OPEN IMAN PAGE
@@ -12757,7 +12919,35 @@ window.scrollTo(0,0);
 
 }
 
+// =========================
+// CLOSE FARGHI RIZQ PAGE
+// =========================
+function closeFarghiRizqPage(){
 
+let farghiRizqPage = document.getElementById("farghiRizqPage");
+
+// hide Farghi Rizq page first
+if(farghiRizqPage) farghiRizqPage.style.display = "none";
+
+// open Dua page using the real Dua page function
+// this brings back the same top bar correctly
+if(typeof openDuaPage === "function"){
+openDuaPage();
+return;
+}
+
+// backup only, if openDuaPage is not found
+let duaPage = document.getElementById("duaPage");
+let bottomNav = document.getElementById("bottomNav");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+
+if(duaPage) duaPage.style.display = "block";
+if(bottomNav) bottomNav.style.display = "none";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+
+window.scrollTo(0,0);
+
+}
 
 
 // =========================
@@ -13717,6 +13907,12 @@ meaning: `گناہ سے بچنے کی ہمت ہے نہ نیکی کرنے کی ط
 اللہ ہی کی توفیق سے۔`,
 ref: `صحیح البخاری، الادب المفرد، باب قول: لا حول ولا قوة إلا بالله<br>حدیث: 6409`
 },
+farghirizq: {
+hadith: `Farghi Rizq Dua`,
+arabic: `رَبَّنَا أَنزِلْ عَلَيْنَا مَائِدَةً مِّنَ السَّمَاءِ تَكُونُ لَنَا عِيدًا لِّأَوَّلِنَا وَآخِرِنَا وَآيَةً مِّنكَ ۖ وَارْزُقْنَا وَأَنتَ خَيْرُ الرَّازِقِينَ`,
+meaning: `اے ہمارے رب! ہم پر آسمان سے ایک دسترخوان نازل فرما جو ہمارے اگلوں اور پچھلوں کے لیے عید ہو، اور تیری طرف سے نشانی ہو، اور ہمیں رزق عطا فرما، اور تو سب سے بہتر رزق دینے والا ہے۔`,
+ref: `Surah Al-Ma'idah: 114`
+},
 alhamdulillah: {
 hadith: `رسول اللہ ﷺ نے فرمایا:
 "الطُّهُورُ شَطْرُ الإِيمَانِ، وَالْحَمْدُ لِلَّهِ تَمْلأُ الْمِيزَانَ"`,
@@ -13780,6 +13976,56 @@ function getZikrCardManualDone(name){
 }
 
 // =========================
+// DELETE CUSTOM ZIKR FROM 3 DOT MENU
+// =========================
+function deleteCustomZikrFromMenu(){
+
+  let name = currentZikrCardMenuName;
+
+  if(!name) return;
+
+  if(!isCustomZikr(name)){
+    return;
+  }
+
+  let item = getCustomZikrById(name);
+
+  if(!item){
+    closeZikrCardMenu();
+    return;
+  }
+
+  let ok = confirm('Delete zikr "' + (item.englishName || "Custom Zikr") + '"?');
+
+  if(!ok){
+    closeZikrCardMenu();
+    return;
+  }
+
+  let list = getCustomZikrList();
+
+  list = list.filter(function(zikrItem){
+    return zikrItem.id !== name;
+  });
+
+  saveCustomZikrList(list);
+
+  localStorage.removeItem(getZikrCardCountKey(name));
+  localStorage.removeItem(getZikrCardTargetKey(name));
+  localStorage.removeItem(getZikrCardManualDoneKey(name));
+
+  closeZikrCardMenu();
+
+  renderCustomZikrCards();
+  updateAllZikrCardUI();
+
+}
+
+
+
+
+     
+// =========================
 // OPEN ZIKR CARD MENU
 // =========================
 function openZikrCardMenu(name, event){
@@ -13810,8 +14056,48 @@ if(manualBtn){
 
 }
 
-  popup.style.display = "block";
+// =========================
+// CUSTOM ZIKR DELETE MENU BUTTON
+// =========================
+let deleteBtn = document.getElementById("zikrDeleteCustomMenuBtn");
 
+if(!deleteBtn){
+
+  deleteBtn = document.createElement("button");
+  deleteBtn.id = "zikrDeleteCustomMenuBtn";
+  deleteBtn.innerText = "Delete";
+
+  deleteBtn.onclick = function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    deleteCustomZikrFromMenu();
+  };
+
+  deleteBtn.style.width = "100%";
+  deleteBtn.style.padding = "12px 14px";
+  deleteBtn.style.border = "none";
+  deleteBtn.style.borderTop = "1px solid #f0f0f3";
+  deleteBtn.style.background = "white";
+  deleteBtn.style.color = "#ff3b30";
+  deleteBtn.style.fontSize = "15px";
+  deleteBtn.style.fontWeight = "800";
+  deleteBtn.style.textAlign = "left";
+  deleteBtn.style.cursor = "pointer";
+  deleteBtn.style.borderRadius = "0 0 16px 16px";
+
+  box.appendChild(deleteBtn);
+
+}
+
+if(deleteBtn){
+  if(isCustomZikr(name)){
+    deleteBtn.style.display = "block";
+  }else{
+    deleteBtn.style.display = "none";
+  }
+}
+
+  popup.style.display = "block";
   let buttonRect = null;
 
   if(event && event.currentTarget){
@@ -14260,6 +14546,7 @@ if(badgeEl){
 }
 
 document.getElementById("zikrHadithText").innerHTML = data.hadith || "";
+
 let arabicEl = document.getElementById("zikrArabicText");
 
 if(arabicEl){
@@ -14270,24 +14557,64 @@ if(arabicEl){
     arabicEl.style.display = "none";
   }
 }
+
 document.getElementById("zikrMeaningText").innerHTML = data.meaning || "";
 document.getElementById("zikrRefText").innerHTML = data.ref || "";
 
-document.getElementById("zikrPage").style.display = "none";
-document.getElementById("zikrDetailPage").style.display = "block";
+// hide Daily Dhikr list page
+let zikrPage = document.getElementById("zikrPage");
+if(zikrPage) zikrPage.style.display = "none";
+
+// hide shared top bars so only Zikr detail back button shows
+let duaTopBar = document.getElementById("duaTopBar");
+let zikrTopBar = document.getElementById("zikrTopBar");
+let appTopBar = document.getElementById("appTopBar");
+let topBar = document.getElementById("topBar");
+
+if(duaTopBar) duaTopBar.style.display = "none";
+if(zikrTopBar) zikrTopBar.style.display = "none";
+if(appTopBar) appTopBar.style.display = "none";
+if(topBar) topBar.style.display = "none";
+
+// show only Zikr detail page
+let zikrDetailPage = document.getElementById("zikrDetailPage");
+if(zikrDetailPage) zikrDetailPage.style.display = "block";
 
 window.scrollTo(0,0);
-}
-     
+
+}     
+
+
 // =========================
 // CLOSE ZIKR DETAIL
 // =========================
 function closeZikrDetail(){
-document.getElementById("zikrDetailPage").style.display = "none";
-document.getElementById("zikrPage").style.display = "block";
+
+let zikrDetailPage = document.getElementById("zikrDetailPage");
+let zikrPage = document.getElementById("zikrPage");
+
+if(zikrDetailPage) zikrDetailPage.style.display = "none";
+
+// safest way: use your real Daily Dhikr open function if it exists
+// this brings back the correct top bar
+if(typeof openZikrPage === "function"){
+  openZikrPage();
+  updateAllZikrCardUI();
+  window.scrollTo(0,0);
+  return;
+}
+
+// backup only
+if(zikrPage) zikrPage.style.display = "block";
+
 updateAllZikrCardUI();
 window.scrollTo(0,0);
+
 }
+
+
+
+     
 // =========================
 // GET TRACKER SURAH TITLE
 // =========================
@@ -25130,7 +25457,87 @@ box-sizing:border-box;
 
   </div>
 
+<!-- =========================
+     FARGHI RIZQ DUA CARD
+========================= -->
+<div onclick="openFarghiRizqPage()" style="
+width:100%;
+background:white;
+border-radius:26px;
+padding:18px 5%;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:14px;
+box-shadow:0 8px 22px rgba(0,0,0,0.07);
+border:1px solid rgba(0,0,0,0.03);
+box-sizing:border-box;
+margin-bottom:14px;
+">
 
+  <div style="
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-width:0;
+  flex:1;
+  ">
+
+    <div style="
+    width:54px;
+    height:54px;
+    border-radius:18px;
+    background:#f2f2f7;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:26px;
+    flex-shrink:0;
+    ">
+      🌿
+    </div>
+
+    <div style="
+    min-width:0;
+    flex:1;
+    ">
+
+      <div style="
+      font-size:19px;
+      font-weight:850;
+      color:#111;
+      line-height:1.2;
+      margin-bottom:5px;
+      ">
+        Farghi Rizq
+      </div>
+
+      <div style="
+      font-size:14px;
+      font-weight:600;
+      color:#666;
+      line-height:1.4;
+      ">
+        Rizq ke liye dua
+      </div>
+
+    </div>
+
+  </div>
+
+  <div style="
+  font-size:28px;
+  color:#b0b0b8;
+  flex-shrink:0;
+  ">
+    ›
+  </div>
+
+</div>
+
+
+     
 <!-- =========================
      IMAN MUJMAL & MUFASSAL DUA CARD
 ========================= -->
@@ -25294,7 +25701,88 @@ margin-bottom:14px;
 
 </div>
 
+<!-- =========================
+     FARGHI RIZQ PAGE
+========================= -->
+<div id="farghiRizqPage" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+right:0;
+bottom:0;
+z-index:10002;
+background:linear-gradient(180deg, #f7f7fa 0%, #e9e9ee 100%);
+overflow:auto;
+-webkit-overflow-scrolling:touch;
+padding:90px 4% 120px 4%;
+box-sizing:border-box;
+">
 
+  <!-- =========================
+       FARGHI RIZQ PAGE BACK BUTTON
+  ========================= -->
+  <button onclick="closeFarghiRizqPage()" style="
+  position:fixed;
+  top:18px;
+  left:4%;
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:50%;
+  background:white;
+  font-size:24px;
+  font-weight:700;
+  color:#111;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 12px rgba(0,0,0,0.10);
+  z-index:10003;
+  ">
+    ←
+  </button>
+
+  <!-- =========================
+       FARGHI RIZQ IMAGE CARD
+  ========================= -->
+  <div style="
+  width:100%;
+  background:white;
+  border-radius:30px;
+  padding:14px 4%;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  border:1px solid rgba(0,0,0,0.03);
+  box-sizing:border-box;
+  overflow:hidden;
+  ">
+
+    <div style="
+    font-size:26px;
+    font-weight:900;
+    color:#111;
+    text-align:center;
+    margin-bottom:14px;
+    ">
+      Farghi Rizq
+    </div>
+
+    <img src="Images/Rizq.png" alt="Farghi Rizq Dua" style="
+    width:100%;
+    height:auto;
+    display:block;
+    border-radius:22px;
+    object-fit:contain;
+    ">
+
+  </div>
+
+</div>
+<!-- END FARGHI RIZQ PAGE -->
+
+
+     
 
 <!-- =========================
      IMAN MUJMAL & MUFASSAL PAGE
