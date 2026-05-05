@@ -666,2363 +666,6 @@ Manage Tasks
 </div>
 
   
- 
-  
-  
-
-
-<!-- =========================
-     TASBIH PAGE
-========================= -->
-<div id="tasbihPage" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:92px;
-z-index:4000;
-background:url('wallpaper.jpg') center/cover no-repeat;
-overflow:auto;
-padding:90px 4% 110px 4%;
-">
-
-<!-- TASBIH SETTINGS OVERLAY REMOVED - OLD DUPLICATE DRAWER DELETED -->
-
-
-
-
-  <!-- DARK NIGHT TASBIH -->
-<div id="darkNightTasbih" style="
-display:none;
-position:fixed;
-top:8%;
-left:0;
-right:0;
-bottom:92px;
-z-index:4500;
-background:url('Images/dark-tasbih-bg.jpg') center/cover no-repeat;
-overflow:hidden;
-">
-
-
-
-<!-- TARGET + RESET -->
-<div style="
-position:absolute;
-top:30%;
-left:20px;
-right:20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-">
-
-  <!-- LEFT TARGET CIRCLE -->
- <div style="position:relative;">
-<!-- Dark Target Circle Card -->
-  <div id="darkTargetCircle" onclick="toggleDarkTargetMenu(event)" style="
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  background:rgba(255,255,255,0.2);
-  border:2px solid rgba(255,255,255,0.8);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  font-size:22px;
-  font-weight:700;
-  cursor:pointer;
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  ">
-  <span id="darkTargetText">100</span>
-  </div>
-
-<!-- =========================
-     DARK TARGET MENU
-========================= -->
-  <div id="darkTargetMenu" style="
-  display:none;
-  position:absolute;
-  top:82px;
-  left:0;
-  width:120px;
-  background:rgba(20,20,20,0.96);
-  border:1px solid rgba(255,255,255,0.10);
-  border-radius:20px;
-  padding:8px;
-  box-shadow:0 16px 40px rgba(0,0,0,0.35);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  z-index:20;
-  ">
-
-<!-- Select Dark Target Button -->
-    <button onclick="selectDarkTarget(33,event)" style="
-    width:100%;
-    border:none;
-    border-radius:14px;
-    padding:12px 10px;
-    margin-bottom:8px;
-    background:rgba(255,255,255,0.10);
-    color:white;
-    font-size:18px;
-    font-weight:700;
-    cursor:pointer;
-    ">
-    33
-    </button>
-
-<!-- Select Dark Target Button -->
-    <button onclick="selectDarkTarget(100,event)" style="
-    width:100%;
-    border:none;
-    border-radius:14px;
-    padding:12px 10px;
-    margin-bottom:8px;
-    background:rgba(255,255,255,0.10);
-    color:white;
-    font-size:18px;
-    font-weight:700;
-    cursor:pointer;
-    ">
-    100
-    </button>
-
-<!-- Select Dark Target Button -->
-    <button onclick="selectDarkTarget('inf',event)" style="
-    width:100%;
-    border:none;
-    border-radius:14px;
-    padding:12px 10px;
-    margin-bottom:8px;
-    background:rgba(255,255,255,0.10);
-    color:white;
-    font-size:20px;
-    font-weight:700;
-    cursor:pointer;
-    ">
-    ∞
-    </button>
-
-<!-- Close Dark Target Menu Button -->
-    <button onclick="closeDarkTargetMenu(event)" style="
-    width:100%;
-    border:none;
-    border-radius:14px;
-    padding:10px 10px;
-    background:rgba(255,255,255,0.06);
-    color:#d6d6d6;
-    font-size:15px;
-    font-weight:700;
-    cursor:pointer;
-    ">
-    Cancel
-    </button>
-
-  </div>
-</div>
-
-  <!-- RIGHT RESET CIRCLE -->
-  <div style="
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  background:rgba(255,255,255,0.2);
-  border:2px solid rgba(255,255,255,0.8);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  font-size:16px;
-  font-weight:700;
-  cursor:pointer;
-  " onclick="resetTasbih()">
-  Reset
-  </div>
-
-</div>
-
-<!-- BIG RING -->
-<!-- Dark Night Ring Card -->
-<div id="darkNightRing" onclick="tapDarkNightRing()" style="
-position:absolute;
-left:50%;
-bottom:110px;
-transform:translateX(-50%);
-width:320px;
-height:320px;
-border-radius:50%;
-border:4px solid white;
-display:flex;
-align-items:center;
-justify-content:center;
-color:white;
-font-size:80px;
-font-weight:800;
-cursor:pointer;
-transition:transform .15s;
-user-select:none;
--webkit-user-select:none;
-touch-action:manipulation;
-">
-
-<span id="darkTasbihNumber">0</span>
-
-</div>
-
-</div>
-
-
-<!-- =========================
-     ROYAL TASBIH
-========================= -->
-<div id="royalTasbih" style="
-display:none;
-position:fixed;
-top:8%;
-left:0;
-right:0;
-bottom:92px;
-z-index:4600;
-background:url('Images/royal-tasbih-bg.png') center/cover no-repeat;
-overflow:hidden;
-">
-
-
-   <!-- ROYAL BISMILLAH RIBBON -->
-  <div style="
-  position:absolute;
-  top:14%;
-  left:50%;
-  transform:translateX(-50%);
-  width:78%;
-  max-width:360px;
-  text-align:center;
-  z-index:5;
-  ">
-
-    
-  
-  <!-- =========================
-     ROYAL TASBIH BISMILLAH
-========================= -->
-<div style="
-font-size:26px;
-font-weight:600;
-color:#d4af37;
-text-align:center;
-
-/* move slightly UP */
-margin-top:-0px;
-
-/* Arabic styling */
-direction:rtl;
-letter-spacing:1.5px;
-line-height:1.6;
-
-/* premium gold glow */
-text-shadow:
-0 0 6px rgba(212,175,55,0.6),
-0 0 12px rgba(212,175,55,0.4);
-">
-بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
-</div>
-  </div>
-
-<!-- ROYAL TARGET SELECTOR -->
-<div style="
-position:absolute;
-top:26%;
-left:50%;
-transform:translateX(-50%);
-width:78%;
-max-width:340px;
-z-index:5;
-">
-
-  <div id="royalTasbihModes" style="
-  display:flex;
-  align-items:center;
-  border-radius:999px;
-  overflow:hidden;
-
-  /* LIGHT SLIM GLASS */
-  background:rgba(255,255,255,0.20);
-  backdrop-filter:blur(14px);
-
-  box-shadow:
-  0 4px 10px rgba(0,0,0,0.10);
-
-  padding:2px;
-  gap:2px;
-
-  height:34px;
-  ">
-
-   <!-- 33 -->
-   <button id="royalMode33" onclick="setTasbihMode(33);updateRoyalTasbihUI();" style="
-flex:1;
-height:28px;
-border:none;
-border-radius:999px;
-
-background:rgba(255,255,255,0.45);
-
-color:#d4af37;
-font-size:22px;
-font-weight:900;
-
-cursor:pointer;
-transition:all 0.2s ease;
-">
-33
-</button>
-
-   <!-- 100 -->
-   <button id="royalMode100" onclick="setTasbihMode(100);updateRoyalTasbihUI();" style="
-flex:1;
-height:28px;
-border:none;
-border-radius:999px;
-
-background:rgba(255,255,255,0.45);
-
-color:#d4af37;
-font-size:22px;
-font-weight:900;
-
-cursor:pointer;
-transition:all 0.2s ease;
-">
-100
-</button>
-
-   <!-- INF -->
-   <button id="royalModeInf" onclick="setTasbihMode('inf');updateRoyalTasbihUI();" style="
-flex:1;
-height:28px;
-border:none;
-border-radius:999px;
-
-background:rgba(255,255,255,0.45);
-
-color:#d4af37;
-font-size:25px;
-font-weight:900;
-
-cursor:pointer;
-transition:all 0.2s ease;
-">
-∞
-</button>
-
-  </div>
-</div>
-
-   <!-- ROYAL BIG CIRCLE -->
-  <div onclick="increaseTasbih();updateRoyalTasbihUI();" style="
-  position:absolute;
-  left:50%;
-  top:58%;
-  transform:translate(-50%,-50%);
-  width:270px;
-  height:270px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  z-index:5;
-  user-select:none;
-  -webkit-user-select:none;
-  touch-action:manipulation;
-  ">
-
-    <!-- ROYAL PROGRESS BARS -->
-    <div id="royalTasbihProgress" style="
-    position:absolute;
-    width:270px;
-    height:270px;
-    border-radius:50%;
-    pointer-events:none;
-    z-index:1;
-    "></div>
-
-    <div style="
-    width:205px;
-    height:205px;
-    border-radius:50%;
-    background:radial-gradient(circle at center, #ffffff 0%, #f7f7f7 70%, #f0f0f0 100%);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:
-      inset 0 2px 8px rgba(255,255,255,0.95),
-      inset 0 -10px 22px rgba(0,0,0,0.08);
-    position:relative;
-    z-index:2;
-    ">
-      <div id="royalTasbihCenterText" style="
-      font-size:44px;
-      font-weight:600;
-      color:#d4af37;
-      letter-spacing:1px;
-      text-align:center;
-      line-height:1;
-      ">
-        0 / 33
-      </div>
-    </div>
-
-  </div>
-
-   <!-- ROYAL RESET BUTTON -->
-  <div style="
-  position:absolute;
-  left:50%;
-  bottom:14%;
-  transform:translateX(-50%);
-  z-index:5;
-  ">
-    <button onclick="resetTasbih();updateRoyalTasbihUI();" style="
-    min-width:140px;
-    height:32px;
-    border:none;
-    border-radius:999px;
-    background:linear-gradient(180deg, #244e9e 0%, #153d88 100%);
-    color:#d4af37;
-    font-size:20px;
-    font-weight:800;
-    padding:0 24px;
-    cursor:pointer;
-    box-shadow:0 8px 18px rgba(0,0,0,0.24);
-    ">
-      Reset
-    </button>
-  </div>
-
-</div>
-
-  
-  
-<!-- DARK TARGET POPUP -->
-<!-- =========================
-     DARK TARGET POPUP
-========================= -->
-<!-- Dark Target Popup Card -->
-<div id="darkTargetPopup" onclick="closeDarkTargetPopup()" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-background:rgba(0,0,0,0.45);
-backdrop-filter:blur(4px);
--webkit-backdrop-filter:blur(4px);
-z-index:8700;
-">
-
-<!-- Event Card -->
-  <div onclick="event.stopPropagation()" style="
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:260px;
-  max-width:88%;
-  background:rgba(20,20,20,0.92);
-  border:1px solid rgba(255,255,255,0.10);
-  border-radius:28px;
-  padding:18px;
-  box-shadow:0 20px 50px rgba(0,0,0,0.35);
-  ">
-
-    <div style="
-    color:white;
-    font-size:20px;
-    font-weight:800;
-    text-align:center;
-    margin-bottom:14px;
-    ">
-    Select Target
-    </div>
-
-<!-- Set Dark Target Button -->
-    <button onclick="setDarkTarget(33)" style="
-    width:100%;
-    border:none;
-    border-radius:18px;
-    padding:16px;
-    margin-bottom:10px;
-    background:rgba(255,255,255,0.10);
-    color:white;
-    font-size:20px;
-    font-weight:700;
-    cursor:pointer;
-    ">
-    33
-    </button>
-
-<!-- Set Dark Target Button -->
-    <button onclick="setDarkTarget(100)" style="
-    width:100%;
-    border:none;
-    border-radius:18px;
-    padding:16px;
-    margin-bottom:10px;
-    background:rgba(255,255,255,0.10);
-    color:white;
-    font-size:20px;
-    font-weight:700;
-    cursor:pointer;
-    ">
-    100
-    </button>
-
-<!-- Set Dark Target Button -->
-    <button onclick="setDarkTarget('inf')" style="
-    width:100%;
-    border:none;
-    border-radius:18px;
-    padding:16px;
-    background:rgba(255,255,255,0.10);
-    color:white;
-    font-size:20px;
-    font-weight:700;
-    cursor:pointer;
-    ">
-    ∞
-    </button>
-
-  </div>
-</div>
-
-<!-- TASBIH SETTINGS DRAWER -->
-<div id="tasbihSettingsDrawer" style="
-position:fixed;
-top:0;
-right:-70%;
-width:70%;
-max-width:380px;
-height:100%;
-background:#f7f7fa;
-box-shadow:-10px 0 30px rgba(0,0,0,0.18);
-z-index:8600;
-transition:0.28s ease;
-border-top-left-radius:26px;
-border-bottom-left-radius:26px;
-overflow:auto;
-padding:22px 18px 30px 18px;
-box-sizing:border-box;
-">
-
-  <div style="
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:22px;
-  ">
-    <div style="
-    font-size:22px;
-    font-weight:800;
-    color:#111;
-    ">
-      Settings
-    </div>
-
-<!-- Close Tasbih Settings Button -->
-    <button onclick="closeTasbihSettings()" style="
-    width:38px;
-    height:38px;
-    border:none;
-    border-radius:12px;
-    background:#e9e9ee;
-    font-size:20px;
-    cursor:pointer;
-    color:#111;
-    ">
-      ✕
-    </button>
-  </div>
-
-  <div style="
-  font-size:15px;
-  font-weight:700;
-  color:#666;
-  margin-bottom:10px;
-  letter-spacing:0.2px;
-  ">
-    Style
-  </div>
-
-  <div style="
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  ">
-
-<!-- Style Button Classic Button -->
-    <button id="styleBtnClassic" onclick="setTasbihStyle('classic')" style="
-width:100%;
-border:none;
-border-radius:20px;
-background:white;
-padding:16px 16px;
-text-align:left;
-box-shadow:0 6px 18px rgba(0,0,0,0.08);
-cursor:pointer;
-outline:3px solid #111;
-">
-  <div style="font-size:17px;font-weight:800;color:#111;">Classic</div>
-  <div style="font-size:13px;color:#666;margin-top:4px;">Your current Tasbih style</div>
-</button>
-
-<!-- Style Button Dark Night Button -->
-<button id="styleBtnDarkNight" onclick="setTasbihStyle('dark')" style="
-width:100%;
-border:none;
-border-radius:20px;
-background:white;
-padding:16px 16px;
-text-align:left;
-box-shadow:0 6px 18px rgba(0,0,0,0.08);
-cursor:pointer;
-outline:none;
-">
-  <div style="font-size:17px;font-weight:800;color:#111;">Dark Night</div>
-  <div style="font-size:13px;color:#666;margin-top:4px;">Dark sky ring Tasbih style</div>
-</button>
-
-<!-- Style Button Royal Tasbih Button -->
-<button id="styleBtnRoyal" onclick="setTasbihStyle('royal')" style="
-width:100%;
-border:none;
-border-radius:20px;
-background:white;
-padding:16px 16px;
-text-align:left;
-box-shadow:0 6px 18px rgba(0,0,0,0.08);
-cursor:pointer;
-outline:none;
-">
-  <div style="font-size:17px;font-weight:800;color:#111;">Royal Tasbih</div>
-  <div style="font-size:13px;color:#666;margin-top:4px;">Blue gold luxury Tasbih style</div>
-</button>
-  </div>
-
-</div>
-
-
-  
- <!-- =========================
-     CLASSIC TASBIH
-========================= -->
-<div id="classicTasbih" style="
-display:block;
-padding:10px;
-">
-
- 
-
- <div class="card" style="
-text-align:center;
-max-width:360px;
-margin:10px auto 16px auto;
-padding:20px;
-background:#cfcfd6;
-border-radius:24px;
-box-shadow:0 6px 18px rgba(0,0,0,0.12);
-">
-
-<div style="
-font-size:28px;
-font-weight:800;
-color:#5c4632;
-letter-spacing:1px;
-">
-📿 Tasbih Counter
-</div>
-
-</div>
-
-<div class="card" style="
-width:92%;
-max-width:360px;
-margin:10px auto 16px auto;
-padding:12px;
-text-align:center;
-background:#dcdce1;
-border-radius:28px;
-box-shadow:0 6px 18px rgba(0,0,0,0.15);
-">
-
-<div id="tasbihModes"
-onclick="event.stopPropagation();"
-style="
-display:flex;
-background:#e9e9ee;
-border-radius:18px;
-overflow:hidden;
-height:52px;
-outline:none;
--webkit-tap-highlight-color:transparent;
-">
-
- 
-
-<!-- Set Tasbih Mode Button -->
-  <button class="modeBtn" onclick="setTasbihMode(33)" style="font-size:20px;color:#5c4632;">33</button>
-<!-- Set Tasbih Mode Button -->
-<button class="modeBtn" onclick="setTasbihMode(100)" style="font-size:20px;color:#5c4632;">100</button>
-<!-- Set Tasbih Mode Button -->
-<button class="modeBtn" onclick="setTasbihMode('inf')" style="font-size:24px;color:#5c4632;">∞</button>
-
-  </div>
-
-</div>
-  
-
-
-<div style="
-width:92%;
-max-width:360px;
-margin:0 auto;
-background:#cfcfd6;
-border-radius:40px;
-padding:26px 20px 34px 20px;
-box-shadow:0 10px 24px rgba(0,0,0,0.18);
-position:relative;
-">
-  
-<div id="tasbihScreen" style="
-width:150px;
-height:60px;
-margin:0 auto 24px auto;
-background:#e9e9ee;
-border-radius:14px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:38px;
-font-weight:700;
-color:black;
-letter-spacing:2px;
-box-shadow:inset 0 2px 6px rgba(0,0,0,0.12);
-">
-0
-</div>
-<!-- Increase Tasbih Card -->
-<div onclick="increaseTasbih()" style="
-width:210px;
-height:210px;
-margin:0 auto;
-border-radius:50%;
-background:#e9e9ee;
-display:flex;
-align-items:center;
-justify-content:center;
-box-shadow:inset 0 4px 10px rgba(255,255,255,0.25), inset 0 -6px 12px rgba(0,0,0,0.12);
-cursor:pointer;
-position:relative;
-">
-<div style="
-width:180px;
-height:180px;
-border-radius:50%;
-background:#e9e9ee;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:36px;
-font-weight:800;
-letter-spacing:1px;
-color:#5c4632;
-">
-<div id="tasbihCenterText">0 / 33</div>
-</div>
-  
-<!-- PROGRESS RING -->
-<div id="tasbihProgress" style="
-position:absolute;
-width:210px;
-height:210px;
-border-radius:50%;
-pointer-events:none;
-"></div>
-
-
-</div>
-
-</div>
-
-<div style="
-margin-top:24px;
-display:flex;
-justify-content:center;
-gap:12px;
-flex-wrap:wrap;
-">
-
-<!-- Reset Tasbih Button -->
-<button onclick="resetTasbih()" style="
-background:#e9e9ee;
-color:#5c4632;
-border:none;
-border-radius:18px;
-padding:16px 34px;
-font-size:18px;
-font-weight:800;
-cursor:pointer;
-box-shadow:0 4px 10px rgba(0,0,0,0.15);
-">
-Reset
-</button>
-
-
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-
-
-<!-- =========================
-     ZIKR PAGE
-========================= -->
-<div id="zikrPage" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:92px;
-z-index:5000;
-background:linear-gradient(180deg, #ece9e1 0%, #e9e9ee 100%);
-overflow:auto;
-padding:90px 4% 120px 4%;
-box-sizing:border-box;
-">
-
- 
-
-
-
-  <!-- =========================
-       ZIKR OPTION CARDS
-  ========================= -->
-  <div style="
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-  ">
-
-   <!-- SubhanAllah Zikr Card -->
-<div onclick="openZikrDetail('subhanallah')" style="
-background:white;
-border-radius:26px;
-padding:18px 16px;
-cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:12px;
-box-shadow:0 8px 22px rgba(0,0,0,0.07);
-border:1px solid rgba(0,0,0,0.03);
-">
-
-  <!-- Left Progress Ring -->
-  <div id="zikrCardRing-subhanallah" style="
-  width:52px;
-  height:52px;
-  border-radius:50%;
-  flex-shrink:0;
-  position:relative;
-  background:conic-gradient(#34c759 0deg, #34c759 0deg, #e9e9ee 0deg, #e9e9ee 360deg);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  ">
-    <div id="zikrCardRingText-subhanallah" style="
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    background:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:14px;
-    font-weight:800;
-    color:#666;
-    ">
-      0
-    </div>
-  </div>
-
-  <!-- Center Text -->
-  <div style="
-  flex:1;
-  min-width:0;
-  ">
-
-    <div style="
-    font-size:19px;
-    font-weight:800;
-    color:#111;
-    line-height:1.2;
-    margin-bottom:4px;
-    ">
-      SubhanAllahi wa bihamdihi
-    </div>
-
-    <div style="
-    font-size:15px;
-    color:#666;
-    font-family:'Amiri','Noto Naskh Arabic',serif;
-    direction:rtl;
-    line-height:1.5;
-    margin-bottom:6px;
-    ">
-      سُبْحَانَ اللَّهِ وَبِحَمْدِهِ
-    </div>
-
-    <div id="zikrCardProgressText-subhanallah" style="
-    font-size:13px;
-    font-weight:700;
-    color:#8a8a8a;
-    ">
-      0 / 33
-    </div>
-
-  </div>
-
-  <!-- Right Actions -->
-  <div style="
-  width:50px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  flex-shrink:0;
-  ">
-
-    <!-- Zikr Menu Button -->
-    <button onclick="event.stopPropagation();openZikrCardMenu('subhanallah', event)" style="
-    width:34px;
-    height:34px;
-    border:none;
-    border-radius:50%;
-    background:#f2f2f7;
-    color:#666;
-    font-size:18px;
-    font-weight:700;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    ">
-      ⋮
-    </button>
-
-    <!-- Start Zikr Button -->
-    <button onclick="event.stopPropagation();openZikrDetail('subhanallah')" style="
-    width:38px;
-    height:38px;
-    border:none;
-    border-radius:50%;
-    background:#111;
-    color:white;
-    font-size:16px;
-    font-weight:800;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:0 6px 14px rgba(0,0,0,0.16);
-    ">
-      ▶
-    </button>
-
-  </div>
-
-</div>
-
-       
-<!-- Hawqala Zikr Card -->
-<div onclick="openZikrDetail('hawqala')" style="
-background:white;
-border-radius:26px;
-padding:18px 16px;
-cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:12px;
-box-shadow:0 8px 22px rgba(0,0,0,0.07);
-border:1px solid rgba(0,0,0,0.03);
-">
-
-  <!-- Left Progress Ring -->
-  <div id="zikrCardRing-hawqala" style="
-  width:52px;
-  height:52px;
-  border-radius:50%;
-  flex-shrink:0;
-  position:relative;
-  background:conic-gradient(#34c759 0deg, #34c759 0deg, #e9e9ee 0deg, #e9e9ee 360deg);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  ">
-    <div id="zikrCardRingText-hawqala" style="
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    background:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:14px;
-    font-weight:800;
-    color:#666;
-    ">
-      0
-    </div>
-  </div>
-
-  <!-- Center Text -->
-  <div style="
-  flex:1;
-  min-width:0;
-  ">
-
-    <div style="
-    font-size:19px;
-    font-weight:800;
-    color:#111;
-    line-height:1.2;
-    margin-bottom:4px;
-    ">
-      La hawla wa la quwwata illa billah
-    </div>
-
-    <div style="
-    font-size:15px;
-    color:#666;
-    font-family:'Amiri','Noto Naskh Arabic',serif;
-    direction:rtl;
-    line-height:1.5;
-    margin-bottom:6px;
-    ">
-      لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللّٰهِ
-    </div>
-
-    <div id="zikrCardProgressText-hawqala" style="
-    font-size:13px;
-    font-weight:700;
-    color:#8a8a8a;
-    ">
-      0 / 33
-    </div>
-
-  </div>
-
-  <!-- Right Actions -->
-  <div style="
-  width:50px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  flex-shrink:0;
-  ">
-
-    <!-- Zikr Menu Button -->
-    <button onclick="event.stopPropagation();openZikrCardMenu('hawqala', event)" style="
-    width:34px;
-    height:34px;
-    border:none;
-    border-radius:50%;
-    background:#f2f2f7;
-    color:#666;
-    font-size:18px;
-    font-weight:700;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    ">
-      ⋮
-    </button>
-
-    <!-- Start Zikr Button -->
-    <button onclick="event.stopPropagation();openZikrDetail('hawqala')" style="
-    width:38px;
-    height:38px;
-    border:none;
-    border-radius:50%;
-    background:#111;
-    color:white;
-    font-size:16px;
-    font-weight:800;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:0 6px 14px rgba(0,0,0,0.16);
-    ">
-      ▶
-    </button>
-
-  </div>
-
-</div>
-
-       <!-- Farghi Rizq Zikr Card -->
-<div onclick="openZikrDetail('farghirizq')" style="
-background:white;
-border-radius:26px;
-padding:18px 16px;
-cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:12px;
-box-shadow:0 8px 22px rgba(0,0,0,0.07);
-border:1px solid rgba(0,0,0,0.03);
-">
-
-  <!-- Left Progress Ring -->
-  <div id="zikrCardRing-farghirizq" style="
-  width:52px;
-  height:52px;
-  border-radius:50%;
-  flex-shrink:0;
-  position:relative;
-  background:conic-gradient(#34c759 0deg, #34c759 0deg, #e9e9ee 0deg, #e9e9ee 360deg);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  ">
-    <div id="zikrCardRingText-farghirizq" style="
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    background:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:14px;
-    font-weight:800;
-    color:#666;
-    ">
-      0
-    </div>
-  </div>
-
-  <!-- Center Text -->
-  <div style="
-  flex:1;
-  min-width:0;
-  ">
-
-    <div style="
-    font-size:19px;
-    font-weight:800;
-    color:#111;
-    line-height:1.2;
-    margin-bottom:4px;
-    ">
-      Farghi Rizq
-    </div>
-
-    <div style="
-    font-size:15px;
-    color:#666;
-    font-family:'Amiri','Noto Naskh Arabic',serif;
-    direction:rtl;
-    line-height:1.5;
-    margin-bottom:6px;
-    ">
-      رَبَّنَا أَنزِلْ عَلَيْنَا مَائِدَةً
-    </div>
-
-    <div id="zikrCardProgressText-farghirizq" style="
-    font-size:13px;
-    font-weight:700;
-    color:#8a8a8a;
-    ">
-      0 / 33
-    </div>
-
-  </div>
-
-  <!-- Right Actions -->
-  <div style="
-  width:50px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  flex-shrink:0;
-  ">
-
-    <!-- Zikr Menu Button -->
-    <button onclick="event.stopPropagation();openZikrCardMenu('farghirizq', event)" style="
-    width:34px;
-    height:34px;
-    border:none;
-    border-radius:50%;
-    background:#f2f2f7;
-    color:#666;
-    font-size:18px;
-    font-weight:700;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    ">
-      ⋮
-    </button>
-
-    <!-- Start Zikr Button -->
-    <button onclick="event.stopPropagation();openZikrDetail('farghirizq')" style="
-    width:38px;
-    height:38px;
-    border:none;
-    border-radius:50%;
-    background:#111;
-    color:white;
-    font-size:16px;
-    font-weight:800;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:0 6px 14px rgba(0,0,0,0.16);
-    ">
-      ▶
-    </button>
-
-  </div>
-
-</div>
-  
-  <!-- Alhamdulillah Zikr Card -->
-<div onclick="openZikrDetail('alhamdulillah')" style="
-background:white;
-border-radius:26px;
-padding:18px 16px;
-cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:12px;
-box-shadow:0 8px 22px rgba(0,0,0,0.07);
-border:1px solid rgba(0,0,0,0.03);
-">
-
-  <!-- Left Progress Ring -->
-  <div id="zikrCardRing-alhamdulillah" style="
-  width:52px;
-  height:52px;
-  border-radius:50%;
-  flex-shrink:0;
-  position:relative;
-  background:conic-gradient(#34c759 0deg, #34c759 0deg, #e9e9ee 0deg, #e9e9ee 360deg);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  ">
-    <div id="zikrCardRingText-alhamdulillah" style="
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    background:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:14px;
-    font-weight:800;
-    color:#666;
-    ">
-      0
-    </div>
-  </div>
-
-  <!-- Center Text -->
-  <div style="
-  flex:1;
-  min-width:0;
-  ">
-
-    <div style="
-    font-size:19px;
-    font-weight:800;
-    color:#111;
-    line-height:1.2;
-    margin-bottom:4px;
-    ">
-      Alhamdulillah
-    </div>
-
-    <div style="
-    font-size:15px;
-    color:#666;
-    font-family:'Amiri','Noto Naskh Arabic',serif;
-    direction:rtl;
-    line-height:1.5;
-    margin-bottom:6px;
-    ">
-      ٱلْحَمْدُ لِلَّٰهِ
-    </div>
-
-    <div id="zikrCardProgressText-alhamdulillah" style="
-    font-size:13px;
-    font-weight:700;
-    color:#8a8a8a;
-    ">
-      0 / 33
-    </div>
-
-  </div>
-
-  <!-- Right Actions -->
-  <div style="
-  width:50px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  flex-shrink:0;
-  ">
-
-    <!-- Zikr Menu Button -->
- <button onclick="event.stopPropagation();openZikrCardMenu('alhamdulillah', event)" style="
-    width:34px;
-    height:34px;
-    border:none;
-    border-radius:50%;
-    background:#f2f2f7;
-    color:#666;
-    font-size:18px;
-    font-weight:700;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    ">
-      ⋮
-    </button>
-
-    <!-- Start Zikr Button -->
-    <button onclick="event.stopPropagation();openZikrDetail('alhamdulillah')" style="
-    width:38px;
-    height:38px;
-    border:none;
-    border-radius:50%;
-    background:#111;
-    color:white;
-    font-size:16px;
-    font-weight:800;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:0 6px 14px rgba(0,0,0,0.16);
-    ">
-      ▶
-    </button>
-
-  </div>
-
-</div>
-  
-  
-  </div>
-
-
-     
-
-
-<!-- =========================
-     CUSTOM ZIKR LIST
-========================= -->
-<div id="customZikrList" style="
-display:flex;
-flex-direction:column;
-gap:16px;
-margin-top:18px;
-"></div>
-
-<!-- =========================
-     ZIKR FLOATING ACTION BUTTONS
-========================= -->
-<div style="
-position:fixed;
-left:0;
-right:0;
-bottom:150px;
-z-index:99999;
-pointer-events:none;
-">
-
-  <!-- Reset All Zikr Button -->
-  <button onclick="openResetAllZikrPopup()" style="
-  position:absolute;
-  left:5%;
-  width:56px;
-  height:56px;
-  border:none;
-  border-radius:50%;
-  background:rgba(255,255,255,0.96);
-  color:#111;
-  font-size:26px;
-  font-weight:800;
-  cursor:pointer;
-  box-shadow:0 10px 24px rgba(0,0,0,0.14);
-  border:1px solid rgba(0,0,0,0.05);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  pointer-events:auto;
-  ">
-    ↻
-  </button>
-
-  <!-- Add Custom Zikr Button -->
-     
-  <button onclick="openAddCustomZikrPopup()" style="
-  position:absolute;
-  right:5%;
-  width:56px;
-  height:56px;
-  border:none;
-  border-radius:50%;
-  background:#111;
-  color:white;
-  font-size:30px;
-  font-weight:700;
-  cursor:pointer;
-  box-shadow:0 10px 24px rgba(0,0,0,0.18);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  pointer-events:auto;
-  ">
-    ＋
-  </button>
-
-</div>
-
-
-     <!-- =========================
-     RESET ALL ZIKR POPUP
-========================= -->
-<div id="resetAllZikrPopup" onclick="closeResetAllZikrPopup()" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-background:rgba(0,0,0,0.35);
-backdrop-filter:blur(8px);
--webkit-backdrop-filter:blur(8px);
-z-index:6395;
-align-items:center;
-justify-content:center;
-padding:20px;
-box-sizing:border-box;
-">
-
-  <div onclick="event.stopPropagation()" style="
-  width:100%;
-  max-width:340px;
-  background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,248,250,0.96) 100%);
-  border-radius:30px;
-  padding:24px 20px 18px 20px;
-  box-shadow:0 22px 50px rgba(0,0,0,0.20);
-  border:1px solid rgba(255,255,255,0.7);
-  text-align:center;
-  ">
-
-    <div style="
-    width:58px;
-    height:58px;
-    border-radius:50%;
-    background:#f2f2f7;
-    color:#111;
-    font-size:28px;
-    font-weight:800;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin:0 auto 14px auto;
-    ">
-      ↻
-    </div>
-
-    <div style="
-    font-size:22px;
-    font-weight:800;
-    color:#111;
-    margin-bottom:8px;
-    letter-spacing:-0.3px;
-    ">
-      Reset all zikr counts?
-    </div>
-
-    <div style="
-    font-size:15px;
-    line-height:1.6;
-    color:#666;
-    margin-bottom:18px;
-    ">
-      This will reset all built-in and custom zikr counts to 0.<br>
-      Your saved targets will stay the same.
-    </div>
-
-    <button onclick="confirmResetAllZikr()" style="
-    width:100%;
-    border:none;
-    border-radius:18px;
-    padding:16px;
-    margin-bottom:10px;
-    background:#111;
-    color:white;
-    font-size:18px;
-    font-weight:800;
-    cursor:pointer;
-    ">
-      Reset All
-    </button>
-
-    <button onclick="closeResetAllZikrPopup()" style="
-    width:100%;
-    border:none;
-    border-radius:18px;
-    padding:14px;
-    background:#f2f2f7;
-    color:#666;
-    font-size:17px;
-    font-weight:700;
-    cursor:pointer;
-    ">
-      Cancel
-    </button>
-
-  </div>
-</div>
-     <!-- =========================
-     EDIT CUSTOM ZIKR POPUP
-========================= -->
-<div id="editCustomZikrPopup" onclick="closeEditCustomZikrPopup()" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-background:rgba(0,0,0,0.35);
-backdrop-filter:blur(6px);
-z-index:6001;
-align-items:center;
-justify-content:center;
-padding:20px;
-">
-
-  <div onclick="event.stopPropagation()" style="
-  width:100%;
-  max-width:340px;
-  background:white;
-  border-radius:28px;
-  padding:20px;
-  box-shadow:0 18px 40px rgba(0,0,0,0.2);
-  ">
-
-    <div style="
-    font-size:20px;
-    font-weight:800;
-    text-align:center;
-    margin-bottom:12px;
-    ">
-      Edit Zikr
-    </div>
-
-    <!-- English -->
-    <input id="editCustomZikrEnglishInput" placeholder="English name" style="
-width:100%;
-box-sizing:border-box;
-padding:14px;
-border-radius:16px;
-border:none;
-background:#f2f2f7;
-margin-bottom:10px;
-font-size:16px;
-">
-
-    <!-- Arabic -->
-    <textarea id="editCustomZikrArabicInput" placeholder="Arabic (optional)" style="
-width:100%;
-box-sizing:border-box;
-padding:14px;
-border-radius:16px;
-border:none;
-background:#f2f2f7;
-margin-bottom:10px;
-font-size:18px;
-direction:auto;
-text-align:left;
-min-height:80px;
-"></textarea>
-
-    <!-- Target -->
-    <input id="editCustomZikrTargetInput" type="number" placeholder="Target (33)" style="
-width:100%;
-box-sizing:border-box;
-padding:14px;
-border-radius:16px;
-border:none;
-background:#f2f2f7;
-margin-bottom:14px;
-font-size:16px;
-">
-
-    <!-- Update -->
-    <button onclick="updateCustomZikr()" style="
-width:100%;
-padding:16px;
-border-radius:18px;
-border:none;
-background:#111;
-color:white;
-font-size:18px;
-font-weight:900;
-margin-bottom:10px;
-letter-spacing:-0.2px;
-">
-      Update
-    </button>
-
-    <!-- Cancel -->
-    <button onclick="closeEditCustomZikrPopup()" style="
-width:100%;
-padding:16px;
-border-radius:18px;
-border:none;
-background:#f2f2f7;
-color:#444;
-font-size:17px;
-font-weight:800;
-letter-spacing:-0.2px;
-">
-      Cancel
-    </button>
-
-  </div>
-</div>
-
-<!-- =========================
-     ADD CUSTOM ZIKR POPUP
-========================= -->
-<div id="addCustomZikrPopup" onclick="closeAddCustomZikrPopup()" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-background:rgba(0,0,0,0.35);
-backdrop-filter:blur(6px);
-z-index:6000;
-align-items:center;
-justify-content:center;
-padding:20px;
-">
-
-  <div onclick="event.stopPropagation()" style="
-  width:100%;
-  max-width:340px;
-  background:white;
-  border-radius:28px;
-  padding:20px;
-  box-shadow:0 18px 40px rgba(0,0,0,0.2);
-  ">
-
-    <div style="
-    font-size:20px;
-    font-weight:800;
-    text-align:center;
-    margin-bottom:12px;
-    ">
-      Add Your Zikr
-    </div>
-
-    <!-- English -->
-   <input id="customZikrEnglishInput" placeholder="English name" style="
-width:100%;
-box-sizing:border-box;
-padding:14px;
-border-radius:16px;
-border:none;
-background:#f2f2f7;
-margin-bottom:10px;
-font-size:16px;
-">
-    <!-- Arabic -->
-<textarea id="customZikrArabicInput" placeholder="Arabic (optional)" style="
-width:100%;
-box-sizing:border-box;
-padding:14px;
-border-radius:16px;
-border:none;
-background:#f2f2f7;
-margin-bottom:10px;
-font-size:18px;
-direction:auto;
-text-align:left;
-min-height:80px;
-"></textarea>
-
-    <!-- Target -->
-   <input id="customZikrTargetInput" type="number" placeholder="Target (33)" style="
-width:100%;
-box-sizing:border-box;
-padding:14px;
-border-radius:16px;
-border:none;
-background:#f2f2f7;
-margin-bottom:14px;
-font-size:16px;
-">
-    <!-- Save -->
-   <button onclick="saveNewCustomZikr()" style="
-width:100%;
-padding:16px;
-border-radius:18px;
-border:none;
-background:#111;
-color:white;
-font-size:18px;
-font-weight:900;
-margin-bottom:10px;
-letter-spacing:-0.2px;
-">
-  Save
-</button>
-
-    <!-- Cancel -->
-  <button onclick="closeAddCustomZikrPopup()" style="
-width:100%;
-padding:16px;
-border-radius:18px;
-border:none;
-background:#f2f2f7;
-color:#444;
-font-size:17px;
-font-weight:800;
-letter-spacing:-0.2px;
-">
-  Cancel
-</button>
-  </div>
-</div>
-     </div>
-
-
-<!-- =========================
-     TARGET REACHED POPUP
-========================= -->
-<div id="zikrTargetReachedPopup" onclick="event.stopPropagation()" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-background:rgba(0,0,0,0.35);
-backdrop-filter:blur(6px);
--webkit-backdrop-filter:blur(6px);
-z-index:99999;
-align-items:flex-end;
-justify-content:center;
-padding:20px;
-box-sizing:border-box;
-">
-
-  <div onclick="event.stopPropagation()" style="
-  width:100%;
-  max-width:420px;
-  margin:0 auto;
-  background:white;
-  border-radius:28px;
-  padding:22px 20px 20px 20px;
-  box-shadow:0 -10px 40px rgba(0,0,0,0.2);
-  text-align:center;
-  animation:slideUpZikr 0.35s ease;
-  ">
-
-    <div style="
-    font-size:22px;
-    font-weight:900;
-    color:#f5b301;
-    margin-bottom:6px;
-    ">
-      Target Reached!
-    </div>
-
-    <div id="zikrReachedMessage" style="
-    font-size:15px;
-    color:#666;
-    margin-bottom:6px;
-    ">
-      Mashallah you have completed
-    </div>
-
-    <div id="zikrReachedName" style="
-    font-size:18px;
-    font-weight:800;
-    margin-bottom:16px;
-    ">
-    </div>
-
-    <div style="
-    display:flex;
-    gap:10px;
-    ">
-
-      <button onclick="continueAfterTarget()" style="
-      flex:1;
-      padding:14px;
-      border-radius:16px;
-      border:none;
-      background:#f2f2f7;
-      font-weight:800;
-      font-size:16px;
-      ">
-        Continue
-      </button>
-
-      <button onclick="resetAfterTarget()" style="
-      flex:1;
-      padding:14px;
-      border-radius:16px;
-      border:none;
-      background:#f5b301;
-      color:white;
-      font-weight:900;
-      font-size:16px;
-      ">
-        Reset
-      </button>
-
-    </div>
-
-  </div>
-</div>
-
-<!-- =========================
-     ZIKR CARD MENU POPUP
-========================= -->
-<div id="zikrCardMenuPopup" onclick="closeZikrCardMenu()" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-background:rgba(0,0,0,0.12);
-z-index:6490;
-">
-
-  <div id="zikrCardMenuBox" onclick="event.stopPropagation()" style="
-  position:fixed;
-  min-width:170px;
-  max-width:210px;
-  background:rgba(255,255,255,0.98);
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
-  border-radius:18px;
-  box-shadow:0 18px 40px rgba(0,0,0,0.18);
-  border:1px solid rgba(255,255,255,0.75);
-  overflow:hidden;
-  ">
-
-    <button onclick="openEditTargetFromZikrMenu()" style="
-    width:100%;
-    border:none;
-    background:transparent;
-    padding:14px 16px;
-    text-align:left;
-    font-size:16px;
-    font-weight:700;
-    color:#111;
-    cursor:pointer;
-    border-bottom:1px solid rgba(0,0,0,0.06);
-    ">
-      Edit Target
-    </button>
-
-    <button id="zikrManualDoneMenuBtn" onclick="handleManualDoneFromZikrMenu()" style="
-    width:100%;
-    border:none;
-    background:transparent;
-    padding:14px 16px;
-    text-align:left;
-    font-size:16px;
-    font-weight:700;
-    color:#111;
-    cursor:pointer;
-    ">
-      Mark as Done
-    </button>
-
-  </div>
-</div>
-
-<!-- =========================
-     MANUAL ZIKR DONE POPUP
-========================= -->
-<div id="zikrManualDonePopup" onclick="closeZikrManualDonePopup()" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-background:rgba(0,0,0,0.35);
-backdrop-filter:blur(6px);
--webkit-backdrop-filter:blur(6px);
-z-index:6495;
-align-items:center;
-justify-content:center;
-padding:20px;
-box-sizing:border-box;
-">
-
-  <div onclick="event.stopPropagation()" style="
-  width:100%;
-  max-width:340px;
-  background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,248,250,0.96) 100%);
-  border-radius:30px;
-  padding:24px 20px 18px 20px;
-  box-shadow:0 22px 50px rgba(0,0,0,0.20);
-  border:1px solid rgba(255,255,255,0.7);
-  text-align:center;
-  ">
-
-    <div style="
-    width:58px;
-    height:58px;
-    border-radius:50%;
-    background:#f2f2f7;
-    color:#111;
-    font-size:28px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin:0 auto 14px auto;
-    ">
-      ✓
-    </div>
-
-    <div id="zikrManualDonePopupTitle" style="
-    font-size:22px;
-    font-weight:800;
-    color:#111;
-    margin-bottom:8px;
-    letter-spacing:-0.3px;
-    ">
-      Mark this zikr as done for today?
-    </div>
-
-    <div id="zikrManualDonePopupText" style="
-    font-size:15px;
-    line-height:1.6;
-    color:#666;
-    margin-bottom:18px;
-    ">
-      This will only show the check mark.<br>
-      Your tasbih count and green progress ring will stay the same.
-    </div>
-
-    <button id="zikrManualDoneConfirmBtn" onclick="confirmManualDoneForZikr()" style="
-    width:100%;
-    border:none;
-    border-radius:18px;
-    padding:16px;
-    margin-bottom:10px;
-    background:#111;
-    color:white;
-    font-size:18px;
-    font-weight:800;
-    cursor:pointer;
-    ">
-      Mark as Done
-    </button>
-
-    <button onclick="closeZikrManualDonePopup()" style="
-    width:100%;
-    border:none;
-    border-radius:18px;
-    padding:14px;
-    background:#f2f2f7;
-    color:#666;
-    font-size:17px;
-    font-weight:700;
-    cursor:pointer;
-    ">
-      Cancel
-    </button>
-
-  </div>
-</div>
-
-
-     
-     
-<!-- =========================
-     ZIKR TARGET POPUP
-========================= -->
-<div id="zikrTargetPopup" onclick="closeZikrTargetPopup()" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-background:rgba(0,0,0,0.35);
-backdrop-filter:blur(6px);
--webkit-backdrop-filter:blur(6px);
-z-index:6500;
-align-items:center;
-justify-content:center;
-padding:20px;
-box-sizing:border-box;
-">
-
-  <div onclick="event.stopPropagation()" style="
-  width:100%;
-  max-width:320px;
-  background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.92) 100%);
-  border-radius:30px;
-  padding:22px 18px 18px 18px;
-  box-shadow:0 18px 40px rgba(0,0,0,0.18);
-  border:1px solid rgba(255,255,255,0.7);
-  ">
-
-    <div style="
-    font-size:22px;
-    font-weight:800;
-    color:#111;
-    text-align:center;
-    margin-bottom:8px;
-    ">
-      Edit Target
-    </div>
-
-    <div id="zikrTargetPopupTitle" style="
-    font-size:14px;
-    color:#666;
-    text-align:center;
-    margin-bottom:18px;
-    line-height:1.5;
-    ">
-      Select target
-    </div>
-
-    <button onclick="saveZikrCardTarget(33)" style="
-    width:100%;
-    border:none;
-    border-radius:18px;
-    padding:16px;
-    margin-bottom:10px;
-    background:#111;
-    color:white;
-    font-size:20px;
-    font-weight:800;
-    cursor:pointer;
-    ">
-      33
-    </button>
-
-    <button onclick="saveZikrCardTarget(100)" style="
-    width:100%;
-    border:none;
-    border-radius:18px;
-    padding:16px;
-    margin-bottom:10px;
-    background:#e9e9ee;
-    color:#111;
-    font-size:20px;
-    font-weight:800;
-    cursor:pointer;
-    ">
-      100
-    </button>
-
-    <!-- Custom Target Input -->
-    <input id="zikrCustomTargetInput" type="number" min="1" placeholder="Enter custom target" style="
-    width:100%;
-    border:none;
-    border-radius:18px;
-    padding:16px;
-    margin-bottom:10px;
-    background:#f2f2f7;
-    color:#111;
-    font-size:18px;
-    font-weight:700;
-    box-sizing:border-box;
-    outline:none;
-    ">
-
-    <button onclick="saveCustomZikrCardTarget()" style="
-    width:100%;
-    border:none;
-    border-radius:18px;
-    padding:16px;
-    margin-bottom:10px;
-    background:#e9e9ee;
-    color:#111;
-    font-size:18px;
-    font-weight:800;
-    cursor:pointer;
-    ">
-      Save Custom Target
-    </button>
-
-    <button onclick="closeZikrTargetPopup()" style="
-    width:100%;
-    border:none;
-    border-radius:18px;
-    padding:14px;
-    background:#f5f5f7;
-    color:#666;
-    font-size:17px;
-    font-weight:700;
-    cursor:pointer;
-    ">
-      Cancel
-    </button>
-
-  </div>
-</div>
-
-     
-<!-- =========================
-     ZIKR DETAIL PAGE
-========================= -->
-<div id="zikrDetailPage" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:92px;
-z-index:6000;
-background:url('wallpaper.jpg') center/cover no-repeat;
-overflow:auto;
-padding:15px 15px 120px 15px;
-box-sizing:border-box;
--webkit-overflow-scrolling:touch;
-">
-
-<div style="padding:10px;">
-<!-- Close Zikr Detail Button -->
-<button onclick="closeZikrDetail()" style="
-width:42px;
-height:42px;
-border-radius:50%;
-border:1px solid rgba(0,0,0,0.08);
-background:white;
-font-size:22px;
-cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:center;
-color:#111;
-box-shadow:0 4px 12px rgba(0,0,0,0.08);
-">
-←
-</button>
-</div>
-
-<!-- =========================
-     ZIKR DETAIL FULL CARD (FIXED)
-========================= -->
-<div class="card" style="
-background:white;
-border-radius:24px;
-padding:28px;
-margin-top:10px;
-text-align:center;
-box-shadow:0 10px 25px rgba(0,0,0,0.08);
-">
-
-  <!-- =========================
-       ZIKR DETAIL TITLE BLOCK
-  ========================= -->
-  <div style="
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:22px;
-  ">
-
-    <div id="zikrEnglishTitle" style="
-    font-size:26px;
-    font-weight:800;
-    color:#111;
-    line-height:1.2;
-    letter-spacing:-0.4px;
-    margin-bottom:10px;
-    ">
-    </div>
-
-    <div id="zikrTargetBadge" style="
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    min-width:76px;
-    min-height:34px;
-    padding:0 14px;
-    border-radius:999px;
-    background:#f2f2f7;
-    color:#111;
-    font-size:15px;
-    font-weight:800;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,0.04);
-    ">
-      Target 33
-    </div>
-
-  </div>
-
-  <!-- Hadith -->
-  <div id="zikrHadithText" style="
-  font-size:18px;
-  line-height:1.8;
-  margin-bottom:26px;
-  color:#111;
-  ">
-  </div>
-
-  <!-- Arabic -->
-  <div id="zikrArabicText" style="
-  font-size:42px;
-  font-weight:700;
-  color:#6fa37a;
-  line-height:1.7;
-  margin-bottom:26px;
-  ">
-  </div>
-
-  <!-- Meaning -->
-  <div id="zikrMeaningText" style="
-  font-size:19px;
-  line-height:1.8;
-  margin-bottom:18px;
-  ">
-  </div>
-
-  <!-- Reference -->
-  <div id="zikrRefText" style="
-  margin-top:12px;
-  padding-top:12px;
-  border-top:1px solid #e5e5e5;
-  font-size:14px;
-  color:#666;
-  line-height:1.7;
-  ">
-  </div>
-
-</div>
-<!-- Increase Zikr Tasbih Card -->
-<div onclick="increaseZikrTasbih()" style="
-background:rgba(255,255,255,0.78);
-backdrop-filter:blur(20px);
-border-radius:28px;
-padding:20px 18px 24px 18px;
-margin-top:18px;
-text-align:center;
-cursor:pointer;
-user-select:none;
-min-height:260px;
-display:flex;
-flex-direction:column;
-justify-content:flex-start;
-box-sizing:border-box;
-">
-<div style="
-display:flex;
-justify-content:center;
-margin-bottom:28px;
-">
-
-
-
-</div>
-
-<div id="zikrCountText" style="
-font-size:64px;
-font-weight:700;
-color:#5f946b;
-margin-top:10px;
-margin-bottom:30px;
-letter-spacing:1px;
-">
-0 / 100
-</div>
-
-<div style="
-flex:1;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:22px;
-color:#8a8a8a;
-letter-spacing:1px;
-">
-Tap Anywhere
-</div>
-
-<!-- Reset Zikr Tasbih Button -->
-<button onclick="resetZikrTasbih();event.stopPropagation();" style="
-background:#ff3b30;
-padding:12px 30px;
-border-radius:16px;
-border:none;
-color:white;
-font-size:16px;
-font-weight:700;
-cursor:pointer;
-align-self:center;
-">
-Reset
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
 <!-- =========================
      QIBLA PAGE
 ========================= -->
@@ -3123,1819 +766,6 @@ If the page does not load, Google may be blocking iframe on your device.
 
 </div>
 
-
-
-
-<!-- =========================
-     QAZA TRACKER PAGE
-========================= -->
-<div id="qazaPage" ondblclick="event.preventDefault()" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:92px;
-z-index:10002;
-background:#e9e9ee;
-overflow:auto;
-padding:90px 4% 120px 4%;
-box-sizing:border-box;
-
-/* STOP ZOOM */
-touch-action: manipulation;
--webkit-user-select: none;
-user-select: none;
--webkit-tap-highlight-color: transparent;
-">
-
-
-  <!-- SEGMENT -->
-  <div style="
-  background:#f2f2f7;
-  border-radius:999px;
-  padding:4px;
-  display:flex;
-  gap:4px;
-  margin-bottom:18px;
-  ">
-
-   <button id="qazaPrayerTabBtn" onclick="showQazaPrayerTab()" style="
-flex:1;
-height:44px;
-border:none;
-border-radius:999px;
-background:white;
-font-size:19px;
-font-weight:800;
-letter-spacing:-0.2px;
-">
-  Prayer
-</button>
-
-   <button id="qazaProgressTabBtn" onclick="showQazaProgressTab()" style="
-flex:1;
-height:44px;
-border:none;
-border-radius:999px;
-background:transparent;
-color:#666;
-font-size:19px;
-font-weight:700;
-letter-spacing:-0.2px;
-">
-  Progress
-</button>
-
-  </div>
-
-   <!-- PRAYER TAB -->
-  <div id="qazaPrayerTab" style="display:block;">
-
-       <!-- FAJR CARD -->
-    <div style="
-    background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(250,250,252,0.96) 100%);
-    border-radius:22px;
-    padding:12px 12px 10px 12px;
-    margin-bottom:10px;
-    box-shadow:0 8px 18px rgba(0,0,0,0.05);
-    border:1px solid rgba(255,255,255,0.75);
-    ">
-
-      <!-- FAJR HEADER -->
-      <div style="
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom:8px;
-      ">
-        <div style="
-        font-size:20px;
-        font-weight:800;
-        color:#111;
-        line-height:1.1;
-        ">
-          Fajr
-        </div>
-
-        <div id="fajrLastUpdated" style="
-        font-size:10px;
-        font-weight:700;
-        color:#8a8a8a;
-        line-height:1.25;
-        text-align:right;
-        max-width:42%;
-        ">
-          —
-        </div>
-      </div>
-
-      <!-- FAJR INFO ROW -->
-      <div style="
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:8px;
-      margin-bottom:8px;
-      ">
-
-        <!-- FAJR TOTAL BOX -->
-        <div style="
-        background:#f7f7fa;
-        border-radius:14px;
-        padding:8px 9px;
-        ">
-          <div style="
-          font-size:10px;
-          font-weight:700;
-          color:#888;
-          margin-bottom:4px;
-          line-height:1;
-          ">
-            Total
-          </div>
-
-          <input id="fajrTotalInput" class="qazaTotalInput" type="number" min="0" placeholder="0" style="
-          width:100%;
-          height:28px;
-          border:none;
-          background:transparent;
-          padding:0;
-          margin:0;
-          box-sizing:border-box;
-          font-size:18px;
-          font-weight:800;
-          color:#111;
-          outline:none;
-          ">
-        </div>
-
-        <!-- FAJR REMAINING BOX -->
-        <div style="
-        background:#f7f7fa;
-        border-radius:14px;
-        padding:8px 9px;
-        text-align:right;
-        ">
-          <div style="
-          font-size:10px;
-          font-weight:700;
-          color:#888;
-          margin-bottom:4px;
-          line-height:1;
-          ">
-            Remaining
-          </div>
-
-          <div id="fajrRemaining" style="
-          font-size:18px;
-          font-weight:800;
-          color:#111;
-          line-height:1.1;
-          ">
-            0
-          </div>
-        </div>
-      </div>
-
-      <!-- FAJR MAIN CONTROL BAR -->
-      <div style="
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:0;
-      background:#f3f3f6;
-      border-radius:18px;
-      min-height:52px;
-      padding:0 2px;
-      margin-bottom:8px;
-      ">
-
-     
-<button class="qazaAdjustBtn"
-onclick="handleFajrDecreaseTap()"
-onmousedown="startHoldDecreaseFajr()"
-onmouseup="stopHoldFajr()"
-onmouseleave="stopHoldFajr()"
-ontouchstart="startHoldDecreaseFajr()"
-ontouchend="stopHoldFajr()"
-ontouchcancel="stopHoldFajr()"
-style="
-width:30%;
-min-height:48px;
-border:none;
-background:transparent;
-color:#111;
-font-size:30px;
-font-weight:700;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-border-radius:16px;
--webkit-tap-highlight-color:transparent;
-touch-action:manipulation;
-">
-  −
-</button>
-
-        <div id="fajrPerformed" style="
-        width:40%;
-        min-height:48px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        font-size:22px;
-        font-weight:800;
-        color:#111;
-        line-height:1;
-        ">
-          0
-        </div>
-
-       
-<button class="qazaAdjustBtn"
-onclick="handleFajrIncreaseTap()"
-onmousedown="startHoldIncreaseFajr()"
-onmouseup="stopHoldFajr()"
-onmouseleave="stopHoldFajr()"
-ontouchstart="startHoldIncreaseFajr()"
-ontouchend="stopHoldFajr()"
-ontouchcancel="stopHoldFajr()"
-style="
-width:30%;
-min-height:48px;
-border:none;
-background:transparent;
-color:#111;
-font-size:26px;
-font-weight:800;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-border-radius:16px;
--webkit-tap-highlight-color:transparent;
-touch-action:manipulation;
-">
-  +
-</button>
-      </div>
-
-      <!-- FAJR THIN PROGRESS LINE -->
-     <div style="
-width:100%;
-height:5px;
-background:#6f6f73;
-border-radius:999px;
-overflow:hidden;
-">
-        <div id="fajrProgressFill" style="
-        width:0%;
-        height:100%;
-        background:#34c759;
-        border-radius:999px;
-        transition:width 0.22s ease;
-        "></div>
-      </div>
-
-    </div>
-
-  <!-- DHUHR CARD -->
-<div style="
-background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(250,250,252,0.96) 100%);
-border-radius:22px;
-padding:12px 12px 10px 12px;
-margin-bottom:10px;
-box-shadow:0 8px 18px rgba(0,0,0,0.05);
-border:1px solid rgba(255,255,255,0.75);
-">
-
-  <!-- DHUHR HEADER -->
-  <div style="
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:8px;
-  ">
-    <div style="
-    font-size:20px;
-    font-weight:800;
-    color:#111;
-    line-height:1.1;
-    ">
-      Dhuhr
-    </div>
-
-    <div id="dhuhrLastUpdated" style="
-    font-size:10px;
-    font-weight:700;
-    color:#8a8a8a;
-    line-height:1.25;
-    text-align:right;
-    max-width:42%;
-    ">
-      —
-    </div>
-  </div>
-
-  <!-- DHUHR INFO ROW -->
-  <div style="
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-bottom:8px;
-  ">
-
-    <!-- DHUHR TOTAL BOX -->
-    <div style="
-    background:#f7f7fa;
-    border-radius:14px;
-    padding:8px 9px;
-    ">
-      <div style="
-      font-size:10px;
-      font-weight:700;
-      color:#888;
-      margin-bottom:4px;
-      line-height:1;
-      ">
-        Total
-      </div>
-
-      <input id="dhuhrTotalInput" class="qazaTotalInput" type="number" min="0" placeholder="0" style="
-      width:100%;
-      height:28px;
-      border:none;
-      background:transparent;
-      padding:0;
-      margin:0;
-      box-sizing:border-box;
-      font-size:18px;
-      font-weight:800;
-      color:#111;
-      outline:none;
-      ">
-    </div>
-
-    <!-- DHUHR REMAINING BOX -->
-    <div style="
-    background:#f7f7fa;
-    border-radius:14px;
-    padding:8px 9px;
-    text-align:right;
-    ">
-      <div style="
-      font-size:10px;
-      font-weight:700;
-      color:#888;
-      margin-bottom:4px;
-      line-height:1;
-      ">
-        Remaining
-      </div>
-
-      <div id="dhuhrRemaining" style="
-      font-size:18px;
-      font-weight:800;
-      color:#111;
-      line-height:1.1;
-      ">
-        0
-      </div>
-    </div>
-  </div>
-
-  <!-- DHUHR MAIN CONTROL BAR -->
-  <div style="
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:0;
-  background:#f3f3f6;
-  border-radius:18px;
-  min-height:52px;
-  padding:0 2px;
-  margin-bottom:8px;
-  ">
-
- <button class="qazaAdjustBtn"
-onclick="handleDhuhrDecreaseTap()"
-onmousedown="startHoldDecreaseDhuhr()"
-onmouseup="stopHoldDhuhr()"
-onmouseleave="stopHoldDhuhr()"
-ontouchstart="startHoldDecreaseDhuhr()"
-ontouchend="stopHoldDhuhr()"
-ontouchcancel="stopHoldDhuhr()"
-style="
-width:30%;
-min-height:48px;
-border:none;
-background:transparent;
-color:#111;
-font-size:30px;
-font-weight:700;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-border-radius:16px;
--webkit-tap-highlight-color:transparent;
-touch-action:manipulation;
-">
-  −
-</button>
-
-<div id="dhuhrPerformed" style="
-width:40%;
-min-height:48px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:22px;
-font-weight:800;
-color:#111;
-line-height:1;
-">
-  0
-</div>
-
-<button class="qazaAdjustBtn"
-onclick="handleDhuhrIncreaseTap()"
-onmousedown="startHoldIncreaseDhuhr()"
-onmouseup="stopHoldDhuhr()"
-onmouseleave="stopHoldDhuhr()"
-ontouchstart="startHoldIncreaseDhuhr()"
-ontouchend="stopHoldDhuhr()"
-ontouchcancel="stopHoldDhuhr()"
-style="
-width:30%;
-min-height:48px;
-border:none;
-background:transparent;
-color:#111;
-font-size:26px;
-font-weight:800;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-border-radius:16px;
--webkit-tap-highlight-color:transparent;
-touch-action:manipulation;
-">
-  +
-</button>
-  </div>
-
-  <!-- DHUHR THIN PROGRESS LINE -->
-  <div style="
-width:100%;
-height:5px;
-background:#6f6f73;
-border-radius:999px;
-overflow:hidden;
-">
-    <div id="dhuhrProgressFill" style="
-    width:0%;
-    height:100%;
-    background:#34c759;
-    border-radius:999px;
-    transition:width 0.22s ease;
-    "></div>
-  </div>
-
-</div>
-
-       
-
-<!-- ASR CARD -->
-<div style="
-background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(250,250,252,0.96) 100%);
-border-radius:22px;
-padding:12px 12px 10px 12px;
-margin-bottom:10px;
-box-shadow:0 8px 18px rgba(0,0,0,0.05);
-border:1px solid rgba(255,255,255,0.75);
-">
-
-  <!-- ASR HEADER -->
-  <div style="
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:8px;
-  ">
-    <div style="
-    font-size:20px;
-    font-weight:800;
-    color:#111;
-    line-height:1.1;
-    ">
-      Asr
-    </div>
-
-    <div id="asrLastUpdated" style="
-    font-size:10px;
-    font-weight:700;
-    color:#8a8a8a;
-    line-height:1.25;
-    text-align:right;
-    max-width:42%;
-    ">
-      —
-    </div>
-  </div>
-
-  <!-- ASR INFO ROW -->
-  <div style="
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-bottom:8px;
-  ">
-
-    <!-- ASR TOTAL BOX -->
-    <div style="
-    background:#f7f7fa;
-    border-radius:14px;
-    padding:8px 9px;
-    ">
-      <div style="
-      font-size:10px;
-      font-weight:700;
-      color:#888;
-      margin-bottom:4px;
-      line-height:1;
-      ">
-        Total
-      </div>
-
-      <input id="asrTotalInput" class="qazaTotalInput" type="number" min="0" placeholder="0" style="
-      width:100%;
-      height:28px;
-      border:none;
-      background:transparent;
-      padding:0;
-      margin:0;
-      box-sizing:border-box;
-      font-size:18px;
-      font-weight:800;
-      color:#111;
-      outline:none;
-      ">
-    </div>
-
-    <!-- ASR REMAINING BOX -->
-    <div style="
-    background:#f7f7fa;
-    border-radius:14px;
-    padding:8px 9px;
-    text-align:right;
-    ">
-      <div style="
-      font-size:10px;
-      font-weight:700;
-      color:#888;
-      margin-bottom:4px;
-      line-height:1;
-      ">
-        Remaining
-      </div>
-
-      <div id="asrRemaining" style="
-      font-size:18px;
-      font-weight:800;
-      color:#111;
-      line-height:1.1;
-      ">
-        0
-      </div>
-    </div>
-  </div>
-
-  <!-- ASR MAIN CONTROL BAR -->
-  <div style="
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:0;
-  background:#f3f3f6;
-  border-radius:18px;
-  min-height:52px;
-  padding:0 2px;
-  margin-bottom:8px;
-  ">
-
-   <button class="qazaAdjustBtn"
-onclick="handleAsrDecreaseTap()"
-onmousedown="startHoldDecreaseAsr()"
-onmouseup="stopHoldAsr()"
-onmouseleave="stopHoldAsr()"
-ontouchstart="startHoldDecreaseAsr()"
-ontouchend="stopHoldAsr()"
-ontouchcancel="stopHoldAsr()"
-style="
-width:30%;
-min-height:48px;
-border:none;
-background:transparent;
-color:#111;
-font-size:30px;
-font-weight:700;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-border-radius:16px;
--webkit-tap-highlight-color:transparent;
-touch-action:manipulation;
-">
-  −
-</button>
-
-    <div id="asrPerformed" style="
-    width:40%;
-    min-height:48px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:22px;
-    font-weight:800;
-    color:#111;
-    line-height:1;
-    ">
-      0
-    </div>
-
-   <button class="qazaAdjustBtn"
-onclick="handleAsrIncreaseTap()"
-onmousedown="startHoldIncreaseAsr()"
-onmouseup="stopHoldAsr()"
-onmouseleave="stopHoldAsr()"
-ontouchstart="startHoldIncreaseAsr()"
-ontouchend="stopHoldAsr()"
-ontouchcancel="stopHoldAsr()"
-style="
-width:30%;
-min-height:48px;
-border:none;
-background:transparent;
-color:#111;
-font-size:26px;
-font-weight:800;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-border-radius:16px;
--webkit-tap-highlight-color:transparent;
-touch-action:manipulation;
-">
-  +
-</button>
-  </div>
-
-  <!-- ASR THIN PROGRESS LINE -->
-  <div style="
-width:100%;
-height:5px;
-background:#6f6f73;
-border-radius:999px;
-overflow:hidden;
-">
-    <div id="asrProgressFill" style="
-    width:0%;
-    height:100%;
-    background:#34c759;
-    border-radius:999px;
-    transition:width 0.22s ease;
-    "></div>
-  </div>
-
-</div>
-
-<!-- MAGHRIB CARD -->
-<div style="
-background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(250,250,252,0.96) 100%);
-border-radius:22px;
-padding:12px 12px 10px 12px;
-margin-bottom:10px;
-box-shadow:0 8px 18px rgba(0,0,0,0.05);
-border:1px solid rgba(255,255,255,0.75);
-">
-
-  <!-- MAGHRIB HEADER -->
-  <div style="
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:8px;
-  ">
-    <div style="
-    font-size:20px;
-    font-weight:800;
-    color:#111;
-    line-height:1.1;
-    ">
-      Maghrib
-    </div>
-
-    <div id="maghribLastUpdated" style="
-    font-size:10px;
-    font-weight:700;
-    color:#8a8a8a;
-    line-height:1.25;
-    text-align:right;
-    max-width:42%;
-    ">
-      —
-    </div>
-  </div>
-
-  <!-- MAGHRIB INFO ROW -->
-  <div style="
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-bottom:8px;
-  ">
-
-    <!-- MAGHRIB TOTAL BOX -->
-    <div style="
-    background:#f7f7fa;
-    border-radius:14px;
-    padding:8px 9px;
-    ">
-      <div style="
-      font-size:10px;
-      font-weight:700;
-      color:#888;
-      margin-bottom:4px;
-      line-height:1;
-      ">
-        Total
-      </div>
-
-      <input id="maghribTotalInput" class="qazaTotalInput" type="number" min="0" placeholder="0" style="
-      width:100%;
-      height:28px;
-      border:none;
-      background:transparent;
-      padding:0;
-      margin:0;
-      box-sizing:border-box;
-      font-size:18px;
-      font-weight:800;
-      color:#111;
-      outline:none;
-      ">
-    </div>
-
-    <!-- MAGHRIB REMAINING BOX -->
-    <div style="
-    background:#f7f7fa;
-    border-radius:14px;
-    padding:8px 9px;
-    text-align:right;
-    ">
-      <div style="
-      font-size:10px;
-      font-weight:700;
-      color:#888;
-      margin-bottom:4px;
-      line-height:1;
-      ">
-        Remaining
-      </div>
-
-      <div id="maghribRemaining" style="
-      font-size:18px;
-      font-weight:800;
-      color:#111;
-      line-height:1.1;
-      ">
-        0
-      </div>
-    </div>
-  </div>
-
-  <!-- MAGHRIB MAIN CONTROL BAR -->
-  <div style="
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:0;
-  background:#f3f3f6;
-  border-radius:18px;
-  min-height:52px;
-  padding:0 2px;
-  margin-bottom:8px;
-  ">
-
-   <button class="qazaAdjustBtn"
-onclick="handleMaghribDecreaseTap()"
-onmousedown="startHoldDecreaseMaghrib()"
-onmouseup="stopHoldMaghrib()"
-onmouseleave="stopHoldMaghrib()"
-ontouchstart="startHoldDecreaseMaghrib()"
-ontouchend="stopHoldMaghrib()"
-ontouchcancel="stopHoldMaghrib()"
-style="
-width:30%;
-min-height:48px;
-border:none;
-background:transparent;
-color:#111;
-font-size:30px;
-font-weight:700;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-border-radius:16px;
--webkit-tap-highlight-color:transparent;
-touch-action:manipulation;
-">
-  −
-</button>
-
-    <div id="maghribPerformed" style="
-    width:40%;
-    min-height:48px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:22px;
-    font-weight:800;
-    color:#111;
-    line-height:1;
-    ">
-      0
-    </div>
-
- <button class="qazaAdjustBtn"
-onclick="handleMaghribIncreaseTap()"
-onmousedown="startHoldIncreaseMaghrib()"
-onmouseup="stopHoldMaghrib()"
-onmouseleave="stopHoldMaghrib()"
-ontouchstart="startHoldIncreaseMaghrib()"
-ontouchend="stopHoldMaghrib()"
-ontouchcancel="stopHoldMaghrib()"
-style="
-width:30%;
-min-height:48px;
-border:none;
-background:transparent;
-color:#111;
-font-size:26px;
-font-weight:800;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-border-radius:16px;
--webkit-tap-highlight-color:transparent;
-touch-action:manipulation;
-">
-  +
-</button>
-  </div>
-
-  <!-- MAGHRIB THIN PROGRESS LINE -->
-  <div style="
-width:100%;
-height:5px;
-background:#6f6f73;
-border-radius:999px;
-overflow:hidden;
-">
-    <div id="maghribProgressFill" style="
-    width:0%;
-    height:100%;
-    background:#34c759;
-    border-radius:999px;
-    transition:width 0.22s ease;
-    "></div>
-  </div>
-
-</div>
-
-<!-- ISHA CARD -->
-<div style="
-background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(250,250,252,0.96) 100%);
-border-radius:22px;
-padding:12px 12px 10px 12px;
-margin-bottom:10px;
-box-shadow:0 8px 18px rgba(0,0,0,0.05);
-border:1px solid rgba(255,255,255,0.75);
-">
-
-  <!-- ISHA HEADER -->
-  <div style="
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:8px;
-  ">
-    <div style="
-    font-size:20px;
-    font-weight:800;
-    color:#111;
-    line-height:1.1;
-    ">
-      Isha
-    </div>
-
-    <div id="ishaLastUpdated" style="
-    font-size:10px;
-    font-weight:700;
-    color:#8a8a8a;
-    line-height:1.25;
-    text-align:right;
-    max-width:42%;
-    ">
-      —
-    </div>
-  </div>
-
-  <!-- ISHA INFO ROW -->
-  <div style="
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-bottom:8px;
-  ">
-
-    <!-- ISHA TOTAL BOX -->
-    <div style="
-    background:#f7f7fa;
-    border-radius:14px;
-    padding:8px 9px;
-    ">
-      <div style="
-      font-size:10px;
-      font-weight:700;
-      color:#888;
-      margin-bottom:4px;
-      line-height:1;
-      ">
-        Total
-      </div>
-
-      <input id="ishaTotalInput" class="qazaTotalInput" type="number" min="0" placeholder="0" style="
-      width:100%;
-      height:28px;
-      border:none;
-      background:transparent;
-      padding:0;
-      margin:0;
-      box-sizing:border-box;
-      font-size:18px;
-      font-weight:800;
-      color:#111;
-      outline:none;
-      ">
-    </div>
-
-    <!-- ISHA REMAINING BOX -->
-    <div style="
-    background:#f7f7fa;
-    border-radius:14px;
-    padding:8px 9px;
-    text-align:right;
-    ">
-      <div style="
-      font-size:10px;
-      font-weight:700;
-      color:#888;
-      margin-bottom:4px;
-      line-height:1;
-      ">
-        Remaining
-      </div>
-
-      <div id="ishaRemaining" style="
-      font-size:18px;
-      font-weight:800;
-      color:#111;
-      line-height:1.1;
-      ">
-        0
-      </div>
-    </div>
-  </div>
-
-  <!-- ISHA MAIN CONTROL BAR -->
-  <div style="
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:0;
-  background:#f3f3f6;
-  border-radius:18px;
-  min-height:52px;
-  padding:0 2px;
-  margin-bottom:8px;
-  ">
-
-  <button class="qazaAdjustBtn"
-onclick="handleIshaDecreaseTap()"
-onmousedown="startHoldDecreaseIsha()"
-onmouseup="stopHoldIsha()"
-onmouseleave="stopHoldIsha()"
-ontouchstart="startHoldDecreaseIsha()"
-ontouchend="stopHoldIsha()"
-ontouchcancel="stopHoldIsha()"
-style="
-width:30%;
-min-height:48px;
-border:none;
-background:transparent;
-color:#111;
-font-size:30px;
-font-weight:700;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-border-radius:16px;
--webkit-tap-highlight-color:transparent;
-touch-action:manipulation;
-">
-  −
-</button>
-
-    <div id="ishaPerformed" style="
-    width:40%;
-    min-height:48px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:22px;
-    font-weight:800;
-    color:#111;
-    line-height:1;
-    ">
-      0
-    </div>
-
-   <button class="qazaAdjustBtn"
-onclick="handleIshaIncreaseTap()"
-onmousedown="startHoldIncreaseIsha()"
-onmouseup="stopHoldIsha()"
-onmouseleave="stopHoldIsha()"
-ontouchstart="startHoldIncreaseIsha()"
-ontouchend="stopHoldIsha()"
-ontouchcancel="stopHoldIsha()"
-style="
-width:30%;
-min-height:48px;
-border:none;
-background:transparent;
-color:#111;
-font-size:26px;
-font-weight:800;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-border-radius:16px;
--webkit-tap-highlight-color:transparent;
-touch-action:manipulation;
-">
-  +
-</button>
-  </div>
-
-  <!-- ISHA THIN PROGRESS LINE -->
-  <div style="
-width:100%;
-height:5px;
-background:#6f6f73;
-border-radius:999px;
-overflow:hidden;
-">
-    <div id="ishaProgressFill" style="
-    width:0%;
-    height:100%;
-    background:#34c759;
-    border-radius:999px;
-    transition:width 0.22s ease;
-    "></div>
-  </div>
-
-</div>
-
-<!-- WITR CARD -->
-<div style="
-background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(250,250,252,0.96) 100%);
-border-radius:22px;
-padding:12px 12px 10px 12px;
-margin-bottom:10px;
-box-shadow:0 8px 18px rgba(0,0,0,0.05);
-border:1px solid rgba(255,255,255,0.75);
-">
-
-  <!-- WITR HEADER -->
-  <div style="
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:8px;
-  ">
-    <div style="
-    font-size:20px;
-    font-weight:800;
-    color:#111;
-    line-height:1.1;
-    ">
-      Witr
-    </div>
-
-    <div id="witrLastUpdated" style="
-    font-size:10px;
-    font-weight:700;
-    color:#8a8a8a;
-    line-height:1.25;
-    text-align:right;
-    max-width:42%;
-    ">
-      —
-    </div>
-  </div>
-
-  <!-- WITR INFO ROW -->
-  <div style="
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-bottom:8px;
-  ">
-
-    <!-- WITR TOTAL BOX -->
-    <div style="
-    background:#f7f7fa;
-    border-radius:14px;
-    padding:8px 9px;
-    ">
-      <div style="
-      font-size:10px;
-      font-weight:700;
-      color:#888;
-      margin-bottom:4px;
-      line-height:1;
-      ">
-        Total
-      </div>
-
-      <input id="witrTotalInput" class="qazaTotalInput" type="number" min="0" placeholder="0" style="
-      width:100%;
-      height:28px;
-      border:none;
-      background:transparent;
-      padding:0;
-      margin:0;
-      box-sizing:border-box;
-      font-size:18px;
-      font-weight:800;
-      color:#111;
-      outline:none;
-      ">
-    </div>
-
-    <!-- WITR REMAINING BOX -->
-    <div style="
-    background:#f7f7fa;
-    border-radius:14px;
-    padding:8px 9px;
-    text-align:right;
-    ">
-      <div style="
-      font-size:10px;
-      font-weight:700;
-      color:#888;
-      margin-bottom:4px;
-      line-height:1;
-      ">
-        Remaining
-      </div>
-
-      <div id="witrRemaining" style="
-      font-size:18px;
-      font-weight:800;
-      color:#111;
-      line-height:1.1;
-      ">
-        0
-      </div>
-    </div>
-  </div>
-
-  <!-- WITR MAIN CONTROL BAR -->
-  <div style="
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:0;
-  background:#f3f3f6;
-  border-radius:18px;
-  min-height:52px;
-  padding:0 2px;
-  margin-bottom:8px;
-  ">
-
- <button class="qazaAdjustBtn"
-onclick="handleWitrDecreaseTap()"
-onmousedown="startHoldDecreaseWitr()"
-onmouseup="stopHoldWitr()"
-onmouseleave="stopHoldWitr()"
-ontouchstart="startHoldDecreaseWitr()"
-ontouchend="stopHoldWitr()"
-ontouchcancel="stopHoldWitr()"
-style="
-width:30%;
-min-height:48px;
-border:none;
-background:transparent;
-color:#111;
-font-size:30px;
-font-weight:700;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-border-radius:16px;
--webkit-tap-highlight-color:transparent;
-touch-action:manipulation;
-">
-  −
-</button>
-
-    <div id="witrPerformed" style="
-    width:40%;
-    min-height:48px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:22px;
-    font-weight:800;
-    color:#111;
-    line-height:1;
-    ">
-      0
-    </div>
-
- <button class="qazaAdjustBtn"
-onclick="handleWitrIncreaseTap()"
-onmousedown="startHoldIncreaseWitr()"
-onmouseup="stopHoldWitr()"
-onmouseleave="stopHoldWitr()"
-ontouchstart="startHoldIncreaseWitr()"
-ontouchend="stopHoldWitr()"
-ontouchcancel="stopHoldWitr()"
-style="
-width:30%;
-min-height:48px;
-border:none;
-background:transparent;
-color:#111;
-font-size:26px;
-font-weight:800;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-border-radius:16px;
--webkit-tap-highlight-color:transparent;
-touch-action:manipulation;
-">
-  +
-</button>
-  </div>
-
-  <!-- WITR THIN PROGRESS LINE -->
-  <div style="
-width:100%;
-height:5px;
-background:#6f6f73;
-border-radius:999px;
-overflow:hidden;
-">
-    <div id="witrProgressFill" style="
-    width:0%;
-    height:100%;
-    background:#34c759;
-    border-radius:999px;
-    transition:width 0.22s ease;
-    "></div>
-  </div>
-
-</div>
-
-
-
-
-
-
-
-       
-
-
-  </div>
-
-
-
-     
-  <!-- PROGRESS TAB -->
-  <div id="qazaProgressTab" style="display:none;">
-
-    <!-- OVERALL PROGRESS CARD -->
-    <div style="
-    background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(250,250,252,0.96) 100%);
-    border-radius:30px;
-    padding:20px;
-    margin-bottom:16px;
-    box-shadow:0 10px 24px rgba(0,0,0,0.06);
-    border:1px solid rgba(255,255,255,0.75);
-    ">
-
-      <div style="
-      font-size:20px;
-      font-weight:800;
-      color:#111;
-      margin-bottom:16px;
-      ">
-        Overall Progress
-      </div>
-
-      <div style="
-      display:flex;
-      align-items:center;
-      gap:16px;
-      ">
-
-        <!-- OVERALL BIG RING -->
-        <div id="qazaOverallRing" style="
-        width:120px;
-        height:120px;
-        border-radius:50%;
-        flex-shrink:0;
-        background:conic-gradient(#34c759 0deg, #34c759 0deg, #e9e9ee 0deg, #e9e9ee 360deg);
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        box-shadow:inset 0 0 0 1px rgba(0,0,0,0.03);
-        ">
-          <div style="
-          width:88px;
-          height:88px;
-          border-radius:50%;
-          background:white;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          flex-direction:column;
-          ">
-            <div id="qazaOverallPercentText" style="
-            font-size:24px;
-            font-weight:800;
-            color:#111;
-            line-height:1;
-            ">
-              0%
-            </div>
-          </div>
-        </div>
-
-        <!-- OVERALL STATS -->
-        <div style="flex:1;min-width:0;">
-
-          <div style="
-          font-size:13px;
-          font-weight:700;
-          color:#888;
-          margin-bottom:4px;
-          ">
-            Completed
-          </div>
-
-          <div id="qazaOverallDoneText" style="
-          font-size:30px;
-          font-weight:800;
-          color:#111;
-          line-height:1.1;
-          margin-bottom:14px;
-          ">
-            0
-          </div>
-
-          <div style="
-          font-size:13px;
-          font-weight:700;
-          color:#888;
-          margin-bottom:4px;
-          ">
-            Total Qaza
-          </div>
-
-          <div id="qazaOverallTotalText" style="
-          font-size:22px;
-          font-weight:800;
-          color:#111;
-          line-height:1.1;
-          margin-bottom:14px;
-          ">
-            0
-          </div>
-
-          <div style="
-          font-size:13px;
-          font-weight:700;
-          color:#888;
-          margin-bottom:4px;
-          ">
-            Remaining
-          </div>
-
-          <div id="qazaOverallRemainingText" style="
-          font-size:22px;
-          font-weight:800;
-          color:#34c759;
-          line-height:1.1;
-          ">
-            0
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- PRAYER RINGS GRID CARD -->
-    <div style="
-    background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(250,250,252,0.96) 100%);
-    border-radius:30px;
-    padding:20px;
-    margin-bottom:16px;
-    box-shadow:0 10px 24px rgba(0,0,0,0.06);
-    border:1px solid rgba(255,255,255,0.75);
-    ">
-
-      <div style="
-      font-size:20px;
-      font-weight:800;
-      color:#111;
-      margin-bottom:18px;
-      ">
-        Salah Progress
-      </div>
-
-      <div style="
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:18px 12px;
-      ">
-
-        <!-- FAJR -->
-        <div style="text-align:center;">
-          <div style="font-size:16px;font-weight:800;color:#111;margin-bottom:10px;">Fajr</div>
-          <div id="qazaMiniRing-fajr" style="
-          width:76px;height:76px;border-radius:50%;margin:0 auto 8px auto;
-          background:conic-gradient(#34c759 0deg, #34c759 0deg, #e9e9ee 0deg, #e9e9ee 360deg);
-          display:flex;align-items:center;justify-content:center;
-          ">
-            <div style="
-            width:54px;height:54px;border-radius:50%;background:white;
-            display:flex;align-items:center;justify-content:center;
-            font-size:16px;font-weight:800;color:#111;
-            ">
-              <span id="qazaMiniPercent-fajr">0%</span>
-            </div>
-          </div>
-          <div id="qazaMiniText-fajr" style="font-size:12px;font-weight:700;color:#777;">0 / 0</div>
-        </div>
-
-        <!-- DHUHR -->
-        <div style="text-align:center;">
-          <div style="font-size:16px;font-weight:800;color:#111;margin-bottom:10px;">Dhuhr</div>
-          <div id="qazaMiniRing-dhuhr" style="
-          width:76px;height:76px;border-radius:50%;margin:0 auto 8px auto;
-          background:conic-gradient(#34c759 0deg, #34c759 0deg, #e9e9ee 0deg, #e9e9ee 360deg);
-          display:flex;align-items:center;justify-content:center;
-          ">
-            <div style="
-            width:54px;height:54px;border-radius:50%;background:white;
-            display:flex;align-items:center;justify-content:center;
-            font-size:16px;font-weight:800;color:#111;
-            ">
-              <span id="qazaMiniPercent-dhuhr">0%</span>
-            </div>
-          </div>
-          <div id="qazaMiniText-dhuhr" style="font-size:12px;font-weight:700;color:#777;">0 / 0</div>
-        </div>
-
-        <!-- ASR -->
-        <div style="text-align:center;">
-          <div style="font-size:16px;font-weight:800;color:#111;margin-bottom:10px;">Asr</div>
-          <div id="qazaMiniRing-asr" style="
-          width:76px;height:76px;border-radius:50%;margin:0 auto 8px auto;
-          background:conic-gradient(#34c759 0deg, #34c759 0deg, #e9e9ee 0deg, #e9e9ee 360deg);
-          display:flex;align-items:center;justify-content:center;
-          ">
-            <div style="
-            width:54px;height:54px;border-radius:50%;background:white;
-            display:flex;align-items:center;justify-content:center;
-            font-size:16px;font-weight:800;color:#111;
-            ">
-              <span id="qazaMiniPercent-asr">0%</span>
-            </div>
-          </div>
-          <div id="qazaMiniText-asr" style="font-size:12px;font-weight:700;color:#777;">0 / 0</div>
-        </div>
-
-        <!-- MAGHRIB -->
-        <div style="text-align:center;">
-          <div style="font-size:16px;font-weight:800;color:#111;margin-bottom:10px;">Maghrib</div>
-          <div id="qazaMiniRing-maghrib" style="
-          width:76px;height:76px;border-radius:50%;margin:0 auto 8px auto;
-          background:conic-gradient(#34c759 0deg, #34c759 0deg, #e9e9ee 0deg, #e9e9ee 360deg);
-          display:flex;align-items:center;justify-content:center;
-          ">
-            <div style="
-            width:54px;height:54px;border-radius:50%;background:white;
-            display:flex;align-items:center;justify-content:center;
-            font-size:16px;font-weight:800;color:#111;
-            ">
-              <span id="qazaMiniPercent-maghrib">0%</span>
-            </div>
-          </div>
-          <div id="qazaMiniText-maghrib" style="font-size:12px;font-weight:700;color:#777;">0 / 0</div>
-        </div>
-
-        <!-- ISHA -->
-        <div style="text-align:center;">
-          <div style="font-size:16px;font-weight:800;color:#111;margin-bottom:10px;">Isha</div>
-          <div id="qazaMiniRing-isha" style="
-          width:76px;height:76px;border-radius:50%;margin:0 auto 8px auto;
-          background:conic-gradient(#34c759 0deg, #34c759 0deg, #e9e9ee 0deg, #e9e9ee 360deg);
-          display:flex;align-items:center;justify-content:center;
-          ">
-            <div style="
-            width:54px;height:54px;border-radius:50%;background:white;
-            display:flex;align-items:center;justify-content:center;
-            font-size:16px;font-weight:800;color:#111;
-            ">
-              <span id="qazaMiniPercent-isha">0%</span>
-            </div>
-          </div>
-          <div id="qazaMiniText-isha" style="font-size:12px;font-weight:700;color:#777;">0 / 0</div>
-        </div>
-
-        <!-- WITR -->
-        <div style="text-align:center;">
-          <div style="font-size:16px;font-weight:800;color:#111;margin-bottom:10px;">Witr</div>
-          <div id="qazaMiniRing-witr" style="
-          width:76px;height:76px;border-radius:50%;margin:0 auto 8px auto;
-          background:conic-gradient(#34c759 0deg, #34c759 0deg, #e9e9ee 0deg, #e9e9ee 360deg);
-          display:flex;align-items:center;justify-content:center;
-          ">
-            <div style="
-            width:54px;height:54px;border-radius:50%;background:white;
-            display:flex;align-items:center;justify-content:center;
-            font-size:16px;font-weight:800;color:#111;
-            ">
-              <span id="qazaMiniPercent-witr">0%</span>
-            </div>
-          </div>
-          <div id="qazaMiniText-witr" style="font-size:12px;font-weight:700;color:#777;">0 / 0</div>
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- DAILY GOAL CARD -->
-    <div style="
-    background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(250,250,252,0.96) 100%);
-    border-radius:30px;
-    padding:20px;
-    box-shadow:0 10px 24px rgba(0,0,0,0.06);
-    border:1px solid rgba(255,255,255,0.75);
-    ">
-
-      <div style="
-      font-size:20px;
-      font-weight:800;
-      color:#111;
-      margin-bottom:16px;
-      ">
-        Daily Goal
-      </div>
-
-      <div style="
-      display:flex;
-      align-items:center;
-      gap:14px;
-      margin-bottom:16px;
-      ">
-
-        <div style="
-        min-width:60px;
-        text-align:center;
-        ">
-          <div id="qazaGoalPerDayText" style="
-          font-size:40px;
-          font-weight:800;
-          color:#111;
-          line-height:1;
-          ">
-            1
-          </div>
-          <div style="
-          font-size:12px;
-          font-weight:700;
-          color:#777;
-          margin-top:6px;
-          ">
-            per day
-          </div>
-        </div>
-
-        <div style="
-        flex:1;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        gap:10px;
-        background:#f3f3f6;
-        border-radius:22px;
-        padding:12px;
-        ">
-
-          <button onclick="decreaseQazaGoalPerDay()" style="
-          width:42px;
-          height:42px;
-          border:none;
-          border-radius:14px;
-          background:white;
-          color:#111;
-          font-size:28px;
-          font-weight:700;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          cursor:pointer;
-          ">
-            −
-          </button>
-
-          <div style="
-          width:1px;
-          align-self:stretch;
-          background:rgba(0,0,0,0.08);
-          "></div>
-
-          <button onclick="increaseQazaGoalPerDay()" style="
-          width:42px;
-          height:42px;
-          border:none;
-          border-radius:14px;
-          background:#111;
-          color:white;
-          font-size:24px;
-          font-weight:800;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          cursor:pointer;
-          ">
-            +
-          </button>
-
-        </div>
-
-      </div>
-
-      <div id="qazaGoalEstimateText" style="
-      font-size:22px;
-      font-weight:800;
-      line-height:1.4;
-      color:#34c759;
-      ">
-        All qaza prayers will be completed in 0 days
-      </div>
-
-    </div>
-
-  </div>
-
-  <!-- =========================
-       QAZA LOCK REQUIRED POPUP
-  ========================= -->
-  <div id="qazaLockRequiredPopup" onclick="closeQazaLockRequiredPopup()" style="
-  display:none;
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  background:rgba(0,0,0,0.35);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-  z-index:10050;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  box-sizing:border-box;
-  ">
-
-    <div onclick="event.stopPropagation()" style="
-    width:100%;
-    max-width:340px;
-    background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,248,250,0.96) 100%);
-    border-radius:30px;
-    padding:24px 20px 18px 20px;
-    box-shadow:0 22px 50px rgba(0,0,0,0.20);
-    border:1px solid rgba(255,255,255,0.7);
-    text-align:center;
-    ">
-
-      <div style="
-      width:58px;
-      height:58px;
-      border-radius:50%;
-      background:#f2f2f7;
-      color:#111;
-      font-size:28px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      margin:0 auto 14px auto;
-      ">
-        🔒
-      </div>
-
-      <div style="
-      font-size:22px;
-      font-weight:800;
-      color:#111;
-      margin-bottom:8px;
-      letter-spacing:-0.3px;
-      ">
-        Unlock first
-      </div>
-
-      <div style="
-      font-size:15px;
-      line-height:1.6;
-      color:#666;
-      margin-bottom:18px;
-      ">
-        Unlock first to edit Qaza totals
-      </div>
-
-      <button onclick="unlockQazaEditingFromPopup()" style="
-      width:100%;
-      border:none;
-      border-radius:18px;
-      padding:16px;
-      margin-bottom:10px;
-      background:#111;
-      color:white;
-      font-size:18px;
-      font-weight:800;
-      cursor:pointer;
-      ">
-        Unlock Editing
-      </button>
-
-      <button onclick="closeQazaLockRequiredPopup()" style="
-      width:100%;
-      border:none;
-      border-radius:18px;
-      padding:14px;
-      background:#f2f2f7;
-      color:#666;
-      font-size:17px;
-      font-weight:700;
-      cursor:pointer;
-      ">
-        Cancel
-      </button>
-
-    </div>
-  </div>
-
-
-     
-</div>
 
 
 
@@ -9970,17 +5800,48 @@ function getDefaultPage(){
 // OPEN SELECTED DEFAULT PAGE
 // =========================
 function openSelectedDefaultPage(){
+
+  // FIRST CHECK: Did user come back from a folder page like Qaza, Dua, Dhikr, or Tasbih?
+  let folderReturnPage = localStorage.getItem("ibadahFolderReturnPage");
+
+  if(folderReturnPage){
+
+    localStorage.removeItem("ibadahFolderReturnPage");
+
+    if(folderReturnPage === "more" && typeof openMorePage === "function"){
+      openMorePage();
+      return;
+    }
+
+    if(folderReturnPage === "home" && typeof openHomePage === "function"){
+      openHomePage();
+      return;
+    }
+
+    if(folderReturnPage === "tracker" && typeof openTrackerPage === "function"){
+      openTrackerPage();
+      return;
+    }
+
+    if(folderReturnPage === "salah" && typeof openSalahPage === "function"){
+      openSalahPage();
+      return;
+    }
+  }
+
+  // NORMAL STARTUP: open your selected default page
   let defaultPage = getDefaultPage();
 
   if(defaultPage === "salah"){
     openSalahPage();
   }else if(defaultPage === "tasbih"){
-    openTasbihPage();
+    openTasbihPageFromHome();
   }else if(defaultPage === "home"){
     openHomePage();
   }else{
     openTrackerPage();
   }
+
 }
 
 // =========================
@@ -9994,7 +5855,7 @@ if(defaultPage === "salah"){
   openSalahPage();
 }
 else if(defaultPage === "tasbih"){
-  openTasbihPage();
+  openTasbihPageFromHome();
 }
 else if(defaultPage === "home"){
   openHomePage();
@@ -10004,8 +5865,6 @@ else{
 }
 
 }
-
-
 
   
 // =========================
@@ -12501,6 +8360,176 @@ setAppTopBarTitle("");
 
 
 // =========================
+// OPEN QAZA PAGE
+// =========================
+function openQazaPage(){
+
+hideAllAppPages();
+
+let qazaPage = document.getElementById("qazaPage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+
+if(qazaPage) qazaPage.style.display = "block";
+if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+
+setBottomNavVisibility(true);
+setMainMenuHandleVisibility(false);
+
+setAppTopBarVisibility(true);
+setAppTopBarTitle("Qaza Tracker");
+setAppTopBarBackButton(true, function(){
+  closeQazaPage();
+});
+setAppTopBarRightButton(true, "🔒", function(){
+  toggleQazaLockState();
+});
+
+showQazaPrayerTab();
+loadFajrData();
+loadDhuhrData();
+loadAsrData();
+loadMaghribData();
+loadIshaData();
+loadWitrData();
+updateQazaProgressTabUI();
+updateQazaLockButtonUI();
+
+window.scrollTo(0,0);
+
+}
+
+// =========================
+// AUTO LOCK WHEN QAZA PAGE HIDES
+// =========================
+function autoLockQazaIfHidden(){
+
+  let qazaPage = document.getElementById("qazaPage");
+
+  if(qazaPage && qazaPage.style.display !== "block"){
+    setQazaLockState(true);
+  }
+}
+
+// =========================
+// CLOSE QAZA PAGE
+// =========================
+function closeQazaPage(){
+
+// 🔒 AUTO LOCK WHEN LEAVING QAZA PAGE
+setQazaLockState(true);
+
+let qazaPage = document.getElementById("qazaPage");
+let homePage = document.getElementById("homePage");
+let trackerPage = document.getElementById("trackerPage");
+let salahPage = document.getElementById("salahPage");
+let morePage = document.getElementById("morePage");
+let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+
+if(qazaPage) qazaPage.style.display = "none";
+
+setAppTopBarVisibility(false);
+setAppTopBarBackButton(false, null);
+setAppTopBarRightButton(false, "", null);
+
+if(homePage) homePage.style.display = "none";
+if(trackerPage) trackerPage.style.display = "none";
+if(salahPage) salahPage.style.display = "none";
+if(morePage) morePage.style.display = "none";
+
+if(lastMainTab === "home"){
+
+  if(homePage) homePage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+  setMainMenuHandleVisibility(true);
+
+}else if(lastMainTab === "more"){
+
+  if(morePage) morePage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+  setMainMenuHandleVisibility(false);
+
+}else if(lastMainTab === "salah"){
+
+  if(salahPage) salahPage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
+  setMainMenuHandleVisibility(true);
+
+}else{
+
+  if(trackerPage) trackerPage.style.display = "block";
+  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
+  setMainMenuHandleVisibility(true);
+  lastMainTab = "tracker";
+
+}
+
+setBottomNavVisibility(true);
+
+window.scrollTo(0,0);
+
+}
+
+// =========================
+// SHOW QAZA PRAYER TAB
+// =========================
+function showQazaPrayerTab(){
+
+  let prayerTab = document.getElementById("qazaPrayerTab");
+  let progressTab = document.getElementById("qazaProgressTab");
+  let prayerBtn = document.getElementById("qazaPrayerTabBtn");
+  let progressBtn = document.getElementById("qazaProgressTabBtn");
+
+  if(prayerTab) prayerTab.style.display = "block";
+  if(progressTab) progressTab.style.display = "none";
+
+  if(prayerBtn){
+    prayerBtn.style.background = "white";
+    prayerBtn.style.color = "#111";
+    prayerBtn.style.fontWeight = "800";
+    prayerBtn.style.boxShadow = "0 3px 8px rgba(0,0,0,0.06)";
+  }
+
+  if(progressBtn){
+    progressBtn.style.background = "transparent";
+    progressBtn.style.color = "#666";
+    progressBtn.style.fontWeight = "700";
+    progressBtn.style.boxShadow = "none";
+  }
+}
+
+// =========================
+// SHOW QAZA PROGRESS TAB
+// =========================
+function showQazaProgressTab(){
+
+  let prayerTab = document.getElementById("qazaPrayerTab");
+  let progressTab = document.getElementById("qazaProgressTab");
+  let prayerBtn = document.getElementById("qazaPrayerTabBtn");
+  let progressBtn = document.getElementById("qazaProgressTabBtn");
+
+  if(prayerTab) prayerTab.style.display = "none";
+  if(progressTab) progressTab.style.display = "block";
+
+  if(prayerBtn){
+    prayerBtn.style.background = "transparent";
+    prayerBtn.style.color = "#666";
+    prayerBtn.style.fontWeight = "700";
+    prayerBtn.style.boxShadow = "none";
+  }
+
+  if(progressBtn){
+    progressBtn.style.background = "white";
+    progressBtn.style.color = "#111";
+    progressBtn.style.fontWeight = "800";
+    progressBtn.style.boxShadow = "0 3px 8px rgba(0,0,0,0.06)";
+  }
+}
+     
+
+
+     
+
+// =========================
 // GET QAZA LOCK STATE
 // =========================
 function getQazaLockState(){
@@ -12686,178 +8715,82 @@ document.addEventListener("click", function(e){
 
 }, true);
 
-     
 
 // =========================
-// OPEN QAZA PAGE
+// OPEN TASBIH PAGE FROM FOLDER
 // =========================
-function openQazaPage(){
+function openTasbihPageFromFolder(fromPage){
 
-hideAllAppPages();
+  if(!fromPage){
+    fromPage = "home";
+  }
 
-let qazaPage = document.getElementById("qazaPage");
-let floatingMenuBtn = document.getElementById("floatingMenuBtn");
+  localStorage.setItem("tasbihReturnPage", fromPage);
 
-if(qazaPage) qazaPage.style.display = "block";
-if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-
-setBottomNavVisibility(true);
-setMainMenuHandleVisibility(false);
-
-setAppTopBarVisibility(true);
-setAppTopBarTitle("Qaza Tracker");
-setAppTopBarBackButton(true, function(){
-  closeQazaPage();
-});
-setAppTopBarRightButton(true, "🔒", function(){
-  toggleQazaLockState();
-});
-
-showQazaPrayerTab();
-loadFajrData();
-loadDhuhrData();
-loadAsrData();
-loadMaghribData();
-loadIshaData();
-loadWitrData();
-updateQazaProgressTabUI();
-updateQazaLockButtonUI();
-
-
-window.scrollTo(0,0);
+  window.location.href = "tasbih/?from=" + fromPage;
 
 }
 
 // =========================
-// AUTO LOCK WHEN QAZA PAGE HIDES
+// OPEN TASBIH PAGE FROM HOME
 // =========================
-function autoLockQazaIfHidden(){
+function openTasbihPageFromHome(){
 
-  let qazaPage = document.getElementById("qazaPage");
+  openTasbihPageFromFolder("home");
 
-  if(qazaPage && qazaPage.style.display !== "block"){
-    setQazaLockState(true);
-  }
+}
+
+// =========================
+// OPEN TASBIH PAGE FROM MORE
+// =========================
+function openTasbihPageFromMore(){
+
+  openTasbihPageFromFolder("more");
+
 }
 
 
      
+// =========================
+// OPEN QAZA TRACKER FROM FOLDER
+// =========================
+function openQazaTrackerFromFolder(returnPage){
+
+  if(!returnPage){
+    returnPage = "more";
+  }
+
+  localStorage.setItem("qazaReturnPage", returnPage);
+
+  window.location.href = "qazatracker/";
+
+}
+
+// =========================
+// OPEN QAZA TRACKER FROM HOME
+// =========================
+function openQazaTrackerFromHome(){
+
+  openQazaTrackerFromFolder("home");
+
+}
+
+// =========================
+// OPEN QAZA TRACKER FROM MORE
+// =========================
+function openQazaTrackerFromMore(){
+
+  openQazaTrackerFromFolder("more");
+
+}
+
+
+
+
 
      
-// =========================
-// CLOSE QAZA PAGE
-// =========================
-function closeQazaPage(){
-
-// 🔒 AUTO LOCK WHEN LEAVING QAZA PAGE
-setQazaLockState(true);
-
-let qazaPage = document.getElementById("qazaPage");
-let homePage = document.getElementById("homePage");
-let trackerPage = document.getElementById("trackerPage");
-let salahPage = document.getElementById("salahPage");
-let morePage = document.getElementById("morePage");
-let floatingMenuBtn = document.getElementById("floatingMenuBtn");
-
-if(qazaPage) qazaPage.style.display = "none";
-
-setAppTopBarVisibility(false);
-setAppTopBarBackButton(false, null);
-setAppTopBarRightButton(false, "", null);
-
-if(homePage) homePage.style.display = "none";
-if(trackerPage) trackerPage.style.display = "none";
-if(salahPage) salahPage.style.display = "none";
-if(morePage) morePage.style.display = "none";
-
-if(lastMainTab === "home"){
-
-  if(homePage) homePage.style.display = "block";
-  if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-  setMainMenuHandleVisibility(true);
-
-}else if(lastMainTab === "more"){
-
-  if(morePage) morePage.style.display = "block";
-  if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-  setMainMenuHandleVisibility(false);
-
-}else if(lastMainTab === "salah"){
-
-  if(salahPage) salahPage.style.display = "block";
-  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
-  setMainMenuHandleVisibility(true);
-
-}else{
-
-  if(trackerPage) trackerPage.style.display = "block";
-  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
-  setMainMenuHandleVisibility(true);
-  lastMainTab = "tracker";
-
-}
-
-setBottomNavVisibility(true);
-
-window.scrollTo(0,0);
-
-}
      
-// =========================
-// SHOW QAZA PRAYER TAB
-// =========================
-function showQazaPrayerTab(){
 
-  let prayerTab = document.getElementById("qazaPrayerTab");
-  let progressTab = document.getElementById("qazaProgressTab");
-  let prayerBtn = document.getElementById("qazaPrayerTabBtn");
-  let progressBtn = document.getElementById("qazaProgressTabBtn");
-
-  if(prayerTab) prayerTab.style.display = "block";
-  if(progressTab) progressTab.style.display = "none";
-
-  if(prayerBtn){
-    prayerBtn.style.background = "white";
-    prayerBtn.style.color = "#111";
-    prayerBtn.style.fontWeight = "800";
-    prayerBtn.style.boxShadow = "0 3px 8px rgba(0,0,0,0.06)";
-  }
-
-  if(progressBtn){
-    progressBtn.style.background = "transparent";
-    progressBtn.style.color = "#666";
-    progressBtn.style.fontWeight = "700";
-    progressBtn.style.boxShadow = "none";
-  }
-}
-
-// =========================
-// SHOW QAZA PROGRESS TAB
-// =========================
-function showQazaProgressTab(){
-
-  let prayerTab = document.getElementById("qazaPrayerTab");
-  let progressTab = document.getElementById("qazaProgressTab");
-  let prayerBtn = document.getElementById("qazaPrayerTabBtn");
-  let progressBtn = document.getElementById("qazaProgressTabBtn");
-
-  if(prayerTab) prayerTab.style.display = "none";
-  if(progressTab) progressTab.style.display = "block";
-
-  if(prayerBtn){
-    prayerBtn.style.background = "transparent";
-    prayerBtn.style.color = "#666";
-    prayerBtn.style.fontWeight = "700";
-    prayerBtn.style.boxShadow = "none";
-  }
-
-  if(progressBtn){
-    progressBtn.style.background = "white";
-    progressBtn.style.color = "#111";
-    progressBtn.style.fontWeight = "800";
-    progressBtn.style.boxShadow = "0 3px 8px rgba(0,0,0,0.06)";
-  }
-}
 
 // =========================
 // OPEN FARGHI RIZQ PAGE
@@ -12977,6 +8910,30 @@ window.scrollTo(0,0);
 
 }
 
+
+
+// =========================
+// OPEN DUA PAGE FROM FOLDER
+// =========================
+function openDuaPageFromFolder(fromPage){
+
+let sourcePage = fromPage || "home";
+
+// full GitHub Pages path + source page + fresh version number
+window.location.href = "/test-ibadah-tracker/duapage/index.html?from=" + sourcePage + "&v=" + Date.now();
+
+}
+
+// =========================
+// OPEN DAILY AZKAR PAGE FROM FOLDER
+// =========================
+function openDailyAzkarPageFromFolder(){
+
+// full GitHub Pages path + fresh version number
+window.location.href = "/test-ibadah-tracker/dailyazkar/index.html?v=" + Date.now();
+
+}
+     
      
   
 // =========================
@@ -14747,20 +10704,19 @@ closeTasbihPage();
 function openHomeTasbihPage(){
 
 lastMainTab = "home";
-openTasbihPage();
+openTasbihPageFromHome();
 
 }
 
-  // =========================
+// =========================
 // OPEN TASBIH FROM MORE
 // =========================
 function openMoreTasbihPage(){
 
 lastMainTab = "more";
-openTasbihPage();
+openTasbihPageFromMore();
 
 }
-  
   
 
 // =========================
@@ -16084,30 +12040,7 @@ setBottomNavVisibility(true);
 // =========================
 function openTasbihPage(){
 
-let tasbihPage = document.getElementById("tasbihPage");
-let floatingMenuBtn = document.getElementById("floatingMenuBtn");
-
-hideAllAppPages();
-
-if(tasbihPage) tasbihPage.style.display = "block";
-if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-
-setBottomNavVisibility(true);
-setMainMenuHandleVisibility(false);
-
-setAppTopBarVisibility(true);
-setAppTopBarTitle("Tasbih");
-setAppTopBarBackButton(true, function(){
-  closeTasbihPage();
-});
-setAppTopBarRightButton(true, "⚙️", function(){
-  openTasbihSettings();
-});
-
-applySavedTasbihStyle();
-updateTasbihTopButton();
-
-window.scrollTo(0,0);
+  openTasbihPageFromHome();
 
 }
 
@@ -18065,47 +13998,93 @@ isSideMenuOpen = false;
 }
 
 // =========================
-// STRONG REFRESH APP
+// REFRESH APP - KEEP QURAN DOWNLOADS SAFE
 // =========================
 async function refreshApp(){
 
   closeSideMenu();
 
+  let ok = confirm(
+    "Refresh App?\n\n" +
+    "This will load the newest app code.\n\n" +
+    "Your saved app data will stay safe.\n" +
+    "Downloaded Quran pages will stay safe."
+  );
+
+  if(!ok) return;
+
   try{
 
-    // Save important localStorage data automatically stays safe.
-    // This refresh only clears app update cache, not your saved data.
-
+    // =========================
+    // UPDATE SERVICE WORKER ONLY
+    // =========================
+    // We do NOT unregister service worker here.
+    // Unregistering can remove/break offline Quran downloads.
     if("serviceWorker" in navigator){
+
       let registrations = await navigator.serviceWorker.getRegistrations();
 
       for(let registration of registrations){
-        await registration.unregister();
+
+        if(registration && registration.update){
+          await registration.update();
+        }
+
       }
+
     }
 
+    // =========================
+    // CLEAR ONLY SAFE NON-QURAN CACHE
+    // =========================
     if("caches" in window){
+
       let cacheNames = await caches.keys();
 
       for(let cacheName of cacheNames){
 
-        // DO NOT delete runtime cache because Quran downloads are saved there
-        if(cacheName !== "ibadah-runtime-v1"){
-          await caches.delete(cacheName);
+        let lowerName = String(cacheName).toLowerCase();
+
+        let keepThisCache =
+          lowerName.includes("quran") ||
+          lowerName.includes("mushaf") ||
+          lowerName.includes("surah") ||
+          lowerName.includes("ayat") ||
+          lowerName.includes("offline") ||
+          lowerName.includes("download") ||
+          lowerName.includes("runtime");
+
+        if(keepThisCache){
+          console.log("Keeping Quran/download/runtime cache:", cacheName);
+          continue;
         }
 
+        console.log("Deleting old app cache:", cacheName);
+        await caches.delete(cacheName);
+
       }
+
     }
 
-    let freshUrl = window.location.pathname + "?refresh=" + Date.now();
+    // =========================
+    // FORCE FRESH RELOAD
+    // =========================
+    let cleanPath = window.location.origin + window.location.pathname;
+    let freshUrl = cleanPath + "?refreshKeepQuran=" + Date.now();
+
     window.location.replace(freshUrl);
 
   }catch(error){
 
-    console.log("Strong refresh failed:", error);
-    window.location.reload(true);
+    console.log("Refresh app failed:", error);
+
+    let cleanPath = window.location.origin + window.location.pathname;
+    let fallbackUrl = cleanPath + "?refreshKeepQuran=" + Date.now();
+
+    window.location.replace(fallbackUrl);
 
   }
+
 }
 
 // =========================
@@ -20745,25 +16724,26 @@ let appSettingsPage = document.getElementById("appSettingsPage");
 let morePage = document.getElementById("morePage");
 let salahPage = document.getElementById("salahPage");
 let tasbihPage = document.getElementById("tasbihPage");
-let duaPage = document.getElementById("duaPage");
 let qiblaPage = document.getElementById("qiblaPage");
-let zikrPage = document.getElementById("zikrPage");
-let zikrDetailPage = document.getElementById("zikrDetailPage");
+let homePage = document.getElementById("homePage");
+let trackerPage = document.getElementById("trackerPage");
+
+// IMPORTANT:
+// Dua and Daily Azkar are now separate folder pages.
+// Do not check old duaPage / zikrPage here anymore.
 
 if(salahPage && salahPage.style.display === "block"){
 localStorage.setItem("appSettingsReturnPage", "salah");
-}else if(morePage && morePage.style.display === "block"){
-localStorage.setItem("appSettingsReturnPage", "more");
 }else if(tasbihPage && tasbihPage.style.display === "block"){
 localStorage.setItem("appSettingsReturnPage", "tasbih");
-}else if(duaPage && duaPage.style.display === "block"){
-localStorage.setItem("appSettingsReturnPage", "dua");
 }else if(qiblaPage && qiblaPage.style.display === "block"){
 localStorage.setItem("appSettingsReturnPage", "qibla");
-}else if(zikrDetailPage && zikrDetailPage.style.display === "block"){
-localStorage.setItem("appSettingsReturnPage", "zikrDetail");
-}else if(zikrPage && zikrPage.style.display === "block"){
-localStorage.setItem("appSettingsReturnPage", "zikr");
+}else if(homePage && homePage.style.display === "block"){
+localStorage.setItem("appSettingsReturnPage", "home");
+}else if(trackerPage && trackerPage.style.display === "block"){
+localStorage.setItem("appSettingsReturnPage", "tracker");
+}else if(morePage && morePage.style.display === "block"){
+localStorage.setItem("appSettingsReturnPage", "more");
 }else{
 localStorage.setItem("appSettingsReturnPage", "more");
 }
@@ -20780,7 +16760,6 @@ window.scrollTo(0,0);
 }
 
 
-  
 // =========================
 // CLOSE APP SETTINGS PAGE
 // =========================
@@ -20794,24 +16773,18 @@ if(appSettingsPage) appSettingsPage.style.display = "none";
 // ALWAYS SHOW BOTTOM NAV AGAIN WHEN LEAVING APP SETTINGS
 setBottomNavVisibility(true);
 
-// RETURN TO THE PAGE YOU CAME FROM
+// IMPORTANT:
+// Do not return to old Dua or old Daily Zikr pages.
+// They are now folder pages, so Settings should return only to main app pages.
+
 if(returnPage === "salah"){
 openSalahPage();
 }
 else if(returnPage === "tasbih"){
 openTasbihPage();
 }
-else if(returnPage === "dua"){
-openDuaPage();
-}
 else if(returnPage === "qibla"){
 openQiblaPage();
-}
-else if(returnPage === "zikr"){
-openZikrPage();
-}
-else if(returnPage === "zikrDetail"){
-if(typeof openZikrPage === "function") openZikrPage();
 }
 else if(returnPage === "home"){
 openHomePage();
@@ -20828,7 +16801,6 @@ setBottomNavVisibility(true);
 window.scrollTo(0,0);
 
 }
-
 // =========================
 // GET DEFAULT PAGE LABEL
 // =========================
@@ -22608,7 +18580,7 @@ box-sizing:border-box;
     </div>
 
     <!-- DAILY ZIKR TOP SHORTCUT -->
-    <div onclick="openZikrPage()" style="
+    <div onclick="openDailyAzkarPageFromFolder()" style="
     width:30%;
     text-align:center;
     cursor:pointer;
@@ -22635,7 +18607,7 @@ box-sizing:border-box;
     </div>
 
     <!-- QAZA TOP SHORTCUT -->
-    <div onclick="openQazaPage()" style="
+    <div onclick="openQazaTrackerFromHome()" style="
     width:30%;
     text-align:center;
     cursor:pointer;
@@ -22734,7 +18706,7 @@ box-shadow:0 10px 24px rgba(0,0,0,0.08);
         </div>
 
         <!-- DUA SHORTCUT -->
-        <div onclick="openDuaPage()" style="
+       <div onclick="openDuaPageFromFolder()" style="
         background:#f8f8fa;
         border-radius:22px;
         padding:16px 8px;
@@ -22945,6 +18917,8 @@ box-sizing:border-box;
 ">
 
 <div style="padding:10px;">
+
+     
 <!-- Close More Page Button -->
 <button onclick="closeMorePage()" style="
 width:36px;
@@ -23004,7 +18978,7 @@ box-shadow:0 6px 16px rgba(0,0,0,0.08);
 
      
 <!-- Open Dua Page Card -->
-<div onclick="openDuaPage()" style="
+<div onclick="openDuaPageFromFolder('more')" style="
 background:white;
 border-radius:22px;
 padding:18px 10px;
@@ -23022,7 +18996,7 @@ box-shadow:0 6px 16px rgba(0,0,0,0.08);
      
 
 <!-- Open Zikr Page Card -->
-<div onclick="openMoreZikrPage()" style="
+<div onclick="openDailyAzkarPageFromFolder('more')" style="
 background:white;
 border-radius:22px;
 padding:18px 10px;
@@ -23057,7 +19031,7 @@ box-shadow:0 6px 16px rgba(0,0,0,0.08);
      
 
 <!-- QAZA TRACKER CARD -->
-<div onclick="openQazaPage()" style="
+<div onclick="openQazaTrackerFromMore()" style="
 background:white;
 border-radius:22px;
 padding:18px 10px;
@@ -23070,7 +19044,6 @@ box-shadow:0 6px 16px rgba(0,0,0,0.08);
 </div>
 <div style="font-size:15px;font-weight:700;color:#111;">Qaza Tracker</div>
 </div>
-
      
 
 <!-- Open Qibla Page Card -->
@@ -25299,990 +21272,6 @@ Mushaf page loading...
      
   
 
-<!-- =========================
-     DUA PAGE
-========================= -->
-<div id="duaPage" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-z-index:10001;
-background:linear-gradient(180deg, #f7f7fa 0%, #e9e9ee 100%);
-overflow:auto;
--webkit-overflow-scrolling:touch;
-padding:90px 4% 120px 4%;
-box-sizing:border-box;
-">
-
- 
-  <!-- =========================
-       DUA HERO CARD
-  ========================= -->
-  <div style="
-  width:100%;
-  background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.88) 100%);
-  border-radius:30px;
-  padding:28px 6%;
-  text-align:center;
-  box-shadow:0 10px 30px rgba(0,0,0,0.08);
-  border:1px solid rgba(255,255,255,0.75);
-  box-sizing:border-box;
-  margin-bottom:18px;
-  ">
-
-    <div style="
-    font-size:38px;
-    margin-bottom:12px;
-    ">
-      🤲
-    </div>
-
-    <div style="
-    font-size:28px;
-    font-weight:900;
-    color:#111;
-    letter-spacing:-0.6px;
-    line-height:1.1;
-    margin-bottom:8px;
-    ">
-      Masnoon Duas
-    </div>
-
-    <div style="
-    width:86%;
-    margin:0 auto;
-    font-size:15px;
-    line-height:1.6;
-    color:#666;
-    font-weight:600;
-    ">
-      Read important duas with a clean and simple layout.
-    </div>
-
-  </div>
-
-  <!-- =========================
-       DUA LIST SECTION TITLE
-  ========================= -->
-  <div style="
-  font-size:13px;
-  font-weight:800;
-  color:#777;
-  letter-spacing:0.6px;
-  text-transform:uppercase;
-  margin:0 0 10px 2%;
-  ">
-    Available Duas
-  </div>
-
-  <!-- =========================
-       ISTIKHARA DUA CARD
-  ========================= -->
-  <div onclick="openDuaViewer('istikhara')" style="
-  width:100%;
-  background:white;
-  border-radius:26px;
-  padding:18px 5%;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  box-shadow:0 8px 22px rgba(0,0,0,0.07);
-  border:1px solid rgba(0,0,0,0.03);
-  box-sizing:border-box;
-  margin-bottom:14px;
-  ">
-
-    <div style="
-    display:flex;
-    align-items:center;
-    gap:14px;
-    min-width:0;
-    flex:1;
-    ">
-
-      <div style="
-      width:54px;
-      height:54px;
-      border-radius:18px;
-      background:#f2f2f7;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:26px;
-      flex-shrink:0;
-      ">
-        📿
-      </div>
-
-      <div style="
-      min-width:0;
-      flex:1;
-      ">
-
-        <div style="
-        font-size:19px;
-        font-weight:850;
-        color:#111;
-        line-height:1.2;
-        margin-bottom:5px;
-        ">
-          Istikhara Dua
-        </div>
-
-        <div style="
-        font-size:14px;
-        font-weight:600;
-        color:#666;
-        line-height:1.4;
-        ">
-          Dua for seeking guidance
-        </div>
-
-      </div>
-
-    </div>
-
-      <div style="
-    font-size:28px;
-    color:#b0b0b8;
-    flex-shrink:0;
-    ">
-      ›
-    </div>
-
-  </div>
-
-<!-- =========================
-     FARGHI RIZQ DUA CARD
-========================= -->
-<div onclick="openFarghiRizqPage()" style="
-width:100%;
-background:white;
-border-radius:26px;
-padding:18px 5%;
-cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:14px;
-box-shadow:0 8px 22px rgba(0,0,0,0.07);
-border:1px solid rgba(0,0,0,0.03);
-box-sizing:border-box;
-margin-bottom:14px;
-">
-
-  <div style="
-  display:flex;
-  align-items:center;
-  gap:14px;
-  min-width:0;
-  flex:1;
-  ">
-
-    <div style="
-    width:54px;
-    height:54px;
-    border-radius:18px;
-    background:#f2f2f7;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:26px;
-    flex-shrink:0;
-    ">
-      🌿
-    </div>
-
-    <div style="
-    min-width:0;
-    flex:1;
-    ">
-
-      <div style="
-      font-size:19px;
-      font-weight:850;
-      color:#111;
-      line-height:1.2;
-      margin-bottom:5px;
-      ">
-        Farghi Rizq
-      </div>
-
-      <div style="
-      font-size:14px;
-      font-weight:600;
-      color:#666;
-      line-height:1.4;
-      ">
-        Rizq ke liye dua
-      </div>
-
-    </div>
-
-  </div>
-
-  <div style="
-  font-size:28px;
-  color:#b0b0b8;
-  flex-shrink:0;
-  ">
-    ›
-  </div>
-
-</div>
-
-
-     
-<!-- =========================
-     IMAN MUJMAL & MUFASSAL DUA CARD
-========================= -->
-<div onclick="openImanPage()" style="
-width:100%;
-background:white;
-border-radius:26px;
-padding:18px 5%;
-cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:14px;
-box-shadow:0 8px 22px rgba(0,0,0,0.07);
-border:1px solid rgba(0,0,0,0.03);
-box-sizing:border-box;
-margin-bottom:14px;
-">
-
-  <div style="
-  display:flex;
-  align-items:center;
-  gap:14px;
-  min-width:0;
-  flex:1;
-  ">
-
-    <div style="
-    width:54px;
-    height:54px;
-    border-radius:18px;
-    background:#f2f2f7;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:26px;
-    flex-shrink:0;
-    ">
-      ☝️
-    </div>
-
-    <div style="
-    min-width:0;
-    flex:1;
-    ">
-
-      <div style="
-      font-size:19px;
-      font-weight:850;
-      color:#111;
-      line-height:1.2;
-      margin-bottom:5px;
-      ">
-        Iman Mujmal & Mufassal
-      </div>
-
-      <div style="
-      font-size:14px;
-      font-weight:600;
-      color:#666;
-      line-height:1.4;
-      ">
-        ایمان مجمل اور ایمان مفصل
-      </div>
-
-    </div>
-
-  </div>
-
-  <div style="
-  font-size:28px;
-  color:#b0b0b8;
-  flex-shrink:0;
-  ">
-    ›
-  </div>
-
-</div>
-
-
-
-     
-  <!-- =========================
-       AYATUL KURSI DUA CARD
-  ========================= -->
-  <div onclick="openAyatulKursiPage()" style="
-  width:100%;
-  background:white;
-  border-radius:26px;
-  padding:18px 5%;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  box-shadow:0 8px 22px rgba(0,0,0,0.07);
-  border:1px solid rgba(0,0,0,0.03);
-  box-sizing:border-box;
-  margin-bottom:14px;
-  ">
-
-    <div style="
-    display:flex;
-    align-items:center;
-    gap:14px;
-    min-width:0;
-    flex:1;
-    ">
-
-      <div style="
-      width:54px;
-      height:54px;
-      border-radius:18px;
-      background:#f2f2f7;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:26px;
-      flex-shrink:0;
-      ">
-        📖
-      </div>
-
-      <div style="
-      min-width:0;
-      flex:1;
-      ">
-
-        <div style="
-        font-size:19px;
-        font-weight:850;
-        color:#111;
-        line-height:1.2;
-        margin-bottom:5px;
-        ">
-          Ayatul Kursi
-        </div>
-
-        <div style="
-        font-size:14px;
-        font-weight:600;
-        color:#666;
-        line-height:1.4;
-        ">
-          Surah Al-Baqarah 255 with Urdu translation
-        </div>
-
-      </div>
-
-    </div>
-
-    <div style="
-    font-size:28px;
-    color:#b0b0b8;
-    flex-shrink:0;
-    ">
-      ›
-    </div>
-
-  </div>
-
-</div>
-
-<!-- =========================
-     FARGHI RIZQ PAGE
-========================= -->
-<div id="farghiRizqPage" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-z-index:10002;
-background:linear-gradient(180deg, #f7f7fa 0%, #e9e9ee 100%);
-overflow:auto;
--webkit-overflow-scrolling:touch;
-padding:90px 4% 120px 4%;
-box-sizing:border-box;
-">
-
-  <!-- =========================
-       FARGHI RIZQ PAGE BACK BUTTON
-  ========================= -->
-  <button onclick="closeFarghiRizqPage()" style="
-  position:fixed;
-  top:18px;
-  left:4%;
-  width:42px;
-  height:42px;
-  border:none;
-  border-radius:50%;
-  background:white;
-  font-size:24px;
-  font-weight:700;
-  color:#111;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 4px 12px rgba(0,0,0,0.10);
-  z-index:10003;
-  ">
-    ←
-  </button>
-
-  <!-- =========================
-       FARGHI RIZQ IMAGE CARD
-  ========================= -->
-  <div style="
-  width:100%;
-  background:white;
-  border-radius:30px;
-  padding:14px 4%;
-  box-shadow:0 10px 30px rgba(0,0,0,0.08);
-  border:1px solid rgba(0,0,0,0.03);
-  box-sizing:border-box;
-  overflow:hidden;
-  ">
-
-    <div style="
-    font-size:26px;
-    font-weight:900;
-    color:#111;
-    text-align:center;
-    margin-bottom:14px;
-    ">
-      Farghi Rizq
-    </div>
-
-    <img src="Images/Rizq.png" alt="Farghi Rizq Dua" style="
-    width:100%;
-    height:auto;
-    display:block;
-    border-radius:22px;
-    object-fit:contain;
-    ">
-
-  </div>
-
-</div>
-<!-- END FARGHI RIZQ PAGE -->
-
-
-     
-
-<!-- =========================
-     IMAN MUJMAL & MUFASSAL PAGE
-========================= -->
-<div id="imanPage" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-z-index:10002;
-background:linear-gradient(180deg, #f7f7fa 0%, #e9e9ee 100%);
-overflow:auto;
--webkit-overflow-scrolling:touch;
-padding:90px 4% 120px 4%;
-box-sizing:border-box;
-">
-
- 
-
-  <!-- =========================
-       IMAN MUJMAL CARD
-  ========================= -->
-  <div style="
-  background:white;
-  border-radius:28px;
-  padding:22px 5%;
-  margin-bottom:16px;
-  box-shadow:0 8px 22px rgba(0,0,0,0.07);
-  border:1px solid rgba(0,0,0,0.03);
-  box-sizing:border-box;
-  ">
-
-    <div style="
-    font-size:22px;
-    font-weight:900;
-    color:#111;
-    margin-bottom:16px;
-    text-align:center;
-    ">
-      ایمان مجمل
-    </div>
-
-    <div style="
-    font-family:'Amiri','Noto Naskh Arabic',serif;
-    direction:rtl;
-    text-align:right;
-    font-size:28px;
-    line-height:2.1;
-    color:#111;
-    font-weight:600;
-    margin-bottom:16px;
-    ">
-      اٰمَنْتُ بِاللہِ کَمَا ھُوَ بِاَسْمَآئِہٖ وَصِفَاتِہٖ وَقَبِلْتُ جَمِیْعَ اَحْکَامِہٖ اِقْرَارٌم بِاللِّسَانِ وَتَصْدِیْقٌ بِالْقَلْبِ
-    </div>
-
-    <div style="
-    font-family:'Noto Naskh Arabic','Amiri',serif;
-    direction:rtl;
-    text-align:right;
-    font-size:21px;
-    line-height:2;
-    color:#111;
-    background:#f7f7fa;
-    border-radius:20px;
-    padding:16px;
-    box-sizing:border-box;
-    ">
-      میں اللہ پر ایمان لایا جیسا کہ وہ اپنے ناموں اور صفات کے ساتھ ہے، اور میں نے اس کے تمام احکام قبول کیے، زبان سے اقرار کیا اور دل سے تصدیق کی۔
-    </div>
-
-  </div>
-
-  <!-- =========================
-       IMAN MUFASSAL CARD
-  ========================= -->
-  <div style="
-  background:white;
-  border-radius:28px;
-  padding:22px 5%;
-  margin-bottom:16px;
-  box-shadow:0 8px 22px rgba(0,0,0,0.07);
-  border:1px solid rgba(0,0,0,0.03);
-  box-sizing:border-box;
-  ">
-
-    <div style="
-    font-size:22px;
-    font-weight:900;
-    color:#111;
-    margin-bottom:16px;
-    text-align:center;
-    ">
-      ایمان مفصل
-    </div>
-
-    <div style="
-    font-family:'Amiri','Noto Naskh Arabic',serif;
-    direction:rtl;
-    text-align:right;
-    font-size:28px;
-    line-height:2.1;
-    color:#111;
-    font-weight:600;
-    margin-bottom:16px;
-    ">
-      اٰمَنْتُ بِاللہِ وَمَلَائِکَتِہٖ وَکُتُبِہٖ وَرُسُلِہٖ وَالْیَوْمِ الْاٰخِرِ وَالْقَدْرِ خَیْرِہٖ وَشَرِّہٖ مِنَ اللہِ تَعَالٰی وَالْبَعْثِ بَعْدَ الْمَوْتِ
-    </div>
-
-    <div style="
-    font-family:'Noto Naskh Arabic','Amiri',serif;
-    direction:rtl;
-    text-align:right;
-    font-size:21px;
-    line-height:2;
-    color:#111;
-    background:#f7f7fa;
-    border-radius:20px;
-    padding:16px;
-    box-sizing:border-box;
-    ">
-      ایمان لایا میں اللہ پر، اس کے فرشتوں پر، اس کی کتابوں پر، اس کے رسولوں پر، قیامت کے دن پر، اور اس بات پر کہ اچھی اور بری تقدیر اللہ تعالیٰ کی طرف سے ہے، اور موت کے بعد دوبارہ اٹھائے جانے پر بھی ایمان لایا۔
-    </div>
-
-  </div>
-
-</div>
-<!-- END IMAN MUJMAL & MUFASSAL PAGE -->
-
-
-<!-- =========================
-     IMAN MUJMAL & MUFASSAL PAGE
-========================= -->
-<div id="imanPage" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-z-index:10002;
-background:linear-gradient(180deg, #f7f7fa 0%, #e9e9ee 100%);
-overflow:auto;
--webkit-overflow-scrolling:touch;
-padding:90px 4% 120px 4%;
-box-sizing:border-box;
-">
-
-  <!-- =========================
-       IMAN PAGE BACK BUTTON
-  ========================= -->
-  <button onclick="closeImanPage()" style="
-  position:fixed;
-  top:18px;
-  left:4%;
-  width:42px;
-  height:42px;
-  border:none;
-  border-radius:50%;
-  background:white;
-  font-size:24px;
-  font-weight:700;
-  color:#111;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 4px 12px rgba(0,0,0,0.10);
-  z-index:10003;
-  ">
-    ←
-  </button>
-
-  <!-- =========================
-       IMAN MUJMAL CARD
-  ========================= -->
-  <div style="
-  background:white;
-  border-radius:28px;
-  padding:22px 5%;
-  margin-bottom:16px;
-  box-shadow:0 8px 22px rgba(0,0,0,0.07);
-  border:1px solid rgba(0,0,0,0.03);
-  box-sizing:border-box;
-  ">
-
-    <div style="
-    font-size:22px;
-    font-weight:900;
-    color:#111;
-    margin-bottom:16px;
-    text-align:center;
-    ">
-      ایمان مجمل
-    </div>
-
-    <div style="
-    font-family:'Amiri','Noto Naskh Arabic',serif;
-    direction:rtl;
-    text-align:right;
-    font-size:28px;
-    line-height:2.1;
-    color:#111;
-    font-weight:600;
-    margin-bottom:16px;
-    ">
-      اٰمَنْتُ بِاللہِ کَمَا ھُوَ بِاَسْمَآئِہٖ وَصِفَاتِہٖ وَقَبِلْتُ جَمِیْعَ اَحْکَامِہٖ اِقْرَارٌم بِاللِّسَانِ وَتَصْدِیْقٌ بِالْقَلْبِ
-    </div>
-
-    <div style="
-    font-family:'Noto Naskh Arabic','Amiri',serif;
-    direction:rtl;
-    text-align:right;
-    font-size:21px;
-    line-height:2;
-    color:#111;
-    background:#f7f7fa;
-    border-radius:20px;
-    padding:16px;
-    box-sizing:border-box;
-    ">
-      میں اللہ پر ایمان لایا جیسا کہ وہ اپنے ناموں اور صفات کے ساتھ ہے، اور میں نے اس کے تمام احکام قبول کیے، زبان سے اقرار کیا اور دل سے تصدیق کی۔
-    </div>
-
-  </div>
-
-  <!-- =========================
-       IMAN MUFASSAL CARD
-  ========================= -->
-  <div style="
-  background:white;
-  border-radius:28px;
-  padding:22px 5%;
-  margin-bottom:16px;
-  box-shadow:0 8px 22px rgba(0,0,0,0.07);
-  border:1px solid rgba(0,0,0,0.03);
-  box-sizing:border-box;
-  ">
-
-    <div style="
-    font-size:22px;
-    font-weight:900;
-    color:#111;
-    margin-bottom:16px;
-    text-align:center;
-    ">
-      ایمان مفصل
-    </div>
-
-    <div style="
-    font-family:'Amiri','Noto Naskh Arabic',serif;
-    direction:rtl;
-    text-align:right;
-    font-size:28px;
-    line-height:2.1;
-    color:#111;
-    font-weight:600;
-    margin-bottom:16px;
-    ">
-      اٰمَنْتُ بِاللہِ وَمَلَائِکَتِہٖ وَکُتُبِہٖ وَرُسُلِہٖ وَالْیَوْمِ الْاٰخِرِ وَالْقَدْرِ خَیْرِہٖ وَشَرِّہٖ مِنَ اللہِ تَعَالٰی وَالْبَعْثِ بَعْدَ الْمَوْتِ
-    </div>
-
-    <div style="
-    font-family:'Noto Naskh Arabic','Amiri',serif;
-    direction:rtl;
-    text-align:right;
-    font-size:21px;
-    line-height:2;
-    color:#111;
-    background:#f7f7fa;
-    border-radius:20px;
-    padding:16px;
-    box-sizing:border-box;
-    ">
-      ایمان لایا میں اللہ پر، اس کے فرشتوں پر، اس کی کتابوں پر، اس کے رسولوں پر، قیامت کے دن پر، اور اس بات پر کہ اچھی اور بری تقدیر اللہ تعالیٰ کی طرف سے ہے، اور موت کے بعد دوبارہ اٹھائے جانے پر بھی ایمان لایا۔
-    </div>
-
-  </div>
-
-</div>
-<!-- END IMAN MUJMAL & MUFASSAL PAGE -->
-     
-
-<!-- =========================
-     AYATUL KURSI PAGE
-========================= -->
-<div id="ayatulKursiPage" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:0;
-z-index:10002;
-background:linear-gradient(180deg, #f7f7fa 0%, #e9e9ee 100%);
-overflow:auto;
--webkit-overflow-scrolling:touch;
-padding:90px 4% 120px 4%;
-box-sizing:border-box;
-">
-
-  <!-- =========================
-       AYATUL KURSI HEADER CARD
-  ========================= -->
-  <div style="
-  width:100%;
-  background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.88) 100%);
-  border-radius:30px;
-  padding:24px 6%;
-  text-align:center;
-  box-shadow:0 10px 30px rgba(0,0,0,0.08);
-  border:1px solid rgba(255,255,255,0.75);
-  box-sizing:border-box;
-  margin-bottom:18px;
-  ">
-
-    <div style="
-    font-size:38px;
-    margin-bottom:10px;
-    ">
-      📖
-    </div>
-
-    <div style="
-    font-size:28px;
-    font-weight:900;
-    color:#111;
-    letter-spacing:-0.6px;
-    line-height:1.1;
-    margin-bottom:8px;
-    ">
-      Ayatul Kursi
-    </div>
-
-    <div style="
-    font-size:15px;
-    font-weight:700;
-    color:#666;
-    line-height:1.5;
-    ">
-      Surah Al-Baqarah: 255
-    </div>
-
-  </div>
-
-  <!-- =========================
-       AYATUL KURSI ARABIC CARD
-  ========================= -->
-  <div style="
-  background:white;
-  border-radius:28px;
-  padding:22px 5%;
-  margin-bottom:16px;
-  box-shadow:0 8px 22px rgba(0,0,0,0.07);
-  border:1px solid rgba(0,0,0,0.03);
-  box-sizing:border-box;
-  ">
-
-    <div style="
-    font-size:13px;
-    font-weight:800;
-    color:#777;
-    letter-spacing:0.6px;
-    text-transform:uppercase;
-    margin-bottom:14px;
-    text-align:left;
-    ">
-      Arabic
-    </div>
-
-    <div style="
-    font-family:'Amiri','Noto Naskh Arabic',serif;
-    direction:rtl;
-    text-align:right;
-    font-size:27px;
-    line-height:2.15;
-    color:#111;
-    font-weight:600;
-    ">
-      ﴿اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ﴾
-    </div>
-
-    <div style="
-    margin-top:16px;
-    padding-top:14px;
-    border-top:1px solid #f0f0f3;
-    font-size:16px;
-    font-weight:800;
-    color:#666;
-    text-align:right;
-    direction:rtl;
-    ">
-      [ البقرة: 255 ]
-    </div>
-
-  </div>
-
-  <!-- =========================
-       AYATUL KURSI URDU TRANSLATION CARD
-  ========================= -->
-  <div style="
-  background:white;
-  border-radius:28px;
-  padding:22px 5%;
-  margin-bottom:16px;
-  box-shadow:0 8px 22px rgba(0,0,0,0.07);
-  border:1px solid rgba(0,0,0,0.03);
-  box-sizing:border-box;
-  ">
-
-    <div style="
-    font-size:13px;
-    font-weight:800;
-    color:#777;
-    letter-spacing:0.6px;
-    text-transform:uppercase;
-    margin-bottom:14px;
-    text-align:left;
-    ">
-      Urdu Translation
-    </div>
-
-    <div style="
-    font-family:'Noto Naskh Arabic','Amiri',serif;
-    direction:rtl;
-    text-align:right;
-    font-size:21px;
-    line-height:2;
-    color:#111;
-    ">
-      خدا (وہ معبود برحق ہے کہ) اس کے سوا کوئی عبادت کے لائق نہیں زندہ ہمیشہ رہنے والا اسے نہ اونگھ آتی ہے نہ نیند جو کچھ آسمانوں میں اور جو کچھ زمین میں ہیں سب اسی کا ہے کون ہے جو اس کی اجازت کے بغیر اس سے (کسی کی) سفارش کر سکے جو کچھ لوگوں کے روبرو ہو رہا ہے اور جو کچھ ان کے پیچھے ہوچکا ہے اسے سب معلوم ہے اور وہ اس کی معلومات میں سے کسی چیز پر دسترس حاصل نہیں کر سکتے ہاں جس قدر وہ چاہتا ہے (اسی قدر معلوم کرا دیتا ہے) اس کی بادشاہی (اور علم) آسمان اور زمین سب پر حاوی ہے اور اسے ان کی حفاظت کچھ بھی دشوار نہیں وہ بڑا عالی رتبہ اور جلیل القدر ہے
-    </div>
-
-  </div>
-
-  <!-- =========================
-       AYATUL KURSI URDU EXPLANATION CARD
-  ========================= -->
-  <div style="
-  background:white;
-  border-radius:28px;
-  padding:22px 5%;
-  margin-bottom:16px;
-  box-shadow:0 8px 22px rgba(0,0,0,0.07);
-  border:1px solid rgba(0,0,0,0.03);
-  box-sizing:border-box;
-  ">
-
-    <div style="
-    font-size:13px;
-    font-weight:800;
-    color:#777;
-    letter-spacing:0.6px;
-    text-transform:uppercase;
-    margin-bottom:14px;
-    text-align:left;
-    ">
-      Tafsir / Explanation
-    </div>
-
-    <div style="
-    font-family:'Noto Naskh Arabic','Amiri',serif;
-    direction:rtl;
-    text-align:right;
-    font-size:20px;
-    line-height:2;
-    color:#111;
-    margin-bottom:18px;
-    ">
-      (1) یہ آیت الکرسی ہے جس کی بڑی فضیلت صحیح احادیث سے ثابت ہے مثلاً یہ آیت قرآن کی اعظم آیت ہے۔ اس کے پڑھنے سے رات کو شیطان سے تحفظ رہتا ہے۔ ہر فرض نماز کے بعد پڑھنے کی بڑی فضیلت ہے وغیرہ (ابن کثیر) یہ اللہ تعالیٰ کی صفات جلال، اس کی علو شان اور اس کی قدرت وعظمت پر مبنی نہایت جامع آیت ہے۔
-    </div>
-
-    <div style="
-    font-family:'Noto Naskh Arabic','Amiri',serif;
-    direction:rtl;
-    text-align:right;
-    font-size:20px;
-    line-height:2;
-    color:#111;
-    ">
-      (2) كُرْسِيٌّ سے بعض نے مَوْضِعُ قَدَمَيْنِ (قدم رکھنے کی جگہ)، بعض نے علم، بعض نے قدرت وعظمت، بعض نے بادشاہی اور بعض نے عرش مراد لیا ہے۔ لیکن صفات باری تعالیٰ کے بارے میں محدثین اور سلف کا یہ مسلک ہے کہ اللہ تعالیٰ کی جو صفات جس طرح قرآن وحدیث میں بیان ہوئی ہیں، ان کی بغیر تاویل اور کیفیت بیان کئے، ان پر ایمان رکھا جائے۔ اس لئے یہی ایمان رکھنا چاہیے کہ یہ فی الواقع کرسی ہے جو عرش سے الگ ہے۔ اس کی کیفیت کیا ہے، اس پر وہ کس طرح بیٹھتا ہے؟ اس کو ہم بیان نہیں کرسکتے کیونکہ اس کی حقیقت سے ہم بےخبر ہیں۔
-    </div>
-
-  </div>
-
-</div>
-
-
-
-
-
-     
-</div>
-
-
-
-</div>
-     
-</div>
 
 <!-- =========================
      APP SETTINGS PAGE
