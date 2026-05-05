@@ -2,7 +2,7 @@
 // IBADAH OFFLINE SERVICE WORKER
 // =========================
 
-const IBADAH_STATIC_CACHE = "ibadah-static-v1";
+const IBADAH_STATIC_CACHE = "ibadah-static-v2";
 const IBADAH_RUNTIME_CACHE = "ibadah-runtime-v1";
 
 // =========================
@@ -72,20 +72,34 @@ self.addEventListener("fetch", function(event){
   // only cache same-origin files
   if(url.origin !== self.location.origin) return;
 
-  // 1) APP SHELL FIRST
+ // 1) HTML PAGES
+if(
+  request.mode === "navigate" ||
+  url.pathname.endsWith(".html") ||
+  url.pathname.endsWith("/")
+){
+
+  // Folder pages must load their own index.html
   if(
-    request.mode === "navigate" ||
-    url.pathname.endsWith(".html") ||
-    url.pathname === "/" ||
-    url.pathname.endsWith("/")
+    url.pathname.includes("/duapage/") ||
+    url.pathname.includes("/dailyazkar/")
   ){
     event.respondWith(
-      caches.match("./index.html").then(function(cachedPage){
-        return cachedPage || fetch(request);
+      fetch(request).catch(function(){
+        return caches.match(request);
       })
     );
     return;
   }
+
+  // Main app page can use cached app shell
+  event.respondWith(
+    caches.match("./index.html").then(function(cachedPage){
+      return cachedPage || fetch(request);
+    })
+  );
+  return;
+}
 
   // 2) STATIC FILES / IMAGES / PDF / JSON / JS / CSS
   event.respondWith(
