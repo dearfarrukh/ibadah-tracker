@@ -8919,21 +8919,22 @@ function openDuaPageFromFolder(fromPage){
 
 let sourcePage = fromPage || "home";
 
-// full GitHub Pages path + source page + fresh version number
-window.location.href = "/test-ibadah-tracker/duapage/index.html?from=" + sourcePage + "&v=" + Date.now();
+// same app folder path for real/main Ibadah app
+window.location.href = "duapage/?from=" + sourcePage + "&v=" + Date.now();
 
 }
 
 // =========================
 // OPEN DAILY AZKAR PAGE FROM FOLDER
 // =========================
-function openDailyAzkarPageFromFolder(){
+function openDailyAzkarPageFromFolder(fromPage){
 
-// full GitHub Pages path + fresh version number
-window.location.href = "/test-ibadah-tracker/dailyazkar/index.html?v=" + Date.now();
+let sourcePage = fromPage || "home";
+
+// same app folder path for real/main Ibadah app
+window.location.href = "dailyazkar/?from=" + sourcePage + "&v=" + Date.now();
 
 }
-     
      
   
 // =========================
