@@ -522,6 +522,28 @@ button{
   font-size:17px;
   font-weight:800;
 }
+
+
+
+
+/* =========================
+   QAZA TOP BAR SPACING FIX
+========================= */
+
+/* Move the whole Qaza page content lower so Prayer / Progress tabs do not hide under top bar */
+body{
+  padding-top:calc(12% + env(safe-area-inset-top)) !important;
+}
+
+/* Extra safety: keep first Qaza card/tab area lower on small phones */
+#qazaPrayerTabBtn,
+#qazaProgressTabBtn{
+  position:relative;
+  z-index:2;
+}
+
+
+   
 </style>
 </head>
 
