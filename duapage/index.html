@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<!-- =========================
+     DUA PAGE FONT IMPORT
+========================= -->
+<link href="https://fonts.googleapis.com/css2?family=Amiri&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- =========================
+     DUA PAGE CACHE FIX
+========================= -->
+<meta charset="UTF-8">
+<title>Dua Page</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#e9e9ee">
+
+<!-- iPhone Safari cache fix -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<style>
+
+/* =========================
+   GLOBAL PAGE STYLE
+========================= */
+html, body{
+margin:0;
+padding:0;
+width:100%;
+min-height:100%;
+font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+background:#e9e9ee;
+color:#111;
+-webkit-text-size-adjust:100%;
+}
+
+body{
+overflow-x:hidden;
+}
+
+/* =========================
+   IOS TOP BAR
+========================= */
+.duaTopBar{
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:8%;
+min-height:64px;
+max-height:82px;
+background:rgba(233,233,238,0.96);
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+z-index:9999;
+display:flex;
+align-items:flex-end;
+justify-content:center;
+box-sizing:border-box;
+padding:env(safe-area-inset-top) 5% 10px 5%;
+border-bottom:1px solid rgba(0,0,0,0.08);
+box-shadow:0 8px 22px rgba(0,0,0,0.08);
+}
+
+.duaBackBtn{
+position:absolute;
+left:4%;
+bottom:10px;
+width:42px;
+height:42px;
+border:none;
+border-radius:50%;
+background:white;
+color:#111;
+font-size:24px;
+font-weight:800;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:0 4px 12px rgba(0,0,0,0.10);
+cursor:pointer;
+-webkit-tap-highlight-color:transparent;
+}
+
+.duaTopTitle{
+font-size:20px;
+font-weight:900;
+letter-spacing:-0.3px;
+text-align:center;
+max-width:70%;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+/* =========================
+   PAGE WRAPS
+========================= */
+.duaPage{
+display:none;
+min-height:100vh;
+box-sizing:border-box;
+background:linear-gradient(180deg, #f7f7fa 0%, #e9e9ee 100%);
+padding:92px 4% 40px 4%;
+}
+
+.duaPage.active{
+display:block;
+}
+
+.duaList{
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+/* =========================
+   IOS CARDS
+========================= */
+.duaHeroCard{
+background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,248,250,0.94) 100%);
+border-radius:30px;
+padding:28px 6%;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,0.08);
+border:1px solid rgba(255,255,255,0.75);
+box-sizing:border-box;
+margin-bottom:18px;
+}
+
+.duaHeroIcon{
+font-size:34px;
+margin-bottom:12px;
+}
+
+.duaHeroTitle{
+font-size:28px;
+font-weight:900;
+letter-spacing:-0.5px;
+line-height:1.1;
+margin-bottom:8px;
+}
+
+.duaHeroText{
+font-size:15px;
+font-weight:600;
+color:#666;
+line-height:1.6;
+max-width:320px;
+margin:0 auto;
+}
+
+.duaOptionCard{
+width:100%;
+background:white;
+border-radius:26px;
+padding:18px 5%;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:14px;
+box-shadow:0 8px 22px rgba(0,0,0,0.07);
+border:1px solid rgba(0,0,0,0.03);
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
+}
+
+.duaOptionCard:active{
+transform:scale(0.98);
+}
+
+.duaOptionLeft{
+display:flex;
+align-items:center;
+gap:14px;
+min-width:0;
+flex:1;
+}
+
+.duaOptionIcon{
+width:54px;
+height:54px;
+border-radius:18px;
+background:#f2f2f7;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:26px;
+flex-shrink:0;
+}
+
+.duaOptionTitle{
+font-size:19px;
+font-weight:850;
+color:#111;
+line-height:1.2;
+margin-bottom:5px;
+}
+
+.duaOptionSub{
+font-size:14px;
+font-weight:600;
+color:#666;
+line-height:1.4;
+}
+
+.duaOptionArrow{
+font-size:28px;
+color:#b0b0b8;
+flex-shrink:0;
+}
+
+/* =========================
+   DETAIL CARDS
+========================= */
+.duaDetailCard{
+background:white;
+border-radius:30px;
+padding:22px 5%;
+box-shadow:0 10px 30px rgba(0,0,0,0.08);
+border:1px solid rgba(0,0,0,0.03);
+box-sizing:border-box;
+overflow:hidden;
+}
+
+.duaDetailTitle{
+font-size:26px;
+font-weight:900;
+color:#111;
+text-align:center;
+margin-bottom:16px;
+letter-spacing:-0.4px;
+}
+
+.duaImage{
+width:100%;
+height:auto;
+display:block;
+border-radius:22px;
+object-fit:contain;
+box-shadow:0 8px 22px rgba(0,0,0,0.10);
+margin-top:12px;
+}
+
+.duaArabic{
+font-family:"Amiri","Noto Naskh Arabic",serif;
+direction:rtl;
+text-align:right;
+font-size:28px;
+line-height:2.1;
+color:#111;
+font-weight:600;
+margin-bottom:18px;
+}
+
+.duaUrdu{
+font-family:"Noto Naskh Arabic","Amiri",serif;
+direction:rtl;
+text-align:right;
+font-size:20px;
+line-height:2;
+color:#333;
+margin-bottom:18px;
+}
+
+.duaEnglish{
+font-size:16px;
+line-height:1.7;
+color:#555;
+margin-bottom:18px;
+}
+
+.duaRef{
+font-size:14px;
+font-weight:700;
+color:#777;
+line-height:1.5;
+padding-top:14px;
+border-top:1px solid #e5e5ea;
+}
+
+/* =========================
+   NO BOTTOM BAR SPACE
+========================= */
+.noBottomBarNote{
+font-size:12px;
+color:transparent;
+height:1px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     DUA TOP BAR
+========================= -->
+<div class="duaTopBar">
+  <button class="duaBackBtn" onclick="handleDuaBack()">←</button>
+  <div id="duaTopTitle" class="duaTopTitle">🤲 Masnoon Dua</div>
+</div>
+
+<!-- =========================
+     DUA MAIN PAGE
+========================= -->
+<div id="duaMainPage" class="duaPage active">
+
+ 
+
+  <div class="duaList">
+
+    <!-- =========================
+         ISTIKHARA DUA CARD
+    ========================= -->
+    <div class="duaOptionCard" onclick="openDuaDetailPage('istikhara')">
+      <div class="duaOptionLeft">
+        <div class="duaOptionIcon">🤲</div>
+        <div style="min-width:0;flex:1;">
+          <div class="duaOptionTitle">Istikhara Dua</div>
+          <div class="duaOptionSub">Dua images from your app</div>
+        </div>
+      </div>
+      <div class="duaOptionArrow">›</div>
+    </div>
+
+    <!-- =========================
+         FARGHI RIZQ DUA CARD
+    ========================= -->
+    <div class="duaOptionCard" onclick="openDuaDetailPage('farghi')">
+      <div class="duaOptionLeft">
+        <div class="duaOptionIcon">🌿</div>
+        <div style="min-width:0;flex:1;">
+          <div class="duaOptionTitle">Farghi Rizq</div>
+          <div class="duaOptionSub">Rizq dua image</div>
+        </div>
+      </div>
+      <div class="duaOptionArrow">›</div>
+    </div>
+
+    <!-- =========================
+         IMAN MUJMAL & MUFASSAL CARD
+    ========================= -->
+    <div class="duaOptionCard" onclick="openDuaDetailPage('iman')">
+      <div class="duaOptionLeft">
+        <div class="duaOptionIcon">☝️</div>
+        <div style="min-width:0;flex:1;">
+          <div class="duaOptionTitle">Iman Mujmal & Mufassal</div>
+          <div class="duaOptionSub">ایمان مجمل اور ایمان مفصل</div>
+        </div>
+      </div>
+      <div class="duaOptionArrow">›</div>
+    </div>
+
+    <!-- =========================
+         AYATUL KURSI CARD
+    ========================= -->
+    <div class="duaOptionCard" onclick="openDuaDetailPage('ayatul')">
+      <div class="duaOptionLeft">
+        <div class="duaOptionIcon">📖</div>
+        <div style="min-width:0;flex:1;">
+          <div class="duaOptionTitle">Ayatul Kursi</div>
+          <div class="duaOptionSub">Surah Al-Baqarah 255 with Urdu translation</div>
+        </div>
+      </div>
+      <div class="duaOptionArrow">›</div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- =========================
+     ISTIKHARA DETAIL PAGE
+========================= -->
+<div id="istikharaPage" class="duaPage">
+
+  <div class="duaDetailCard">
+    <div class="duaDetailTitle">Istikhara Dua</div>
+
+    <img class="duaImage" src="../duas/istikhara-1.jpg" alt="Istikhara Dua Page 1">
+    <img class="duaImage" src="../duas/istikhara-2.jpg" alt="Istikhara Dua Page 2">
+    <img class="duaImage" src="../duas/istikhara-3.jpg" alt="Istikhara Dua Page 3">
+  </div>
+
+</div>
+
+<!-- =========================
+     FARGHI RIZQ DETAIL PAGE
+========================= -->
+<div id="farghiPage" class="duaPage">
+
+  <div class="duaDetailCard">
+    <div class="duaDetailTitle">Farghi Rizq</div>
+
+    <img class="duaImage" src="../Images/Rizq.png" alt="Farghi Rizq Dua">
+  </div>
+
+</div>
+
+<!-- =========================
+     IMAN DETAIL PAGE
+========================= -->
+<div id="imanPage" class="duaPage">
+
+  <div class="duaDetailCard">
+
+    <div class="duaDetailTitle">Iman Mujmal</div>
+
+    <div class="duaArabic">
+      اٰمَنْتُ بِاللہِ كَمَا هُوَ بِاَسْمَآئِهٖ وَصِفَاتِهٖ وَقَبِلْتُ جَمِيْعَ اَحْكَامِهٖ
+    </div>
+
+    <div class="duaUrdu">
+      میں اللہ پر ایمان لایا جیسا کہ وہ اپنے ناموں اور صفات کے ساتھ ہے، اور میں نے اس کے تمام احکام قبول کیے۔
+    </div>
+
+  </div>
+
+  <div style="height:16px;"></div>
+
+  <div class="duaDetailCard">
+
+    <div class="duaDetailTitle">Iman Mufassal</div>
+
+    <div class="duaArabic">
+      اٰمَنْتُ بِاللہِ وَمَلٰٓئِكَتِهٖ وَكُتُبِهٖ وَرُسُلِهٖ وَالْيَوْمِ الْاٰخِرِ وَالْقَدْرِ خَيْرِهٖ وَشَرِّهٖ مِنَ اللہِ تَعَالٰی وَالْبَعْثِ بَعْدَ الْمَوْتِ
+    </div>
+
+    <div class="duaUrdu">
+      میں ایمان لایا اللہ پر، اس کے فرشتوں پر، اس کی کتابوں پر، اس کے رسولوں پر، قیامت کے دن پر، اور اچھی بری تقدیر پر جو اللہ تعالیٰ کی طرف سے ہے، اور مرنے کے بعد دوبارہ اٹھائے جانے پر۔
+    </div>
+
+  </div>
+
+</div>
+
+<!-- =========================
+     AYATUL KURSI DETAIL PAGE
+========================= -->
+<div id="ayatulPage" class="duaPage">
+
+  <!-- =========================
+       AYATUL KURSI HEADER CARD
+  ========================= -->
+  <div style="
+  width:100%;
+  background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.88) 100%);
+  border-radius:30px;
+  padding:24px 6%;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  border:1px solid rgba(255,255,255,0.75);
+  box-sizing:border-box;
+  margin-bottom:18px;
+  ">
+
+    <div style="
+    font-size:38px;
+    margin-bottom:10px;
+    ">
+      📖
+    </div>
+
+    <div style="
+    font-size:28px;
+    font-weight:900;
+    color:#111;
+    letter-spacing:-0.6px;
+    line-height:1.1;
+    margin-bottom:8px;
+    ">
+      Ayatul Kursi
+    </div>
+
+    <div style="
+    font-size:15px;
+    font-weight:700;
+    color:#666;
+    line-height:1.5;
+    ">
+      Surah Al-Baqarah: 255
+    </div>
+
+  </div>
+
+  <!-- =========================
+       AYATUL KURSI ARABIC CARD
+  ========================= -->
+  <div style="
+  background:white;
+  border-radius:28px;
+  padding:22px 5%;
+  margin-bottom:16px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  box-sizing:border-box;
+  ">
+
+    <div style="
+    font-size:13px;
+    font-weight:800;
+    color:#777;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    margin-bottom:14px;
+    text-align:left;
+    ">
+      Arabic
+    </div>
+
+    <div style="
+    font-family:'Amiri','Noto Naskh Arabic',serif;
+    direction:rtl;
+    text-align:right;
+    font-size:27px;
+    line-height:2.15;
+    color:#111;
+    font-weight:600;
+    ">
+      ﴿اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ﴾
+    </div>
+
+    <div style="
+    margin-top:16px;
+    padding-top:14px;
+    border-top:1px solid #f0f0f3;
+    font-size:16px;
+    font-weight:800;
+    color:#666;
+    text-align:right;
+    direction:rtl;
+    ">
+      [ البقرة: 255 ]
+    </div>
+
+  </div>
+
+  <!-- =========================
+       AYATUL KURSI URDU TRANSLATION CARD
+  ========================= -->
+  <div style="
+  background:white;
+  border-radius:28px;
+  padding:22px 5%;
+  margin-bottom:16px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  box-sizing:border-box;
+  ">
+
+    <div style="
+    font-size:13px;
+    font-weight:800;
+    color:#777;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    margin-bottom:14px;
+    text-align:left;
+    ">
+      Urdu Translation
+    </div>
+
+    <div style="
+    font-family:'Noto Naskh Arabic','Amiri',serif;
+    direction:rtl;
+    text-align:right;
+    font-size:21px;
+    line-height:2;
+    color:#111;
+    ">
+      خدا (وہ معبود برحق ہے کہ) اس کے سوا کوئی عبادت کے لائق نہیں، زندہ ہمیشہ رہنے والا، اسے نہ اونگھ آتی ہے نہ نیند۔ جو کچھ آسمانوں میں اور جو کچھ زمین میں ہے سب اسی کا ہے۔ کون ہے جو اس کی اجازت کے بغیر اس سے کسی کی سفارش کر سکے؟ جو کچھ لوگوں کے روبرو ہو رہا ہے اور جو کچھ ان کے پیچھے ہوچکا ہے اسے سب معلوم ہے، اور وہ اس کی معلومات میں سے کسی چیز پر دسترس حاصل نہیں کر سکتے، ہاں جس قدر وہ چاہتا ہے اسی قدر معلوم کرا دیتا ہے۔ اس کی بادشاہی اور علم آسمان اور زمین سب پر حاوی ہے، اور اسے ان کی حفاظت کچھ بھی دشوار نہیں۔ وہ بڑا عالی رتبہ اور جلیل القدر ہے۔
+    </div>
+
+  </div>
+
+  <!-- =========================
+       AYATUL KURSI URDU EXPLANATION CARD
+  ========================= -->
+  <div style="
+  background:white;
+  border-radius:28px;
+  padding:22px 5%;
+  margin-bottom:16px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  box-sizing:border-box;
+  ">
+
+    <div style="
+    font-size:13px;
+    font-weight:800;
+    color:#777;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    margin-bottom:14px;
+    text-align:left;
+    ">
+      Tafsir / Explanation
+    </div>
+
+    <div style="
+    font-family:'Noto Naskh Arabic','Amiri',serif;
+    direction:rtl;
+    text-align:right;
+    font-size:20px;
+    line-height:2;
+    color:#111;
+    margin-bottom:18px;
+    ">
+      (1) یہ آیت الکرسی ہے جس کی بڑی فضیلت صحیح احادیث سے ثابت ہے۔ مثلاً یہ آیت قرآن کی اعظم آیت ہے۔ اس کے پڑھنے سے رات کو شیطان سے تحفظ رہتا ہے۔ ہر فرض نماز کے بعد پڑھنے کی بڑی فضیلت ہے۔ یہ اللہ تعالیٰ کی صفات جلال، اس کی علو شان اور اس کی قدرت و عظمت پر مبنی نہایت جامع آیت ہے۔
+    </div>
+
+    <div style="
+    font-family:'Noto Naskh Arabic','Amiri',serif;
+    direction:rtl;
+    text-align:right;
+    font-size:20px;
+    line-height:2;
+    color:#111;
+    ">
+      (2) كُرْسِيٌّ سے بعض نے قدم رکھنے کی جگہ، بعض نے علم، بعض نے قدرت و عظمت، بعض نے بادشاہی اور بعض نے عرش مراد لیا ہے۔ صفات باری تعالیٰ کے بارے میں محدثین اور سلف کا مسلک یہ ہے کہ اللہ تعالیٰ کی جو صفات جس طرح قرآن و حدیث میں بیان ہوئی ہیں، ان کی کیفیت بیان کیے بغیر ان پر ایمان رکھا جائے۔
+    </div>
+
+  </div>
+
+</div>
+
+  </div>
+
+</div>
+
+<!-- =========================
+     DUA PAGE JAVASCRIPT
+========================= -->
+<script>
+
+/* =========================
+   DUA PAGE STATE
+========================= */
+let currentDuaSubPage = "main";
+
+/* =========================
+   SHOW ONLY ONE DUA PAGE
+========================= */
+function showOnlyDuaPage(pageId){
+
+  let pages = document.querySelectorAll(".duaPage");
+
+  pages.forEach(function(page){
+    page.classList.remove("active");
+  });
+
+  let targetPage = document.getElementById(pageId);
+
+  if(targetPage){
+    targetPage.classList.add("active");
+  }
+
+  window.scrollTo(0,0);
+}
+
+/* =========================
+   SET DUA TOP TITLE
+========================= */
+function setDuaTopTitle(titleText){
+
+  let title = document.getElementById("duaTopTitle");
+
+  if(title){
+    title.innerText = titleText;
+  }
+}
+
+/* =========================
+   OPEN DUA DETAIL PAGE
+========================= */
+function openDuaDetailPage(duaName){
+
+  currentDuaSubPage = duaName;
+
+  if(duaName === "istikhara"){
+    setDuaTopTitle("Istikhara Dua");
+    showOnlyDuaPage("istikharaPage");
+    return;
+  }
+
+  if(duaName === "farghi"){
+    setDuaTopTitle("Farghi Rizq");
+    showOnlyDuaPage("farghiPage");
+    return;
+  }
+
+  if(duaName === "iman"){
+    setDuaTopTitle("Iman Mujmal & Mufassal");
+    showOnlyDuaPage("imanPage");
+    return;
+  }
+
+  if(duaName === "ayatul"){
+    setDuaTopTitle("Ayatul Kursi");
+    showOnlyDuaPage("ayatulPage");
+    return;
+  }
+
+  openDuaMainPage();
+}
+
+/* =========================
+   OPEN DUA MAIN PAGE
+========================= */
+function openDuaMainPage(){
+
+  currentDuaSubPage = "main";
+  setDuaTopTitle("🤲 Masnoon Dua");
+  showOnlyDuaPage("duaMainPage");
+}
+
+
+     
+/* =========================
+   GET DUA RETURN SOURCE
+========================= */
+function getDuaReturnSource(){
+
+  let params = new URLSearchParams(window.location.search);
+  let from = params.get("from");
+
+  if(from === "more") return "more";
+  if(from === "home") return "home";
+  if(from === "tracker") return "tracker";
+  if(from === "salah") return "salah";
+
+  return "home";
+}
+
+/* =========================
+   HANDLE DUA BACK
+========================= */
+function handleDuaBack(){
+
+  if(currentDuaSubPage !== "main"){
+    openDuaMainPage();
+    return;
+  }
+
+  let from = getDuaReturnSource();
+
+  localStorage.setItem("ibadahFolderReturnPage", from);
+
+  window.location.href = "../";
+}
+
+
+     
+/* =========================
+   LOAD DUA PAGE
+========================= */
+function loadDuaPage(){
+
+  openDuaMainPage();
+
+}
+
+loadDuaPage();
+
+</script>
+
+</body>
+</html>
