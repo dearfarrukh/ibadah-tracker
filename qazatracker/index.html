@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Qaza Tracker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<meta name="theme-color" content="#e9e9ee">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<style>
+/* =========================
+   QAZA TRACKER PAGE CSS
+========================= */
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+  margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
+  background:#e9e9ee;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
+  color:#111;
+  overflow-x:hidden;
+  touch-action:manipulation;
+  -webkit-user-select:none;
+  user-select:none;
+}
+
+button,
+input{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
+}
+
+button{
+  cursor:pointer;
+  touch-action:manipulation;
+}
+
+.qazaTopBar{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:8%;
+  min-height:62px;
+  max-height:78px;
+  background:rgba(233,233,238,0.96);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:env(safe-area-inset-top) 4% 0 4%;
+  border-bottom:1px solid rgba(0,0,0,0.08);
+  box-shadow:0 8px 22px rgba(0,0,0,0.08);
+  z-index:100;
+}
+
+.qazaBackBtn,
+.qazaLockBtn{
+  position:absolute;
+  bottom:10px;
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:50%;
+  background:white;
+  color:#111;
+  font-size:23px;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 12px rgba(0,0,0,0.10);
+}
+
+.qazaBackBtn{
+  left:4%;
+}
+
+.qazaLockBtn{
+  right:4%;
+}
+
+.qazaTitle{
+  font-size:20px;
+  font-weight:900;
+  color:#111;
+  letter-spacing:-0.3px;
+}
+
+.qazaPageWrap{
+  width:100%;
+  min-height:100vh;
+  padding:calc(8% + 22px) 4% 8% 4%;
+  background:#e9e9ee;
+}
+
+.qazaSegment{
+  width:100%;
+  background:#f2f2f7;
+  border-radius:999px;
+  padding:4px;
+  display:flex;
+  gap:4px;
+  margin-bottom:18px;
+}
+
+.qazaSegment button{
+  width:50%;
+  height:44px;
+  border:none;
+  border-radius:999px;
+  background:transparent;
+  color:#666;
+  font-size:19px;
+  font-weight:800;
+}
+
+.qazaSegment button.active{
+  background:white;
+  color:#111;
+  box-shadow:0 3px 8px rgba(0,0,0,0.06);
+}
+
+.qazaCard{
+  width:100%;
+  background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(250,250,252,0.96) 100%);
+  border-radius:22px;
+  padding:12px 12px 10px 12px;
+  margin-bottom:10px;
+  box-shadow:0 8px 18px rgba(0,0,0,0.05);
+  border:1px solid rgba(255,255,255,0.75);
+}
+
+.qazaCardHeader{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
+}
+
+.qazaPrayerName{
+  font-size:20px;
+  font-weight:900;
+  color:#111;
+  line-height:1.1;
+}
+
+.qazaLastUpdated{
+  font-size:10px;
+  font-weight:700;
+  color:#8a8a8a;
+  line-height:1.25;
+  text-align:right;
+  max-width:44%;
+}
+
+.qazaInfoRow{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:8px;
+}
+
+.qazaInfoBox{
+  background:#f7f7fa;
+  border-radius:14px;
+  padding:8px 9px;
+}
+
+.qazaInfoBox.right{
+  text-align:right;
+}
+
+.qazaSmallLabel{
+  font-size:10px;
+  font-weight:800;
+  color:#888;
+  margin-bottom:4px;
+  line-height:1;
+}
+
+.qazaTotalInput{
+  width:100%;
+  height:28px;
+  border:none;
+  background:transparent;
+  padding:0;
+  margin:0;
+  font-size:18px;
+  font-weight:900;
+  color:#111;
+  outline:none;
+}
+
+.qazaRemaining{
+  font-size:18px;
+  font-weight:900;
+  color:#111;
+  line-height:1.1;
+}
+
+.qazaControlBar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:0;
+  background:#f3f3f6;
+  border-radius:18px;
+  min-height:52px;
+  padding:0 2px;
+  margin-bottom:8px;
+}
+
+.qazaAdjustBtn{
+  width:30%;
+  min-height:48px;
+  border:none;
+  background:transparent;
+  color:#111;
+  font-size:28px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:16px;
+}
+
+.qazaPerformed{
+  width:40%;
+  min-height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  font-weight:900;
+  color:#111;
+  line-height:1;
+}
+
+.qazaProgressLine{
+  width:100%;
+  height:5px;
+  background:#6f6f73;
+  border-radius:999px;
+  overflow:hidden;
+}
+
+.qazaProgressFill{
+  width:0%;
+  height:100%;
+  background:#34c759;
+  border-radius:999px;
+  transition:width 0.22s ease;
+}
+
+.qazaProgressCard{
+  width:100%;
+  background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(250,250,252,0.96) 100%);
+  border-radius:30px;
+  padding:20px;
+  margin-bottom:16px;
+  box-shadow:0 10px 24px rgba(0,0,0,0.06);
+  border:1px solid rgba(255,255,255,0.75);
+}
+
+.qazaCardTitle{
+  font-size:20px;
+  font-weight:900;
+  color:#111;
+  margin-bottom:16px;
+}
+
+.qazaOverallRow{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.qazaOverallRing{
+  width:34%;
+  max-width:130px;
+  aspect-ratio:1 / 1;
+  border-radius:50%;
+  flex-shrink:0;
+  background:conic-gradient(#34c759 0deg, #e9e9ee 0deg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.qazaOverallRingInner{
+  width:74%;
+  height:74%;
+  border-radius:50%;
+  background:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+}
+
+.qazaOverallPercent{
+  font-size:24px;
+  font-weight:900;
+  color:#111;
+  line-height:1;
+}
+
+.qazaStats{
+  flex:1;
+  min-width:0;
+}
+
+.qazaStatsLabel{
+  font-size:13px;
+  font-weight:800;
+  color:#888;
+  margin-bottom:4px;
+}
+
+.qazaStatsNumber{
+  font-size:24px;
+  font-weight:900;
+  color:#111;
+  line-height:1.1;
+  margin-bottom:12px;
+}
+
+.qazaMiniGrid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:18px 10px;
+}
+
+.qazaMiniItem{
+  text-align:center;
+}
+
+.qazaMiniName{
+  font-size:15px;
+  font-weight:900;
+  color:#111;
+  margin-bottom:10px;
+}
+
+.qazaMiniRing{
+  width:74%;
+  max-width:78px;
+  aspect-ratio:1 / 1;
+  border-radius:50%;
+  margin:0 auto 8px auto;
+  background:conic-gradient(#34c759 0deg, #e9e9ee 0deg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.qazaMiniInner{
+  width:72%;
+  height:72%;
+  border-radius:50%;
+  background:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:15px;
+  font-weight:900;
+  color:#111;
+}
+
+.qazaMiniText{
+  font-size:12px;
+  font-weight:800;
+  color:#777;
+}
+
+.qazaGoalControl{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.qazaGoalNumberBox{
+  min-width:60px;
+  text-align:center;
+}
+
+.qazaGoalNumber{
+  font-size:40px;
+  font-weight:900;
+  color:#111;
+  line-height:1;
+}
+
+.qazaGoalLabel{
+  font-size:12px;
+  font-weight:800;
+  color:#777;
+  margin-top:6px;
+}
+
+.qazaGoalButtons{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  background:#f3f3f6;
+  border-radius:22px;
+  padding:12px;
+}
+
+.qazaGoalButtons button{
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:14px;
+  background:white;
+  color:#111;
+  font-size:28px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.qazaGoalButtons button.plus{
+  background:#111;
+  color:white;
+}
+
+.qazaGoalEstimate{
+  margin-top:16px;
+  font-size:22px;
+  font-weight:900;
+  line-height:1.4;
+  color:#34c759;
+}
+
+.qazaPopupOverlay{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:rgba(0,0,0,0.35);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  z-index:300;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.qazaPopupCard{
+  width:100%;
+  max-width:340px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,248,250,0.96) 100%);
+  border-radius:30px;
+  padding:24px 20px 18px 20px;
+  box-shadow:0 22px 50px rgba(0,0,0,0.20);
+  border:1px solid rgba(255,255,255,0.7);
+  text-align:center;
+}
+
+.qazaPopupIcon{
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  background:#f2f2f7;
+  color:#111;
+  font-size:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 14px auto;
+}
+
+.qazaPopupTitle{
+  font-size:22px;
+  font-weight:900;
+  color:#111;
+  margin-bottom:8px;
+}
+
+.qazaPopupText{
+  font-size:15px;
+  line-height:1.6;
+  color:#666;
+  margin-bottom:18px;
+}
+
+.qazaPopupMainBtn{
+  width:100%;
+  border:none;
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:10px;
+  background:#111;
+  color:white;
+  font-size:18px;
+  font-weight:900;
+}
+
+.qazaPopupCancelBtn{
+  width:100%;
+  border:none;
+  border-radius:18px;
+  padding:14px;
+  background:#f2f2f7;
+  color:#666;
+  font-size:17px;
+  font-weight:800;
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     QAZA TOP BAR
+========================= -->
+<div class="qazaTopBar">
+  <button class="qazaBackBtn" onclick="goBackToMainIbadahApp()">←</button>
+  <div class="qazaTitle">Qaza Tracker</div>
+  <button id="qazaLockBtn" class="qazaLockBtn" onclick="toggleQazaLockState()">🔒</button>
+</div>
+
+<!-- =========================
+     QAZA PAGE WRAP
+========================= -->
+<div class="qazaPageWrap">
+
+  <!-- =========================
+       QAZA SEGMENT TABS
+  ========================= -->
+  <div class="qazaSegment">
+    <button id="qazaPrayerTabBtn" class="active" onclick="showQazaPrayerTab()">Prayer</button>
+    <button id="qazaProgressTabBtn" onclick="showQazaProgressTab()">Progress</button>
+  </div>
+
+  <!-- =========================
+       QAZA PRAYER TAB
+  ========================= -->
+  <div id="qazaPrayerTab"></div>
+
+  <!-- =========================
+       QAZA PROGRESS TAB
+  ========================= -->
+  <div id="qazaProgressTab" style="display:none;">
+
+    <div class="qazaProgressCard">
+      <div class="qazaCardTitle">Overall Progress</div>
+
+      <div class="qazaOverallRow">
+        <div id="qazaOverallRing" class="qazaOverallRing">
+          <div class="qazaOverallRingInner">
+            <div id="qazaOverallPercentText" class="qazaOverallPercent">0%</div>
+          </div>
+        </div>
+
+        <div class="qazaStats">
+          <div class="qazaStatsLabel">Completed</div>
+          <div id="qazaOverallDoneText" class="qazaStatsNumber">0</div>
+
+          <div class="qazaStatsLabel">Total Qaza</div>
+          <div id="qazaOverallTotalText" class="qazaStatsNumber">0</div>
+
+          <div class="qazaStatsLabel">Remaining</div>
+          <div id="qazaOverallRemainingText" class="qazaStatsNumber" style="color:#34c759;">0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="qazaProgressCard">
+      <div class="qazaCardTitle">Salah Progress</div>
+      <div id="qazaMiniGrid" class="qazaMiniGrid"></div>
+    </div>
+
+    <div class="qazaProgressCard">
+      <div class="qazaCardTitle">Daily Goal</div>
+
+      <div class="qazaGoalControl">
+        <div class="qazaGoalNumberBox">
+          <div id="qazaGoalPerDayText" class="qazaGoalNumber">1</div>
+          <div class="qazaGoalLabel">per day</div>
+        </div>
+
+        <div class="qazaGoalButtons">
+          <button onclick="decreaseQazaGoalPerDay()">−</button>
+          <button class="plus" onclick="increaseQazaGoalPerDay()">+</button>
+        </div>
+      </div>
+
+      <div id="qazaGoalEstimateText" class="qazaGoalEstimate">
+        All qaza prayers will be completed in 0 days
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- =========================
+     QAZA LOCK REQUIRED POPUP
+========================= -->
+<div id="qazaLockRequiredPopup" class="qazaPopupOverlay" onclick="closeQazaLockRequiredPopup()">
+  <div class="qazaPopupCard" onclick="event.stopPropagation()">
+    <div class="qazaPopupIcon">🔒</div>
+    <div class="qazaPopupTitle">Unlock first</div>
+    <div class="qazaPopupText">Unlock first to edit Qaza totals or use the plus and minus buttons.</div>
+
+    <button class="qazaPopupMainBtn" onclick="unlockQazaEditingFromPopup()">Unlock Editing</button>
+    <button class="qazaPopupCancelBtn" onclick="closeQazaLockRequiredPopup()">Cancel</button>
+  </div>
+</div>
+
+<script>
+/* =========================
+   QAZA TRACKER JAVASCRIPT
+========================= */
+
+let qazaPrayerNames = ["fajr", "dhuhr", "asr", "maghrib", "isha", "witr"];
+
+let qazaPrayerLabels = {
+  fajr: "Fajr",
+  dhuhr: "Dhuhr",
+  asr: "Asr",
+  maghrib: "Maghrib",
+  isha: "Isha",
+  witr: "Witr"
+};
+
+let qazaData = {
+  fajr: { total:0, done:0 },
+  dhuhr: { total:0, done:0 },
+  asr: { total:0, done:0 },
+  maghrib: { total:0, done:0 },
+  isha: { total:0, done:0 },
+  witr: { total:0, done:0 }
+};
+
+let qazaHoldTimer = null;
+let qazaHoldInterval = null;
+let qazaHoldStarted = false;
+
+/* =========================
+   GO BACK TO MAIN IBADAH APP
+========================= */
+function goBackToMainIbadahApp(){
+
+  setQazaLockState(true);
+
+  let returnPage = localStorage.getItem("qazaReturnPage") || "more";
+
+  localStorage.setItem("ibadahFolderReturnPage", returnPage);
+
+  window.location.href = "../";
+}
+
+/* =========================
+   BUILD QAZA PRAYER CARDS
+========================= */
+function buildQazaPrayerCards(){
+
+  let container = document.getElementById("qazaPrayerTab");
+  if(!container) return;
+
+  container.innerHTML = "";
+
+  qazaPrayerNames.forEach(function(prayer){
+
+    let label = qazaPrayerLabels[prayer];
+
+    let card = document.createElement("div");
+    card.className = "qazaCard";
+
+    card.innerHTML = `
+      <div class="qazaCardHeader">
+        <div class="qazaPrayerName">${label}</div>
+        <div id="${prayer}LastUpdated" class="qazaLastUpdated">—</div>
+      </div>
+
+      <div class="qazaInfoRow">
+        <div class="qazaInfoBox">
+          <div class="qazaSmallLabel">Total</div>
+          <input id="${prayer}TotalInput" class="qazaTotalInput" type="number" min="0" placeholder="0">
+        </div>
+
+        <div class="qazaInfoBox right">
+          <div class="qazaSmallLabel">Remaining</div>
+          <div id="${prayer}Remaining" class="qazaRemaining">0</div>
+        </div>
+      </div>
+
+      <div class="qazaControlBar">
+        <button class="qazaAdjustBtn"
+          onclick="handleQazaDecreaseTap('${prayer}')"
+          onmousedown="startHoldQaza('${prayer}', -1)"
+          onmouseup="stopHoldQaza()"
+          onmouseleave="stopHoldQaza()"
+          ontouchstart="startHoldQaza('${prayer}', -1)"
+          ontouchend="stopHoldQaza()"
+          ontouchcancel="stopHoldQaza()">−</button>
+
+        <div id="${prayer}Performed" class="qazaPerformed">0</div>
+
+        <button class="qazaAdjustBtn"
+          onclick="handleQazaIncreaseTap('${prayer}')"
+          onmousedown="startHoldQaza('${prayer}', 1)"
+          onmouseup="stopHoldQaza()"
+          onmouseleave="stopHoldQaza()"
+          ontouchstart="startHoldQaza('${prayer}', 1)"
+          ontouchend="stopHoldQaza()"
+          ontouchcancel="stopHoldQaza()">+</button>
+      </div>
+
+      <div class="qazaProgressLine">
+        <div id="${prayer}ProgressFill" class="qazaProgressFill"></div>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+
+  setupQazaTotalInputs();
+}
+
+/* =========================
+   SETUP QAZA TOTAL INPUTS
+========================= */
+function setupQazaTotalInputs(){
+
+  qazaPrayerNames.forEach(function(prayer){
+
+    let input = document.getElementById(prayer + "TotalInput");
+    if(!input) return;
+
+    input.addEventListener("input", function(){
+
+      if(getQazaLockState()){
+        input.blur();
+        openQazaLockRequiredPopup();
+        return;
+      }
+
+      let value = parseInt(input.value || "0", 10);
+      if(!value || value < 0) value = 0;
+
+      qazaData[prayer].total = value;
+
+      if(qazaData[prayer].done > qazaData[prayer].total){
+        qazaData[prayer].done = qazaData[prayer].total;
+      }
+
+      saveQazaPrayerData(prayer);
+      updateSingleQazaUI(prayer);
+      updateQazaProgressTabUI();
+    });
+
+    input.addEventListener("focus", function(){
+      if(getQazaLockState()){
+        input.blur();
+        openQazaLockRequiredPopup();
+      }
+    });
+
+  });
+}
+
+/* =========================
+   LOAD ALL QAZA DATA
+========================= */
+function loadAllQazaData(){
+
+  qazaPrayerNames.forEach(function(prayer){
+
+    let total = parseInt(localStorage.getItem(prayer + "Total") || "0", 10);
+    let done = parseInt(localStorage.getItem(prayer + "Done") || "0", 10);
+
+    if(!total || total < 0) total = 0;
+    if(!done || done < 0) done = 0;
+
+    if(done > total){
+      done = total;
+      localStorage.setItem(prayer + "Done", done);
+    }
+
+    qazaData[prayer].total = total;
+    qazaData[prayer].done = done;
+
+    let totalInput = document.getElementById(prayer + "TotalInput");
+    let performedBox = document.getElementById(prayer + "Performed");
+    let lastUpdatedBox = document.getElementById(prayer + "LastUpdated");
+
+    if(totalInput){
+      totalInput.value = total > 0 ? total : "";
+    }
+
+    if(performedBox){
+      performedBox.innerText = done;
+    }
+
+    let last = localStorage.getItem(prayer + "LastUpdated");
+    if(lastUpdatedBox){
+      lastUpdatedBox.innerText = last ? last : "—";
+    }
+
+    updateSingleQazaUI(prayer);
+  });
+}
+
+/* =========================
+   SAVE QAZA PRAYER DATA
+========================= */
+function saveQazaPrayerData(prayer){
+
+  localStorage.setItem(prayer + "Total", qazaData[prayer].total);
+  localStorage.setItem(prayer + "Done", qazaData[prayer].done);
+
+  let now = new Date().toLocaleString();
+  localStorage.setItem(prayer + "LastUpdated", now);
+
+  let lastUpdatedBox = document.getElementById(prayer + "LastUpdated");
+  if(lastUpdatedBox){
+    lastUpdatedBox.innerText = now;
+  }
+}
+
+/* =========================
+   GET QAZA REMAINING
+========================= */
+function getQazaRemaining(prayer){
+
+  let remaining = qazaData[prayer].total - qazaData[prayer].done;
+
+  if(remaining < 0) remaining = 0;
+
+  return remaining;
+}
+
+/* =========================
+   UPDATE SINGLE QAZA UI
+========================= */
+function updateSingleQazaUI(prayer){
+
+  let remainingBox = document.getElementById(prayer + "Remaining");
+  let performedBox = document.getElementById(prayer + "Performed");
+  let progressFill = document.getElementById(prayer + "ProgressFill");
+
+  let total = qazaData[prayer].total;
+  let done = qazaData[prayer].done;
+  let remaining = getQazaRemaining(prayer);
+
+  if(remainingBox) remainingBox.innerText = remaining;
+  if(performedBox) performedBox.innerText = done;
+
+  let percent = total > 0 ? Math.round((done / total) * 100) : 0;
+  if(percent > 100) percent = 100;
+
+  if(progressFill){
+    progressFill.style.width = percent + "%";
+  }
+}
+
+/* =========================
+   HANDLE QAZA INCREASE TAP
+========================= */
+function handleQazaIncreaseTap(prayer){
+
+  if(qazaHoldStarted){
+    qazaHoldStarted = false;
+    return;
+  }
+
+  adjustQazaPrayer(prayer, 1);
+}
+
+/* =========================
+   HANDLE QAZA DECREASE TAP
+========================= */
+function handleQazaDecreaseTap(prayer){
+
+  if(qazaHoldStarted){
+    qazaHoldStarted = false;
+    return;
+  }
+
+  adjustQazaPrayer(prayer, -1);
+}
+
+/* =========================
+   ADJUST QAZA PRAYER
+========================= */
+function adjustQazaPrayer(prayer, amount){
+
+  if(getQazaLockState()){
+    openQazaLockRequiredPopup();
+    return;
+  }
+
+  if(!qazaData[prayer]) return;
+
+  let total = qazaData[prayer].total;
+  let done = qazaData[prayer].done;
+
+  done = done + amount;
+
+  if(done < 0) done = 0;
+  if(done > total) done = total;
+
+  qazaData[prayer].done = done;
+
+  saveQazaPrayerData(prayer);
+  updateSingleQazaUI(prayer);
+  updateQazaProgressTabUI();
+}
+
+/* =========================
+   START HOLD QAZA
+========================= */
+function startHoldQaza(prayer, amount){
+
+  if(getQazaLockState()){
+    openQazaLockRequiredPopup();
+    return;
+  }
+
+  qazaHoldStarted = false;
+
+  clearTimeout(qazaHoldTimer);
+  clearInterval(qazaHoldInterval);
+
+  qazaHoldTimer = setTimeout(function(){
+
+    qazaHoldStarted = true;
+
+    qazaHoldInterval = setInterval(function(){
+      adjustQazaPrayer(prayer, amount);
+    }, 500);
+
+  }, 500);
+}
+
+/* =========================
+   STOP HOLD QAZA
+========================= */
+function stopHoldQaza(){
+
+  clearTimeout(qazaHoldTimer);
+  clearInterval(qazaHoldInterval);
+
+  qazaHoldTimer = null;
+  qazaHoldInterval = null;
+
+  setTimeout(function(){
+    qazaHoldStarted = false;
+  }, 80);
+}
+
+/* =========================
+   SHOW QAZA PRAYER TAB
+========================= */
+function showQazaPrayerTab(){
+
+  let prayerTab = document.getElementById("qazaPrayerTab");
+  let progressTab = document.getElementById("qazaProgressTab");
+  let prayerBtn = document.getElementById("qazaPrayerTabBtn");
+  let progressBtn = document.getElementById("qazaProgressTabBtn");
+
+  if(prayerTab) prayerTab.style.display = "block";
+  if(progressTab) progressTab.style.display = "none";
+
+  if(prayerBtn) prayerBtn.classList.add("active");
+  if(progressBtn) progressBtn.classList.remove("active");
+}
+
+/* =========================
+   SHOW QAZA PROGRESS TAB
+========================= */
+function showQazaProgressTab(){
+
+  let prayerTab = document.getElementById("qazaPrayerTab");
+  let progressTab = document.getElementById("qazaProgressTab");
+  let prayerBtn = document.getElementById("qazaPrayerTabBtn");
+  let progressBtn = document.getElementById("qazaProgressTabBtn");
+
+  if(prayerTab) prayerTab.style.display = "none";
+  if(progressTab) progressTab.style.display = "block";
+
+  if(prayerBtn) prayerBtn.classList.remove("active");
+  if(progressBtn) progressBtn.classList.add("active");
+
+  updateQazaProgressTabUI();
+}
+
+/* =========================
+   UPDATE QAZA PROGRESS TAB UI
+========================= */
+function updateQazaProgressTabUI(){
+
+  let totalAll = 0;
+  let doneAll = 0;
+
+  qazaPrayerNames.forEach(function(prayer){
+    totalAll += qazaData[prayer].total;
+    doneAll += qazaData[prayer].done;
+  });
+
+  let remainingAll = totalAll - doneAll;
+  if(remainingAll < 0) remainingAll = 0;
+
+  let percent = totalAll > 0 ? Math.round((doneAll / totalAll) * 100) : 0;
+  if(percent > 100) percent = 100;
+
+  let degrees = Math.round((percent / 100) * 360);
+
+  let ring = document.getElementById("qazaOverallRing");
+  let percentText = document.getElementById("qazaOverallPercentText");
+  let doneText = document.getElementById("qazaOverallDoneText");
+  let totalText = document.getElementById("qazaOverallTotalText");
+  let remainingText = document.getElementById("qazaOverallRemainingText");
+
+  if(ring){
+    ring.style.background = "conic-gradient(#34c759 0deg, #34c759 " + degrees + "deg, #e9e9ee " + degrees + "deg, #e9e9ee 360deg)";
+  }
+
+  if(percentText) percentText.innerText = percent + "%";
+  if(doneText) doneText.innerText = doneAll;
+  if(totalText) totalText.innerText = totalAll;
+  if(remainingText) remainingText.innerText = remainingAll;
+
+  renderQazaMiniProgress();
+  updateQazaGoalEstimate();
+}
+
+/* =========================
+   RENDER QAZA MINI PROGRESS
+========================= */
+function renderQazaMiniProgress(){
+
+  let grid = document.getElementById("qazaMiniGrid");
+  if(!grid) return;
+
+  grid.innerHTML = "";
+
+  qazaPrayerNames.forEach(function(prayer){
+
+    let total = qazaData[prayer].total;
+    let done = qazaData[prayer].done;
+
+    let percent = total > 0 ? Math.round((done / total) * 100) : 0;
+    if(percent > 100) percent = 100;
+
+    let degrees = Math.round((percent / 100) * 360);
+
+    let item = document.createElement("div");
+    item.className = "qazaMiniItem";
+
+    item.innerHTML = `
+      <div class="qazaMiniName">${qazaPrayerLabels[prayer]}</div>
+
+      <div class="qazaMiniRing" style="background:conic-gradient(#34c759 0deg, #34c759 ${degrees}deg, #e9e9ee ${degrees}deg, #e9e9ee 360deg);">
+        <div class="qazaMiniInner">${percent}%</div>
+      </div>
+
+      <div class="qazaMiniText">${done} / ${total}</div>
+    `;
+
+    grid.appendChild(item);
+  });
+}
+
+/* =========================
+   GET QAZA GOAL PER DAY
+========================= */
+function getQazaGoalPerDay(){
+
+  let goal = parseInt(localStorage.getItem("qazaGoalPerDay") || "1", 10);
+
+  if(!goal || goal < 1) goal = 1;
+
+  return goal;
+}
+
+/* =========================
+   SET QAZA GOAL PER DAY
+========================= */
+function setQazaGoalPerDay(goal){
+
+  if(!goal || goal < 1) goal = 1;
+
+  localStorage.setItem("qazaGoalPerDay", goal);
+
+  updateQazaGoalEstimate();
+}
+
+/* =========================
+   INCREASE QAZA GOAL PER DAY
+========================= */
+function increaseQazaGoalPerDay(){
+
+  let goal = getQazaGoalPerDay();
+  goal = goal + 1;
+
+  setQazaGoalPerDay(goal);
+}
+
+/* =========================
+   DECREASE QAZA GOAL PER DAY
+========================= */
+function decreaseQazaGoalPerDay(){
+
+  let goal = getQazaGoalPerDay();
+  goal = goal - 1;
+
+  if(goal < 1) goal = 1;
+
+  setQazaGoalPerDay(goal);
+}
+
+/* =========================
+   UPDATE QAZA GOAL ESTIMATE
+========================= */
+function updateQazaGoalEstimate(){
+
+  let goal = getQazaGoalPerDay();
+  let goalText = document.getElementById("qazaGoalPerDayText");
+  let estimateText = document.getElementById("qazaGoalEstimateText");
+
+  if(goalText) goalText.innerText = goal;
+
+  let remainingAll = 0;
+
+  qazaPrayerNames.forEach(function(prayer){
+    remainingAll += getQazaRemaining(prayer);
+  });
+
+  let days = Math.ceil(remainingAll / goal);
+
+  if(estimateText){
+    if(remainingAll <= 0){
+      estimateText.innerText = "All qaza prayers are completed";
+    }else{
+      estimateText.innerText = "All qaza prayers will be completed in " + days + " days";
+    }
+  }
+}
+
+/* =========================
+   GET QAZA LOCK STATE
+========================= */
+function getQazaLockState(){
+
+  let saved = localStorage.getItem("qazaLocked");
+
+  if(saved === null){
+    localStorage.setItem("qazaLocked", "true");
+    return true;
+  }
+
+  return saved === "true";
+}
+
+/* =========================
+   SET QAZA LOCK STATE
+========================= */
+function setQazaLockState(isLocked){
+
+  localStorage.setItem("qazaLocked", isLocked ? "true" : "false");
+
+  updateQazaLockButtonUI();
+  updateQazaTotalInputsLockState();
+}
+
+/* =========================
+   TOGGLE QAZA LOCK STATE
+========================= */
+function toggleQazaLockState(){
+
+  let isLocked = getQazaLockState();
+
+  setQazaLockState(!isLocked);
+}
+
+/* =========================
+   UPDATE QAZA LOCK BUTTON UI
+========================= */
+function updateQazaLockButtonUI(){
+
+  let btn = document.getElementById("qazaLockBtn");
+  if(!btn) return;
+
+  let isLocked = getQazaLockState();
+
+  if(isLocked){
+    btn.innerHTML = "🔒";
+    btn.style.background = "#FF3B30";
+    btn.style.color = "white";
+    btn.style.boxShadow = "0 6px 14px rgba(255,59,48,0.28)";
+  }else{
+    btn.innerHTML = "🔓";
+    btn.style.background = "#34C759";
+    btn.style.color = "white";
+    btn.style.boxShadow = "0 6px 14px rgba(52,199,89,0.35)";
+  }
+}
+
+/* =========================
+   UPDATE QAZA TOTAL INPUTS LOCK STATE
+========================= */
+function updateQazaTotalInputsLockState(){
+
+  let totalInputs = document.querySelectorAll(".qazaTotalInput");
+  let qazaButtons = document.querySelectorAll(".qazaAdjustBtn");
+  let isLocked = getQazaLockState();
+
+  totalInputs.forEach(function(input){
+    if(isLocked){
+      input.readOnly = true;
+      input.style.opacity = "0.75";
+      input.style.cursor = "pointer";
+    }else{
+      input.readOnly = false;
+      input.style.opacity = "1";
+      input.style.cursor = "text";
+    }
+  });
+
+  qazaButtons.forEach(function(btn){
+    if(isLocked){
+      btn.style.opacity = "0.45";
+      btn.style.cursor = "not-allowed";
+    }else{
+      btn.style.opacity = "1";
+      btn.style.cursor = "pointer";
+    }
+  });
+}
+
+/* =========================
+   OPEN QAZA LOCK REQUIRED POPUP
+========================= */
+function openQazaLockRequiredPopup(){
+
+  let popup = document.getElementById("qazaLockRequiredPopup");
+
+  if(popup){
+    popup.style.display = "flex";
+  }
+}
+
+/* =========================
+   CLOSE QAZA LOCK REQUIRED POPUP
+========================= */
+function closeQazaLockRequiredPopup(){
+
+  let popup = document.getElementById("qazaLockRequiredPopup");
+
+  if(popup){
+    popup.style.display = "none";
+  }
+}
+
+/* =========================
+   UNLOCK QAZA EDITING FROM POPUP
+========================= */
+function unlockQazaEditingFromPopup(){
+
+  setQazaLockState(false);
+
+  closeQazaLockRequiredPopup();
+}
+
+/* =========================
+   QAZA LOCKED CONTROL TAP HANDLER
+========================= */
+document.addEventListener("click", function(e){
+
+  let target = e.target;
+  if(!target) return;
+
+  let isTotalInput = target.classList && target.classList.contains("qazaTotalInput");
+  let isAdjustButton = target.classList && target.classList.contains("qazaAdjustBtn");
+
+  if(isTotalInput || isAdjustButton){
+
+    if(getQazaLockState()){
+      e.preventDefault();
+      e.stopPropagation();
+
+      if(isTotalInput){
+        target.blur();
+      }
+
+      openQazaLockRequiredPopup();
+      return false;
+    }
+
+  }
+
+}, true);
+
+/* =========================
+   START QAZA PAGE
+========================= */
+function startQazaTrackerPage(){
+
+  buildQazaPrayerCards();
+  loadAllQazaData();
+  updateQazaProgressTabUI();
+  updateQazaLockButtonUI();
+  updateQazaTotalInputsLockState();
+  showQazaPrayerTab();
+
+  window.scrollTo(0,0);
+}
+
+window.addEventListener("load", startQazaTrackerPage);
+</script>
+
+</body>
+</html>
