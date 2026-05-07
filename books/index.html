@@ -1,1 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Books</title>
+
+<style>
+/* =========================
+   BOOKS MAIN PAGE
+========================= */
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+  margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
+  background:#e9e9ee;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  color:#111;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+/* =========================
+   PAGE WRAP
+========================= */
+
+#booksPage{
+  width:100%;
+  min-height:100vh;
+  background:#e9e9ee;
+  padding:calc(18px + env(safe-area-inset-top)) 5% calc(32px + env(safe-area-inset-bottom)) 5%;
+}
+
+/* =========================
+   TOP BAR
+========================= */
+
+.booksTopBar{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.booksBackBtn{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  border:none;
+  background:white;
+  color:#111;
+  font-size:26px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 18px rgba(0,0,0,0.10);
+  cursor:pointer;
+}
+
+.booksTopTitleWrap{
+  flex:1;
+  min-width:0;
+}
+
+.booksTopSmall{
+  font-size:13px;
+  font-weight:800;
+  color:#777;
+  margin-bottom:2px;
+}
+
+.booksTopTitle{
+  font-size:28px;
+  font-weight:950;
+  color:#111;
+  letter-spacing:-0.5px;
+}
+
+.booksIconBubble{
+  width:48px;
+  height:48px;
+  border-radius:18px;
+  background:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.10);
+}
+
+/* =========================
+   HERO CARD
+========================= */
+
+.booksHeroCard{
+  width:100%;
+  background:linear-gradient(135deg,#ffffff,#f7f7fa);
+  border-radius:30px;
+  padding:22px 5%;
+  box-shadow:0 10px 28px rgba(0,0,0,0.08);
+  border:1px solid rgba(0,0,0,0.04);
+  margin-bottom:18px;
+}
+
+.booksHeroTitle{
+  font-size:22px;
+  font-weight:950;
+  color:#111;
+  margin-bottom:8px;
+}
+
+.booksHeroText{
+  font-size:14px;
+  font-weight:700;
+  line-height:1.55;
+  color:#555;
+}
+
+/* =========================
+   SECTION TITLE
+========================= */
+
+.booksSectionTitle{
+  font-size:15px;
+  font-weight:950;
+  color:#555;
+  margin:22px 0 12px 2px;
+  letter-spacing:0.3px;
+  text-transform:uppercase;
+}
+
+/* =========================
+   BOOK CARD
+========================= */
+
+.bookCard{
+  width:100%;
+  background:white;
+  border-radius:28px;
+  padding:18px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.04);
+  cursor:pointer;
+  margin-bottom:14px;
+}
+
+.bookCard:active{
+  transform:scale(0.985);
+}
+
+.bookLeft{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-width:0;
+  flex:1;
+}
+
+.bookIcon{
+  width:58px;
+  height:58px;
+  border-radius:22px;
+  background:#e9e9ee;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  flex-shrink:0;
+}
+
+.bookTextWrap{
+  min-width:0;
+  flex:1;
+}
+
+.bookTitle{
+  font-size:18px;
+  font-weight:950;
+  color:#111;
+  margin-bottom:4px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.bookSub{
+  font-size:13px;
+  font-weight:700;
+  color:#666;
+  line-height:1.35;
+}
+
+.bookArrow{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:#f2f2f6;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  font-weight:900;
+  color:#333;
+  flex-shrink:0;
+}
+
+/* =========================
+   EMPTY CARD
+========================= */
+
+.booksComingCard{
+  width:100%;
+  background:rgba(255,255,255,0.72);
+  border-radius:26px;
+  padding:18px 5%;
+  border:1px dashed rgba(0,0,0,0.14);
+  color:#777;
+  font-size:14px;
+  font-weight:750;
+  line-height:1.5;
+}
+
+/* =========================
+   SMALL PHONE FIX
+========================= */
+
+@media (max-width:380px){
+  #booksPage{
+    padding-left:4%;
+    padding-right:4%;
+  }
+
+  .booksTopTitle{
+    font-size:25px;
+  }
+
+  .bookTitle{
+    font-size:17px;
+  }
+
+  .bookIcon{
+    width:54px;
+    height:54px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     BOOKS MAIN PAGE
+========================= -->
+<div id="booksPage">
+
+  <!-- =========================
+       BOOKS TOP BAR
+  ========================= -->
+  <div class="booksTopBar">
+
+    <button class="booksBackBtn" onclick="goBackToMainApp()">‹</button>
+
+    <div class="booksTopTitleWrap">
+      <div class="booksTopSmall">Ibadah App</div>
+      <div class="booksTopTitle">Books</div>
+    </div>
+
+    <div class="booksIconBubble">📚</div>
+
+  </div>
+
+  <!-- =========================
+       BOOKS HERO CARD
+  ========================= -->
+  <div class="booksHeroCard">
+    <div class="booksHeroTitle">Islamic Learning Books</div>
+    <div class="booksHeroText">
+      Read Islamic learning books in a clean full-screen reader. More books can be added here later.
+    </div>
+  </div>
+
+  <!-- =========================
+       BOOKS LIST SECTION
+  ========================= -->
+  <div class="booksSectionTitle">Available Books</div>
+
+  <!-- =========================
+       NOORANI QAIDA CARD
+  ========================= -->
+  <div class="bookCard" onclick="openNooraniQaidaPage()">
+
+    <div class="bookLeft">
+
+      <div class="bookIcon">📖</div>
+
+      <div class="bookTextWrap">
+        <div class="bookTitle">Noorani Qaida</div>
+        <div class="bookSub">
+          Open the Noorani Qaida reader with sliding pages.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bookArrow">›</div>
+
+  </div>
+
+  <!-- =========================
+       COMING SOON CARD
+  ========================= -->
+  <div class="booksComingCard">
+    More books can be added here later, each one in its own folder page.
+  </div>
+
+</div>
+
+<script>
+/* =========================
+   OPEN NOORANI QAIDA PAGE
+   full function name: openNooraniQaidaPage
+========================= */
+function openNooraniQaidaPage(){
+
+  window.location.href = "noorani-qaida/";
+
+}
+
+/* =========================
+   GO BACK TO MAIN APP
+   full function name: goBackToMainApp
+========================= */
+function goBackToMainApp(){
+
+  localStorage.setItem("ibadahFolderReturnPage", "more");
+  window.location.href = "../";
+
+}
+</script>
+
+</body>
+</html>
 
