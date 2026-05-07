@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!-- =========================
+     ARABIC QURAN FOLDER PAGE
+     File: arabic-quran/index.html
+========================= -->
+
+<meta charset="UTF-8">
+<title>Arabic Quran</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<meta name="theme-color" content="#e9e9ee">
+<link rel="apple-touch-icon" href="../icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+
+<!-- =========================
+     QURAN FONT IMPORT
+========================= -->
+<link href="https://fonts.googleapis.com/css2?family=Amiri&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================
+   GLOBAL APP STYLE
+========================= */
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+  margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
+  font-family:-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+  background:#e9e9ee;
+  color:#111;
+  overflow:hidden;
+  touch-action:manipulation;
+}
+
+body{
+  position:fixed;
+  inset:0;
+}
+
+/* =========================
+   PAGE BASE
+========================= */
+.appPage{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:none;
+  background:linear-gradient(180deg,#f8f8fb 0%,#e9e9ee 100%);
+  overflow:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:18px 4% 34px 4%;
+}
+
+.appPage.active{
+  display:block;
+}
+
+/* =========================
+   SIMPLE TOP BAR
+========================= */
+.simpleTopBar{
+  width:100%;
+  height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  margin-bottom:16px;
+}
+
+.roundBackBtn,
+.roundIconBtn{
+  width:44px;
+  height:44px;
+  border:none;
+  border-radius:50%;
+  background:white;
+  color:#111;
+  font-size:23px;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:absolute;
+  top:7px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.10);
+  cursor:pointer;
+}
+
+.roundBackBtn{
+  left:0;
+}
+
+.roundIconBtn{
+  right:0;
+}
+
+.simpleTitle{
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:-0.4px;
+  color:#111;
+  text-align:center;
+  max-width:70%;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* =========================
+   HERO CARD
+========================= */
+.heroCard{
+  width:100%;
+  background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0.90));
+  border-radius:32px;
+  padding:30px 5%;
+  text-align:center;
+  box-shadow:0 12px 32px rgba(0,0,0,0.09);
+  border:1px solid rgba(255,255,255,0.75);
+  margin-bottom:18px;
+}
+
+.heroIcon{
+  font-size:42px;
+  margin-bottom:12px;
+}
+
+.heroTitle{
+  font-size:31px;
+  font-weight:900;
+  letter-spacing:-0.8px;
+  color:#111;
+  margin-bottom:8px;
+}
+
+.heroSub{
+  font-size:15px;
+  font-weight:600;
+  color:#666;
+  line-height:1.5;
+  max-width:300px;
+  margin:0 auto;
+}
+
+/* =========================
+   IOS OPTION CARDS
+========================= */
+.optionList{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.optionCard{
+  width:100%;
+  background:white;
+  border-radius:28px;
+  padding:20px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  cursor:pointer;
+}
+
+.optionLeft{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-width:0;
+  flex:1;
+}
+
+.optionIcon{
+  width:54px;
+  height:54px;
+  border-radius:19px;
+  background:#f2f2f7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+  flex-shrink:0;
+}
+
+.optionTitle{
+  font-size:20px;
+  font-weight:900;
+  color:#111;
+  margin-bottom:4px;
+  letter-spacing:-0.3px;
+}
+
+.optionSub{
+  font-size:14px;
+  font-weight:600;
+  color:#666;
+  line-height:1.35;
+}
+
+.optionArrow{
+  font-size:28px;
+  color:#b0b0b8;
+  flex-shrink:0;
+}
+
+/* =========================
+   SURAH LIST
+========================= */
+.searchBox{
+  width:100%;
+  background:white;
+  border:none;
+  outline:none;
+  border-radius:22px;
+  padding:17px 18px;
+  font-size:18px;
+  font-weight:700;
+  color:#111;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  margin-bottom:14px;
+}
+
+.surahList{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  padding-bottom:30px;
+}
+
+.surahCard{
+  width:100%;
+  background:white;
+  border-radius:26px;
+  padding:17px 4%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  cursor:pointer;
+}
+
+.surahNumber{
+  width:50px;
+  height:50px;
+  border-radius:18px;
+  background:#f2f2f7;
+  color:#111;
+  font-size:17px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+
+.surahNames{
+  min-width:0;
+  flex:1;
+}
+
+.surahEnglish{
+  font-size:18px;
+  font-weight:900;
+  color:#111;
+  margin-bottom:4px;
+  letter-spacing:-0.3px;
+}
+
+.surahArabic{
+  font-family:"Amiri","Noto Naskh Arabic",serif;
+  direction:rtl;
+  font-size:24px;
+  font-weight:700;
+  color:#555;
+  line-height:1.35;
+}
+
+.surahMeta{
+  font-size:13px;
+  font-weight:700;
+  color:#888;
+  white-space:nowrap;
+}
+
+/* =========================
+   BOOKMARK LIST
+========================= */
+.emptyCard{
+  width:100%;
+  background:white;
+  border-radius:26px;
+  padding:24px 5%;
+  text-align:center;
+  font-size:16px;
+  font-weight:700;
+  color:#666;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+}
+
+.bookmarkList{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.bookmarkCard{
+  width:100%;
+  background:white;
+  border-radius:26px;
+  padding:18px 5%;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  cursor:pointer;
+}
+
+.bookmarkTitle{
+  font-size:18px;
+  font-weight:900;
+  color:#111;
+  margin-bottom:4px;
+}
+
+.bookmarkSub{
+  font-size:14px;
+  font-weight:700;
+  color:#666;
+  line-height:1.35;
+}
+
+/* =========================
+   ARABIC READING PAGE
+========================= */
+#arabicReadingPage{
+  display:none;
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  background:#111;
+  overflow:hidden;
+  z-index:5000;
+}
+
+/* =========================
+   READER TOP BAR
+========================= */
+#arabicReaderTopBar{
+  position:fixed;
+  top:-86px;
+  left:0;
+  right:0;
+  height:86px;
+  padding:env(safe-area-inset-top) 4% 0 4%;
+  background:rgba(233,233,238,0.96);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  z-index:5010;
+  transition:top 0.28s ease;
+  border-bottom:1px solid rgba(0,0,0,0.08);
+  box-shadow:0 8px 24px rgba(0,0,0,0.14);
+}
+
+#arabicReaderTopBar.show{
+  top:0;
+}
+
+.readerTopBarInner{
+  width:100%;
+  height:62px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.readerBackBtn,
+.readerBookmarkBtn{
+  position:absolute;
+  bottom:10px;
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:50%;
+  background:white;
+  color:#111;
+  font-size:22px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 12px rgba(0,0,0,0.10);
+  cursor:pointer;
+}
+
+.readerBackBtn{
+  left:0;
+}
+
+.readerBookmarkBtn{
+  right:0;
+}
+
+.readerTitleWrap{
+  max-width:66%;
+  text-align:center;
+  padding-bottom:11px;
+}
+
+.readerTitle{
+  font-size:18px;
+  font-weight:900;
+  color:#111;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  letter-spacing:-0.3px;
+}
+
+.readerSubTitle{
+  font-size:12px;
+  font-weight:700;
+  color:#666;
+  margin-top:2px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* =========================
+   READER CONTENT
+========================= */
+#arabicReaderContent{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:linear-gradient(180deg,#f8f8fb 0%,#e9e9ee 100%);
+  overflow:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:18px 4% 34px 4%;
+  transition:top 0.28s ease, transform 0.28s ease, border-radius 0.28s ease;
+  transform-origin:center top;
+}
+
+#arabicReaderContent.shrink{
+  top:86px;
+  transform:scale(0.96);
+  border-radius:28px 28px 0 0;
+  box-shadow:0 -2px 30px rgba(0,0,0,0.22);
+}
+
+.readingHeaderCard{
+  width:100%;
+  background:white;
+  border-radius:30px;
+  padding:24px 5%;
+  margin-bottom:16px;
+  text-align:center;
+  box-shadow:0 10px 28px rgba(0,0,0,0.08);
+}
+
+.readingArabicTitle{
+  font-family:"Amiri","Noto Naskh Arabic",serif;
+  direction:rtl;
+  font-size:34px;
+  font-weight:700;
+  color:#111;
+  line-height:1.5;
+  margin-bottom:6px;
+}
+
+.readingEnglishTitle{
+  font-size:20px;
+  font-weight:900;
+  color:#111;
+  margin-bottom:5px;
+}
+
+.readingMeta{
+  font-size:14px;
+  font-weight:700;
+  color:#666;
+}
+
+.ayahList{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  padding-bottom:32px;
+}
+
+.ayahCard{
+  width:100%;
+  background:white;
+  border-radius:28px;
+  padding:20px 5%;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+}
+
+.ayahNumber{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:#f2f2f7;
+  color:#555;
+  font-size:14px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:12px;
+}
+
+.ayahArabic{
+  font-family:"Amiri","Noto Naskh Arabic",serif;
+  direction:rtl;
+  text-align:right;
+  font-size:31px;
+  line-height:2.05;
+  color:#111;
+  font-weight:600;
+}
+
+.loadingCard{
+  width:100%;
+  background:white;
+  border-radius:28px;
+  padding:24px 5%;
+  text-align:center;
+  font-size:18px;
+  font-weight:800;
+  color:#666;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+}
+
+/* =========================
+   TOAST
+========================= */
+#toast{
+  display:none;
+  position:fixed;
+  left:50%;
+  bottom:24px;
+  transform:translateX(-50%);
+  background:rgba(17,17,17,0.94);
+  color:white;
+  padding:14px 18px;
+  border-radius:18px;
+  font-size:16px;
+  font-weight:800;
+  z-index:9000;
+  box-shadow:0 10px 30px rgba(0,0,0,0.22);
+  max-width:88%;
+  text-align:center;
+}
+
+/* =========================
+   SMALL PHONES
+========================= */
+@media(max-width:390px){
+  .heroTitle{
+    font-size:28px;
+  }
+
+  .optionTitle{
+    font-size:19px;
+  }
+
+  .ayahArabic{
+    font-size:28px;
+    line-height:2;
+  }
+
+  .readingArabicTitle{
+    font-size:31px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     ARABIC QURAN HOME PAGE
+========================= -->
+<div id="arabicHomePage" class="appPage active">
+
+  <div class="simpleTopBar">
+    <button class="roundBackBtn" onclick="goBackToMainApp()">←</button>
+    <div class="simpleTitle">Arabic Quran</div>
+  </div>
+
+  <div class="heroCard">
+    <div class="heroIcon">📖</div>
+    <div class="heroTitle">Arabic Quran</div>
+    <div class="heroSub">
+      Read Quran in Arabic, resume your last Surah, and save bookmarks.
+    </div>
+  </div>
+
+  <div class="optionList">
+
+    <!-- =========================
+         RESUME READING CARD
+    ========================= -->
+    <div class="optionCard" onclick="resumeArabicReading()">
+      <div class="optionLeft">
+        <div class="optionIcon">▶️</div>
+        <div>
+          <div class="optionTitle">Resume Reading</div>
+          <div class="optionSub" id="resumeSubText">Continue from your last Surah</div>
+        </div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <!-- =========================
+         SURAH INDEX CARD
+    ========================= -->
+    <div class="optionCard" onclick="openSurahIndexPage()">
+      <div class="optionLeft">
+        <div class="optionIcon">📚</div>
+        <div>
+          <div class="optionTitle">Surah Index</div>
+          <div class="optionSub">Browse all 114 Surahs</div>
+        </div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <!-- =========================
+         BOOKMARKS CARD
+    ========================= -->
+    <div class="optionCard" onclick="openBookmarkPage()">
+      <div class="optionLeft">
+        <div class="optionIcon">🔖</div>
+        <div>
+          <div class="optionTitle">Bookmarks</div>
+          <div class="optionSub">Open your saved Surahs</div>
+        </div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     SURAH INDEX PAGE
+========================= -->
+<div id="surahIndexPage" class="appPage">
+
+  <div class="simpleTopBar">
+    <button class="roundBackBtn" onclick="openArabicHomePage()">←</button>
+    <div class="simpleTitle">Surah Index</div>
+  </div>
+
+  <input id="surahSearchInput" class="searchBox" placeholder="Search Surah..." oninput="renderSurahList()">
+
+  <div id="surahList" class="surahList"></div>
+
+</div>
+
+
+<!-- =========================
+     BOOKMARK PAGE
+========================= -->
+<div id="bookmarkPage" class="appPage">
+
+  <div class="simpleTopBar">
+    <button class="roundBackBtn" onclick="openArabicHomePage()">←</button>
+    <div class="simpleTitle">Bookmarks</div>
+  </div>
+
+  <div class="heroCard">
+    <div class="heroIcon">🔖</div>
+    <div class="heroTitle">Bookmarks</div>
+    <div class="heroSub">
+      Your saved Arabic Quran reading places.
+    </div>
+  </div>
+
+  <div id="bookmarkList" class="bookmarkList"></div>
+
+</div>
+
+
+<!-- =========================
+     ARABIC READING PAGE
+========================= -->
+<div id="arabicReadingPage">
+
+  <!-- =========================
+       ARABIC READER TOP BAR
+  ========================= -->
+  <div id="arabicReaderTopBar">
+    <div class="readerTopBarInner">
+
+      <button class="readerBackBtn" onclick="closeArabicReadingPage(event)">←</button>
+
+      <div class="readerTitleWrap">
+        <div id="readerTopTitle" class="readerTitle">Arabic Quran</div>
+        <div id="readerTopSubTitle" class="readerSubTitle">Tap page to hide bar</div>
+      </div>
+
+      <button class="readerBookmarkBtn" onclick="saveCurrentArabicBookmark(event)">🔖</button>
+
+    </div>
+  </div>
+
+  <!-- =========================
+       ARABIC READER CONTENT
+  ========================= -->
+  <div id="arabicReaderContent" onclick="toggleArabicReaderTopBar(event)">
+
+    <div id="readingHeaderCard" class="readingHeaderCard">
+      <div id="readingArabicTitle" class="readingArabicTitle">سورة الفاتحة</div>
+      <div id="readingEnglishTitle" class="readingEnglishTitle">Al-Fatihah</div>
+      <div id="readingMeta" class="readingMeta">Loading...</div>
+    </div>
+
+    <div id="ayahList" class="ayahList">
+      <div class="loadingCard">Loading Surah...</div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     TOAST
+========================= -->
+<div id="toast">Saved</div>
+
+
+<script>
+
+/* =========================
+   ARABIC QURAN DATA
+========================= */
+const surahData = [
+  {num:1,en:"Al-Fatihah",ar:"الفاتحة",type:"Makki",ayahs:7},
+  {num:2,en:"Al-Baqarah",ar:"البقرة",type:"Madani",ayahs:286},
+  {num:3,en:"Aal-Imran",ar:"آل عمران",type:"Madani",ayahs:200},
+  {num:4,en:"An-Nisa",ar:"النساء",type:"Madani",ayahs:176},
+  {num:5,en:"Al-Ma'idah",ar:"المائدة",type:"Madani",ayahs:120},
+  {num:6,en:"Al-An'am",ar:"الأنعام",type:"Makki",ayahs:165},
+  {num:7,en:"Al-A'raf",ar:"الأعراف",type:"Makki",ayahs:206},
+  {num:8,en:"Al-Anfal",ar:"الأنفال",type:"Madani",ayahs:75},
+  {num:9,en:"At-Tawbah",ar:"التوبة",type:"Madani",ayahs:129},
+  {num:10,en:"Yunus",ar:"يونس",type:"Makki",ayahs:109},
+  {num:11,en:"Hud",ar:"هود",type:"Makki",ayahs:123},
+  {num:12,en:"Yusuf",ar:"يوسف",type:"Makki",ayahs:111},
+  {num:13,en:"Ar-Ra'd",ar:"الرعد",type:"Madani",ayahs:43},
+  {num:14,en:"Ibrahim",ar:"إبراهيم",type:"Makki",ayahs:52},
+  {num:15,en:"Al-Hijr",ar:"الحجر",type:"Makki",ayahs:99},
+  {num:16,en:"An-Nahl",ar:"النحل",type:"Makki",ayahs:128},
+  {num:17,en:"Al-Isra",ar:"الإسراء",type:"Makki",ayahs:111},
+  {num:18,en:"Al-Kahf",ar:"الكهف",type:"Makki",ayahs:110},
+  {num:19,en:"Maryam",ar:"مريم",type:"Makki",ayahs:98},
+  {num:20,en:"Ta-Ha",ar:"طه",type:"Makki",ayahs:135},
+  {num:21,en:"Al-Anbiya",ar:"الأنبياء",type:"Makki",ayahs:112},
+  {num:22,en:"Al-Hajj",ar:"الحج",type:"Madani",ayahs:78},
+  {num:23,en:"Al-Mu'minun",ar:"المؤمنون",type:"Makki",ayahs:118},
+  {num:24,en:"An-Nur",ar:"النور",type:"Madani",ayahs:64},
+  {num:25,en:"Al-Furqan",ar:"الفرقان",type:"Makki",ayahs:77},
+  {num:26,en:"Ash-Shu'ara",ar:"الشعراء",type:"Makki",ayahs:227},
+  {num:27,en:"An-Naml",ar:"النمل",type:"Makki",ayahs:93},
+  {num:28,en:"Al-Qasas",ar:"القصص",type:"Makki",ayahs:88},
+  {num:29,en:"Al-Ankabut",ar:"العنكبوت",type:"Makki",ayahs:69},
+  {num:30,en:"Ar-Rum",ar:"الروم",type:"Makki",ayahs:60},
+  {num:31,en:"Luqman",ar:"لقمان",type:"Makki",ayahs:34},
+  {num:32,en:"As-Sajdah",ar:"السجدة",type:"Makki",ayahs:30},
+  {num:33,en:"Al-Ahzab",ar:"الأحزاب",type:"Madani",ayahs:73},
+  {num:34,en:"Saba",ar:"سبأ",type:"Makki",ayahs:54},
+  {num:35,en:"Fatir",ar:"فاطر",type:"Makki",ayahs:45},
+  {num:36,en:"Ya-Sin",ar:"يس",type:"Makki",ayahs:83},
+  {num:37,en:"As-Saffat",ar:"الصافات",type:"Makki",ayahs:182},
+  {num:38,en:"Sad",ar:"ص",type:"Makki",ayahs:88},
+  {num:39,en:"Az-Zumar",ar:"الزمر",type:"Makki",ayahs:75},
+  {num:40,en:"Ghafir",ar:"غافر",type:"Makki",ayahs:85},
+  {num:41,en:"Fussilat",ar:"فصلت",type:"Makki",ayahs:54},
+  {num:42,en:"Ash-Shura",ar:"الشورى",type:"Makki",ayahs:53},
+  {num:43,en:"Az-Zukhruf",ar:"الزخرف",type:"Makki",ayahs:89},
+  {num:44,en:"Ad-Dukhan",ar:"الدخان",type:"Makki",ayahs:59},
+  {num:45,en:"Al-Jathiyah",ar:"الجاثية",type:"Makki",ayahs:37},
+  {num:46,en:"Al-Ahqaf",ar:"الأحقاف",type:"Makki",ayahs:35},
+  {num:47,en:"Muhammad",ar:"محمد",type:"Madani",ayahs:38},
+  {num:48,en:"Al-Fath",ar:"الفتح",type:"Madani",ayahs:29},
+  {num:49,en:"Al-Hujurat",ar:"الحجرات",type:"Madani",ayahs:18},
+  {num:50,en:"Qaf",ar:"ق",type:"Makki",ayahs:45},
+  {num:51,en:"Adh-Dhariyat",ar:"الذاريات",type:"Makki",ayahs:60},
+  {num:52,en:"At-Tur",ar:"الطور",type:"Makki",ayahs:49},
+  {num:53,en:"An-Najm",ar:"النجم",type:"Makki",ayahs:62},
+  {num:54,en:"Al-Qamar",ar:"القمر",type:"Makki",ayahs:55},
+  {num:55,en:"Ar-Rahman",ar:"الرحمن",type:"Madani",ayahs:78},
+  {num:56,en:"Al-Waqi'ah",ar:"الواقعة",type:"Makki",ayahs:96},
+  {num:57,en:"Al-Hadid",ar:"الحديد",type:"Madani",ayahs:29},
+  {num:58,en:"Al-Mujadilah",ar:"المجادلة",type:"Madani",ayahs:22},
+  {num:59,en:"Al-Hashr",ar:"الحشر",type:"Madani",ayahs:24},
+  {num:60,en:"Al-Mumtahanah",ar:"الممتحنة",type:"Madani",ayahs:13},
+  {num:61,en:"As-Saff",ar:"الصف",type:"Madani",ayahs:14},
+  {num:62,en:"Al-Jumu'ah",ar:"الجمعة",type:"Madani",ayahs:11},
+  {num:63,en:"Al-Munafiqun",ar:"المنافقون",type:"Madani",ayahs:11},
+  {num:64,en:"At-Taghabun",ar:"التغابن",type:"Madani",ayahs:18},
+  {num:65,en:"At-Talaq",ar:"الطلاق",type:"Madani",ayahs:12},
+  {num:66,en:"At-Tahrim",ar:"التحريم",type:"Madani",ayahs:12},
+  {num:67,en:"Al-Mulk",ar:"الملك",type:"Makki",ayahs:30},
+  {num:68,en:"Al-Qalam",ar:"القلم",type:"Makki",ayahs:52},
+  {num:69,en:"Al-Haqqah",ar:"الحاقة",type:"Makki",ayahs:52},
+  {num:70,en:"Al-Ma'arij",ar:"المعارج",type:"Makki",ayahs:44},
+  {num:71,en:"Nuh",ar:"نوح",type:"Makki",ayahs:28},
+  {num:72,en:"Al-Jinn",ar:"الجن",type:"Makki",ayahs:28},
+  {num:73,en:"Al-Muzzammil",ar:"المزمل",type:"Makki",ayahs:20},
+  {num:74,en:"Al-Muddaththir",ar:"المدثر",type:"Makki",ayahs:56},
+  {num:75,en:"Al-Qiyamah",ar:"القيامة",type:"Makki",ayahs:40},
+  {num:76,en:"Al-Insan",ar:"الإنسان",type:"Madani",ayahs:31},
+  {num:77,en:"Al-Mursalat",ar:"المرسلات",type:"Makki",ayahs:50},
+  {num:78,en:"An-Naba",ar:"النبأ",type:"Makki",ayahs:40},
+  {num:79,en:"An-Nazi'at",ar:"النازعات",type:"Makki",ayahs:46},
+  {num:80,en:"Abasa",ar:"عبس",type:"Makki",ayahs:42},
+  {num:81,en:"At-Takwir",ar:"التكوير",type:"Makki",ayahs:29},
+  {num:82,en:"Al-Infitar",ar:"الإنفطار",type:"Makki",ayahs:19},
+  {num:83,en:"Al-Mutaffifin",ar:"المطففين",type:"Makki",ayahs:36},
+  {num:84,en:"Al-Inshiqaq",ar:"الإنشقاق",type:"Makki",ayahs:25},
+  {num:85,en:"Al-Buruj",ar:"البروج",type:"Makki",ayahs:22},
+  {num:86,en:"At-Tariq",ar:"الطارق",type:"Makki",ayahs:17},
+  {num:87,en:"Al-A'la",ar:"الأعلى",type:"Makki",ayahs:19},
+  {num:88,en:"Al-Ghashiyah",ar:"الغاشية",type:"Makki",ayahs:26},
+  {num:89,en:"Al-Fajr",ar:"الفجر",type:"Makki",ayahs:30},
+  {num:90,en:"Al-Balad",ar:"البلد",type:"Makki",ayahs:20},
+  {num:91,en:"Ash-Shams",ar:"الشمس",type:"Makki",ayahs:15},
+  {num:92,en:"Al-Layl",ar:"الليل",type:"Makki",ayahs:21},
+  {num:93,en:"Ad-Duhaa",ar:"الضحى",type:"Makki",ayahs:11},
+  {num:94,en:"Ash-Sharh",ar:"الشرح",type:"Makki",ayahs:8},
+  {num:95,en:"At-Tin",ar:"التين",type:"Makki",ayahs:8},
+  {num:96,en:"Al-Alaq",ar:"العلق",type:"Makki",ayahs:19},
+  {num:97,en:"Al-Qadr",ar:"القدر",type:"Makki",ayahs:5},
+  {num:98,en:"Al-Bayyinah",ar:"البينة",type:"Madani",ayahs:8},
+  {num:99,en:"Az-Zalzalah",ar:"الزلزلة",type:"Madani",ayahs:8},
+  {num:100,en:"Al-Adiyat",ar:"العاديات",type:"Makki",ayahs:11},
+  {num:101,en:"Al-Qari'ah",ar:"القارعة",type:"Makki",ayahs:11},
+  {num:102,en:"At-Takathur",ar:"التكاثر",type:"Makki",ayahs:8},
+  {num:103,en:"Al-Asr",ar:"العصر",type:"Makki",ayahs:3},
+  {num:104,en:"Al-Humazah",ar:"الهمزة",type:"Makki",ayahs:9},
+  {num:105,en:"Al-Fil",ar:"الفيل",type:"Makki",ayahs:5},
+  {num:106,en:"Quraysh",ar:"قريش",type:"Makki",ayahs:4},
+  {num:107,en:"Al-Ma'un",ar:"الماعون",type:"Makki",ayahs:7},
+  {num:108,en:"Al-Kawthar",ar:"الكوثر",type:"Makki",ayahs:3},
+  {num:109,en:"Al-Kafirun",ar:"الكافرون",type:"Makki",ayahs:6},
+  {num:110,en:"An-Nasr",ar:"النصر",type:"Madani",ayahs:3},
+  {num:111,en:"Al-Masad",ar:"المسد",type:"Makki",ayahs:5},
+  {num:112,en:"Al-Ikhlas",ar:"الإخلاص",type:"Makki",ayahs:4},
+  {num:113,en:"Al-Falaq",ar:"الفلق",type:"Makki",ayahs:5},
+  {num:114,en:"An-Nas",ar:"الناس",type:"Makki",ayahs:6}
+];
+
+
+/* =========================
+   GLOBAL VARIABLES
+========================= */
+let currentArabicSurahNumber = 1;
+let currentArabicSurahEnglish = "Al-Fatihah";
+let currentArabicSurahArabic = "الفاتحة";
+let arabicReaderTopBarVisible = false;
+let arabicReadingBackPage = "home";
+
+
+/* =========================
+   HIDE ALL APP PAGES
+========================= */
+function hideAllArabicPages(){
+
+  let pages = [
+    "arabicHomePage",
+    "surahIndexPage",
+    "bookmarkPage"
+  ];
+
+  pages.forEach(function(id){
+    let page = document.getElementById(id);
+    if(page){
+      page.classList.remove("active");
+    }
+  });
+
+}
+
+
+/* =========================
+   OPEN ARABIC HOME PAGE
+========================= */
+function openArabicHomePage(){
+
+  hideAllArabicPages();
+
+  let page = document.getElementById("arabicHomePage");
+  if(page){
+    page.classList.add("active");
+  }
+
+  updateResumeText();
+  window.scrollTo(0,0);
+
+}
+
+
+/* =========================
+   GO BACK TO MAIN APP
+========================= */
+function goBackToMainApp(){
+
+  window.location.href = "../";
+
+}
+
+
+/* =========================
+   OPEN SURAH INDEX PAGE
+========================= */
+function openSurahIndexPage(){
+
+  hideAllArabicPages();
+
+  let page = document.getElementById("surahIndexPage");
+  if(page){
+    page.classList.add("active");
+  }
+
+  renderSurahList();
+  window.scrollTo(0,0);
+
+}
+
+
+/* =========================
+   RENDER SURAH LIST
+========================= */
+function renderSurahList(){
+
+  let container = document.getElementById("surahList");
+  let searchInput = document.getElementById("surahSearchInput");
+
+  if(!container) return;
+
+  let query = searchInput ? searchInput.value.trim().toLowerCase() : "";
+
+  container.innerHTML = "";
+
+  surahData.forEach(function(surah){
+
+    let searchText = (
+      surah.num + " " +
+      surah.en + " " +
+      surah.ar + " " +
+      surah.type
+    ).toLowerCase();
+
+    if(query && !searchText.includes(query)){
+      return;
+    }
+
+    let card = document.createElement("div");
+    card.className = "surahCard";
+
+    card.onclick = function(){
+      openArabicReadingPage(surah.num, "surahIndex");
+    };
+
+    card.innerHTML = `
+      <div class="surahNumber">${surah.num}</div>
+
+      <div class="surahNames">
+        <div class="surahEnglish">${surah.en}</div>
+        <div class="surahArabic">${surah.ar}</div>
+      </div>
+
+      <div class="surahMeta">${surah.ayahs} Ayahs</div>
+    `;
+
+    container.appendChild(card);
+
+  });
+
+}
+
+
+/* =========================
+   OPEN BOOKMARK PAGE
+========================= */
+function openBookmarkPage(){
+
+  hideAllArabicPages();
+
+  let page = document.getElementById("bookmarkPage");
+  if(page){
+    page.classList.add("active");
+  }
+
+  loadArabicBookmarks();
+  window.scrollTo(0,0);
+
+}
+
+
+/* =========================
+   GET ALL QURAN BOOKMARKS
+========================= */
+function getAllQuranBookmarks(){
+
+  try{
+    return JSON.parse(localStorage.getItem("quranBookmarks") || "[]");
+  }catch(error){
+    return [];
+  }
+
+}
+
+
+/* =========================
+   SAVE ALL QURAN BOOKMARKS
+========================= */
+function saveAllQuranBookmarks(bookmarks){
+
+  localStorage.setItem("quranBookmarks", JSON.stringify(bookmarks));
+
+}
+
+
+/* =========================
+   LOAD ARABIC BOOKMARKS
+========================= */
+function loadArabicBookmarks(){
+
+  let container = document.getElementById("bookmarkList");
+  if(!container) return;
+
+  let allBookmarks = getAllQuranBookmarks();
+
+  let bookmarks = allBookmarks.filter(function(item){
+    return item.type === "arabic";
+  });
+
+  container.innerHTML = "";
+
+  if(!bookmarks.length){
+    container.innerHTML = `
+      <div class="emptyCard">
+        No Arabic Quran bookmarks saved yet.
+      </div>
+    `;
+    return;
+  }
+
+  bookmarks.forEach(function(bookmark){
+
+    let card = document.createElement("div");
+    card.className = "bookmarkCard";
+
+    card.onclick = function(){
+      openArabicReadingPage(Number(bookmark.surahNumber), "bookmark");
+    };
+
+    card.innerHTML = `
+      <div style="min-width:0;flex:1;">
+        <div class="bookmarkTitle">${bookmark.name || bookmark.surah || "Bookmark"}</div>
+        <div class="bookmarkSub">${bookmark.surah || "Arabic Quran"}</div>
+        <div class="bookmarkSub">${bookmark.createdAtText || ""}</div>
+      </div>
+
+      <button onclick="deleteArabicBookmark(event, '${bookmark.id}')" style="
+      width:42px;
+      height:42px;
+      border:none;
+      border-radius:50%;
+      background:#fff1f1;
+      color:#ff3b30;
+      font-size:18px;
+      font-weight:900;
+      cursor:pointer;
+      flex-shrink:0;
+      ">
+        🗑
+      </button>
+    `;
+
+    container.appendChild(card);
+
+  });
+
+}
+
+
+/* =========================
+   DELETE ARABIC BOOKMARK
+========================= */
+function deleteArabicBookmark(event, bookmarkId){
+
+  event.stopPropagation();
+
+  let ok = confirm("Delete this bookmark?");
+  if(!ok) return;
+
+  let allBookmarks = getAllQuranBookmarks();
+
+  allBookmarks = allBookmarks.filter(function(item){
+    return String(item.id) !== String(bookmarkId);
+  });
+
+  saveAllQuranBookmarks(allBookmarks);
+  loadArabicBookmarks();
+  showToast("Bookmark deleted");
+
+}
+
+
+/* =========================
+   OPEN ARABIC READING PAGE
+========================= */
+async function openArabicReadingPage(surahNumber, backPage){
+
+  let surah = surahData.find(function(item){
+    return Number(item.num) === Number(surahNumber);
+  });
+
+  if(!surah){
+    alert("Surah not found");
+    return;
+  }
+
+  currentArabicSurahNumber = surah.num;
+  currentArabicSurahEnglish = surah.en;
+  currentArabicSurahArabic = surah.ar;
+  arabicReadingBackPage = backPage || "home";
+
+  localStorage.setItem("lastArabicQuranSurahNumber", String(surah.num));
+  localStorage.setItem("lastArabicQuranEnglishName", surah.en);
+  localStorage.setItem("lastArabicQuranArabicName", surah.ar);
+
+  hideAllArabicPages();
+
+  let readingPage = document.getElementById("arabicReadingPage");
+  if(readingPage){
+    readingPage.style.display = "block";
+  }
+
+  resetArabicReaderTopBar();
+
+  let readerTopTitle = document.getElementById("readerTopTitle");
+  let readerTopSubTitle = document.getElementById("readerTopSubTitle");
+  let readingArabicTitle = document.getElementById("readingArabicTitle");
+  let readingEnglishTitle = document.getElementById("readingEnglishTitle");
+  let readingMeta = document.getElementById("readingMeta");
+  let ayahList = document.getElementById("ayahList");
+
+  if(readerTopTitle) readerTopTitle.innerText = surah.en;
+  if(readerTopSubTitle) readerTopSubTitle.innerText = surah.ar;
+  if(readingArabicTitle) readingArabicTitle.innerText = "سورة " + surah.ar;
+  if(readingEnglishTitle) readingEnglishTitle.innerText = surah.num + ". " + surah.en;
+  if(readingMeta) readingMeta.innerText = surah.type + " • " + surah.ayahs + " Ayahs";
+
+  if(ayahList){
+    ayahList.innerHTML = `
+      <div class="loadingCard">Loading Surah...</div>
+    `;
+  }
+
+  try{
+
+    let url = "https://api.alquran.cloud/v1/surah/" + surah.num + "/quran-uthmani";
+    let response = await fetch(url);
+    let result = await response.json();
+
+    if(!result || !result.data || !result.data.ayahs){
+      throw new Error("Surah data not found");
+    }
+
+    renderArabicAyahs(result.data.ayahs);
+
+  }catch(error){
+
+    if(ayahList){
+      ayahList.innerHTML = `
+        <div class="loadingCard">
+          Could not load Surah. Please check internet and try again.
+        </div>
+      `;
+    }
+
+  }
+
+}
+
+
+/* =========================
+   RENDER ARABIC AYAHS
+========================= */
+function renderArabicAyahs(ayahs){
+
+  let ayahList = document.getElementById("ayahList");
+  if(!ayahList) return;
+
+  ayahList.innerHTML = "";
+
+  ayahs.forEach(function(ayah){
+
+    let card = document.createElement("div");
+    card.className = "ayahCard";
+
+    card.innerHTML = `
+      <div class="ayahNumber">${ayah.numberInSurah}</div>
+      <div class="ayahArabic">${ayah.text}</div>
+    `;
+
+    ayahList.appendChild(card);
+
+  });
+
+}
+
+
+/* =========================
+   CLOSE ARABIC READING PAGE
+========================= */
+function closeArabicReadingPage(event){
+
+  if(event){
+    event.stopPropagation();
+  }
+
+  let readingPage = document.getElementById("arabicReadingPage");
+  if(readingPage){
+    readingPage.style.display = "none";
+  }
+
+  resetArabicReaderTopBar();
+
+  if(arabicReadingBackPage === "bookmark"){
+    openBookmarkPage();
+  }else if(arabicReadingBackPage === "surahIndex"){
+    openSurahIndexPage();
+  }else{
+    openArabicHomePage();
+  }
+
+}
+
+
+/* =========================
+   TOGGLE ARABIC READER TOP BAR
+========================= */
+function toggleArabicReaderTopBar(event){
+
+  if(event){
+    let target = event.target;
+
+    if(
+      target &&
+      (
+        target.closest(".readerBackBtn") ||
+        target.closest(".readerBookmarkBtn")
+      )
+    ){
+      return;
+    }
+  }
+
+  let topBar = document.getElementById("arabicReaderTopBar");
+  let content = document.getElementById("arabicReaderContent");
+
+  if(!topBar || !content) return;
+
+  arabicReaderTopBarVisible = !arabicReaderTopBarVisible;
+
+  if(arabicReaderTopBarVisible){
+    topBar.classList.add("show");
+    content.classList.add("shrink");
+  }else{
+    topBar.classList.remove("show");
+    content.classList.remove("shrink");
+  }
+
+}
+
+
+/* =========================
+   RESET ARABIC READER TOP BAR
+========================= */
+function resetArabicReaderTopBar(){
+
+  arabicReaderTopBarVisible = false;
+
+  let topBar = document.getElementById("arabicReaderTopBar");
+  let content = document.getElementById("arabicReaderContent");
+
+  if(topBar){
+    topBar.classList.remove("show");
+  }
+
+  if(content){
+    content.classList.remove("shrink");
+    content.scrollTop = 0;
+  }
+
+}
+
+
+/* =========================
+   SAVE CURRENT ARABIC BOOKMARK
+========================= */
+function saveCurrentArabicBookmark(event){
+
+  if(event){
+    event.stopPropagation();
+  }
+
+  let allBookmarks = getAllQuranBookmarks();
+
+  let duplicate = allBookmarks.some(function(item){
+    return (
+      item.type === "arabic" &&
+      Number(item.surahNumber) === Number(currentArabicSurahNumber)
+    );
+  });
+
+  if(duplicate){
+    showToast("This Surah is already bookmarked");
+    return;
+  }
+
+  let now = new Date();
+
+  let bookmark = {
+    id: Date.now(),
+    type: "arabic",
+    name: currentArabicSurahEnglish,
+    surah: currentArabicSurahEnglish,
+    arabicName: currentArabicSurahArabic,
+    surahNumber: currentArabicSurahNumber,
+    createdAt: now.toISOString(),
+    createdAtText: now.toLocaleString()
+  };
+
+  allBookmarks.unshift(bookmark);
+  saveAllQuranBookmarks(allBookmarks);
+
+  showToast("Bookmark saved");
+
+}
+
+
+/* =========================
+   RESUME ARABIC READING
+========================= */
+function resumeArabicReading(){
+
+  let lastSurah = parseInt(localStorage.getItem("lastArabicQuranSurahNumber") || "0", 10);
+
+  if(!lastSurah || lastSurah < 1 || lastSurah > 114){
+    alert("No previous Arabic Quran reading found");
+    return;
+  }
+
+  openArabicReadingPage(lastSurah, "home");
+
+}
+
+
+/* =========================
+   UPDATE RESUME TEXT
+========================= */
+function updateResumeText(){
+
+  let resumeSubText = document.getElementById("resumeSubText");
+  if(!resumeSubText) return;
+
+  let lastSurah = parseInt(localStorage.getItem("lastArabicQuranSurahNumber") || "0", 10);
+  let lastName = localStorage.getItem("lastArabicQuranEnglishName") || "";
+
+  if(lastSurah && lastName){
+    resumeSubText.innerText = "Continue from " + lastName;
+  }else{
+    resumeSubText.innerText = "Continue from your last Surah";
+  }
+
+}
+
+
+/* =========================
+   SHOW TOAST
+========================= */
+function showToast(message){
+
+  let toast = document.getElementById("toast");
+  if(!toast) return;
+
+  toast.innerText = message;
+  toast.style.display = "block";
+
+  clearTimeout(window.arabicToastTimer);
+
+  window.arabicToastTimer = setTimeout(function(){
+    toast.style.display = "none";
+  }, 1800);
+
+}
+
+
+/* =========================
+   START APP
+========================= */
+document.addEventListener("DOMContentLoaded", function(){
+
+  updateResumeText();
+  renderSurahList();
+
+});
+
+</script>
+
+</body>
+</html>
