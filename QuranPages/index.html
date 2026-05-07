@@ -1,0 +1,2089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!-- =========================
+     15 LINE QURAN FOLDER PAGE
+     File: QuranPages/index.html
+========================= -->
+
+<meta charset="UTF-8">
+<title>15 Line Quran</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<meta name="theme-color" content="#e9e9ee">
+<link rel="apple-touch-icon" href="../icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+
+<link href="https://fonts.googleapis.com/css2?family=Amiri&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================
+   GLOBAL STYLE
+========================= */
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  font-family:-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+  background:#e9e9ee;
+  color:#111;
+  overflow:hidden;
+  touch-action:manipulation;
+}
+
+body{
+  position:fixed;
+  inset:0;
+}
+
+/* =========================
+   PAGE BASE
+========================= */
+.appPage{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:none;
+  background:linear-gradient(180deg,#f8f8fb 0%,#e9e9ee 100%);
+  overflow:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:18px 4% 34px 4%;
+}
+
+.appPage.active{
+  display:block;
+}
+
+/* =========================
+   SIMPLE TOP BAR
+========================= */
+.simpleTopBar{
+  width:100%;
+  height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  margin-bottom:16px;
+}
+
+.roundBackBtn,
+.roundIconBtn{
+  width:44px;
+  height:44px;
+  border:none;
+  border-radius:50%;
+  background:white;
+  color:#111;
+  font-size:23px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:absolute;
+  top:7px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.10);
+  cursor:pointer;
+}
+
+.roundBackBtn{
+  left:0;
+}
+
+.roundIconBtn{
+  right:0;
+}
+
+.simpleTitle{
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:-0.4px;
+  color:#111;
+  text-align:center;
+  max-width:70%;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* =========================
+   HERO CARD
+========================= */
+.heroCard{
+  width:100%;
+  background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0.90));
+  border-radius:32px;
+  padding:30px 5%;
+  text-align:center;
+  box-shadow:0 12px 32px rgba(0,0,0,0.09);
+  border:1px solid rgba(255,255,255,0.75);
+  margin-bottom:18px;
+}
+
+.heroIcon{
+  font-size:42px;
+  margin-bottom:12px;
+}
+
+.heroTitle{
+  font-size:31px;
+  font-weight:900;
+  letter-spacing:-0.8px;
+  color:#111;
+  margin-bottom:8px;
+}
+
+.heroSub{
+  font-size:15px;
+  font-weight:600;
+  color:#666;
+  line-height:1.5;
+  max-width:310px;
+  margin:0 auto;
+}
+
+/* =========================
+   OPTION CARDS
+========================= */
+.optionList{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.optionCard{
+  width:100%;
+  background:white;
+  border-radius:28px;
+  padding:20px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  cursor:pointer;
+}
+
+.optionLeft{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-width:0;
+  flex:1;
+}
+
+.optionIcon{
+  width:54px;
+  height:54px;
+  border-radius:19px;
+  background:#f2f2f7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+  flex-shrink:0;
+}
+
+.optionTitle{
+  font-size:20px;
+  font-weight:900;
+  color:#111;
+  margin-bottom:4px;
+  letter-spacing:-0.3px;
+}
+
+.optionSub{
+  font-size:14px;
+  font-weight:600;
+  color:#666;
+  line-height:1.35;
+}
+
+.optionArrow{
+  font-size:28px;
+  color:#b0b0b8;
+  flex-shrink:0;
+}
+
+/* =========================
+   SEARCH
+========================= */
+.searchBox{
+  width:100%;
+  background:white;
+  border:none;
+  outline:none;
+  border-radius:22px;
+  padding:17px 18px;
+  font-size:18px;
+  font-weight:700;
+  color:#111;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  margin-bottom:14px;
+}
+
+/* =========================
+   LISTS
+========================= */
+.listWrap{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  padding-bottom:30px;
+}
+
+.listCard{
+  width:100%;
+  background:white;
+  border-radius:26px;
+  padding:17px 4%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  cursor:pointer;
+}
+
+.numberBadge{
+  width:50px;
+  height:50px;
+  border-radius:18px;
+  background:#f2f2f7;
+  color:#111;
+  font-size:17px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+
+.listNames{
+  min-width:0;
+  flex:1;
+}
+
+.listTitle{
+  font-size:18px;
+  font-weight:900;
+  color:#111;
+  margin-bottom:4px;
+  letter-spacing:-0.3px;
+}
+
+.listArabic{
+  font-family:"Amiri","Noto Naskh Arabic",serif;
+  direction:rtl;
+  font-size:24px;
+  font-weight:700;
+  color:#555;
+  line-height:1.35;
+}
+
+.listMeta{
+  font-size:13px;
+  font-weight:800;
+  color:#888;
+  white-space:nowrap;
+  text-align:right;
+}
+
+.emptyCard{
+  width:100%;
+  background:white;
+  border-radius:26px;
+  padding:24px 5%;
+  text-align:center;
+  font-size:16px;
+  font-weight:700;
+  color:#666;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+}
+
+/* =========================
+   READING PAGE
+========================= */
+#readingPage{
+  display:none;
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  background:#000;
+  overflow:hidden;
+  z-index:5000;
+}
+
+/* =========================
+   READER TOP BAR
+========================= */
+#readerTopBar{
+  position:fixed;
+  top:-86px;
+  left:0;
+  right:0;
+  height:86px;
+  padding:env(safe-area-inset-top) 4% 0 4%;
+  background:rgba(233,233,238,0.96);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  z-index:5010;
+  transition:top 0.28s ease;
+  border-bottom:1px solid rgba(0,0,0,0.08);
+  box-shadow:0 8px 24px rgba(0,0,0,0.14);
+}
+
+#readerTopBar.show{
+  top:0;
+}
+
+.readerTopBarInner{
+  width:100%;
+  height:62px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.readerBackBtn,
+.readerBookmarkBtn{
+  position:absolute;
+  bottom:10px;
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:50%;
+  background:white;
+  color:#111;
+  font-size:22px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 12px rgba(0,0,0,0.10);
+  cursor:pointer;
+}
+
+.readerBackBtn{
+  left:0;
+}
+
+.readerBookmarkBtn{
+  right:0;
+}
+
+.readerTitleWrap{
+  max-width:66%;
+  text-align:center;
+  padding-bottom:11px;
+}
+
+.readerTitle{
+  font-size:18px;
+  font-weight:900;
+  color:#111;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  letter-spacing:-0.3px;
+}
+
+.readerSubTitle{
+  font-size:12px;
+  font-weight:700;
+  color:#666;
+  margin-top:2px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* =========================
+   READER CONTENT
+========================= */
+#readerContent{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:#000;
+  overflow:hidden;
+  transition:top 0.28s ease, transform 0.28s ease, border-radius 0.28s ease;
+  transform-origin:center top;
+}
+
+#readerContent.shrink{
+  top:86px;
+  transform:scale(0.96);
+  border-radius:28px 28px 0 0;
+  box-shadow:0 -2px 30px rgba(0,0,0,0.22);
+}
+
+/* =========================
+   INTERACTIVE QURAN PAGE FLIP
+========================= */
+.quranFlipStage{
+  position:relative;
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0;
+  overflow:hidden;
+  touch-action:pan-y;
+  background:#000;
+}
+
+.quranFlipTrack{
+  position:relative;
+  width:100%;
+  height:100%;
+  background:#000;
+}
+
+.quranFlipSheet{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  transform:translateX(0%);
+  transition:transform 0.24s ease;
+  will-change:transform;
+  background:#000;
+}
+
+.quranFlipSheet.dragging{
+  transition:none;
+}
+
+.quranFlipSheet img,
+.quranFlipUnderPage img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center center;
+  display:block;
+  user-select:none;
+  -webkit-user-drag:none;
+  pointer-events:none;
+  background:#000;
+}
+
+.quranFlipUnderPage{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  opacity:0;
+  transition:opacity 0.18s ease;
+  pointer-events:none;
+}
+
+.quranFlipUnderPage.show{
+  opacity:1;
+}
+
+.quranFlipShadow{
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:18%;
+  right:0;
+  opacity:0;
+  pointer-events:none;
+  background:linear-gradient(to left, rgba(0,0,0,0.28), rgba(0,0,0,0));
+  transition:opacity 0.18s ease;
+}
+
+.quranFlipSheet.dragging .quranFlipShadow{
+  opacity:1;
+}
+
+/* =========================
+   PAGE NUMBER FLOAT
+========================= */
+#pageFloat{
+  position:fixed;
+  left:50%;
+  bottom:18px;
+  transform:translateX(-50%);
+  background:rgba(17,17,17,0.72);
+  color:white;
+  font-size:14px;
+  font-weight:800;
+  padding:10px 14px;
+  border-radius:999px;
+  z-index:5020;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+/* =========================
+   TOAST
+========================= */
+#toast{
+  display:none;
+  position:fixed;
+  left:50%;
+  bottom:24px;
+  transform:translateX(-50%);
+  background:rgba(17,17,17,0.94);
+  color:white;
+  padding:14px 18px;
+  border-radius:18px;
+  font-size:16px;
+  font-weight:800;
+  z-index:9000;
+  box-shadow:0 10px 30px rgba(0,0,0,0.22);
+  max-width:88%;
+  text-align:center;
+}
+
+/* =========================
+   SMALL PHONES
+========================= */
+@media(max-width:390px){
+  .heroTitle{
+    font-size:28px;
+  }
+
+  .optionTitle{
+    font-size:19px;
+  }
+
+  .listTitle{
+    font-size:17px;
+  }
+
+  .listArabic{
+    font-size:22px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     15 LINE QURAN HOME PAGE
+========================= -->
+<div id="homePage" class="appPage active">
+
+  <div class="simpleTopBar">
+    <button class="roundBackBtn" onclick="goBackToMainApp()">←</button>
+    <div class="simpleTitle">15 Line Quran</div>
+  </div>
+
+  <div class="heroCard">
+    <div class="heroIcon">📖</div>
+    <div class="heroTitle">15 Line Quran</div>
+    <div class="heroSub">
+      Read the 15 Line Quran with page swipe, Surah index, Juz index, bookmarks, and resume reading.
+    </div>
+  </div>
+
+  <div class="optionList">
+
+    <!-- =========================
+         RESUME READING CARD
+    ========================= -->
+    <div class="optionCard" onclick="resumeReading()">
+      <div class="optionLeft">
+        <div class="optionIcon">▶️</div>
+        <div>
+          <div class="optionTitle">Resume Reading</div>
+          <div class="optionSub" id="resumeSubText">Continue from your last page</div>
+        </div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <!-- =========================
+         SURAH INDEX CARD
+    ========================= -->
+    <div class="optionCard" onclick="openSurahPage()">
+      <div class="optionLeft">
+        <div class="optionIcon">📚</div>
+        <div>
+          <div class="optionTitle">Surah Index</div>
+          <div class="optionSub">Browse all 114 Surahs</div>
+        </div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <!-- =========================
+         JUZ INDEX CARD
+    ========================= -->
+    <div class="optionCard" onclick="openJuzPage()">
+      <div class="optionLeft">
+        <div class="optionIcon">🕌</div>
+        <div>
+          <div class="optionTitle">Juz Index</div>
+          <div class="optionSub">Open any Juz</div>
+        </div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <!-- =========================
+         BOOKMARKS CARD
+    ========================= -->
+    <div class="optionCard" onclick="openBookmarkPage()">
+      <div class="optionLeft">
+        <div class="optionIcon">🔖</div>
+        <div>
+          <div class="optionTitle">Bookmarks</div>
+          <div class="optionSub">Open your saved pages</div>
+        </div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <!-- =========================
+         GO TO PAGE CARD
+    ========================= -->
+    <div class="optionCard" onclick="openGoToPagePrompt()">
+      <div class="optionLeft">
+        <div class="optionIcon">🔢</div>
+        <div>
+          <div class="optionTitle">Go To Page</div>
+          <div class="optionSub">Open page number 1 to 847</div>
+        </div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     SURAH INDEX PAGE
+========================= -->
+<div id="surahPage" class="appPage">
+
+  <div class="simpleTopBar">
+    <button class="roundBackBtn" onclick="openHomePage()">←</button>
+    <div class="simpleTitle">Surah Index</div>
+  </div>
+
+  <input id="surahSearchInput" class="searchBox" placeholder="Search Surah..." oninput="renderSurahList()">
+
+  <div id="surahList" class="listWrap"></div>
+
+</div>
+
+
+<!-- =========================
+     JUZ INDEX PAGE
+========================= -->
+<div id="juzPage" class="appPage">
+
+  <div class="simpleTopBar">
+    <button class="roundBackBtn" onclick="openHomePage()">←</button>
+    <div class="simpleTitle">Juz Index</div>
+  </div>
+
+  <div id="juzList" class="listWrap"></div>
+
+</div>
+
+
+<!-- =========================
+     BOOKMARK PAGE
+========================= -->
+<div id="bookmarkPage" class="appPage">
+
+  <div class="simpleTopBar">
+    <button class="roundBackBtn" onclick="openHomePage()">←</button>
+    <div class="simpleTitle">Bookmarks</div>
+  </div>
+
+  <div class="heroCard">
+    <div class="heroIcon">🔖</div>
+    <div class="heroTitle">Bookmarks</div>
+    <div class="heroSub">
+      Your saved 15 Line Quran pages.
+    </div>
+  </div>
+
+  <div id="bookmarkList" class="listWrap"></div>
+
+</div>
+
+
+<!-- =========================
+     READING PAGE
+========================= -->
+<div id="readingPage">
+
+  <!-- =========================
+       READER TOP BAR
+  ========================= -->
+  <div id="readerTopBar">
+    <div class="readerTopBarInner">
+
+      <button class="readerBackBtn" onclick="closeReadingPage(event)">←</button>
+
+      <div class="readerTitleWrap">
+        <div id="readerTopTitle" class="readerTitle">15 Line Quran</div>
+        <div id="readerTopSubTitle" class="readerSubTitle">Tap page to hide bar</div>
+      </div>
+
+      <button class="readerBookmarkBtn" onclick="saveCurrentBookmark(event)">🔖</button>
+
+    </div>
+  </div>
+
+  <!-- =========================
+       READER CONTENT
+  ========================= -->
+  <div id="readerContent" onclick="toggleReaderTopBar(event)">
+
+    <div id="quranFlipStage" class="quranFlipStage">
+      <div class="quranFlipTrack">
+
+        <div id="quranFlipUnderPage" class="quranFlipUnderPage">
+          <img id="quranUnderImage" src="" alt="">
+        </div>
+
+        <div id="quranFlipSheet" class="quranFlipSheet">
+          <img id="pageImage" src="" alt="15 Line Quran Page">
+          <div class="quranFlipShadow"></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div id="pageFloat">Page 1</div>
+
+</div>
+
+
+<!-- =========================
+     TOAST
+========================= -->
+<div id="toast">Saved</div>
+
+
+<script>
+
+/* =========================
+   15 LINE QURAN GLOBAL VARIABLES
+========================= */
+let currentPage = 1;
+let totalPages = 847;
+let readingBackPage = "home";
+let readerTopBarVisible = false;
+
+/* =========================
+   REAL JUZ PAGE COUNTS
+========================= */
+const juzPageCounts = {
+  1:27,
+  2:28,
+  3:28,
+  4:28,
+  5:28,
+  6:28,
+  7:28,
+  8:28,
+  9:28,
+  10:28,
+  11:28,
+  12:28,
+  13:28,
+  14:28,
+  15:28,
+  16:28,
+  17:28,
+  18:28,
+  19:28,
+  20:26,
+  21:28,
+  22:26,
+  23:28,
+  24:26,
+  25:30,
+  26:30,
+  27:30,
+  28:30,
+  29:32,
+  30:30
+};
+
+/* =========================
+   SURAH TO 15 LINE PAGE MAP
+   FIXED USER PAGE MAP
+========================= */
+const surahToPageMap = {
+  1: 1,
+  2: 2,
+  3: 67,
+  4: 105,
+  5: 146,
+  6: 176,
+  7: 208,
+  8: 245,
+  9: 259,
+  10: 287,
+  11: 307,
+  12: 327,
+  13: 345,
+  14: 354,
+  15: 363,
+  16: 371,
+  17: 392,
+  18: 407,
+  19: 424,
+  20: 434,
+  21: 448,
+  22: 461,
+  23: 476,
+  24: 486,
+  25: 500,
+  26: 510,
+  27: 524,
+  28: 536,
+  29: 551,
+  30: 561,
+  31: 570,
+  32: 576,
+  33: 580,
+  34: 594,
+  35: 602,
+  36: 610,
+  37: 617,
+  38: 627,
+  39: 634,
+  40: 646,
+  41: 658,
+  42: 667,
+  43: 676,
+  44: 685,
+  45: 690,
+  46: 696,
+  47: 703,
+  48: 709,
+  49: 715,
+  50: 720,
+  51: 724,
+  52: 728,
+  53: 731,
+  54: 735,
+  55: 739,
+  56: 744,
+  57: 749,
+  58: 756,
+  59: 760,
+  60: 765,
+  61: 769,
+  62: 772,
+  63: 774,
+  64: 776,
+  65: 779,
+  66: 782,
+  67: 786,
+  68: 789,
+  69: 793,
+  70: 796,
+  71: 799,
+  72: 802,
+  73: 805,
+  74: 807,
+  75: 810,
+  76: 812,
+  77: 815,
+  78: 818,
+  79: 819,
+  80: 821,
+  81: 823,
+  82: 824,
+  83: 825,
+  84: 827,
+  85: 828,
+  86: 829,
+  87: 830,
+  88: 831,
+  89: 832,
+  90: 834,
+  91: 835,
+  92: 836,
+  93: 837,
+  94: 837,
+  95: 838,
+  96: 838,
+  97: 839,
+  98: 839,
+  99: 840,
+  100: 841,
+  101: 842,
+  102: 842,
+  103: 843,
+  104: 843,
+  105: 843,
+  106: 844,
+  107: 844,
+  108: 845,
+  109: 845,
+  110: 845,
+  111: 846,
+  112: 846,
+  113: 846,
+  114: 847
+};
+
+
+     
+/* =========================
+   15 LINE SURAH DATA
+========================= */
+const surahData = [
+  {num:1,en:"Al-Fatihah",ar:"الفاتحة"},
+  {num:2,en:"Al-Baqarah",ar:"البقرة"},
+  {num:3,en:"Aal-Imran",ar:"آل عمران"},
+  {num:4,en:"An-Nisa",ar:"النساء"},
+  {num:5,en:"Al-Ma'idah",ar:"المائدة"},
+  {num:6,en:"Al-An'am",ar:"الأنعام"},
+  {num:7,en:"Al-A'raf",ar:"الأعراف"},
+  {num:8,en:"Al-Anfal",ar:"الأنفال"},
+  {num:9,en:"At-Tawbah",ar:"التوبة"},
+  {num:10,en:"Yunus",ar:"يونس"},
+  {num:11,en:"Hud",ar:"هود"},
+  {num:12,en:"Yusuf",ar:"يوسف"},
+  {num:13,en:"Ar-Ra'd",ar:"الرعد"},
+  {num:14,en:"Ibrahim",ar:"إبراهيم"},
+  {num:15,en:"Al-Hijr",ar:"الحجر"},
+  {num:16,en:"An-Nahl",ar:"النحل"},
+  {num:17,en:"Al-Isra",ar:"الإسراء"},
+  {num:18,en:"Al-Kahf",ar:"الكهف"},
+  {num:19,en:"Maryam",ar:"مريم"},
+  {num:20,en:"Ta-Ha",ar:"طه"},
+  {num:21,en:"Al-Anbiya",ar:"الأنبياء"},
+  {num:22,en:"Al-Hajj",ar:"الحج"},
+  {num:23,en:"Al-Mu'minun",ar:"المؤمنون"},
+  {num:24,en:"An-Nur",ar:"النور"},
+  {num:25,en:"Al-Furqan",ar:"الفرقان"},
+  {num:26,en:"Ash-Shu'ara",ar:"الشعراء"},
+  {num:27,en:"An-Naml",ar:"النمل"},
+  {num:28,en:"Al-Qasas",ar:"القصص"},
+  {num:29,en:"Al-Ankabut",ar:"العنكبوت"},
+  {num:30,en:"Ar-Rum",ar:"الروم"},
+  {num:31,en:"Luqman",ar:"لقمان"},
+  {num:32,en:"As-Sajdah",ar:"السجدة"},
+  {num:33,en:"Al-Ahzab",ar:"الأحزاب"},
+  {num:34,en:"Saba",ar:"سبأ"},
+  {num:35,en:"Fatir",ar:"فاطر"},
+  {num:36,en:"Ya-Sin",ar:"يس"},
+  {num:37,en:"As-Saffat",ar:"الصافات"},
+  {num:38,en:"Sad",ar:"ص"},
+  {num:39,en:"Az-Zumar",ar:"الزمر"},
+  {num:40,en:"Ghafir",ar:"غافر"},
+  {num:41,en:"Fussilat",ar:"فصلت"},
+  {num:42,en:"Ash-Shura",ar:"الشورى"},
+  {num:43,en:"Az-Zukhruf",ar:"الزخرف"},
+  {num:44,en:"Ad-Dukhan",ar:"الدخان"},
+  {num:45,en:"Al-Jathiyah",ar:"الجاثية"},
+  {num:46,en:"Al-Ahqaf",ar:"الأحقاف"},
+  {num:47,en:"Muhammad",ar:"محمد"},
+  {num:48,en:"Al-Fath",ar:"الفتح"},
+  {num:49,en:"Al-Hujurat",ar:"الحجرات"},
+  {num:50,en:"Qaf",ar:"ق"},
+  {num:51,en:"Adh-Dhariyat",ar:"الذاريات"},
+  {num:52,en:"At-Tur",ar:"الطور"},
+  {num:53,en:"An-Najm",ar:"النجم"},
+  {num:54,en:"Al-Qamar",ar:"القمر"},
+  {num:55,en:"Ar-Rahman",ar:"الرحمن"},
+  {num:56,en:"Al-Waqi'ah",ar:"الواقعة"},
+  {num:57,en:"Al-Hadid",ar:"الحديد"},
+  {num:58,en:"Al-Mujadilah",ar:"المجادلة"},
+  {num:59,en:"Al-Hashr",ar:"الحشر"},
+  {num:60,en:"Al-Mumtahanah",ar:"الممتحنة"},
+  {num:61,en:"As-Saff",ar:"الصف"},
+  {num:62,en:"Al-Jumu'ah",ar:"الجمعة"},
+  {num:63,en:"Al-Munafiqun",ar:"المنافقون"},
+  {num:64,en:"At-Taghabun",ar:"التغابن"},
+  {num:65,en:"At-Talaq",ar:"الطلاق"},
+  {num:66,en:"At-Tahrim",ar:"التحريم"},
+  {num:67,en:"Al-Mulk",ar:"الملك"},
+  {num:68,en:"Al-Qalam",ar:"القلم"},
+  {num:69,en:"Al-Haqqah",ar:"الحاقة"},
+  {num:70,en:"Al-Ma'arij",ar:"المعارج"},
+  {num:71,en:"Nuh",ar:"نوح"},
+  {num:72,en:"Al-Jinn",ar:"الجن"},
+  {num:73,en:"Al-Muzzammil",ar:"المزمل"},
+  {num:74,en:"Al-Muddaththir",ar:"المدثر"},
+  {num:75,en:"Al-Qiyamah",ar:"القيامة"},
+  {num:76,en:"Al-Insan",ar:"الإنسان"},
+  {num:77,en:"Al-Mursalat",ar:"المرسلات"},
+  {num:78,en:"An-Naba",ar:"النبأ"},
+  {num:79,en:"An-Nazi'at",ar:"النازعات"},
+  {num:80,en:"Abasa",ar:"عبس"},
+  {num:81,en:"At-Takwir",ar:"التكوير"},
+  {num:82,en:"Al-Infitar",ar:"الإنفطار"},
+  {num:83,en:"Al-Mutaffifin",ar:"المطففين"},
+  {num:84,en:"Al-Inshiqaq",ar:"الإنشقاق"},
+  {num:85,en:"Al-Buruj",ar:"البروج"},
+  {num:86,en:"At-Tariq",ar:"الطارق"},
+  {num:87,en:"Al-A'la",ar:"الأعلى"},
+  {num:88,en:"Al-Ghashiyah",ar:"الغاشية"},
+  {num:89,en:"Al-Fajr",ar:"الفجر"},
+  {num:90,en:"Al-Balad",ar:"البلد"},
+  {num:91,en:"Ash-Shams",ar:"الشمس"},
+  {num:92,en:"Al-Layl",ar:"الليل"},
+  {num:93,en:"Ad-Duhaa",ar:"الضحى"},
+  {num:94,en:"Ash-Sharh",ar:"الشرح"},
+  {num:95,en:"At-Tin",ar:"التين"},
+  {num:96,en:"Al-Alaq",ar:"العلق"},
+  {num:97,en:"Al-Qadr",ar:"القدر"},
+  {num:98,en:"Al-Bayyinah",ar:"البينة"},
+  {num:99,en:"Az-Zalzalah",ar:"الزلزلة"},
+  {num:100,en:"Al-Adiyat",ar:"العاديات"},
+  {num:101,en:"Al-Qari'ah",ar:"القارعة"},
+  {num:102,en:"At-Takathur",ar:"التكاثر"},
+  {num:103,en:"Al-Asr",ar:"العصر"},
+  {num:104,en:"Al-Humazah",ar:"الهمزة"},
+  {num:105,en:"Al-Fil",ar:"الفيل"},
+  {num:106,en:"Quraysh",ar:"قريش"},
+  {num:107,en:"Al-Ma'un",ar:"الماعون"},
+  {num:108,en:"Al-Kawthar",ar:"الكوثر"},
+  {num:109,en:"Al-Kafirun",ar:"الكافرون"},
+  {num:110,en:"An-Nasr",ar:"النصر"},
+  {num:111,en:"Al-Masad",ar:"المسد"},
+  {num:112,en:"Al-Ikhlas",ar:"الإخلاص"},
+  {num:113,en:"Al-Falaq",ar:"الفلق"},
+  {num:114,en:"An-Nas",ar:"الناس"}
+];
+
+/* =========================
+   HIDE ALL PAGES
+========================= */
+function hideAllPages(){
+
+  let pages = [
+    "homePage",
+    "surahPage",
+    "juzPage",
+    "bookmarkPage"
+  ];
+
+  pages.forEach(function(id){
+    let page = document.getElementById(id);
+    if(page){
+      page.classList.remove("active");
+    }
+  });
+
+}
+
+/* =========================
+   OPEN HOME PAGE
+========================= */
+function openHomePage(){
+
+  hideAllPages();
+
+  let page = document.getElementById("homePage");
+  if(page){
+    page.classList.add("active");
+  }
+
+  updateResumeText();
+  window.scrollTo(0,0);
+
+}
+
+/* =========================
+   GO BACK TO MAIN APP
+========================= */
+function goBackToMainApp(){
+
+  localStorage.setItem("ibadahFolderReturnPage", "quran");
+  window.location.href = "../";
+
+}
+
+/* =========================
+   GET REAL JUZ INFO FROM PAGE
+========================= */
+function getRealJuzInfoFromPage(page){
+
+  let runningTotal = 0;
+
+  for(let juzNumber = 1; juzNumber <= 30; juzNumber++){
+
+    let juzCount = juzPageCounts[juzNumber];
+    let juzStart = runningTotal + 1;
+    let juzEnd = runningTotal + juzCount;
+
+    if(page >= juzStart && page <= juzEnd){
+      return {
+        juzNumber: juzNumber,
+        pageInsideJuz: page - runningTotal,
+        juzStart: juzStart,
+        juzEnd: juzEnd
+      };
+    }
+
+    runningTotal += juzCount;
+  }
+
+  return {
+    juzNumber:1,
+    pageInsideJuz:1,
+    juzStart:1,
+    juzEnd:27
+  };
+
+}
+
+/* =========================
+   BUILD MUSHAF IMAGE PATH
+   IMPORTANT:
+   This file is inside QuranPages folder,
+   so path starts with juz1, not QuranPages/juz1.
+========================= */
+function buildMushafImagePath(page){
+
+  let info = getRealJuzInfoFromPage(page);
+  let paddedPage = String(info.pageInsideJuz).padStart(2, "0");
+
+  return "juz" + info.juzNumber + "/" + info.juzNumber + "-" + paddedPage + ".png";
+
+}
+
+/* =========================
+   GET SURAH INFO FROM PAGE
+========================= */
+function getSurahInfoFromPage(page){
+
+  let matchedSurah = surahData[0];
+
+  for(let i = 0; i < surahData.length; i++){
+
+    let surah = surahData[i];
+    let startPage = surahToPageMap[surah.num] || 1;
+
+    if(page >= startPage){
+      matchedSurah = surah;
+    }
+
+  }
+
+  return matchedSurah;
+
+}
+
+/* =========================
+   GET JUZ START PAGE
+========================= */
+function getJuzStartPage(juzNumber){
+
+  let runningTotal = 0;
+
+  for(let i = 1; i < juzNumber; i++){
+    runningTotal += juzPageCounts[i];
+  }
+
+  return runningTotal + 1;
+
+}
+
+/* =========================
+   OPEN SURAH PAGE
+========================= */
+function openSurahPage(){
+
+  hideAllPages();
+
+  let page = document.getElementById("surahPage");
+  if(page){
+    page.classList.add("active");
+  }
+
+  renderSurahList();
+  window.scrollTo(0,0);
+
+}
+
+/* =========================
+   RENDER SURAH LIST
+========================= */
+function renderSurahList(){
+
+  let container = document.getElementById("surahList");
+  let searchInput = document.getElementById("surahSearchInput");
+
+  if(!container) return;
+
+  let query = searchInput ? searchInput.value.trim().toLowerCase() : "";
+
+  container.innerHTML = "";
+
+  surahData.forEach(function(surah){
+
+    let page = surahToPageMap[surah.num] || 1;
+
+    let searchText = (
+      surah.num + " " +
+      surah.en + " " +
+      surah.ar
+    ).toLowerCase();
+
+    if(query && !searchText.includes(query)){
+      return;
+    }
+
+    let card = document.createElement("div");
+    card.className = "listCard";
+
+    card.onclick = function(){
+      openReadingPage(page, "surah");
+    };
+
+    card.innerHTML = `
+      <div class="numberBadge">${surah.num}</div>
+
+      <div class="listNames">
+        <div class="listTitle">${surah.en}</div>
+        <div class="listArabic">${surah.ar}</div>
+      </div>
+
+      <div class="listMeta">Page<br>${page}</div>
+    `;
+
+    container.appendChild(card);
+
+  });
+
+}
+
+/* =========================
+   OPEN JUZ PAGE
+========================= */
+function openJuzPage(){
+
+  hideAllPages();
+
+  let page = document.getElementById("juzPage");
+  if(page){
+    page.classList.add("active");
+  }
+
+  renderJuzList();
+  window.scrollTo(0,0);
+
+}
+
+/* =========================
+   RENDER JUZ LIST
+========================= */
+function renderJuzList(){
+
+  let container = document.getElementById("juzList");
+  if(!container) return;
+
+  container.innerHTML = "";
+
+  for(let juzNumber = 1; juzNumber <= 30; juzNumber++){
+
+    let startPage = getJuzStartPage(juzNumber);
+    let pageCount = juzPageCounts[juzNumber] || 0;
+
+    let card = document.createElement("div");
+    card.className = "listCard";
+
+    card.onclick = function(){
+      openReadingPage(startPage, "juz");
+    };
+
+    card.innerHTML = `
+      <div class="numberBadge">${juzNumber}</div>
+
+      <div class="listNames">
+        <div class="listTitle">Juz ${juzNumber}</div>
+        <div class="listArabic">الجزء ${juzNumber}</div>
+      </div>
+
+      <div class="listMeta">Page<br>${startPage}</div>
+    `;
+
+    container.appendChild(card);
+
+  }
+
+}
+
+/* =========================
+   OPEN BOOKMARK PAGE
+========================= */
+function openBookmarkPage(){
+
+  hideAllPages();
+
+  let page = document.getElementById("bookmarkPage");
+  if(page){
+    page.classList.add("active");
+  }
+
+  loadBookmarks();
+  window.scrollTo(0,0);
+
+}
+
+/* =========================
+   GET ALL BOOKMARKS
+========================= */
+function getAllBookmarks(){
+
+  try{
+    return JSON.parse(localStorage.getItem("quranBookmarks") || "[]");
+  }catch(error){
+    return [];
+  }
+
+}
+
+/* =========================
+   SAVE ALL BOOKMARKS
+========================= */
+function saveAllBookmarks(bookmarks){
+
+  localStorage.setItem("quranBookmarks", JSON.stringify(bookmarks));
+
+}
+
+/* =========================
+   LOAD BOOKMARKS
+========================= */
+function loadBookmarks(){
+
+  let container = document.getElementById("bookmarkList");
+  if(!container) return;
+
+  let allBookmarks = getAllBookmarks();
+
+  let bookmarks = allBookmarks.filter(function(item){
+    return item.type === "15line";
+  });
+
+  container.innerHTML = "";
+
+  if(!bookmarks.length){
+    container.innerHTML = `
+      <div class="emptyCard">
+        No 15 Line Quran bookmarks saved yet.
+      </div>
+    `;
+    return;
+  }
+
+  bookmarks.forEach(function(bookmark){
+
+    let card = document.createElement("div");
+    card.className = "listCard";
+
+    card.onclick = function(){
+      openReadingPage(Number(bookmark.page), "bookmark");
+    };
+
+    card.innerHTML = `
+      <div class="numberBadge">🔖</div>
+
+      <div class="listNames">
+        <div class="listTitle">${bookmark.name || "Bookmark"}</div>
+        <div class="listArabic" style="font-size:18px;color:#666;">${bookmark.surah || "15 Line Quran"}</div>
+      </div>
+
+      <button onclick="deleteBookmark(event, '${bookmark.id}')" style="
+      width:42px;
+      height:42px;
+      border:none;
+      border-radius:50%;
+      background:#fff1f1;
+      color:#ff3b30;
+      font-size:18px;
+      font-weight:900;
+      cursor:pointer;
+      flex-shrink:0;
+      ">
+        🗑
+      </button>
+    `;
+
+    container.appendChild(card);
+
+  });
+
+}
+
+/* =========================
+   DELETE BOOKMARK
+========================= */
+function deleteBookmark(event, bookmarkId){
+
+  event.stopPropagation();
+
+  let ok = confirm("Delete this bookmark?");
+  if(!ok) return;
+
+  let allBookmarks = getAllBookmarks();
+
+  allBookmarks = allBookmarks.filter(function(item){
+    return String(item.id) !== String(bookmarkId);
+  });
+
+  saveAllBookmarks(allBookmarks);
+  loadBookmarks();
+  showToast("Bookmark deleted");
+
+}
+
+/* =========================
+   OPEN GO TO PAGE PROMPT
+========================= */
+function openGoToPagePrompt(){
+
+  let page = prompt("Enter page number 1 to 847");
+
+  if(page === null) return;
+
+  page = parseInt(page, 10);
+
+  if(!page || page < 1 || page > totalPages){
+    alert("Please enter page number 1 to 847");
+    return;
+  }
+
+  openReadingPage(page, "home");
+
+}
+
+/* =========================
+   OPEN READING PAGE
+========================= */
+function openReadingPage(page, backPage){
+
+  if(page < 1) page = 1;
+  if(page > totalPages) page = totalPages;
+
+  currentPage = page;
+  readingBackPage = backPage || "home";
+
+  hideAllPages();
+
+  let readingPage = document.getElementById("readingPage");
+  if(readingPage){
+    readingPage.style.display = "block";
+  }
+
+  resetReaderTopBar();
+  loadPage(page);
+
+  setTimeout(function(){
+    setupInteractiveQuranFlip({
+      stage: document.getElementById("quranFlipStage"),
+      sheet: document.getElementById("quranFlipSheet"),
+      underPage: document.getElementById("quranFlipUnderPage"),
+      frontImage: document.getElementById("pageImage"),
+      underImage: document.getElementById("quranUnderImage"),
+      shadow: document.querySelector("#quranFlipSheet .quranFlipShadow"),
+      onNext: function(){
+        previousPage();
+      },
+      onPrev: function(){
+        nextPage();
+      },
+      getNextImageSrc: function(){
+        return getPreviousImageSrc();
+      },
+      getPrevImageSrc: function(){
+        return getNextImageSrc();
+      }
+    });
+  }, 100);
+
+}
+
+/* =========================
+   CLOSE READING PAGE
+========================= */
+function closeReadingPage(event){
+
+  if(event){
+    event.stopPropagation();
+  }
+
+  let readingPage = document.getElementById("readingPage");
+  if(readingPage){
+    readingPage.style.display = "none";
+  }
+
+  resetReaderTopBar();
+
+  if(readingBackPage === "surah"){
+    openSurahPage();
+  }else if(readingBackPage === "juz"){
+    openJuzPage();
+  }else if(readingBackPage === "bookmark"){
+    openBookmarkPage();
+  }else{
+    openHomePage();
+  }
+
+}
+
+/* =========================
+   LOAD PAGE
+========================= */
+function loadPage(page){
+
+  if(page < 1) page = 1;
+  if(page > totalPages) page = totalPages;
+
+  currentPage = page;
+
+  let img = document.getElementById("pageImage");
+  let pageFloat = document.getElementById("pageFloat");
+  let readerTopTitle = document.getElementById("readerTopTitle");
+  let readerTopSubTitle = document.getElementById("readerTopSubTitle");
+
+  let surahInfo = getSurahInfoFromPage(page);
+  let juzInfo = getRealJuzInfoFromPage(page);
+
+  if(img){
+    img.src = buildMushafImagePath(page);
+  }
+
+  if(pageFloat){
+    pageFloat.innerText = "Page " + page;
+  }
+
+  if(readerTopTitle){
+    readerTopTitle.innerText = surahInfo.en || "15 Line Quran";
+  }
+
+  if(readerTopSubTitle){
+    readerTopSubTitle.innerText = "Page " + page + " • Juz " + juzInfo.juzNumber;
+  }
+
+  localStorage.setItem("lastMushafPage", String(page));
+  localStorage.setItem("lastQuranReadingSource", "quran15");
+
+}
+
+/* =========================
+   NEXT PAGE
+========================= */
+function nextPage(){
+
+  if(currentPage >= totalPages) return;
+  loadPage(currentPage + 1);
+
+}
+
+/* =========================
+   PREVIOUS PAGE
+========================= */
+function previousPage(){
+
+  if(currentPage <= 1) return;
+  loadPage(currentPage - 1);
+
+}
+
+/* =========================
+   GET NEXT IMAGE SRC
+========================= */
+function getNextImageSrc(){
+
+  let next = currentPage + 1;
+  if(next > totalPages) next = totalPages;
+
+  return buildMushafImagePath(next);
+
+}
+
+/* =========================
+   GET PREVIOUS IMAGE SRC
+========================= */
+function getPreviousImageSrc(){
+
+  let prev = currentPage - 1;
+  if(prev < 1) prev = 1;
+
+  return buildMushafImagePath(prev);
+
+}
+
+/* =========================
+   RESUME READING
+========================= */
+function resumeReading(){
+
+  let lastPage = parseInt(localStorage.getItem("lastMushafPage") || "0", 10);
+
+  if(!lastPage || lastPage < 1 || lastPage > totalPages){
+    alert("No previous 15 Line Quran reading found");
+    return;
+  }
+
+  openReadingPage(lastPage, "home");
+
+}
+
+/* =========================
+   UPDATE RESUME TEXT
+========================= */
+function updateResumeText(){
+
+  let resumeSubText = document.getElementById("resumeSubText");
+  if(!resumeSubText) return;
+
+  let lastPage = parseInt(localStorage.getItem("lastMushafPage") || "0", 10);
+
+  if(lastPage && lastPage >= 1 && lastPage <= totalPages){
+    let surahInfo = getSurahInfoFromPage(lastPage);
+    resumeSubText.innerText = "Continue from page " + lastPage + " • " + surahInfo.en;
+  }else{
+    resumeSubText.innerText = "Continue from your last page";
+  }
+
+}
+
+/* =========================
+   TOGGLE READER TOP BAR
+========================= */
+function toggleReaderTopBar(event){
+
+  if(event){
+    let target = event.target;
+
+    if(
+      target &&
+      (
+        target.closest(".readerBackBtn") ||
+        target.closest(".readerBookmarkBtn")
+      )
+    ){
+      return;
+    }
+  }
+
+  let topBar = document.getElementById("readerTopBar");
+  let content = document.getElementById("readerContent");
+
+  if(!topBar || !content) return;
+
+  readerTopBarVisible = !readerTopBarVisible;
+
+  if(readerTopBarVisible){
+    topBar.classList.add("show");
+    content.classList.add("shrink");
+  }else{
+    topBar.classList.remove("show");
+    content.classList.remove("shrink");
+  }
+
+}
+
+/* =========================
+   RESET READER TOP BAR
+========================= */
+function resetReaderTopBar(){
+
+  readerTopBarVisible = false;
+
+  let topBar = document.getElementById("readerTopBar");
+  let content = document.getElementById("readerContent");
+
+  if(topBar){
+    topBar.classList.remove("show");
+  }
+
+  if(content){
+    content.classList.remove("shrink");
+  }
+
+}
+
+/* =========================
+   SAVE CURRENT BOOKMARK
+========================= */
+function saveCurrentBookmark(event){
+
+  if(event){
+    event.stopPropagation();
+  }
+
+  let allBookmarks = getAllBookmarks();
+  let surahInfo = getSurahInfoFromPage(currentPage);
+  let juzInfo = getRealJuzInfoFromPage(currentPage);
+
+  let duplicate = allBookmarks.some(function(item){
+    return (
+      item.type === "15line" &&
+      Number(item.page) === Number(currentPage)
+    );
+  });
+
+  if(duplicate){
+    showToast("This page is already bookmarked");
+    return;
+  }
+
+  let now = new Date();
+
+  let bookmark = {
+    id: Date.now(),
+    type: "15line",
+    name: surahInfo.en + " - Page " + currentPage,
+    surah: surahInfo.en,
+    arabicName: surahInfo.ar,
+    juz: "Juz " + juzInfo.juzNumber,
+    page: currentPage,
+    createdAt: now.toISOString(),
+    createdAtText: now.toLocaleString()
+  };
+
+  allBookmarks.unshift(bookmark);
+  saveAllBookmarks(allBookmarks);
+
+  showToast("Bookmark saved");
+
+}
+
+/* =========================
+   SHOW TOAST
+========================= */
+function showToast(message){
+
+  let toast = document.getElementById("toast");
+  if(!toast) return;
+
+  toast.innerText = message;
+  toast.style.display = "block";
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer = setTimeout(function(){
+    toast.style.display = "none";
+  }, 1800);
+
+}
+
+/* =========================
+   INTERACTIVE QURAN PAGE FLIP SYSTEM
+========================= */
+let quranFlipState = {
+  enabled:false,
+  stage:null,
+  sheet:null,
+  underPage:null,
+  frontImage:null,
+  underImage:null,
+  shadow:null,
+  startX:0,
+  currentX:0,
+  deltaX:0,
+  dragging:false,
+  threshold:12,
+  maxDragPercent:62,
+  onNext:null,
+  onPrev:null,
+  getNextImageSrc:null,
+  getPrevImageSrc:null
+};
+
+/* =========================
+   SETUP INTERACTIVE QURAN FLIP
+========================= */
+function setupInteractiveQuranFlip(config){
+
+  quranFlipState.stage = config.stage;
+  quranFlipState.sheet = config.sheet;
+  quranFlipState.underPage = config.underPage;
+  quranFlipState.frontImage = config.frontImage;
+  quranFlipState.underImage = config.underImage;
+  quranFlipState.shadow = config.shadow;
+  quranFlipState.onNext = config.onNext;
+  quranFlipState.onPrev = config.onPrev;
+  quranFlipState.getNextImageSrc = config.getNextImageSrc;
+  quranFlipState.getPrevImageSrc = config.getPrevImageSrc;
+  quranFlipState.enabled = true;
+
+  if(!quranFlipState.stage) return;
+
+  if(quranFlipState.stage.dataset.flipReady === "yes") return;
+
+  quranFlipState.stage.addEventListener("touchstart", handleQuranFlipStart, {passive:true});
+  quranFlipState.stage.addEventListener("touchmove", handleQuranFlipMove, {passive:false});
+  quranFlipState.stage.addEventListener("touchend", handleQuranFlipEnd, {passive:true});
+
+  quranFlipState.stage.addEventListener("mousedown", handleQuranFlipMouseStart);
+  window.addEventListener("mousemove", handleQuranFlipMouseMove);
+  window.addEventListener("mouseup", handleQuranFlipMouseEnd);
+
+  quranFlipState.stage.dataset.flipReady = "yes";
+
+}
+
+/* =========================
+   HANDLE QURAN FLIP START
+========================= */
+function handleQuranFlipStart(e){
+
+  if(!quranFlipState.enabled) return;
+
+  let point = e.touches ? e.touches[0] : e;
+
+  quranFlipState.startX = point.clientX;
+  quranFlipState.currentX = point.clientX;
+  quranFlipState.deltaX = 0;
+  quranFlipState.dragging = true;
+
+  if(quranFlipState.sheet){
+    quranFlipState.sheet.classList.add("dragging");
+  }
+
+  if(quranFlipState.underPage){
+    quranFlipState.underPage.classList.remove("show");
+  }
+
+}
+
+/* =========================
+   HANDLE QURAN FLIP MOVE
+========================= */
+function handleQuranFlipMove(e){
+
+  if(!quranFlipState.enabled) return;
+  if(!quranFlipState.dragging) return;
+
+  let point = e.touches ? e.touches[0] : e;
+  quranFlipState.currentX = point.clientX;
+  quranFlipState.deltaX = quranFlipState.currentX - quranFlipState.startX;
+
+  let stageWidth = quranFlipState.stage ? quranFlipState.stage.offsetWidth : 1;
+  if(stageWidth < 1) stageWidth = 1;
+
+  let dragPercent = (quranFlipState.deltaX / stageWidth) * 100;
+
+  if(dragPercent > quranFlipState.maxDragPercent){
+    dragPercent = quranFlipState.maxDragPercent;
+  }
+
+  if(dragPercent < -quranFlipState.maxDragPercent){
+    dragPercent = -quranFlipState.maxDragPercent;
+  }
+
+  if(Math.abs(quranFlipState.deltaX) > 6){
+    e.preventDefault();
+  }
+
+  if(quranFlipState.deltaX < 0){
+    let nextSrc = quranFlipState.getNextImageSrc ? quranFlipState.getNextImageSrc() : "";
+    if(nextSrc && quranFlipState.underImage){
+      quranFlipState.underImage.src = nextSrc;
+      if(quranFlipState.underPage){
+        quranFlipState.underPage.classList.add("show");
+      }
+    }
+  }
+
+  if(quranFlipState.deltaX > 0){
+    let prevSrc = quranFlipState.getPrevImageSrc ? quranFlipState.getPrevImageSrc() : "";
+    if(prevSrc && quranFlipState.underImage){
+      quranFlipState.underImage.src = prevSrc;
+      if(quranFlipState.underPage){
+        quranFlipState.underPage.classList.add("show");
+      }
+    }
+  }
+
+  if(quranFlipState.sheet){
+    quranFlipState.sheet.style.transform = "translateX(" + dragPercent + "%)";
+  }
+
+}
+
+/* =========================
+   HANDLE QURAN FLIP END
+========================= */
+function handleQuranFlipEnd(){
+
+  if(!quranFlipState.enabled) return;
+  if(!quranFlipState.dragging) return;
+
+  quranFlipState.dragging = false;
+
+  let stageWidth = quranFlipState.stage ? quranFlipState.stage.offsetWidth : 1;
+  if(stageWidth < 1) stageWidth = 1;
+
+  let dragPercent = (quranFlipState.deltaX / stageWidth) * 100;
+
+  if(quranFlipState.sheet){
+    quranFlipState.sheet.classList.remove("dragging");
+  }
+
+  if(dragPercent <= -quranFlipState.threshold){
+    animateQuranFlipNext();
+    return;
+  }
+
+  if(dragPercent >= quranFlipState.threshold){
+    animateQuranFlipPrev();
+    return;
+  }
+
+  resetQuranFlipPosition();
+
+}
+
+/* =========================
+   HANDLE QURAN FLIP MOUSE START
+========================= */
+function handleQuranFlipMouseStart(e){
+  handleQuranFlipStart(e);
+}
+
+/* =========================
+   HANDLE QURAN FLIP MOUSE MOVE
+========================= */
+function handleQuranFlipMouseMove(e){
+  if(!quranFlipState.dragging) return;
+  handleQuranFlipMove(e);
+}
+
+/* =========================
+   HANDLE QURAN FLIP MOUSE END
+========================= */
+function handleQuranFlipMouseEnd(){
+  if(!quranFlipState.dragging) return;
+  handleQuranFlipEnd();
+}
+
+/* =========================
+   ANIMATE QURAN FLIP NEXT
+========================= */
+function animateQuranFlipNext(){
+
+  if(!quranFlipState.sheet) return;
+
+  quranFlipState.sheet.style.transform = "translateX(-100%)";
+
+  setTimeout(function(){
+
+    if(quranFlipState.onNext){
+      quranFlipState.onNext();
+    }
+
+    if(quranFlipState.sheet){
+      quranFlipState.sheet.style.transition = "none";
+      quranFlipState.sheet.style.transform = "translateX(0%)";
+    }
+
+    if(quranFlipState.underPage){
+      quranFlipState.underPage.classList.remove("show");
+    }
+
+    setTimeout(function(){
+      if(quranFlipState.sheet){
+        quranFlipState.sheet.style.transition = "transform 0.24s ease";
+      }
+    }, 30);
+
+  }, 240);
+
+}
+
+/* =========================
+   ANIMATE QURAN FLIP PREV
+========================= */
+function animateQuranFlipPrev(){
+
+  if(!quranFlipState.sheet) return;
+
+  quranFlipState.sheet.style.transform = "translateX(100%)";
+
+  setTimeout(function(){
+
+    if(quranFlipState.onPrev){
+      quranFlipState.onPrev();
+    }
+
+    if(quranFlipState.sheet){
+      quranFlipState.sheet.style.transition = "none";
+      quranFlipState.sheet.style.transform = "translateX(0%)";
+    }
+
+    if(quranFlipState.underPage){
+      quranFlipState.underPage.classList.remove("show");
+    }
+
+    setTimeout(function(){
+      if(quranFlipState.sheet){
+        quranFlipState.sheet.style.transition = "transform 0.24s ease";
+      }
+    }, 30);
+
+  }, 240);
+
+}
+
+/* =========================
+   RESET QURAN FLIP POSITION
+========================= */
+function resetQuranFlipPosition(){
+
+  if(quranFlipState.sheet){
+    quranFlipState.sheet.style.transform = "translateX(0%)";
+  }
+
+  if(quranFlipState.underPage){
+    setTimeout(function(){
+      if(quranFlipState.underPage){
+        quranFlipState.underPage.classList.remove("show");
+      }
+    }, 180);
+  }
+
+}
+
+/* =========================
+   START APP
+========================= */
+document.addEventListener("DOMContentLoaded", function(){
+
+  updateResumeText();
+  renderSurahList();
+  renderJuzList();
+
+});
+
+</script>
+
+</body>
+</html>
