@@ -7,7 +7,7 @@
 
 <style>
 /* =========================
-   SIMPLE QIBLA COMPASS PAGE
+   QIBLA PAGE FULL REWRITE WITH CENTER COMPASS POPUP
 ========================= */
 
 *{
@@ -457,47 +457,76 @@ body{
 }
 
 /* =========================
-   PERMISSION CARD
+   CENTER POPUP OVERLAY
+========================= */
+
+#qiblaPermissionOverlay{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  width:100%;
+  height:100%;
+  z-index:9999;
+  background:rgba(0,0,0,0.34);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:0 6%;
+}
+
+/* =========================
+   CENTER POPUP PERMISSION CARD
 ========================= */
 
 #qiblaPermissionCard{
-  position:absolute;
-  left:5%;
-  right:5%;
-  bottom:calc(20px + env(safe-area-inset-bottom));
-  z-index:60;
-  background:rgba(255,255,255,0.96);
+  width:100%;
+  max-width:360px;
+  background:rgba(255,255,255,0.97);
   backdrop-filter:blur(18px);
   -webkit-backdrop-filter:blur(18px);
   border-radius:30px;
-  padding:18px 5%;
-  box-shadow:0 16px 36px rgba(0,0,0,0.18);
-  display:none;
+  padding:24px 6%;
+  box-shadow:0 18px 44px rgba(0,0,0,0.28);
+  text-align:center;
+}
+
+.qiblaPermissionIcon{
+  width:64px;
+  height:64px;
+  border-radius:24px;
+  background:#e9e9ee;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:34px;
+  margin:0 auto 14px auto;
 }
 
 .qiblaPermissionTitle{
-  font-size:18px;
+  font-size:22px;
   font-weight:950;
   color:#111;
-  margin-bottom:6px;
+  margin-bottom:8px;
 }
 
 .qiblaPermissionText{
-  font-size:13px;
+  font-size:14px;
   font-weight:750;
   color:#555;
-  line-height:1.45;
-  margin-bottom:14px;
+  line-height:1.5;
+  margin-bottom:18px;
 }
 
 .qiblaPermissionBtn{
   width:100%;
-  height:52px;
+  height:54px;
   border:none;
   border-radius:999px;
   background:#111;
   color:white;
-  font-size:15px;
+  font-size:16px;
   font-weight:950;
   cursor:pointer;
 }
@@ -549,6 +578,11 @@ body{
     height:62px;
     left:-31px;
     font-size:30px;
+  }
+
+  #qiblaPermissionCard{
+    max-width:330px;
+    padding:22px 6%;
   }
 }
 </style>
@@ -646,17 +680,27 @@ body{
     <div class="qiblaFrontHill"></div>
   </div>
 
-  <!-- =========================
-       PERMISSION CARD
-  ========================= -->
+</div>
+
+<!-- =========================
+     CENTER COMPASS PERMISSION POPUP
+========================= -->
+<div id="qiblaPermissionOverlay">
+
   <div id="qiblaPermissionCard">
+
+    <div class="qiblaPermissionIcon">🧭</div>
+
     <div class="qiblaPermissionTitle">Allow Compass</div>
+
     <div class="qiblaPermissionText">
-      iPhone needs permission before the compass can move. Tap below one time.
+      Your phone needs compass permission so the Qibla arrow can move when you turn your phone.
     </div>
+
     <button class="qiblaPermissionBtn" onclick="requestQiblaCompassPermission()">
       Allow Compass
     </button>
+
   </div>
 
 </div>
@@ -796,16 +840,7 @@ function updateQiblaCompassDisplay(){
     return;
   }
 
-  /*
-    Dial rotates opposite of phone heading.
-    This makes N/E/S/W move like a real compass.
-  */
   let dialRotation = normalizeDegree(0 - currentHeading);
-
-  /*
-    Arrow points to Qibla relative to current phone direction.
-    When arrow points up, user is facing Qibla.
-  */
   let qiblaArrowRotation = getShortestAngleDifference(qiblaBearing, currentHeading);
 
   dial.style.transform = "rotate(" + dialRotation + "deg)";
@@ -861,12 +896,33 @@ function startCompassListener(){
 }
 
 /* =========================
+   SHOW COMPASS PERMISSION POPUP
+   full function name: showCompassPermissionPopup
+========================= */
+function showCompassPermissionPopup(){
+
+  let permissionOverlay = document.getElementById("qiblaPermissionOverlay");
+  permissionOverlay.style.display = "flex";
+
+}
+
+/* =========================
+   HIDE COMPASS PERMISSION POPUP
+   full function name: hideCompassPermissionPopup
+========================= */
+function hideCompassPermissionPopup(){
+
+  let permissionOverlay = document.getElementById("qiblaPermissionOverlay");
+  permissionOverlay.style.display = "none";
+
+}
+
+/* =========================
    REQUEST QIBLA COMPASS PERMISSION
    full function name: requestQiblaCompassPermission
 ========================= */
 function requestQiblaCompassPermission(){
 
-  let permissionCard = document.getElementById("qiblaPermissionCard");
   let instructionText = document.getElementById("qiblaInstructionText");
 
   if(
@@ -878,7 +934,7 @@ function requestQiblaCompassPermission(){
       .then(function(permissionState){
 
         if(permissionState === "granted"){
-          permissionCard.style.display = "none";
+          hideCompassPermissionPopup();
           instructionText.innerHTML = "Compass active. Move your phone.";
           startCompassListener();
         }else{
@@ -892,7 +948,7 @@ function requestQiblaCompassPermission(){
 
   }else{
 
-    permissionCard.style.display = "none";
+    hideCompassPermissionPopup();
     startCompassListener();
 
   }
@@ -905,15 +961,13 @@ function requestQiblaCompassPermission(){
 ========================= */
 function setupCompassPermission(){
 
-  let permissionCard = document.getElementById("qiblaPermissionCard");
-
   if(
     typeof DeviceOrientationEvent !== "undefined" &&
     typeof DeviceOrientationEvent.requestPermission === "function"
   ){
-    permissionCard.style.display = "block";
+    showCompassPermissionPopup();
   }else{
-    permissionCard.style.display = "none";
+    hideCompassPermissionPopup();
     startCompassListener();
   }
 
