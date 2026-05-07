@@ -169,10 +169,6 @@ input:checked + .slider:before{
 transform:translateX(20px);
 }
 
-  #bottomNav{
-box-shadow:0 -2px 10px rgba(0,0,0,0.05);
-}
-  
 
      
 /* =========================
@@ -344,7 +340,6 @@ font-size:13px;
 font-weight:600;
 z-index:12000;
 box-shadow:0 -2px 10px rgba(0,0,0,0.05);
-}dow:0 -2px 10px rgba(0,0,0,0.05);
 }
 
 .navItem{
@@ -1270,418 +1265,7 @@ box-sizing:border-box;
 
 </div>
 
-<!-- =========================
-     ARABIC QURAN MAIN PAGE
-========================= -->
-<div id="arabicQuranPage" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:92px;
-z-index:5002;
-background:linear-gradient(180deg, #ece9e1 0%, #e9e9ee 100%);
-overflow:auto;
-padding:18px 16px 120px 16px;
-box-sizing:border-box;
-">
 
-  <!-- =========================
-       ARABIC QURAN TOP BAR
-  ========================= -->
- <div style="
-position:relative;
-display:flex;
-align-items:center;
-justify-content:center;
-margin-bottom:18px;
-height:52px;
-box-sizing:border-box;
-">
-
-    <!-- Close Arabic Quran Page Button -->
-    <button onclick="closeArabicQuranPage()" style="
-position:absolute;
-left:0;
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    border:1px solid rgba(0,0,0,0.08);
-    background:white;
-    font-size:22px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#111;
-    box-shadow:0 4px 12px rgba(0,0,0,0.08);
-    ">
-      ←
-    </button>
-
-   <div style="
-position:absolute;
-left:50%;
-transform:translateX(-50%);
-font-size:20px;
-font-weight:800;
-color:#111;
-letter-spacing:-0.3px;
-">
-  Arabic Quran
-</div>
-
-   
-  </div>
-
-  <!-- =========================
-       ARABIC QURAN HERO CARD
-  ========================= -->
-  <div style="
-  background:linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 100%);
-  border-radius:30px;
-  padding:28px 22px;
-  text-align:center;
-  box-shadow:0 10px 30px rgba(0,0,0,0.08);
-  border:1px solid rgba(255,255,255,0.7);
-  margin-bottom:18px;
-  ">
-
-    <div style="
-    font-size:34px;
-    margin-bottom:12px;
-    ">
-      📖
-    </div>
-
-    <div style="
-    font-size:28px;
-    font-weight:800;
-    color:#111;
-    letter-spacing:-0.5px;
-    line-height:1.1;
-    margin-bottom:8px;
-    ">
-      Arabic Quran
-    </div>
-
-    <div style="
-    font-size:15px;
-    line-height:1.6;
-    color:#666;
-    max-width:280px;
-    margin:0 auto;
-    ">
-      Continue reading, browse surahs, or open your saved bookmarks.
-    </div>
-
-  </div>
-
-  <!-- =========================
-       ARABIC QURAN OPTION CARDS
-  ========================= -->
-  <div style="
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-  ">
-
-  <!-- Continue Reading Card -->
-<div onclick="resumeArabicQuranReading()" style="
-    background:white;
-    border-radius:26px;
-    padding:22px 20px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    box-shadow:0 8px 22px rgba(0,0,0,0.07);
-    border:1px solid rgba(0,0,0,0.03);
-    ">
-      <div style="
-      display:flex;
-      align-items:center;
-      gap:14px;
-      min-width:0;
-      ">
-        <div style="
-        width:52px;
-        height:52px;
-        border-radius:18px;
-        background:#f2f2f7;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        font-size:24px;
-        flex-shrink:0;
-        ">
-          ▶️
-        </div>
-        <div>
-          <div style="
-          font-size:20px;
-          font-weight:800;
-          color:#111;
-          margin-bottom:4px;
-          ">
-            Resume Reading
-          </div>
-          <div style="
-          font-size:14px;
-          color:#666;
-          ">
-            Continue from your last reading place
-          </div>
-        </div>
-      </div>
-      <div style="
-      font-size:24px;
-      color:#b0b0b8;
-      margin-left:14px;
-      ">
-        ›
-      </div>
-    </div>
-
-    <!-- Surah Index Card -->
-    <div onclick="openSurahIndexPage()" style="
-    background:white;
-    border-radius:26px;
-    padding:22px 20px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    box-shadow:0 8px 22px rgba(0,0,0,0.07);
-    border:1px solid rgba(0,0,0,0.03);
-    ">
-      <div style="
-      display:flex;
-      align-items:center;
-      gap:14px;
-      min-width:0;
-      ">
-        <div style="
-        width:52px;
-        height:52px;
-        border-radius:18px;
-        background:#f2f2f7;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        font-size:24px;
-        flex-shrink:0;
-        ">
-          📚
-        </div>
-        <div>
-          <div style="
-          font-size:20px;
-          font-weight:800;
-          color:#111;
-          margin-bottom:4px;
-          ">
-            Surah Index
-          </div>
-          <div style="
-          font-size:14px;
-          color:#666;
-          ">
-            Browse all surahs
-          </div>
-        </div>
-      </div>
-      <div style="
-      font-size:24px;
-      color:#b0b0b8;
-      margin-left:14px;
-      ">
-        ›
-      </div>
-    </div>
-
-   <!-- Bookmarks Card -->
-<div onclick="openArabicQuranBookmarkPage()" style="
-    background:white;
-    border-radius:26px;
-    padding:22px 20px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    box-shadow:0 8px 22px rgba(0,0,0,0.07);
-    border:1px solid rgba(0,0,0,0.03);
-    ">
-      <div style="
-      display:flex;
-      align-items:center;
-      gap:14px;
-      min-width:0;
-      ">
-        <div style="
-        width:52px;
-        height:52px;
-        border-radius:18px;
-        background:#f2f2f7;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        font-size:24px;
-        flex-shrink:0;
-        ">
-          🔖
-        </div>
-        <div>
-          <div style="
-          font-size:20px;
-          font-weight:800;
-          color:#111;
-          margin-bottom:4px;
-          ">
-            Bookmarks
-          </div>
-          <div style="
-          font-size:14px;
-          color:#666;
-          ">
-            View your saved reading places
-          </div>
-        </div>
-      </div>
-      <div style="
-      font-size:24px;
-      color:#b0b0b8;
-      margin-left:14px;
-      ">
-        ›
-      </div>
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     ARABIC QURAN BOOKMARK PAGE
-========================= -->
-<div id="arabicQuranBookmarkPage" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:92px;
-z-index:5003;
-background:linear-gradient(180deg, #ece9e1 0%, #e9e9ee 100%);
-overflow:auto;
-padding:18px 4% 120px 4%;
-box-sizing:border-box;
-">
-
-  <!-- =========================
-       ARABIC QURAN BOOKMARK TOP BAR
-  ========================= -->
-  <div style="
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  height:56px;
-  margin-bottom:14px;
-  box-sizing:border-box;
-  ">
-
-    <button onclick="closeArabicQuranBookmarkPage()" style="
-    position:absolute;
-    left:0;
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    border:none;
-    background:white;
-    font-size:22px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:0 4px 10px rgba(0,0,0,0.08);
-    cursor:pointer;
-    color:#111;
-    ">
-      ←
-    </button>
-
-    <div style="
-    position:absolute;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:20px;
-    font-weight:800;
-    color:#111;
-    letter-spacing:-0.3px;
-    text-align:center;
-    white-space:nowrap;
-    ">
-      Bookmarks
-    </div>
-
-  </div>
-
-  <!-- =========================
-       ARABIC QURAN BOOKMARK HERO CARD
-  ========================= -->
-  <div style="
-  background:linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 100%);
-  border-radius:30px;
-  padding:28px 22px;
-  text-align:center;
-  box-shadow:0 10px 30px rgba(0,0,0,0.08);
-  border:1px solid rgba(255,255,255,0.7);
-  margin-bottom:18px;
-  ">
-
-    <div style="
-    font-size:34px;
-    margin-bottom:12px;
-    ">
-      🔖
-    </div>
-
-    <div style="
-    font-size:28px;
-    font-weight:800;
-    color:#111;
-    letter-spacing:-0.5px;
-    line-height:1.1;
-    margin-bottom:8px;
-    ">
-      Arabic Quran Bookmarks
-    </div>
-
-    <div style="
-    font-size:15px;
-    line-height:1.6;
-    color:#666;
-    max-width:280px;
-    margin:0 auto;
-    ">
-      Your saved Arabic Quran reading places
-    </div>
-
-  </div>
-
-  <!-- =========================
-       ARABIC QURAN BOOKMARK LIST
-  ========================= -->
-  <div id="arabicQuranBookmarkList" style="
-  margin-top:12px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  "></div>
-
-</div>
 
 
      
@@ -2028,107 +1612,6 @@ box-sizing:border-box;
 
      
 
-<!-- =========================
-     15 LINE QURAN BOOKMARK PAGE
-========================= -->
-<div id="quran15BookmarkPage" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:92px;
-z-index:5002;
-background:linear-gradient(180deg, #ece9e1 0%, #e9e9ee 100%);
-overflow:auto;
-padding:18px 16px 120px 16px;
-box-sizing:border-box;
-">
-
-  <!-- =========================
-       15 LINE BOOKMARK TOP BAR
-  ========================= -->
-  <div style="
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  height:56px;
-  margin-bottom:14px;
-  box-sizing:border-box;
-  ">
-
-    <button onclick="closeQuran15BookmarkPage()" style="
-    position:absolute;
-    left:0;
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    border:none;
-    background:white;
-    font-size:22px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:0 4px 10px rgba(0,0,0,0.08);
-    cursor:pointer;
-    color:#111;
-    ">
-      ←
-    </button>
-
-    <div style="
-    position:absolute;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:20px;
-    font-weight:800;
-    color:#111;
-    letter-spacing:-0.3px;
-    text-align:center;
-    white-space:nowrap;
-    ">
-      Bookmarks
-    </div>
-
-  </div>
-
-  <!-- =========================
-       15 LINE BOOKMARK SUBTITLE CARD
-  ========================= -->
-  <div style="
-  background:white;
-  border-radius:26px;
-  padding:18px 20px;
-  margin-top:0;
-  text-align:center;
-  box-shadow:0 8px 22px rgba(0,0,0,0.07);
-  border:1px solid rgba(0,0,0,0.03);
-  ">
-    <div style="
-    font-size:14px;
-    color:#666;
-    ">
-      Your saved 15 line Quran bookmarks
-    </div>
-  </div>
-
-  <!-- Bookmark List -->
-  <div id="quran15BookmarkList" style="
-  margin-top:12px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  "></div>
-
-</div>
-
-
-
-
-
-     
-     
 <!-- =========================
      JAVASCRIPT LOGIC
 ========================= -->
@@ -2734,7 +2217,6 @@ quran16BackDestination = "quran16Page";
   let quran15SurahPage = document.getElementById("quran15SurahPage");
   let quranReadingPage = document.getElementById("quranReadingPage");
   let surahIndexPage = document.getElementById("surahIndexPage");
-  let quran15BookmarkPage = document.getElementById("quran15BookmarkPage");
 
 
   if(quranPage) quranPage.style.display = "none";
@@ -2743,7 +2225,6 @@ quran16BackDestination = "quran16Page";
   if(quran15SurahPage) quran15SurahPage.style.display = "none";
   if(quranReadingPage) quranReadingPage.style.display = "none";
   if(surahIndexPage) surahIndexPage.style.display = "none";
-  if(quran15BookmarkPage) quran15BookmarkPage.style.display = "none";
   if(quran16ReadingPage) quran16ReadingPage.style.display = "none";
 
   if(quran16Page) quran16Page.style.display = "block";
@@ -2838,7 +2319,6 @@ function openQuran16PageNumber(page){
   let quran15SurahPage = document.getElementById("quran15SurahPage");
   let quranReadingPage = document.getElementById("quranReadingPage");
   let surahIndexPage = document.getElementById("surahIndexPage");
-  let quran15BookmarkPage = document.getElementById("quran15BookmarkPage");
   
 
   if(quranPage) quranPage.style.display = "none";
@@ -2847,7 +2327,6 @@ function openQuran16PageNumber(page){
   if(quran15SurahPage) quran15SurahPage.style.display = "none";
   if(quranReadingPage) quranReadingPage.style.display = "none";
   if(surahIndexPage) surahIndexPage.style.display = "none";
-  if(quran15BookmarkPage) quran15BookmarkPage.style.display = "none";
   if(quran16Page) quran16Page.style.display = "none";
 
   if(quran16ReadingPage) quran16ReadingPage.style.display = "block";
@@ -3966,662 +3445,16 @@ function saveQuran16Bookmark(){
   closeQuran16BookmarkPopup();
   alert("Bookmark saved");
 }
-
-
-// =========================
-// RESUME ARABIC QURAN READING
-// =========================
-function resumeArabicQuranReading(){
-
-  let surahNumber = parseInt(localStorage.getItem("lastArabicQuranSurahNumber") || "0");
-  let englishName = localStorage.getItem("lastArabicQuranEnglishName") || "";
-  let arabicName = localStorage.getItem("lastArabicQuranArabicName") || "";
-
-  if(!surahNumber || surahNumber < 1 || surahNumber > 114){
-    alert("No previous Arabic Quran reading found");
-    return;
-  }
-
-  openQuranReadingPage(surahNumber, englishName || "Surah", arabicName || "");
-}
-
-
-// =========================
-// OPEN ARABIC QURAN BOOKMARK PAGE
-// =========================
-function openArabicQuranBookmarkPage(){
-
-  let arabicQuranPage = document.getElementById("arabicQuranPage");
-  let surahIndexPage = document.getElementById("surahIndexPage");
-  let quranReadingPage = document.getElementById("quranReadingPage");
-  let arabicQuranBookmarkPage = document.getElementById("arabicQuranBookmarkPage");
-
-  if(arabicQuranPage) arabicQuranPage.style.display = "none";
-  if(surahIndexPage) surahIndexPage.style.display = "none";
-  if(quranReadingPage) quranReadingPage.style.display = "none";
-
-  if(arabicQuranBookmarkPage) arabicQuranBookmarkPage.style.display = "block";
-
-  setBottomNavVisibility(true);
-  loadArabicQuranBookmarkList();
-
-  window.scrollTo(0,0);
-}
-
-
-// =========================
-// CLOSE ARABIC QURAN BOOKMARK PAGE
-// =========================
-function closeArabicQuranBookmarkPage(){
-
-  let arabicQuranPage = document.getElementById("arabicQuranPage");
-  let arabicQuranBookmarkPage = document.getElementById("arabicQuranBookmarkPage");
-
-  if(arabicQuranBookmarkPage) arabicQuranBookmarkPage.style.display = "none";
-  if(arabicQuranPage) arabicQuranPage.style.display = "block";
-
-  setBottomNavVisibility(true);
-
-  window.scrollTo(0,0);
-}
-
-
-// =========================
-// LOAD ARABIC QURAN BOOKMARK LIST
-// =========================
-function loadArabicQuranBookmarkList(){
-
-  let container = document.getElementById("arabicQuranBookmarkList");
-  if(!container) return;
-
-  let allBookmarks = JSON.parse(localStorage.getItem("quranBookmarks") || "[]");
-
-  let bookmarks = allBookmarks.filter(function(item){
-    return item.type === "arabic";
-  });
-
-  container.innerHTML = "";
-
-  if(!bookmarks.length){
-    container.innerHTML = `
-      <div style="
-      background:white;
-      border-radius:24px;
-      padding:22px 18px;
-      text-align:center;
-      box-shadow:0 8px 22px rgba(0,0,0,0.07);
-      color:#666;
-      font-size:15px;
-      font-weight:600;
-      ">
-        No Arabic Quran bookmarks saved yet
-      </div>
-    `;
-    return;
-  }
-
-  bookmarks.forEach(function(bookmark){
-
-    let card = document.createElement("div");
-
-    card.onclick = function(){
-      openSavedArabicQuranBookmark(bookmark.id);
-    };
-
-    card.style.background = "white";
-    card.style.borderRadius = "24px";
-    card.style.padding = "18px 16px";
-    card.style.boxShadow = "0 8px 22px rgba(0,0,0,0.07)";
-    card.style.border = "1px solid rgba(0,0,0,0.03)";
-    card.style.cursor = "pointer";
-
-    card.innerHTML = `
-      <div style="
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-      ">
-        <div style="min-width:0;flex:1;">
-          <div style="
-          font-size:18px;
-          font-weight:800;
-          color:#111;
-          margin-bottom:4px;
-          ">
-            ${bookmark.name || "Bookmark"}
-          </div>
-
-          <div style="
-          font-size:14px;
-          color:#444;
-          margin-bottom:4px;
-          ">
-            ${bookmark.surah || "Arabic Quran"}
-          </div>
-
-          <div style="
-          font-size:12px;
-          color:#999;
-          ">
-            ${bookmark.createdAtText || ""}
-          </div>
-        </div>
-
-        <div style="
-        font-size:22px;
-        color:#b0b0b8;
-        flex-shrink:0;
-        ">
-          🔖
-        </div>
-      </div>
-    `;
-
-    container.appendChild(card);
-
-  });
-}
-
-
-// =========================
-// OPEN SAVED ARABIC QURAN BOOKMARK
-// =========================
-function openSavedArabicQuranBookmark(bookmarkId){
-
-  let allBookmarks = JSON.parse(localStorage.getItem("quranBookmarks") || "[]");
-
-  let bookmark = allBookmarks.find(function(item){
-    return String(item.id) === String(bookmarkId);
-  });
-
-  if(!bookmark){
-    alert("Bookmark not found");
-    return;
-  }
-
-  if(bookmark.type !== "arabic"){
-    alert("This is not an Arabic Quran bookmark");
-    return;
-  }
-
-  let surahNumber = parseInt(bookmark.surahNumber || "0");
-
-  if(!surahNumber && bookmark.surah && typeof quran16SurahData !== "undefined"){
-    let matchedSurah = quran16SurahData.find(function(surah){
-      return String(surah.en).toLowerCase() === String(bookmark.surah).toLowerCase();
-    });
-
-    if(matchedSurah){
-      surahNumber = matchedSurah.num;
-    }
-  }
-
-  if(!surahNumber || surahNumber < 1 || surahNumber > 114){
-    alert("Saved Surah not found in this bookmark");
-    return;
-  }
-
-  let arabicQuranBookmarkPage = document.getElementById("arabicQuranBookmarkPage");
-  let arabicQuranPage = document.getElementById("arabicQuranPage");
-  let surahIndexPage = document.getElementById("surahIndexPage");
-  let quranReadingPage = document.getElementById("quranReadingPage");
-
-  if(arabicQuranBookmarkPage) arabicQuranBookmarkPage.style.display = "none";
-  if(arabicQuranPage) arabicQuranPage.style.display = "none";
-  if(surahIndexPage) surahIndexPage.style.display = "none";
-  if(quranReadingPage) quranReadingPage.style.display = "block";
-
-  setBottomNavVisibility(true);
-
-  openQuranReadingPage(
-    surahNumber,
-    bookmark.surah || "Surah",
-    ""
-  );
-}
-
-     
      
 
 // =========================
 // OPEN 15 LINE BOOKMARK PAGE
 // =========================
-function openQuran15BookmarkPage(){
-
-  let quran15Page = document.getElementById("quran15Page");
-  let quran15SurahPage = document.getElementById("quran15SurahPage");
-  let juzIndexPage = document.getElementById("juzIndexPage");
-  let quranReadingPage = document.getElementById("quranReadingPage");
-  let bookmarkPage = document.getElementById("quran15BookmarkPage");
-
-  if(quran15Page) quran15Page.style.display = "none";
-  if(quran15SurahPage) quran15SurahPage.style.display = "none";
-  if(juzIndexPage) juzIndexPage.style.display = "none";
-  if(quranReadingPage) quranReadingPage.style.display = "none";
-  if(bookmarkPage) bookmarkPage.style.display = "block";
-  setBottomNavVisibility(true);
-
-  loadQuran15BookmarkList();
-
-  window.scrollTo(0,0);
-}
-// =========================
 // CLOSE 15 LINE BOOKMARK PAGE
-// =========================
-function closeQuran15BookmarkPage(){
-
-  let quran15Page = document.getElementById("quran15Page");
-  let bookmarkPage = document.getElementById("quran15BookmarkPage");
-  
-
-  if(bookmarkPage) bookmarkPage.style.display = "none";
-  if(quran15Page) quran15Page.style.display = "block";
-  setBottomNavVisibility(true);
-
-  window.scrollTo(0,0);
-}
-
-
 // =========================
 // OPEN SAVED 15 LINE BOOKMARK
 // =========================
-function openSavedQuran15Bookmark(bookmarkId){
-
-  let allBookmarks = JSON.parse(localStorage.getItem("quranBookmarks") || "[]");
-
-  let bookmark = allBookmarks.find(function(item){
-    return String(item.id) === String(bookmarkId);
-  });
-
-  if(!bookmark){
-    alert("Bookmark not found");
-    return;
-  }
-
-  if(bookmark.type !== "15line"){
-    alert("This is not a 15 line bookmark");
-    return;
-  }
-
-  let page = parseInt(bookmark.page || 0);
-
-  if(!page || page < 1){
-    alert("Saved page not found in this bookmark");
-    return;
-  }
-
-  quranReadingSource = "continue15";
-
-  let quranReadingPage = document.getElementById("quranReadingPage");
-  let quranReadingEnglishName = document.getElementById("quranReadingEnglishName");
-  let quranReadingArabicName = document.getElementById("quranReadingArabicName");
-  let quranReadingMeta = document.getElementById("quranReadingMeta");
-  let quranReadingLoadingCard = document.getElementById("quranReadingLoadingCard");
-  let quranReadingTextCard = document.getElementById("quranReadingTextCard");
-  let mushafPageView = document.getElementById("mushafPageView");
-
-
-  // reset all Quran layers first
-  hideAllQuranLayers();
-
-  if(quranReadingPage) quranReadingPage.style.display = "block";
-  setBottomNavVisibility(true);
-
-  if(quranReadingEnglishName) quranReadingEnglishName.innerText = bookmark.surah || "Bookmark";
-  if(quranReadingArabicName) quranReadingArabicName.innerText = "";
-  if(quranReadingMeta) quranReadingMeta.innerText = "15 Line Quran Bookmark";
-
-  if(quranReadingLoadingCard) quranReadingLoadingCard.style.display = "none";
-  if(quranReadingTextCard) quranReadingTextCard.style.display = "none";
-  if(mushafPageView) mushafPageView.style.display = "block";
-
-  loadMushafPage(page);
-resetQuranReaderTopBar();
-  setTimeout(function(){
-    setupInteractiveQuranFlip({
-      stage: document.getElementById("quranFlipStage"),
-      sheet: document.getElementById("quranFlipSheet"),
-      underPage: document.getElementById("quranFlipUnderPage"),
-      frontImage: document.getElementById("mushafPageImage"),
-      underImage: document.getElementById("quranUnderImage"),
-      shadow: document.querySelector("#quranFlipSheet .quranFlipShadow"),
-      onNext: function(){
-        prevMushafPage();
-      },
-      onPrev: function(){
-        nextMushafPage();
-      },
-      getNextImageSrc: function(){
-        return getPrevMushafImageSrc();
-      },
-      getPrevImageSrc: function(){
-        return getNextMushafImageSrc();
-      }
-    });
-  }, 100);
-
-  window.scrollTo(0,0);
-}
-
-
-
-
-
-     
-
-// =========================
 // LOAD 15 LINE BOOKMARK LIST
-// =========================
-function loadQuran15BookmarkList(){
-
-  let container = document.getElementById("quran15BookmarkList");
-  if(!container) return;
-
-  let allBookmarks = JSON.parse(localStorage.getItem("quranBookmarks") || "[]");
-  let bookmarks = allBookmarks.filter(function(item){
-    return item.type === "15line";
-  });
-
-  container.innerHTML = "";
-
-  if(!bookmarks.length){
-    container.innerHTML = `
-      <div style="
-      background:white;
-      border-radius:24px;
-      padding:22px 18px;
-      text-align:center;
-      box-shadow:0 8px 22px rgba(0,0,0,0.07);
-      color:#666;
-      font-size:15px;
-      font-weight:600;
-      ">
-        No 15 line bookmarks saved yet
-      </div>
-    `;
-    return;
-  }
-
-  let openCardController = null;
-
-  bookmarks.forEach(function(bookmark){
-
-    let swipeWrap = document.createElement("div");
-    swipeWrap.style.position = "relative";
-    swipeWrap.style.width = "100%";
-    swipeWrap.style.borderRadius = "24px";
-    swipeWrap.style.overflow = "hidden";
-    swipeWrap.style.marginBottom = "12px";
-    swipeWrap.style.touchAction = "pan-y";
-
-    let deleteBack = document.createElement("div");
-    deleteBack.style.position = "absolute";
-    deleteBack.style.top = "0";
-    deleteBack.style.right = "0";
-    deleteBack.style.bottom = "0";
-    deleteBack.style.width = "96px";
-    deleteBack.style.background = "linear-gradient(180deg,#ff453a 0%, #ff3b30 100%)";
-    deleteBack.style.display = "flex";
-    deleteBack.style.alignItems = "center";
-    deleteBack.style.justifyContent = "center";
-    deleteBack.style.color = "white";
-    deleteBack.style.fontSize = "16px";
-    deleteBack.style.fontWeight = "800";
-    deleteBack.style.letterSpacing = "-0.2px";
-    deleteBack.style.borderRadius = "24px";
-    deleteBack.style.userSelect = "none";
-    deleteBack.style.webkitUserSelect = "none";
-    deleteBack.style.boxShadow = "inset 0 0 0 1px rgba(255,255,255,0.10)";
-    deleteBack.innerText = "Delete";
-
-    let card = document.createElement("div");
-    card.style.position = "relative";
-    card.style.background = "white";
-    card.style.borderRadius = "24px";
-    card.style.padding = "18px 16px";
-    card.style.boxShadow = "0 8px 22px rgba(0,0,0,0.07)";
-    card.style.border = "1px solid rgba(0,0,0,0.03)";
-    card.style.cursor = "pointer";
-    card.style.transform = "translateX(0px)";
-    card.style.transition = "transform 0.28s cubic-bezier(0.22, 1, 0.36, 1)";
-    card.style.willChange = "transform";
-
-    card.innerHTML = `
-      <div style="
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-      ">
-        <div style="min-width:0;flex:1;">
-          <div style="
-          font-size:18px;
-          font-weight:800;
-          color:#111;
-          margin-bottom:4px;
-          ">
-            ${bookmark.name || "Bookmark"}
-          </div>
-
-          <div style="
-          font-size:14px;
-          color:#444;
-          margin-bottom:4px;
-          ">
-            ${bookmark.surah || ""}
-          </div>
-
-          <div style="
-          font-size:13px;
-          color:#666;
-          margin-bottom:4px;
-          ">
-            ${bookmark.juz || ""}
-          </div>
-
-          <div style="
-          font-size:12px;
-          color:#999;
-          ">
-            ${bookmark.createdAtText || ""}
-          </div>
-        </div>
-
-        <div style="
-        font-size:22px;
-        color:#b0b0b8;
-        flex-shrink:0;
-        ">
-          🔖
-        </div>
-      </div>
-    `;
-
-    let startX = 0;
-    let startY = 0;
-    let deltaX = 0;
-    let isDragging = false;
-    let isHorizontalSwipe = false;
-    let didMove = false;
-    let fullSwipeTriggered = false;
-    let isOpen = false;
-
-    let openX = -96;
-    let halfOpenThreshold = -48;
-    let fullSwipeThreshold = -118;
-    let maxDrag = -138;
-
-    function setCardX(x){
-      card.style.transform = "translateX(" + x + "px)";
-    }
-
-    function closeThisCard(){
-      card.style.transition = "transform 0.28s cubic-bezier(0.22, 1, 0.36, 1)";
-      setCardX(0);
-      isOpen = false;
-
-      if(openCardController && openCardController.card === card){
-        openCardController = null;
-      }
-    }
-
-    function openThisCard(){
-      if(openCardController && openCardController.card !== card){
-        openCardController.close();
-      }
-
-      card.style.transition = "transform 0.28s cubic-bezier(0.22, 1, 0.36, 1)";
-      setCardX(openX);
-      isOpen = true;
-
-      openCardController = {
-        card: card,
-        close: closeThisCard
-      };
-    }
-
-    function deleteThisBookmark(){
-      let savedBookmarks = JSON.parse(localStorage.getItem("quranBookmarks") || "[]");
-
-      savedBookmarks = savedBookmarks.filter(function(item){
-        return String(item.id) !== String(bookmark.id);
-      });
-
-      localStorage.setItem("quranBookmarks", JSON.stringify(savedBookmarks));
-      loadQuran15BookmarkList();
-    }
-
-    function askDeleteBookmark(){
-      let ok = confirm('Delete bookmark "' + (bookmark.name || "Bookmark") + '"?');
-
-      if(ok){
-        deleteThisBookmark();
-      }else{
-        closeThisCard();
-      }
-    }
-
-    deleteBack.onclick = function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      askDeleteBookmark();
-    };
-
-    card.onclick = function(e){
-      if(didMove || fullSwipeTriggered){
-        e.preventDefault();
-        e.stopPropagation();
-        return;
-      }
-
-      if(isOpen){
-        closeThisCard();
-        return;
-      }
-
-      openSavedQuran15Bookmark(bookmark.id);
-    };
-
-    swipeWrap.addEventListener("touchstart", function(e){
-      let touch = e.touches[0];
-      if(!touch) return;
-
-      startX = touch.clientX;
-      startY = touch.clientY;
-      deltaX = isOpen ? openX : 0;
-      isDragging = true;
-      isHorizontalSwipe = false;
-      didMove = false;
-      fullSwipeTriggered = false;
-
-      card.style.transition = "none";
-
-      if(openCardController && openCardController.card !== card){
-        openCardController.close();
-      }
-    }, {passive:true});
-
-    swipeWrap.addEventListener("touchmove", function(e){
-      if(!isDragging) return;
-
-      let touch = e.touches[0];
-      if(!touch) return;
-
-      let moveX = touch.clientX - startX;
-      let moveY = touch.clientY - startY;
-
-      if(!isHorizontalSwipe){
-        if(Math.abs(moveX) > 8 && Math.abs(moveX) > Math.abs(moveY)){
-          isHorizontalSwipe = true;
-        }else{
-          return;
-        }
-      }
-
-      e.preventDefault();
-      didMove = true;
-
-      let nextX = (isOpen ? openX : 0) + moveX;
-
-      if(nextX > 0){
-        nextX = nextX * 0.18;
-      }
-
-      if(nextX < maxDrag){
-        nextX = maxDrag;
-      }
-
-      setCardX(nextX);
-      deltaX = nextX;
-    }, {passive:false});
-
-    swipeWrap.addEventListener("touchend", function(){
-      if(!isDragging) return;
-
-      isDragging = false;
-      card.style.transition = "transform 0.28s cubic-bezier(0.22, 1, 0.36, 1)";
-
-      if(!isHorizontalSwipe){
-        didMove = false;
-        return;
-      }
-
-      if(deltaX <= fullSwipeThreshold){
-        fullSwipeTriggered = true;
-        setCardX(openX);
-
-        setTimeout(function(){
-          askDeleteBookmark();
-          setTimeout(function(){
-            fullSwipeTriggered = false;
-          }, 120);
-        }, 110);
-
-        return;
-      }
-
-      if(deltaX <= halfOpenThreshold){
-        openThisCard();
-      }else{
-        closeThisCard();
-      }
-
-      setTimeout(function(){
-        didMove = false;
-      }, 60);
-    });
-
-    swipeWrap.appendChild(deleteBack);
-    swipeWrap.appendChild(card);
-    container.appendChild(swipeWrap);
-  });
-}
-
-     
-
-
-     
 // =========================
 // INTERACTIVE QURAN PAGE FLIP SYSTEM
 // =========================
@@ -5113,105 +3946,6 @@ function closeMushafMode(){
 
 // =========================
 // RESUME 15 LINE QURAN READING
-// =========================
-function resumeQuran15Reading(){
-
-  let lastPage = parseInt(localStorage.getItem("lastMushafPage") || "0");
-  let lastSurahNumber = parseInt(localStorage.getItem("lastSurahNumber") || "1");
-  let lastSource = localStorage.getItem("lastQuranReadingSource") || "quran15";
-
-  if(!lastPage || lastPage < 1){
-    alert("No previous reading found");
-    return;
-  }
-
-  let quran15Page = document.getElementById("quran15Page");
-  let quran15SurahPage = document.getElementById("quran15SurahPage");
-  let juzIndexPage = document.getElementById("juzIndexPage");
-  let quranReadingPage = document.getElementById("quranReadingPage");
-  let quranReadingEnglishName = document.getElementById("quranReadingEnglishName");
-  let quranReadingArabicName = document.getElementById("quranReadingArabicName");
-  let quranReadingMeta = document.getElementById("quranReadingMeta");
-  let quranReadingLoadingCard = document.getElementById("quranReadingLoadingCard");
-  let quranReadingTextCard = document.getElementById("quranReadingTextCard");
-  let mushafPageView = document.getElementById("mushafPageView");
-  
-
-  quranReadingSource = "continue15";
-  currentQuranSurahNumber = lastSurahNumber;
-
-  if(quran15Page) quran15Page.style.display = "none";
-  if(quran15SurahPage) quran15SurahPage.style.display = "none";
-  if(juzIndexPage) juzIndexPage.style.display = "none";
-  if(quranReadingPage) quranReadingPage.style.display = "block";
-  setBottomNavVisibility(true);
-
- if(quranReadingEnglishName) quranReadingEnglishName.innerText = "Continue Reading";
-if(quranReadingArabicName) quranReadingArabicName.innerText = "";
-if(quranReadingMeta) quranReadingMeta.innerText = "15 Line Quran";
-
-  if(quranReadingLoadingCard) quranReadingLoadingCard.style.display = "none";
-  if(quranReadingTextCard) quranReadingTextCard.style.display = "none";
-  if(mushafPageView) mushafPageView.style.display = "block";
-
-  loadMushafPage(lastPage);
-resetQuranReaderTopBar();
-  setTimeout(function(){
-
-    if(lastSource === "juz"){
-      setupInteractiveQuranFlip({
-        stage: document.getElementById("quranFlipStage"),
-        sheet: document.getElementById("quranFlipSheet"),
-        underPage: document.getElementById("quranFlipUnderPage"),
-        frontImage: document.getElementById("mushafPageImage"),
-        underImage: document.getElementById("quranUnderImage"),
-        shadow: document.querySelector("#quranFlipSheet .quranFlipShadow"),
-        onNext: function(){
-          prevMushafPage();
-        },
-        onPrev: function(){
-          nextMushafPage();
-        },
-        getNextImageSrc: function(){
-          return getPrevMushafImageSrc();
-        },
-        getPrevImageSrc: function(){
-          return getNextMushafImageSrc();
-        }
-      });
-    }else{
-      setupInteractiveQuranFlip({
-        stage: document.getElementById("quranFlipStage"),
-        sheet: document.getElementById("quranFlipSheet"),
-        underPage: document.getElementById("quranFlipUnderPage"),
-        frontImage: document.getElementById("mushafPageImage"),
-        underImage: document.getElementById("quranUnderImage"),
-        shadow: document.querySelector("#quranFlipSheet .quranFlipShadow"),
-        onNext: function(){
-          prevMushafPage();
-        },
-        onPrev: function(){
-          nextMushafPage();
-        },
-        getNextImageSrc: function(){
-          return getPrevMushafImageSrc();
-        },
-        getPrevImageSrc: function(){
-          return getNextMushafImageSrc();
-        }
-      });
-    }
-
-  }, 100);
-
-  window.scrollTo(0,0);
-
-}
-
-
-
-
-  
 // =========================
 // BUILD TASBIH BARS
 // =========================
@@ -7925,7 +6659,6 @@ let quranLayerIds = [
   "quran15SurahPage",
   "surahIndexPage",
   "quranReadingPage",
-  "quran15BookmarkPage",
   "quran16Page",
   "quran16SurahPage",
   "quran16ReadingPage",
@@ -8346,13 +7079,7 @@ setAppTopBarTitle("");
     "salahPage",
     "trackerPage",
     "morePage",
-    "tasbihPage",
-    "duaPage",
-    "ayatulKursiPage",
     "qiblaPage",
-    "zikrPage",
-    "zikrDetailPage",
-    "qazaPage",
     "appSettingsPage",
     "juzIndexPage"
   ];
@@ -8371,41 +7098,11 @@ setAppTopBarTitle("");
 
 
 // =========================
-// OPEN QAZA PAGE
+// OPEN QAZA PAGE (FOLDER REDIRECT)
 // =========================
 function openQazaPage(){
 
-hideAllAppPages();
-
-let qazaPage = document.getElementById("qazaPage");
-let floatingMenuBtn = document.getElementById("floatingMenuBtn");
-
-if(qazaPage) qazaPage.style.display = "block";
-if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-
-setBottomNavVisibility(true);
-setMainMenuHandleVisibility(false);
-
-setAppTopBarVisibility(true);
-setAppTopBarTitle("Qaza Tracker");
-setAppTopBarBackButton(true, function(){
-  closeQazaPage();
-});
-setAppTopBarRightButton(true, "🔒", function(){
-  toggleQazaLockState();
-});
-
-showQazaPrayerTab();
-loadFajrData();
-loadDhuhrData();
-loadAsrData();
-loadMaghribData();
-loadIshaData();
-loadWitrData();
-updateQazaProgressTabUI();
-updateQazaLockButtonUI();
-
-window.scrollTo(0,0);
+  openQazaTrackerFromFolder(lastMainTab || "more");
 
 }
 
@@ -8804,124 +7501,40 @@ function openQazaTrackerFromMore(){
 
 
 // =========================
-// OPEN FARGHI RIZQ PAGE
+// OPEN FARGHI RIZQ PAGE (NOW INSIDE DUA FOLDER)
 // =========================
 function openFarghiRizqPage(){
 
-let duaPage = document.getElementById("duaPage");
-let farghiRizqPage = document.getElementById("farghiRizqPage");
-let bottomNav = document.getElementById("bottomNav");
-let floatingMenuBtn = document.getElementById("floatingMenuBtn");
-
-// hide all main app pages first
-if(typeof hideAllAppPages === "function"){
-hideAllAppPages();
-}
-
-// keep dua page hidden
-if(duaPage) duaPage.style.display = "none";
-
-// show only Farghi Rizq page
-if(farghiRizqPage) farghiRizqPage.style.display = "block";
-
-// no bottom bar inside dua detail page
-if(bottomNav) bottomNav.style.display = "none";
-
-// no menu button inside dua detail page
-if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-
-window.scrollTo(0,0);
+  openDuaPageFromFolder(lastMainTab || "home");
 
 }
-
-
-     
 
 // =========================
-// OPEN IMAN PAGE
+// OPEN IMAN PAGE (NOW INSIDE DUA FOLDER)
 // =========================
 function openImanPage(){
 
-let duaPage = document.getElementById("duaPage");
-let imanPage = document.getElementById("imanPage");
-let floatingMenuBtn = document.getElementById("floatingMenuBtn");
-
-if(duaPage) duaPage.style.display = "none";
-if(imanPage) imanPage.style.display = "block";
-if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-
-setBottomNavVisibility(false);
-setMainMenuHandleVisibility(false);
-
-setAppTopBarVisibility(true);
-setAppTopBarTitle("Iman Mujmal & Mufassal");
-setAppTopBarBackButton(true, function(){
-  closeImanPage();
-});
-
-window.scrollTo(0,0);
+  openDuaPageFromFolder(lastMainTab || "home");
 
 }
 
 // =========================
-// CLOSE FARGHI RIZQ PAGE
+// CLOSE FARGHI RIZQ PAGE (OLD PAGE REMOVED)
 // =========================
 function closeFarghiRizqPage(){
 
-let farghiRizqPage = document.getElementById("farghiRizqPage");
-
-// hide Farghi Rizq page first
-if(farghiRizqPage) farghiRizqPage.style.display = "none";
-
-// open Dua page using the real Dua page function
-// this brings back the same top bar correctly
-if(typeof openDuaPage === "function"){
-openDuaPage();
-return;
-}
-
-// backup only, if openDuaPage is not found
-let duaPage = document.getElementById("duaPage");
-let bottomNav = document.getElementById("bottomNav");
-let floatingMenuBtn = document.getElementById("floatingMenuBtn");
-
-if(duaPage) duaPage.style.display = "block";
-if(bottomNav) bottomNav.style.display = "none";
-if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-
-window.scrollTo(0,0);
+  openDuaPageFromFolder(lastMainTab || "home");
 
 }
-
 
 // =========================
-// CLOSE IMAN PAGE
+// CLOSE IMAN PAGE (OLD PAGE REMOVED)
 // =========================
 function closeImanPage(){
 
-let duaPage = document.getElementById("duaPage");
-let imanPage = document.getElementById("imanPage");
-let floatingMenuBtn = document.getElementById("floatingMenuBtn");
-
-if(imanPage) imanPage.style.display = "none";
-if(duaPage) duaPage.style.display = "block";
-if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-
-setBottomNavVisibility(true);
-setMainMenuHandleVisibility(false);
-
-// RESTORE DUA PAGE TOP BAR
-setAppTopBarVisibility(true);
-setAppTopBarTitle("Dua");
-setAppTopBarBackButton(true, function(){
-  closeDuaPage();
-});
-
-window.scrollTo(0,0);
+  openDuaPageFromFolder(lastMainTab || "home");
 
 }
-
-
 
 // =========================
 // OPEN DUA PAGE FROM FOLDER
@@ -8935,6 +7548,32 @@ window.location.href = "duapage/?from=" + sourcePage + "&v=" + Date.now();
 
 }
 
+/* =========================
+   OPEN BOOKS PAGE FROM MORE
+   full function name: openBooksPageFromMore
+========================= */
+function openBooksPageFromMore(){
+
+  localStorage.setItem("ibadahFolderReturnPage", "more");
+  window.location.href = "books/";
+
+}
+
+
+/* =========================
+   OPEN QIBLA FOLDER PAGE FROM MORE
+   full function name: openQiblaPageFromMoreFolder
+========================= */
+function openQiblaPageFromMoreFolder(){
+
+  localStorage.setItem("ibadahFolderReturnPage", "more");
+  window.location.href = "qibla/";
+
+}
+
+     
+
+     
 // =========================
 // OPEN DAILY AZKAR PAGE FROM FOLDER
 // =========================
@@ -8946,169 +7585,43 @@ let sourcePage = fromPage || "home";
 window.location.href = "dailyazkar/?from=" + sourcePage + "&v=" + Date.now();
 
 }
-     
-  
+
 // =========================
-// OPEN DUA PAGE
+// OPEN DUA PAGE (FOLDER REDIRECT)
 // =========================
 function openDuaPage(){
 
-duaOpenedFromPage = getCurrentMainPageForDua();
-
-hideAllAppPages();
-
-let duaPage = document.getElementById("duaPage");
-let floatingMenuBtn = document.getElementById("floatingMenuBtn");
-
-if(duaPage) duaPage.style.display = "block";
-if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-
-setBottomNavVisibility(true);
-setMainMenuHandleVisibility(false);
-
-setAppTopBarVisibility(true);
-setAppTopBarTitle("Masnoon Duas");
-setAppTopBarBackButton(true, function(){
-  closeDuaPage();
-});
-
-if(typeof setAppTopBarRightButton === "function"){
-  setAppTopBarRightButton(false, "", null);
-}
-
-window.scrollTo(0,0);
+  openDuaPageFromFolder(lastMainTab || "home");
 
 }
 
-
-     
 // =========================
-// CLOSE DUA PAGE
+// CLOSE DUA PAGE (OLD PAGE REMOVED)
 // =========================
 function closeDuaPage(){
 
-let duaPage = document.getElementById("duaPage");
-let homePage = document.getElementById("homePage");
-let salahPage = document.getElementById("salahPage");
-let trackerPage = document.getElementById("trackerPage");
-let morePage = document.getElementById("morePage");
-let floatingMenuBtn = document.getElementById("floatingMenuBtn");
-
-if(duaPage) duaPage.style.display = "none";
-
-setAppTopBarVisibility(false);
-setAppTopBarBackButton(false, null);
-
-if(homePage) homePage.style.display = "none";
-if(salahPage) salahPage.style.display = "none";
-if(trackerPage) trackerPage.style.display = "none";
-if(morePage) morePage.style.display = "none";
-
-if(duaOpenedFromPage === "home"){
-
-  if(homePage) homePage.style.display = "block";
-  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
-  lastMainTab = "home";
-
-}else if(duaOpenedFromPage === "salah"){
-
-  if(salahPage) salahPage.style.display = "block";
-  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
-  lastMainTab = "salah";
-
-}else if(duaOpenedFromPage === "more"){
-
-  if(morePage) morePage.style.display = "block";
-  if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-  lastMainTab = "more";
-
-}else{
-
-  if(trackerPage) trackerPage.style.display = "block";
-  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
-  lastMainTab = "tracker";
+  returnToDefaultPage();
 
 }
-
-setBottomNavVisibility(true);
-setMainMenuHandleVisibility(true);
-
-if(duaOpenedFromPage === "more"){
-  setMainMenuHandleVisibility(false);
-}
-
-window.scrollTo(0,0);
-
-}
-
 
 // =========================
-// OPEN AYATUL KURSI PAGE
+// OPEN AYATUL KURSI PAGE (NOW INSIDE DUA FOLDER)
 // =========================
 function openAyatulKursiPage(){
 
-hideAllAppPages();
-
-let ayatulKursiPage = document.getElementById("ayatulKursiPage");
-let floatingMenuBtn = document.getElementById("floatingMenuBtn");
-
-if(ayatulKursiPage) ayatulKursiPage.style.display = "block";
-if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-
-setBottomNavVisibility(true);
-setMainMenuHandleVisibility(false);
-
-setAppTopBarVisibility(true);
-setAppTopBarTitle("Ayatul Kursi");
-setAppTopBarBackButton(true, function(){
-  closeAyatulKursiPage();
-});
-
-if(typeof setAppTopBarRightButton === "function"){
-  setAppTopBarRightButton(false, "", null);
-}
-
-window.scrollTo(0,0);
+  openDuaPageFromFolder(lastMainTab || "home");
 
 }
-
 
 // =========================
-// CLOSE AYATUL KURSI PAGE
+// CLOSE AYATUL KURSI PAGE (OLD PAGE REMOVED)
 // =========================
 function closeAyatulKursiPage(){
 
-let ayatulKursiPage = document.getElementById("ayatulKursiPage");
-let duaPage = document.getElementById("duaPage");
-let floatingMenuBtn = document.getElementById("floatingMenuBtn");
-
-if(ayatulKursiPage) ayatulKursiPage.style.display = "none";
-if(duaPage) duaPage.style.display = "block";
-if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-
-setBottomNavVisibility(true);
-setMainMenuHandleVisibility(false);
-
-setAppTopBarVisibility(true);
-setAppTopBarTitle("Dua");
-setAppTopBarBackButton(true, function(){
-  closeDuaPage();
-});
-
-if(typeof setAppTopBarRightButton === "function"){
-  setAppTopBarRightButton(false, "", null);
-}
-
-window.scrollTo(0,0);
+  openDuaPageFromFolder(lastMainTab || "home");
 
 }
 
-
-
-
-
-
-     
 // =========================
 // OPEN QIBLA PAGE
 // =========================
@@ -10346,116 +8859,42 @@ function updateAllZikrCardUI(){
 }
 
 
-  // =========================
+// =========================
 // OPEN ZIKR PAGE FROM HOME
 // =========================
 function openHomeZikrPage(){
 
-lastMainTab = "home";
-openZikrPage();
+  openDailyAzkarPageFromFolder("home");
 
 }
 
-
-  // =========================
+// =========================
 // OPEN ZIKR PAGE FROM MORE
 // =========================
 function openMoreZikrPage(){
 
-lastMainTab = "more";
-openZikrPage();
+  openDailyAzkarPageFromFolder("more");
 
 }
 
-  
-  
 // =========================
-// OPEN ZIKR PAGE
+// OPEN ZIKR PAGE (FOLDER REDIRECT)
 // =========================
 function openZikrPage(){
 
-let zikrPage = document.getElementById("zikrPage");
-let floatingMenuBtn = document.getElementById("floatingMenuBtn");
-
-hideAllAppPages();
-
-if(zikrPage) zikrPage.style.display = "block";
-
-if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-
-setBottomNavVisibility(true);
-setMainMenuHandleVisibility(false);
-
-setAppTopBarVisibility(true);
-setAppTopBarTitle("Daily Dhikr");
-setAppTopBarBackButton(true, function(){
-  closeZikrPage();
-});
-
-renderCustomZikrCards();
-updateAllZikrCardUI();
-
-window.scrollTo(0,0);
+  openDailyAzkarPageFromFolder(lastMainTab || "home");
 
 }
-  
 
 // =========================
-// CLOSE ZIKR PAGE
+// CLOSE ZIKR PAGE (OLD PAGE REMOVED)
 // =========================
 function closeZikrPage(){
 
-let homePage = document.getElementById("homePage");
-let trackerPage = document.getElementById("trackerPage");
-let salahPage = document.getElementById("salahPage");
-let zikrPage = document.getElementById("zikrPage");
-let morePage = document.getElementById("morePage");
-let floatingMenuBtn = document.getElementById("floatingMenuBtn");
-
-if(zikrPage) zikrPage.style.display = "none";
-
-setAppTopBarVisibility(false);
-setAppTopBarBackButton(false, null);
-
-if(homePage) homePage.style.display = "none";
-if(trackerPage) trackerPage.style.display = "none";
-if(salahPage) salahPage.style.display = "none";
-if(morePage) morePage.style.display = "none";
-
-if(lastMainTab === "home"){
-
-  if(homePage) homePage.style.display = "block";
-  if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-  setMainMenuHandleVisibility(true);
-
-}else if(lastMainTab === "more"){
-
-  if(morePage) morePage.style.display = "block";
-  if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-  setMainMenuHandleVisibility(false);
-
-}else if(lastMainTab === "salah"){
-
-  if(salahPage) salahPage.style.display = "block";
-  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
-  setMainMenuHandleVisibility(true);
-
-}else{
-
-  if(trackerPage) trackerPage.style.display = "block";
-  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
-  setMainMenuHandleVisibility(true);
-  lastMainTab = "tracker";
+  returnToDefaultPage();
 
 }
 
-setBottomNavVisibility(true);
-
-window.scrollTo(0,0);
-
-}
-  
-  
 // =========================
 // OPEN ZIKR DETAIL
 // =========================
@@ -10711,25 +9150,22 @@ closeTasbihPage();
 
 
 // =========================
-// OPEN TASBIH FROM HOME
+// OPEN TASBIH PAGE FROM HOME
 // =========================
 function openHomeTasbihPage(){
 
-lastMainTab = "home";
-openTasbihPageFromHome();
+  openTasbihPageFromHome();
 
 }
 
 // =========================
-// OPEN TASBIH FROM MORE
+// OPEN TASBIH PAGE FROM MORE
 // =========================
 function openMoreTasbihPage(){
 
-lastMainTab = "more";
-openTasbihPageFromMore();
+  openTasbihPageFromMore();
 
 }
-  
 
 // =========================
 // OPEN QURAN FROM MORE
@@ -12043,9 +10479,8 @@ window.scrollTo(0,0);
 }
 
 
-     
 // =========================
-// OPEN TASBIH PAGE
+// OPEN TASBIH PAGE (FOLDER REDIRECT)
 // =========================
 function openTasbihPage(){
 
@@ -12053,75 +10488,15 @@ function openTasbihPage(){
 
 }
 
-
-  
 // =========================
-// CLOSE TASBIH PAGE
+// CLOSE TASBIH PAGE (OLD PAGE REMOVED)
 // =========================
 function closeTasbihPage(){
 
-let tasbihPage = document.getElementById("tasbihPage");
-let homePage = document.getElementById("homePage");
-let trackerPage = document.getElementById("trackerPage");
-let salahPage = document.getElementById("salahPage");
-let morePage = document.getElementById("morePage");
-let floatingMenuBtn = document.getElementById("floatingMenuBtn");
-
-closeTasbihSettings();
-closeDarkTargetMenu();
-
-if(tasbihPage) tasbihPage.style.display = "none";
-
-setAppTopBarVisibility(false);
-setAppTopBarBackButton(false, null);
-setAppTopBarRightButton(false, "", null);
-
-if(homePage) homePage.style.display = "none";
-if(trackerPage) trackerPage.style.display = "none";
-if(salahPage) salahPage.style.display = "none";
-if(morePage) morePage.style.display = "none";
-
-if(lastMainTab === "home"){
-
-  if(homePage) homePage.style.display = "block";
-  if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-  setMainMenuHandleVisibility(true);
-
-}else if(lastMainTab === "more"){
-
-  if(morePage) morePage.style.display = "block";
-  if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
-  setMainMenuHandleVisibility(false);
-
-}else if(lastMainTab === "salah"){
-
-  if(salahPage) salahPage.style.display = "block";
-  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
-  setMainMenuHandleVisibility(true);
-
-}else{
-
-  if(trackerPage) trackerPage.style.display = "block";
-  if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
-  setMainMenuHandleVisibility(true);
-  lastMainTab = "tracker";
+  returnToDefaultPage();
 
 }
 
-setBottomNavVisibility(true);
-
-window.scrollTo(0,0);
-
-}
-
-
-
-
-
-
-
-
-  
 let salahSource = "location";
 let salahDayOffset = 0;
 let salahSliding = false;
@@ -16928,22 +15303,6 @@ arrow.textContent = "▼";
 
 }
 
-  // =========================
-// OPEN TASBIH PAGE FROM HOME
-// =========================
-function openHomeTasbihPage(){
-
-let homePage = document.getElementById("homePage");
-
-if(homePage) homePage.style.display = "none";
-
-lastMainTab = "home";
-
-openTasbihPage();
-
-}
-
-
 /* =========================
    SALAH WEATHER BACKGROUND
 ========================= */
@@ -19055,8 +17414,10 @@ box-shadow:0 6px 16px rgba(0,0,0,0.08);
 </div>
      
 
-<!-- Open Qibla Page Card -->
-<div onclick="document.getElementById('morePage').style.display='none'; openQiblaPage();" style="
+<!-- =========================
+     QIBLA FOLDER CARD - MORE PAGE
+========================= -->
+<div onclick="openQiblaPageFromMoreFolder()" style="
 background:white;
 border-radius:22px;
 padding:18px 10px;
@@ -19068,6 +17429,36 @@ box-shadow:0 6px 16px rgba(0,0,0,0.08);
     <img src="Images/Icons/qibla.png" style="width:50px;height:50px;display:block;margin:0 auto;">
   </div>
   <div style="font-size:15px;font-weight:700;color:#111;">Qibla</div>
+</div>
+
+
+<!-- =========================
+     BOOKS CARD - MORE PAGE
+========================= -->
+<div onclick="openBooksPageFromMore()" style="
+background:white;
+border-radius:22px;
+padding:18px 10px;
+text-align:center;
+cursor:pointer;
+box-shadow:0 6px 16px rgba(0,0,0,0.08);
+">
+  <div style="margin-bottom:8px;">
+    <div style="
+    width:50px;
+    height:50px;
+    border-radius:18px;
+    background:#e9e9ee;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    margin:0 auto;
+    ">
+      📚
+    </div>
+  </div>
+  <div style="font-size:15px;font-weight:700;color:#111;">Books</div>
 </div>
 
 </div>
@@ -20549,438 +18940,6 @@ box-sizing:border-box;
 
 </div>
 
-
-
-     
-     
-
-<!-- =========================
-     15 LINE QURAN MAIN PAGE
-========================= -->
-<div id="quran15Page" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:92px;
-z-index:5002;
-background:linear-gradient(180deg, #ece9e1 0%, #e9e9ee 100%);
-overflow:auto;
-padding:18px 16px 120px 16px;
-box-sizing:border-box;
-">
-
-  
-
-  <!-- =========================
-       15 LINE QURAN TOP BAR
-  ========================= -->
-<div style="
-position:relative;
-display:flex;
-align-items:center;
-justify-content:center;
-margin-bottom:18px;
-height:52px;
-box-sizing:border-box;
-">
-    <!-- Close 15 Line Quran Page Button -->
-   <button onclick="closeQuran15Page()" style="
-position:absolute;
-left:0;
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    border:1px solid rgba(0,0,0,0.08);
-    background:white;
-    font-size:22px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#111;
-    box-shadow:0 4px 12px rgba(0,0,0,0.08);
-    ">
-      ←
-    </button>
-
- <div style="
-position:absolute;
-left:50%;
-transform:translateX(-50%);
-font-size:20px;
-font-weight:800;
-color:#111;
-letter-spacing:-0.3px;
-">
-  15 Line Quran
-</div>
-     
-  </div>
-
-  <!-- =========================
-       15 LINE QURAN HERO CARD
-  ========================= -->
-  <div style="
-  background:linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 100%);
-  border-radius:30px;
-  padding:28px 22px;
-  text-align:center;
-  box-shadow:0 10px 30px rgba(0,0,0,0.08);
-  border:1px solid rgba(255,255,255,0.7);
-  margin-bottom:18px;
-  ">
-
-    <div style="
-    font-size:34px;
-    margin-bottom:12px;
-    ">
-      📖
-    </div>
-
-    <div style="
-    font-size:28px;
-    font-weight:800;
-    color:#111;
-    letter-spacing:-0.5px;
-    line-height:1.1;
-    margin-bottom:8px;
-    ">
-      15 Line Quran
-    </div>
-
-    <div style="
-    font-size:15px;
-    line-height:1.6;
-    color:#666;
-    max-width:280px;
-    margin:0 auto;
-    ">
-      Read page by page with a clean Mushaf style layout.
-    </div>
-
-  </div>
-
-  <!-- =========================
-       15 LINE QURAN OPTION CARDS
-  ========================= -->
-  <div style="
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-  ">
-
-   <!-- Continue Reading Card -->
-<div onclick="resumeQuran15Reading()" style="
-background:white;
-border-radius:26px;
-padding:22px 20px;
-cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:space-between;
-box-shadow:0 8px 22px rgba(0,0,0,0.07);
-border:1px solid rgba(0,0,0,0.03);
-">
-  <div style="
-  display:flex;
-  align-items:center;
-  gap:14px;
-  min-width:0;
-  ">
-    <div style="
-    width:52px;
-    height:52px;
-    border-radius:18px;
-    background:#f2f2f7;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:24px;
-    flex-shrink:0;
-    ">
-      ▶️
-    </div>
-    <div>
-      <div style="
-      font-size:20px;
-      font-weight:800;
-      color:#111;
-      margin-bottom:4px;
-      ">
-        Continue Reading
-      </div>
-      <div style="
-      font-size:14px;
-      color:#666;
-      ">
-        Open your last saved page
-      </div>
-    </div>
-  </div>
-  <div style="
-  font-size:24px;
-  color:#b0b0b8;
-  margin-left:14px;
-  ">
-    ›
-  </div>
-</div>
-   
-   <!-- Surah List Card -->
-<div onclick="openQuran15SurahPage()" style="
-    background:white;
-    border-radius:26px;
-    padding:22px 20px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    box-shadow:0 8px 22px rgba(0,0,0,0.07);
-    border:1px solid rgba(0,0,0,0.03);
-    ">
-      <div style="
-      display:flex;
-      align-items:center;
-      gap:14px;
-      min-width:0;
-      ">
-        <div style="
-        width:52px;
-        height:52px;
-        border-radius:18px;
-        background:#f2f2f7;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        font-size:24px;
-        flex-shrink:0;
-        ">
-          📚
-        </div>
-        <div>
-          <div style="
-          font-size:20px;
-          font-weight:800;
-          color:#111;
-          margin-bottom:4px;
-          ">
-            Surah List
-          </div>
-          <div style="
-          font-size:14px;
-          color:#666;
-          ">
-            Open any surah by start page
-          </div>
-        </div>
-      </div>
-      <div style="
-      font-size:24px;
-      color:#b0b0b8;
-      margin-left:14px;
-      ">
-        ›
-      </div>
-    </div>
-
-    <!-- Juz List Card -->
-    <div onclick="openJuzIndexPage()" style="
-    background:white;
-    border-radius:26px;
-    padding:22px 20px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    box-shadow:0 8px 22px rgba(0,0,0,0.07);
-    border:1px solid rgba(0,0,0,0.03);
-    ">
-      <div style="
-      display:flex;
-      align-items:center;
-      gap:14px;
-      min-width:0;
-      ">
-        <div style="
-        width:52px;
-        height:52px;
-        border-radius:18px;
-        background:#f2f2f7;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        font-size:24px;
-        flex-shrink:0;
-        ">
-          🕌
-        </div>
-        <div>
-          <div style="
-          font-size:20px;
-          font-weight:800;
-          color:#111;
-          margin-bottom:4px;
-          ">
-            Juz List
-          </div>
-          <div style="
-          font-size:14px;
-          color:#666;
-          ">
-            Open from the first page of any juz
-          </div>
-        </div>
-      </div>
-      <div style="
-      font-size:24px;
-      color:#b0b0b8;
-      margin-left:14px;
-      ">
-        ›
-      </div>
-    </div>
-   
-    <!-- Bookmarks Card 15 Line-->
-  
-<div onclick="openQuran15BookmarkPage()" style="
-background:white;
-border-radius:26px;
-padding:22px 20px;
-cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:space-between;
-box-shadow:0 8px 22px rgba(0,0,0,0.07);
-border:1px solid rgba(0,0,0,0.03);
-">
-      <div style="
-      display:flex;
-      align-items:center;
-      gap:14px;
-      min-width:0;
-      ">
-        <div style="
-        width:52px;
-        height:52px;
-        border-radius:18px;
-        background:#f2f2f7;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        font-size:24px;
-        flex-shrink:0;
-        ">
-          🔖
-        </div>
-        <div>
-          <div style="
-          font-size:20px;
-          font-weight:800;
-          color:#111;
-          margin-bottom:4px;
-          ">
-            Bookmarks
-          </div>
-          <div style="
-          font-size:14px;
-          color:#666;
-          ">
-            Open your saved bookmarked pages
-          </div>
-        </div>
-      </div>
-      <div style="
-      font-size:24px;
-      color:#b0b0b8;
-      margin-left:14px;
-      ">
-        ›
-      </div>
-    </div>
-
-  </div>
-
-</div>
-
-<!-- =========================
-     15 LINE SURAH LIST PAGE
-========================= -->
-<div id="quran15SurahPage" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-right:0;
-bottom:92px;
-z-index:5002;
-background:linear-gradient(180deg, #ece9e1 0%, #e9e9ee 100%);
-overflow:auto;
-padding:18px 16px 120px 16px;
-box-sizing:border-box;
-">
-
-   <!-- =========================
-       15 LINE SURAH LIST TOP BAR
-  ========================= -->
-  <div style="
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  height:56px;
-  margin-bottom:18px;
-  box-sizing:border-box;
-  ">
-
-    <button onclick="closeQuran15SurahPage()" style="
-    position:absolute;
-    left:0;
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    border:1px solid rgba(0,0,0,0.08);
-    background:white;
-    font-size:22px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#111;
-    box-shadow:0 4px 12px rgba(0,0,0,0.08);
-    ">
-      ←
-    </button>
-
-    <div style="
-    position:absolute;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:20px;
-    font-weight:800;
-    color:#111;
-    letter-spacing:-0.3px;
-    text-align:center;
-    white-space:nowrap;
-    ">
-      Surah List
-    </div>
-
-  </div>
-
-  <!-- =========================
-       SURAH LIST CONTAINER
-  ========================= -->
-  <div id="quran15SurahList" style="
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  ">
-  </div>
-
-</div>
-     
 
 
      
