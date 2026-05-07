@@ -5807,6 +5807,10 @@ function openSelectedDefaultPage(){
   if(folderReturnPage){
 
     localStorage.removeItem("ibadahFolderReturnPage");
+           if(folderReturnPage === "quran" && typeof openQuranPage === "function"){
+      openQuranPage();
+      return;
+    }
 
     if(folderReturnPage === "more" && typeof openMorePage === "function"){
       openMorePage();
@@ -10735,14 +10739,8 @@ openQuranPage();
 // =========================
 function openArabicQuranPage(){
 
-let quranPage = document.getElementById("quranPage");
-let arabicQuranPage = document.getElementById("arabicQuranPage");
-
-
-if(quranPage) quranPage.style.display = "none";
-if(arabicQuranPage) arabicQuranPage.style.display = "block";
-setBottomNavVisibility(true);
-window.scrollTo(0,0);
+  // Open the new separate Arabic Quran folder page
+  window.location.href = "arabic-quran/";
 
 }
 
