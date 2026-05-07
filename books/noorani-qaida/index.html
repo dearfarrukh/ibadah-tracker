@@ -1,1 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Noorani Qaida</title>
 
+<style>
+/* =========================
+   NOORANI QAIDA READER PAGE
+========================= */
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#111;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  touch-action:manipulation;
+  user-select:none;
+  -webkit-user-select:none;
+}
+
+/* =========================
+   FULL SCREEN READER
+========================= */
+
+#qaidaReaderPage{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  width:100%;
+  height:100%;
+  background:#111;
+  overflow:hidden;
+}
+
+/* =========================
+   TOP BAR
+========================= */
+
+#qaidaTopBar{
+  position:absolute;
+  top:-92px;
+  left:0;
+  right:0;
+  height:92px;
+  z-index:20;
+  background:rgba(233,233,238,0.96);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(0,0,0,0.08);
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  padding:0 5% 14px 5%;
+  transition:top 0.28s ease;
+}
+
+#qaidaTopBar.show{
+  top:0;
+}
+
+.qaidaBackBtn{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:none;
+  background:white;
+  color:#111;
+  font-size:24px;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 5px 14px rgba(0,0,0,0.12);
+  cursor:pointer;
+}
+
+.qaidaTitleWrap{
+  flex:1;
+  text-align:center;
+  padding:0 12px;
+  min-width:0;
+}
+
+.qaidaTitle{
+  font-size:17px;
+  font-weight:900;
+  color:#111;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.qaidaSubtitle{
+  font-size:12px;
+  font-weight:700;
+  color:#555;
+  margin-top:2px;
+}
+
+.qaidaPageBadge{
+  min-width:76px;
+  height:38px;
+  border-radius:999px;
+  background:white;
+  color:#111;
+  font-size:13px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 5px 14px rgba(0,0,0,0.10);
+}
+
+/* =========================
+   PDF AREA
+========================= */
+
+#qaidaPdfShell{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  width:100%;
+  height:100%;
+  background:#111;
+  transition:transform 0.28s ease, padding-top 0.28s ease;
+  transform-origin:center center;
+  overflow:hidden;
+}
+
+#qaidaPdfShell.shrink{
+  padding-top:92px;
+  transform:scale(0.94);
+}
+
+#qaidaPdfFrame{
+  width:100%;
+  height:100%;
+  border:none;
+  background:#111;
+  display:block;
+}
+
+/* =========================
+   TAP LAYER
+========================= */
+
+#qaidaTapLayer{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:10;
+  background:transparent;
+}
+
+/* =========================
+   BOTTOM PAGE CONTROLS
+========================= */
+
+#qaidaBottomControls{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:calc(18px + env(safe-area-inset-bottom));
+  z-index:22;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:14px;
+  padding:0 5%;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.25s ease;
+}
+
+#qaidaBottomControls.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.qaidaNavBtn{
+  width:44%;
+  max-width:190px;
+  height:52px;
+  border:none;
+  border-radius:999px;
+  background:rgba(233,233,238,0.96);
+  color:#111;
+  font-size:16px;
+  font-weight:900;
+  box-shadow:0 8px 22px rgba(0,0,0,0.25);
+  cursor:pointer;
+}
+
+.qaidaNavBtn:active,
+.qaidaBackBtn:active{
+  transform:scale(0.96);
+}
+
+.qaidaNavBtn:disabled{
+  opacity:0.38;
+}
+
+/* =========================
+   SMALL PHONE FIX
+========================= */
+
+@media (max-width:380px){
+  #qaidaTopBar{
+    height:86px;
+    padding:0 4% 12px 4%;
+  }
+
+  #qaidaPdfShell.shrink{
+    padding-top:86px;
+    transform:scale(0.94);
+  }
+
+  .qaidaTitle{
+    font-size:15px;
+  }
+
+  .qaidaSubtitle{
+    font-size:11px;
+  }
+
+  .qaidaBackBtn{
+    width:40px;
+    height:40px;
+  }
+
+  .qaidaPageBadge{
+    min-width:70px;
+    height:36px;
+    font-size:12px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     NOORANI QAIDA READER PAGE
+========================= -->
+<div id="qaidaReaderPage">
+
+  <!-- =========================
+       TOP BAR
+  ========================= -->
+  <div id="qaidaTopBar">
+    <button class="qaidaBackBtn" onclick="goBackToBooksPage()">‹</button>
+
+    <div class="qaidaTitleWrap">
+      <div class="qaidaTitle">Noorani Qaida</div>
+      <div class="qaidaSubtitle">Tap screen to show / hide controls</div>
+    </div>
+
+    <div class="qaidaPageBadge" id="qaidaPageBadge">1 / 30</div>
+  </div>
+
+  <!-- =========================
+       PDF PAGE AREA
+  ========================= -->
+  <div id="qaidaPdfShell">
+    <iframe id="qaidaPdfFrame" src="page-001.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"></iframe>
+  </div>
+
+  <!-- =========================
+       TAP LAYER
+  ========================= -->
+  <div id="qaidaTapLayer" onclick="toggleQaidaTopBar()"></div>
+
+  <!-- =========================
+       BOTTOM CONTROLS
+  ========================= -->
+  <div id="qaidaBottomControls">
+    <button class="qaidaNavBtn" id="qaidaPrevBtn" onclick="event.stopPropagation(); previousQaidaPage();">
+      ← Previous
+    </button>
+
+    <button class="qaidaNavBtn" id="qaidaNextBtn" onclick="event.stopPropagation(); nextQaidaPage();">
+      Next →
+    </button>
+  </div>
+
+</div>
+
+<script>
+/* =========================
+   NOORANI QAIDA SETTINGS
+========================= */
+
+let currentQaidaPage = 1;
+const totalQaidaPages = 30;
+
+/* =========================
+   FORMAT PAGE FILE NAME
+   full function name: formatQaidaPageFileName
+========================= */
+function formatQaidaPageFileName(pageNumber){
+
+  let paddedNumber = String(pageNumber).padStart(3, "0");
+  return "page-" + paddedNumber + ".pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH";
+
+}
+
+/* =========================
+   LOAD QAIDA PAGE
+   full function name: loadQaidaPage
+========================= */
+function loadQaidaPage(pageNumber){
+
+  if(pageNumber < 1){
+    pageNumber = 1;
+  }
+
+  if(pageNumber > totalQaidaPages){
+    pageNumber = totalQaidaPages;
+  }
+
+  currentQaidaPage = pageNumber;
+
+  let frame = document.getElementById("qaidaPdfFrame");
+  let badge = document.getElementById("qaidaPageBadge");
+  let prevBtn = document.getElementById("qaidaPrevBtn");
+  let nextBtn = document.getElementById("qaidaNextBtn");
+
+  frame.src = formatQaidaPageFileName(currentQaidaPage);
+
+  badge.innerHTML = currentQaidaPage + " / " + totalQaidaPages;
+
+  prevBtn.disabled = currentQaidaPage === 1;
+  nextBtn.disabled = currentQaidaPage === totalQaidaPages;
+
+  localStorage.setItem("nooraniQaidaLastPage", currentQaidaPage);
+
+}
+
+/* =========================
+   NEXT QAIDA PAGE
+   full function name: nextQaidaPage
+========================= */
+function nextQaidaPage(){
+
+  if(currentQaidaPage < totalQaidaPages){
+    loadQaidaPage(currentQaidaPage + 1);
+  }
+
+}
+
+/* =========================
+   PREVIOUS QAIDA PAGE
+   full function name: previousQaidaPage
+========================= */
+function previousQaidaPage(){
+
+  if(currentQaidaPage > 1){
+    loadQaidaPage(currentQaidaPage - 1);
+  }
+
+}
+
+/* =========================
+   TOGGLE TOP BAR
+   full function name: toggleQaidaTopBar
+========================= */
+function toggleQaidaTopBar(){
+
+  let topBar = document.getElementById("qaidaTopBar");
+  let pdfShell = document.getElementById("qaidaPdfShell");
+  let bottomControls = document.getElementById("qaidaBottomControls");
+
+  topBar.classList.toggle("show");
+  pdfShell.classList.toggle("shrink");
+  bottomControls.classList.toggle("show");
+
+}
+
+/* =========================
+   GO BACK TO BOOKS PAGE
+   full function name: goBackToBooksPage
+========================= */
+function goBackToBooksPage(){
+
+  window.location.href = "../";
+
+}
+
+/* =========================
+   KEYBOARD SUPPORT
+   full function name: handleQaidaKeyboardControls
+========================= */
+function handleQaidaKeyboardControls(event){
+
+  if(event.key === "ArrowRight"){
+    nextQaidaPage();
+  }
+
+  if(event.key === "ArrowLeft"){
+    previousQaidaPage();
+  }
+
+  if(event.key === "Escape"){
+    goBackToBooksPage();
+  }
+
+}
+
+/* =========================
+   LOAD LAST SAVED PAGE
+   full function name: loadLastSavedQaidaPage
+========================= */
+function loadLastSavedQaidaPage(){
+
+  let savedPage = parseInt(localStorage.getItem("nooraniQaidaLastPage"), 10);
+
+  if(savedPage && savedPage >= 1 && savedPage <= totalQaidaPages){
+    loadQaidaPage(savedPage);
+  }else{
+    loadQaidaPage(1);
+  }
+
+}
+
+/* =========================
+   PAGE START
+========================= */
+
+document.addEventListener("keydown", handleQaidaKeyboardControls);
+loadLastSavedQaidaPage();
+</script>
+
+</body>
+</html>
