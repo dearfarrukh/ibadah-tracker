@@ -5807,10 +5807,17 @@ function openSelectedDefaultPage(){
   if(folderReturnPage){
 
     localStorage.removeItem("ibadahFolderReturnPage");
-           if(folderReturnPage === "quran" && typeof openQuranPage === "function"){
-      openQuranPage();
-      return;
-    }
+         if(folderReturnPage === "quran" && typeof openQuranPage === "function"){
+
+  let savedQuranBackPage = localStorage.getItem("ibadahQuranBackPage");
+
+  if(savedQuranBackPage){
+    lastMainTab = savedQuranBackPage;
+  }
+
+  openQuranPage();
+  return;
+}
 
     if(folderReturnPage === "more" && typeof openMorePage === "function"){
       openMorePage();
@@ -10959,18 +10966,16 @@ loadSurahIndexList();
 // =========================
 function openQuran15Page(){
 
-let quran15Page = document.getElementById("quran15Page");
+  // Save where Quran page should go back after returning from 15 Line Quran folder
+  localStorage.setItem("ibadahQuranBackPage", lastMainTab || "tracker");
 
-
-hideAllAppPages();
-
-if(quran15Page) quran15Page.style.display = "block";
-setBottomNavVisibility(true);
-
-window.scrollTo(0,0);
+  // Open the new separate 15 Line Quran folder page.
+  // This same code works in test app and real app.
+  window.location.href = "QuranPages/";
 
 }
 
+     
 // =========================
 // CLOSE 15 LINE QURAN PAGE
 // =========================
@@ -12021,19 +12026,24 @@ setMainMenuHandleVisibility(true);
 else if(lastMainTab === "more"){
 if(morePage) morePage.style.display = "block";
 if(floatingMenuBtn) floatingMenuBtn.style.display = "none";
+setMainMenuHandleVisibility(false);
 }
 else{
 if(trackerPage) trackerPage.style.display = "block";
 if(floatingMenuBtn) floatingMenuBtn.style.display = "flex";
+setMainMenuHandleVisibility(true);
 }
 
 setBottomNavVisibility(true);
 
-  restoreTrackerMenuHandleAfterQuranShortcut();
+restoreTrackerMenuHandleAfterQuranShortcut();
 
-  window.scrollTo(0,0);
+window.scrollTo(0,0);
+
 }
 
+
+     
 // =========================
 // OPEN TASBIH PAGE
 // =========================
