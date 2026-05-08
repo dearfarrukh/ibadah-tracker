@@ -324,6 +324,28 @@ body{
   </div>
 
   <!-- =========================
+       ASAN NAMAZ CARD
+  ========================= -->
+  <div class="bookCard" onclick="openAsanNamazPage()">
+
+    <div class="bookLeft">
+
+      <div class="bookIcon">🕌</div>
+
+      <div class="bookTextWrap">
+        <div class="bookTitle">Asan Namaz</div>
+        <div class="bookSub">
+          Open the Asan Namaz reader with sliding pages.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bookArrow">›</div>
+
+  </div>
+
+  <!-- =========================
        COMING SOON CARD
   ========================= -->
   <div class="booksComingCard">
@@ -344,6 +366,16 @@ function openNooraniQaidaPage(){
 }
 
 /* =========================
+   OPEN ASAN NAMAZ PAGE
+   full function name: openAsanNamazPage
+========================= */
+function openAsanNamazPage(){
+
+  window.location.href = "AsanNamaz/";
+
+}
+
+/* =========================
    GO BACK TO MAIN APP
    full function name: goBackToMainApp
 ========================= */
@@ -357,4 +389,3 @@ function goBackToMainApp(){
 
 </body>
 </html>
-
