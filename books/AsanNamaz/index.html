@@ -570,6 +570,20 @@ body{
   <div class="optionList">
 
     <!-- =========================
+         CONTENTS CARD
+    ========================= -->
+    <div class="optionCard" onclick="openAsanNamazFehristPage()">
+      <div class="optionLeft">
+        <div class="optionIcon">📑</div>
+        <div>
+          <div class="optionTitle">Contents</div>
+          <div class="optionSub">Open topic list and jump to page</div>
+        </div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <!-- =========================
          RESUME READING CARD
     ========================= -->
     <div class="optionCard" onclick="resumeAsanNamazReading()">
@@ -629,6 +643,238 @@ body{
 
 </div>
 
+
+
+<!-- =========================
+     ASAN NAMAZ FEHRIST MAZAMEEN PAGE
+========================= -->
+<div id="fehristPage" class="appPage">
+
+  <div class="simpleTopBar">
+    <button class="roundBackBtn" onclick="openAsanNamazHomePage()">←</button>
+    <div class="simpleTitle">فہرستِ مضامین</div>
+  </div>
+
+  <div class="heroCard">
+    <div class="heroIcon">📑</div>
+    <div class="heroTitle" style="direction:rtl;">فہرستِ مضامین</div>
+    <div class="heroSub">
+      Tap any topic below to open that page directly.
+    </div>
+  </div>
+
+  <div class="listWrap" style="direction:rtl;">
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(3, 'fehrist')">
+      <div class="numberBadge">۳</div>
+      <div class="listNames">
+        <div class="listTitle">عرضِ مترجم</div>
+        <div class="listMeta">Page 3</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(5, 'fehrist')">
+      <div class="numberBadge">۵</div>
+      <div class="listNames">
+        <div class="listTitle">ایمان کا بیان</div>
+        <div class="listMeta">Page 5</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(8, 'fehrist')">
+      <div class="numberBadge">۸</div>
+      <div class="listNames">
+        <div class="listTitle">طہارت کا بیان</div>
+        <div class="listMeta">Page 8</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(11, 'fehrist')">
+      <div class="numberBadge">۱۱</div>
+      <div class="listNames">
+        <div class="listTitle">وضو کا طریقہ</div>
+        <div class="listMeta">Page 11</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(13, 'fehrist')">
+      <div class="numberBadge">۱۳</div>
+      <div class="listNames">
+        <div class="listTitle">غسل کا طریقہ</div>
+        <div class="listMeta">Page 13</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(15, 'fehrist')">
+      <div class="numberBadge">۱۵</div>
+      <div class="listNames">
+        <div class="listTitle">تیمم کا بیان</div>
+        <div class="listMeta">Page 15</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(16, 'fehrist')">
+      <div class="numberBadge">۱۶</div>
+      <div class="listNames">
+        <div class="listTitle">نماز کا بیان</div>
+        <div class="listMeta">Page 16</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(18, 'fehrist')">
+      <div class="numberBadge">۱۸</div>
+      <div class="listNames">
+        <div class="listTitle">نمازِ جمعہ</div>
+        <div class="listMeta">Page 18</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(19, 'fehrist')">
+      <div class="numberBadge">۱۹</div>
+      <div class="listNames">
+        <div class="listTitle">نماز کی نیت</div>
+        <div class="listMeta">Page 19</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(20, 'fehrist')">
+      <div class="numberBadge">۲۰</div>
+      <div class="listNames">
+        <div class="listTitle">اذان</div>
+        <div class="listMeta">Page 20</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(21, 'fehrist')">
+      <div class="numberBadge">۲۱</div>
+      <div class="listNames">
+        <div class="listTitle">تکبیرِ اقامت</div>
+        <div class="listMeta">Page 21</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(22, 'fehrist')">
+      <div class="numberBadge">۲۲</div>
+      <div class="listNames">
+        <div class="listTitle">اذکار نماز</div>
+        <div class="listMeta">Page 22</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(29, 'fehrist')">
+      <div class="numberBadge">۲۹</div>
+      <div class="listNames">
+        <div class="listTitle">نماز پڑھنے کا طریقہ</div>
+        <div class="listMeta">Page 29</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(33, 'fehrist')">
+      <div class="numberBadge">۳۳</div>
+      <div class="listNames">
+        <div class="listTitle">مرد اور عورت کی نماز کا فرق</div>
+        <div class="listMeta">Page 33</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(35, 'fehrist')">
+      <div class="numberBadge">۳۵</div>
+      <div class="listNames">
+        <div class="listTitle">نماز وتر پڑھنے کا طریقہ</div>
+        <div class="listMeta">Page 35</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(36, 'fehrist')">
+      <div class="numberBadge">۳۶</div>
+      <div class="listNames">
+        <div class="listTitle">نماز کے فرائض، واجبات، سنتیں و مکروہات</div>
+        <div class="listMeta">Page 36</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(43, 'fehrist')">
+      <div class="numberBadge">۴۳</div>
+      <div class="listNames">
+        <div class="listTitle">سجدہ سہو</div>
+        <div class="listMeta">Page 43</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(44, 'fehrist')">
+      <div class="numberBadge">۴۴</div>
+      <div class="listNames">
+        <div class="listTitle">نماز قصر</div>
+        <div class="listMeta">Page 44</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(45, 'fehrist')">
+      <div class="numberBadge">۴۵</div>
+      <div class="listNames">
+        <div class="listTitle">عیدین کا بیان</div>
+        <div class="listMeta">Page 45</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(48, 'fehrist')">
+      <div class="numberBadge">۴۸</div>
+      <div class="listNames">
+        <div class="listTitle">سجدہ تلاوت</div>
+        <div class="listMeta">Page 48</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(50, 'fehrist')">
+      <div class="numberBadge">۵۰</div>
+      <div class="listNames">
+        <div class="listTitle">تراویح کا بیان</div>
+        <div class="listMeta">Page 50</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(52, 'fehrist')">
+      <div class="numberBadge">۵۲</div>
+      <div class="listNames">
+        <div class="listTitle">نماز جنازہ</div>
+        <div class="listMeta">Page 52</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+    <div class="listCard" onclick="openAsanNamazReadingPage(55, 'fehrist')">
+      <div class="numberBadge">۵۵</div>
+      <div class="listNames">
+        <div class="listTitle">چالیس مسنون دعائیں</div>
+        <div class="listMeta">Page 55</div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+  </div>
+
+</div>
 
 <!-- =========================
      ASAN NAMAZ BOOKMARK PAGE
@@ -729,6 +975,7 @@ function hideAllAsanNamazPages(){
 
   let pages = [
     "homePage",
+    "fehristPage",
     "bookmarkPage"
   ];
 
@@ -825,6 +1072,23 @@ function preloadNearbyAsanNamazPages(page){
 
   preloadAsanNamazImage(nextPage);
   preloadAsanNamazImage(previousPage);
+
+}
+
+/* =========================
+   OPEN ASAN NAMAZ FEHRIST PAGE
+   full function name: openAsanNamazFehristPage
+========================= */
+function openAsanNamazFehristPage(){
+
+  hideAllAsanNamazPages();
+
+  let page = document.getElementById("fehristPage");
+  if(page){
+    page.classList.add("active");
+  }
+
+  window.scrollTo(0,0);
 
 }
 
@@ -1049,6 +1313,8 @@ function closeAsanNamazReadingPage(event){
 
   if(asanNamazReadingBackPage === "bookmark"){
     openAsanNamazBookmarkPage();
+  }else if(asanNamazReadingBackPage === "fehrist"){
+    openAsanNamazFehristPage();
   }else{
     openAsanNamazHomePage();
   }
