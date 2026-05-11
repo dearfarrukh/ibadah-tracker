@@ -2,8 +2,8 @@
 // IBADAH OFFLINE SERVICE WORKER
 // =========================
 
-const IBADAH_STATIC_CACHE = "ibadah-static-v3";
-const IBADAH_RUNTIME_CACHE = "ibadah-runtime-v1";
+const IBADAH_STATIC_CACHE = "ibadah-static-v99";
+const IBADAH_RUNTIME_CACHE = "ibadah-runtime-v99";
 
 // =========================
 // APP SHELL FILES TO CACHE
@@ -101,6 +101,7 @@ self.addEventListener("fetch", function(event){
       url.pathname.includes("/qazatracker/") ||
       url.pathname.includes("/arabic-quran/") ||
       url.pathname.includes("/QuranPages/") ||
+url.pathname.includes("/9LineQuran/") ||
       url.pathname.includes("/books/") ||
       url.pathname.includes("/books/AsanNamaz/") ||
       url.pathname.includes("/books/noorani-qaida/")
