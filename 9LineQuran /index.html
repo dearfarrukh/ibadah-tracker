@@ -1178,17 +1178,17 @@ function buildMushafImagePath(page){
 
   let imagePage = page + 1;
 
-  if(imagePage <= 1000){
+  if(imagePage >= 1001){
 
-    return "Images/page-" +
-    String(imagePage).padStart(3,"0") +
-    ".png";
+    return "Images2/page-" +
+      imagePage +
+      ".png";
 
   }
 
-  return "Images2/page-" +
-  imagePage +
-  ".png";
+  return "Images/page-" +
+    String(imagePage).padStart(3,"0") +
+    ".png";
 
 }
 
