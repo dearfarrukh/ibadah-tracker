@@ -1178,6 +1178,7 @@ function buildMushafImagePath(page){
 
   let imagePage = page + 1;
 
+  // Pages 1001+
   if(imagePage >= 1001){
 
     return "Images2/page-" +
@@ -1186,6 +1187,7 @@ function buildMushafImagePath(page){
 
   }
 
+  // Pages 1-1000
   return "Images/page-" +
     String(imagePage).padStart(3,"0") +
     ".png";
