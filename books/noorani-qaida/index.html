@@ -211,6 +211,119 @@ body{
 }
 
 /* =========================
+   QAIDA RULES PAGE STYLE
+========================= */
+.rulesIntroCard{
+  width:100%;
+  background:white;
+  border-radius:28px;
+  padding:20px 5%;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  margin-bottom:14px;
+  direction:rtl;
+  text-align:right;
+}
+
+.rulesIntroTitle{
+  font-size:24px;
+  font-weight:900;
+  color:#111;
+  margin-bottom:8px;
+  text-align:center;
+}
+
+.rulesIntroText{
+  font-size:15px;
+  font-weight:700;
+  color:#555;
+  line-height:1.8;
+  text-align:center;
+}
+
+.rulesCard{
+  width:100%;
+  background:white;
+  border-radius:28px;
+  padding:18px 5%;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  direction:rtl;
+  text-align:right;
+}
+
+.rulesCardTitle{
+  font-size:21px;
+  font-weight:900;
+  color:#111;
+  margin-bottom:10px;
+}
+
+.rulesArabicBig{
+  font-family:"Times New Roman","Amiri","Scheherazade New",serif;
+  font-size:31px;
+  font-weight:900;
+  color:#064e3b;
+  line-height:1.7;
+  text-align:center;
+  background:#f0fdf4;
+  border:1px solid #bbf7d0;
+  border-radius:22px;
+  padding:10px 4%;
+  margin:10px 0 12px 0;
+}
+
+.rulesLine{
+  font-size:15px;
+  font-weight:700;
+  color:#333;
+  line-height:1.85;
+  margin:7px 0;
+}
+
+.rulesLine strong{
+  color:#111;
+  font-weight:900;
+}
+
+.rulesExample{
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#7c2d12;
+  border-radius:20px;
+  padding:11px 4%;
+  margin-top:10px;
+  font-size:15px;
+  font-weight:800;
+  line-height:1.9;
+}
+
+.rulesSummaryCard{
+  width:100%;
+  background:#064e3b;
+  color:white;
+  border-radius:28px;
+  padding:20px 5%;
+  box-shadow:0 10px 26px rgba(6,78,59,0.22);
+  direction:rtl;
+  text-align:right;
+}
+
+.rulesSummaryTitle{
+  font-size:22px;
+  font-weight:900;
+  text-align:center;
+  margin-bottom:12px;
+}
+
+.rulesSummaryLine{
+  font-size:15px;
+  font-weight:800;
+  line-height:1.9;
+  margin:7px 0;
+}
+
+/* =========================
    LISTS
 ========================= */
 .listWrap{
@@ -543,6 +656,14 @@ body{
   .listTitle{
     font-size:17px;
   }
+
+  .rulesCardTitle{
+    font-size:19px;
+  }
+
+  .rulesArabicBig{
+    font-size:27px;
+  }
 }
 
 </style>
@@ -598,7 +719,6 @@ body{
       <div class="optionArrow">›</div>
     </div>
 
-
     <!-- =========================
          QAIDA QUIZ CARD
     ========================= -->
@@ -613,7 +733,6 @@ body{
       <div class="optionArrow">›</div>
     </div>
 
-       
     <!-- =========================
          BOOKMARKS CARD
     ========================= -->
@@ -640,6 +759,275 @@ body{
         </div>
       </div>
       <div class="optionArrow">›</div>
+    </div>
+
+    <!-- =========================
+         QAIDA RULES CARD
+    ========================= -->
+    <div class="optionCard" onclick="openQaidaRulesPage()">
+      <div class="optionLeft">
+        <div class="optionIcon">📚</div>
+        <div>
+          <div class="optionTitle" style="direction:rtl;">قواعد پڑھیں</div>
+          <div class="optionSub" style="direction:rtl;">تمام اہم قواعد اردو میں مثالوں کے ساتھ</div>
+        </div>
+      </div>
+      <div class="optionArrow">›</div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     NOORANI QAIDA RULES PAGE
+========================= -->
+<div id="rulesPage" class="appPage">
+
+  <div class="simpleTopBar">
+    <button class="roundBackBtn" onclick="openQaidaHomePage()">←</button>
+    <div class="simpleTitle" style="direction:rtl;">قواعد</div>
+  </div>
+
+  <div class="heroCard">
+    <div class="heroIcon">📚</div>
+    <div class="heroTitle" style="direction:rtl;">نورانی قاعدہ قواعد</div>
+    <div class="heroSub" style="direction:rtl;">
+      اہم قواعد آسان اردو میں، مثالوں کے ساتھ۔
+    </div>
+  </div>
+
+  <div class="listWrap">
+
+    <div class="rulesIntroCard">
+      <div class="rulesIntroTitle">اہم قواعد</div>
+      <div class="rulesIntroText">
+        پہلے حرف یا نشان کو پہچانیں، پھر اس کے بعد آنے والے حرف کو دیکھیں۔
+        اسی سے معلوم ہوگا کہ اظہار، اقلاب، ادغام، اخفاء، غنہ یا قلقله ہوگا۔
+      </div>
+    </div>
+
+    <div class="rulesCard">
+      <div class="rulesCardTitle">۱۔ نرم حروف</div>
+      <div class="rulesArabicBig">ظ ذ ث</div>
+      <div class="rulesLine"><strong>قاعدہ:</strong> ان حروف کو نرم انداز میں ادا کیا جاتا ہے۔</div>
+      <div class="rulesLine"><strong>یاد رکھیں:</strong> ظ، ذ، ث کو سخت یا بہت موٹا بنا کر نہیں پڑھنا۔</div>
+      <div class="rulesExample">مثال: ثَ ، ذَ ، ظَ — یہ نرم حروف ہیں۔</div>
+    </div>
+
+    <div class="rulesCard">
+      <div class="rulesCardTitle">۲۔ سیٹی والے حروف</div>
+      <div class="rulesArabicBig">ص س ز</div>
+      <div class="rulesLine"><strong>قاعدہ:</strong> ان حروف کی آواز میں سیٹی جیسی صفت ہوتی ہے۔</div>
+      <div class="rulesLine"><strong>کیسے پڑھیں:</strong> ص، س، ز کو صاف آواز کے ساتھ ادا کریں۔</div>
+      <div class="rulesExample">
+        مثال: سَ ، زَ ، صَ — یہ سیٹی والے حروف ہیں۔ ص موٹا بھی ہے اور سیٹی والا بھی ہے۔
+      </div>
+    </div>
+
+    <div class="rulesCard">
+      <div class="rulesCardTitle">۳۔ حروفِ قلقله</div>
+      <div class="rulesArabicBig">ق ط ب ج د</div>
+      <div class="rulesLine"><strong>قاعدہ:</strong> جب ان حروف پر سکون ہو تو ہلکا سا جھٹکا آتا ہے، اسے قلقله کہتے ہیں۔</div>
+      <div class="rulesLine"><strong>یاد رکھیں:</strong> قلقله ہر وقت نہیں ہوتا، صرف اس وقت ہوتا ہے جب یہ حروف ساکن ہوں۔</div>
+      <div class="rulesExample">
+        مثال ۱: اَقْ — قْ ساکن ہے، اس لئے قلقله ہوگا۔<br>
+        مثال ۲: اَبْ — بْ ساکن ہے، اس لئے قلقله ہوگا۔<br>
+        مثال ۳: اَدْ — دْ ساکن ہے، اس لئے قلقله ہوگا۔
+      </div>
+    </div>
+
+    <div class="rulesCard">
+      <div class="rulesCardTitle">۴۔ حلقی حروف</div>
+      <div class="rulesArabicBig">ء ہ ع ح غ خ</div>
+      <div class="rulesLine"><strong>قاعدہ:</strong> یہ حروف گلے سے ادا ہوتے ہیں۔</div>
+      <div class="rulesLine"><strong>نون ساکن یا تنوین کے بعد:</strong> اگر حلقی حرف آئے تو اظہار ہوگا۔</div>
+      <div class="rulesLine"><strong>اظہار کا مطلب:</strong> نون کو صاف پڑھنا۔</div>
+      <div class="rulesExample">
+        مثال ۱: مِنْ خَيْرٍ — نْ کے بعد خ ہے، اس لئے اظہار ہوگا۔<br>
+        مثال ۲: مِنْ عِلْمٍ — نْ کے بعد ع ہے، اس لئے اظہار ہوگا۔
+      </div>
+    </div>
+
+    <div class="rulesCard">
+      <div class="rulesCardTitle">۵۔ موٹے حروف</div>
+      <div class="rulesArabicBig">ص ض ط ظ خ غ ق</div>
+      <div class="rulesLine"><strong>قاعدہ:</strong> ان حروف کو موٹی، پُر اور بھاری آواز کے ساتھ پڑھا جاتا ہے۔</div>
+      <div class="rulesLine"><strong>کیسے پڑھیں:</strong> ان حروف کو پتلا یا نرم نہ پڑھیں، بلکہ پُر آواز سے ادا کریں۔</div>
+      <div class="rulesExample">
+        مثال: قَ ، طَ ، صَ ، خَ — یہ موٹے حروف ہیں۔<br>
+        خ حلقی بھی ہے اور موٹا بھی ہے۔
+      </div>
+    </div>
+
+    <div class="rulesCard">
+      <div class="rulesCardTitle">۶۔ حروفِ یرملون</div>
+      <div class="rulesArabicBig">ی ر م ل و ن</div>
+      <div class="rulesLine"><strong>قاعدہ:</strong> نون ساکن یا تنوین کے بعد یرملون میں سے کوئی حرف آئے تو ادغام ہوتا ہے۔</div>
+      <div class="rulesLine"><strong>ادغام کا مطلب:</strong> نون کو اگلے حرف میں ملا دینا۔</div>
+      <div class="rulesLine"><strong>یاد رکھیں:</strong> یرملون کے کچھ حروف کے ساتھ غنہ ہوتا ہے، اور کچھ کے ساتھ غنہ نہیں ہوتا۔</div>
+      <div class="rulesExample">
+        مثال ۱: مَنْ يَقُولُ — نْ کے بعد ی ہے، اس لئے ادغام بغنہ ہوگا۔<br>
+        مثال ۲: مِنْ مَالٍ — نْ کے بعد م ہے، اس لئے ادغام بغنہ ہوگا۔<br>
+        مثال ۳: مِنْ رَبِّهِمْ — نْ کے بعد ر ہے، اس لئے ادغام بلا غنہ ہوگا۔<br>
+        مثال ۴: غَفُورٌ وَدُودٌ — تنوین کے بعد و ہے، اس لئے ادغام بغنہ ہوگا۔
+      </div>
+    </div>
+
+    <div class="rulesCard">
+      <div class="rulesCardTitle">۷۔ تنوین کا قاعدہ</div>
+      <div class="rulesArabicBig">ــً  ــٍ  ــٌ</div>
+      <div class="rulesLine"><strong>تنوین:</strong> دو زبر، دو زیر، دو پیش۔</div>
+      <div class="rulesLine"><strong>قاعدہ:</strong> تنوین میں نون ساکن کی چھپی ہوئی آواز ہوتی ہے۔</div>
+      <div class="rulesLine"><strong>یاد رکھیں:</strong> تنوین کے بعد آنے والے حرف سے rule decide ہوتا ہے: اظہار، اقلاب، ادغام یا اخفاء۔</div>
+      <div class="rulesExample">
+        بً = بَنْ<br>
+        بٍ = بِنْ<br>
+        بٌ = بُنْ
+      </div>
+    </div>
+
+    <div class="rulesCard">
+      <div class="rulesCardTitle">۸۔ اظہار</div>
+      <div class="rulesArabicBig">ء ہ ع ح غ خ</div>
+      <div class="rulesLine"><strong>اظہار کا مطلب:</strong> نون کو صاف پڑھنا۔</div>
+      <div class="rulesLine"><strong>قاعدہ:</strong> نون ساکن یا تنوین کے بعد حلقی حروف آئیں تو اظہار ہوگا۔</div>
+      <div class="rulesLine"><strong>کیسے پڑھیں:</strong> نون کو واضح اور صاف پڑھیں۔ نون کو نہ چھپائیں، نہ میم بنائیں۔</div>
+      <div class="rulesExample">
+        مثال ۱: مِنْ خَيْرٍ — نْ کے بعد خ ہے، اس لئے اظہار ہوگا۔<br>
+        مثال ۲: مِنْ عِلْمٍ — نْ کے بعد ع ہے، اس لئے اظہار ہوگا۔<br>
+        مثال ۳: تنوین + ع — اس میں بھی اظہار ہوگا۔
+      </div>
+    </div>
+
+    <div class="rulesCard">
+      <div class="rulesCardTitle">۹۔ اقلاب</div>
+      <div class="rulesArabicBig">نْ / تنوین + ب</div>
+      <div class="rulesLine"><strong>اقلاب کا مطلب:</strong> نون کو میم کی آواز میں بدل کر غنہ کرنا۔</div>
+      <div class="rulesLine"><strong>قاعدہ:</strong> نون ساکن یا تنوین کے بعد اگر ب آئے تو اقلاب ہوگا۔</div>
+      <div class="rulesLine"><strong>کیسے پڑھیں:</strong> نون کو صاف نون نہیں پڑھیں گے، بلکہ میم کی آواز کی طرف بدل کر غنہ کریں گے۔</div>
+      <div class="rulesExample">
+        مثال ۱: مِنْ بَعْدِ — نْ کے بعد ب ہے، اس لئے اقلاب ہوگا۔<br>
+        مثال ۲: سَمِيعٌ بَصِيرٌ — تنوین کے بعد ب ہے، اس لئے اقلاب ہوگا۔
+      </div>
+    </div>
+
+    <div class="rulesCard">
+      <div class="rulesCardTitle">۱۰۔ ادغام</div>
+      <div class="rulesArabicBig">ی ر م ل و ن</div>
+      <div class="rulesLine"><strong>ادغام کا مطلب:</strong> نون کو اگلے حرف میں ملا دینا۔</div>
+      <div class="rulesLine"><strong>قاعدہ:</strong> نون ساکن یا تنوین کے بعد حروفِ یرملون آئیں تو ادغام ہوگا۔</div>
+
+      <div class="rulesLine"><strong>ادغام بغنہ:</strong> ی ن م و — ان کے ساتھ غنہ ہوگا۔</div>
+      <div class="rulesExample">
+        مثال ۱: مَنْ يَقُولُ — نْ کے بعد ی ہے، اس لئے ادغام بغنہ ہوگا۔<br>
+        مثال ۲: مِنْ مَالٍ — نْ کے بعد م ہے، اس لئے ادغام بغنہ ہوگا۔<br>
+        مثال ۳: غَفُورٌ وَدُودٌ — تنوین کے بعد و ہے، اس لئے ادغام بغنہ ہوگا۔
+      </div>
+
+      <div class="rulesLine"><strong>ادغام بلا غنہ:</strong> ل ر — ان کے ساتھ غنہ نہیں ہوگا۔</div>
+      <div class="rulesExample">
+        مثال ۱: مِنْ رَبِّهِمْ — نْ کے بعد ر ہے، اس لئے ادغام بلا غنہ ہوگا۔<br>
+        مثال ۲: نْ + ل — ل کے ساتھ ادغام ہوگا، مگر غنہ نہیں ہوگا۔
+      </div>
+    </div>
+
+    <div class="rulesCard">
+      <div class="rulesCardTitle">۱۱۔ اخفاء</div>
+      <div class="rulesArabicBig">نون کو چھپا کر غنہ</div>
+      <div class="rulesLine"><strong>اخفاء کا مطلب:</strong> نون کو چھپا کر غنہ کرنا۔</div>
+      <div class="rulesLine"><strong>قاعدہ:</strong> نون ساکن یا تنوین کے بعد اخفاء والے حروف آئیں تو اخفاء ہوگا۔</div>
+      <div class="rulesLine"><strong>کیسے پڑھیں:</strong> نون کو صاف بھی نہیں پڑھنا، میم بھی نہیں بنانا، بلکہ نون کی آواز کو چھپا کر ناک سے غنہ کرنا ہے۔</div>
+      <div class="rulesExample">
+        مثال ۱: مِنْ تَحْتِهَا — نْ کے بعد ت ہے، اس لئے اخفاء ہوگا۔<br>
+        مثال ۲: أَنْفُسَكُمْ — نْ کے بعد ف ہے، اس لئے اخفاء ہوگا۔<br>
+        مثال ۳: تنوین + ک — ک کے ساتھ اخفاء ہوگا۔
+      </div>
+    </div>
+
+    <div class="rulesCard">
+      <div class="rulesCardTitle">۱۲۔ غنہ</div>
+      <div class="rulesArabicBig">نّ  مّ</div>
+      <div class="rulesLine"><strong>غنہ کا مطلب:</strong> ناک سے آواز نکالنا۔</div>
+      <div class="rulesLine"><strong>قاعدہ:</strong> نّ اور مّ پر غنہ ہوگا۔ اقلاب، اخفاء، اور ادغام بغنہ میں بھی غنہ ہوگا۔</div>
+      <div class="rulesExample">
+        مثال ۱: إِنَّ — ن پر تشدید ہے، اس لئے غنہ ہوگا۔<br>
+        مثال ۲: ثُمَّ — م پر تشدید ہے، اس لئے غنہ ہوگا۔<br>
+        مثال ۳: نْ + ب — اقلاب ہوگا، اس لئے غنہ ہوگا۔<br>
+        مثال ۴: نْ + ت — اخفاء ہوگا، اس لئے غنہ ہوگا۔
+      </div>
+    </div>
+
+    <div class="rulesCard">
+      <div class="rulesCardTitle">۱۳۔ سکون / جزم</div>
+      <div class="rulesArabicBig">ــْ</div>
+      <div class="rulesLine"><strong>سکون کا مطلب:</strong> حرف پر حرکت نہ ہونا۔</div>
+      <div class="rulesLine"><strong>قاعدہ:</strong> جس حرف پر سکون ہو، اسے پچھلے حرکت والے حرف کے ساتھ ملا کر پڑھتے ہیں۔</div>
+      <div class="rulesExample">
+        مثال ۱: اَبْ — ب ساکن ہے، اس لئے اَبْ پڑھیں گے۔<br>
+        مثال ۲: اَتْ — ت ساکن ہے، اس لئے اَتْ پڑھیں گے۔
+      </div>
+    </div>
+
+    <div class="rulesCard">
+      <div class="rulesCardTitle">۱۴۔ تشدید</div>
+      <div class="rulesArabicBig">ــّ</div>
+      <div class="rulesLine"><strong>تشدید کا مطلب:</strong> حرف کو مضبوط اور double انداز میں پڑھنا۔</div>
+      <div class="rulesLine"><strong>قاعدہ:</strong> جس حرف پر تشدید ہو، اسے زور دے کر پڑھتے ہیں۔</div>
+      <div class="rulesExample">
+        مثال ۱: رَبَّ — ب پر تشدید ہے، اس لئے ب کو زور دے کر پڑھیں گے۔<br>
+        مثال ۲: إِنَّ — ن پر تشدید ہے، اس لئے ن پر غنہ بھی ہوگا۔<br>
+        مثال ۳: ثُمَّ — م پر تشدید ہے، اس لئے م پر غنہ ہوگا۔
+      </div>
+    </div>
+
+    <div class="rulesCard">
+      <div class="rulesCardTitle">۱۵۔ مد</div>
+      <div class="rulesArabicBig">بَا  بِی  بُو</div>
+      <div class="rulesLine"><strong>مد کا مطلب:</strong> آواز کو لمبا کرنا۔</div>
+      <div class="rulesLine"><strong>قاعدہ:</strong> مد میں آواز کو کھینچ کر پڑھا جاتا ہے۔</div>
+      <div class="rulesExample">
+        مثال ۱: بَا — زبر کے بعد الف آیا، آواز لمبی ہوگی۔<br>
+        مثال ۲: بِی — زیر کے بعد ی آئی، آواز لمبی ہوگی۔<br>
+        مثال ۳: بُو — پیش کے بعد و آیا، آواز لمبی ہوگی۔
+      </div>
+    </div>
+
+    <div class="rulesCard">
+      <div class="rulesCardTitle">۱۶۔ کھڑی زبر، کھڑی زیر، الٹی پیش</div>
+      <div class="rulesArabicBig">ٰ  ٖ  ٗ</div>
+      <div class="rulesLine"><strong>کھڑی زبر:</strong> آواز کو لمبا کرتی ہے۔</div>
+      <div class="rulesLine"><strong>کھڑی زیر:</strong> زیر کی آواز کو لمبا کرتی ہے۔</div>
+      <div class="rulesLine"><strong>الٹی پیش:</strong> پیش کی آواز کو لمبا کرتی ہے۔</div>
+      <div class="rulesExample">
+        یاد رکھیں: یہ تینوں نشان آواز کو لمبا کرتے ہیں۔
+      </div>
+    </div>
+
+    <div class="rulesCard">
+      <div class="rulesCardTitle">۱۷۔ حروفِ لین</div>
+      <div class="rulesArabicBig">وْ  یْ</div>
+      <div class="rulesLine"><strong>قاعدہ:</strong> جب و یا ی ساکن ہوں اور ان سے پہلے زبر ہو تو نرم آواز سے پڑھا جاتا ہے۔</div>
+      <div class="rulesExample">
+        مثال ۱: خَوْف<br>
+        مثال ۲: بَيْت
+      </div>
+    </div>
+
+    <div class="rulesSummaryCard">
+      <div class="rulesSummaryTitle">آسان خلاصہ</div>
+      <div class="rulesSummaryLine"><strong>اظہار:</strong> نون صاف پڑھنا۔</div>
+      <div class="rulesSummaryLine"><strong>اقلاب:</strong> نون کو میم میں بدل کر غنہ کرنا۔</div>
+      <div class="rulesSummaryLine"><strong>ادغام:</strong> نون کو اگلے حرف میں ملا دینا۔</div>
+      <div class="rulesSummaryLine"><strong>اخفاء:</strong> نون کو چھپا کر غنہ کرنا۔</div>
+      <div class="rulesSummaryLine"><strong>قلقله:</strong> ق ط ب ج د ساکن ہوں تو ہلکا جھٹکا دینا۔</div>
+      <div class="rulesSummaryLine"><strong>غنہ:</strong> ناک سے آواز نکالنا۔</div>
+      <div class="rulesSummaryLine"><strong>موٹے حروف:</strong> ص ض ط ظ خ غ ق</div>
+      <div class="rulesSummaryLine"><strong>حلقی حروف:</strong> ء ہ ع ح غ خ</div>
+      <div class="rulesSummaryLine"><strong>سیٹی والے حروف:</strong> ص س ز</div>
+      <div class="rulesSummaryLine"><strong>نرم حروف:</strong> ظ ذ ث</div>
+      <div class="rulesSummaryLine"><strong>حروف یرملون:</strong> ی ر م ل و ن</div>
     </div>
 
   </div>
@@ -746,6 +1134,7 @@ function hideAllQaidaPages(){
 
   let pages = [
     "homePage",
+    "rulesPage",
     "bookmarkPage"
   ];
 
@@ -772,6 +1161,23 @@ function openQaidaHomePage(){
   }
 
   updateQaidaResumeText();
+  window.scrollTo(0,0);
+
+}
+
+/* =========================
+   OPEN QAIDA RULES PAGE
+   full function name: openQaidaRulesPage
+========================= */
+function openQaidaRulesPage(){
+
+  hideAllQaidaPages();
+
+  let page = document.getElementById("rulesPage");
+  if(page){
+    page.classList.add("active");
+  }
+
   window.scrollTo(0,0);
 
 }
@@ -982,8 +1388,6 @@ function openQaidaQuizPage(){
 
 }
 
-
-     
 /* =========================
    OPEN QAIDA GO TO PAGE PROMPT
    full function name: openQaidaGoToPagePrompt
@@ -1471,10 +1875,6 @@ function handleQaidaFlipMove(e){
     dragPercent = -qaidaFlipState.maxDragPercent;
   }
 
-  /* Arabic / Urdu style:
-     drag right = next page
-     drag left = previous page
-  */
   if(qaidaFlipState.deltaX > 0){
     if(currentQaidaPage < totalQaidaPages){
       let nextSrc = qaidaFlipState.getNextImageSrc ? qaidaFlipState.getNextImageSrc() : "";
@@ -1530,10 +1930,6 @@ function handleQaidaFlipEnd(){
     return;
   }
 
-  /* Arabic / Urdu style:
-     swipe right = next page
-     swipe left = previous page
-  */
   if(dragPercent >= qaidaFlipState.threshold){
     animateQaidaFlipNext();
     return;
