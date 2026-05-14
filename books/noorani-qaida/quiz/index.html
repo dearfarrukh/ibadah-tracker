@@ -3,1596 +3,3599 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-<title>Noorani Qaida Yes No Quiz</title>
-
+<title>نورانی قاعدہ ہاں نہیں سوالات</title>
 <style>
-/* =========================
-   NOORANI QAIDA YES / NO RULE QUIZ
-   File: books/noorani-qaida/quiz/index.html
-========================= */
-
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-
-html,
-body{
-  margin:0;
-  padding:0;
-  width:100%;
-  min-height:100%;
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Arial,sans-serif;
-  background:#e9e9ee;
-  color:#111;
-  overflow-x:hidden;
-  touch-action:manipulation;
-  user-select:none;
-  -webkit-user-select:none;
-}
-
-button{
-  font-family:inherit;
-}
-
-/* =========================
-   APP BASE
-========================= */
-.app{
-  width:100%;
-  min-height:100vh;
-  padding:14px 4% 30px 4%;
-  background:radial-gradient(circle at top,#ffffff 0%,#f7f7fb 40%,#e9e9ee 100%);
-}
-
-/* =========================
-   TOP BAR
-========================= */
-.topBar{
-  width:100%;
-  height:58px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  margin-bottom:14px;
-}
-
-.roundBtn{
-  width:44px;
-  height:44px;
-  border:none;
-  border-radius:50%;
-  background:white;
-  color:#111;
-  font-size:22px;
-  font-weight:900;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 6px 18px rgba(0,0,0,0.10);
-  position:absolute;
-  top:7px;
-  cursor:pointer;
-}
-
-.backBtn{
-  left:0;
-}
-
-.menuBtn{
-  right:0;
-}
-
-.topTitleWrap{
-  text-align:center;
-  max-width:70%;
-}
-
-.topTitle{
-  font-size:22px;
-  font-weight:900;
-  color:#111;
-  letter-spacing:-0.4px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.topSub{
-  font-size:12px;
-  font-weight:700;
-  color:#666;
-  margin-top:2px;
-}
-
-/* =========================
-   HERO
-========================= */
-.heroCard{
-  width:100%;
-  background:linear-gradient(135deg,#064e3b,#16a34a);
-  color:white;
-  border-radius:32px;
-  padding:20px 5%;
-  text-align:center;
-  box-shadow:0 14px 32px rgba(6,78,59,0.26);
-  margin-bottom:14px;
-  position:relative;
-  overflow:hidden;
-}
-
-.heroCard:before{
-  content:"";
-  position:absolute;
-  width:190px;
-  height:190px;
-  border-radius:50%;
-  background:rgba(255,255,255,0.13);
-  top:-70px;
-  left:-70px;
-}
-
-.bismillah{
-  font-family:"Times New Roman",serif;
-  position:relative;
-  z-index:2;
-  font-size:25px;
-  font-weight:900;
-  margin-bottom:8px;
-}
-
-.heroText{
-  position:relative;
-  z-index:2;
-  font-size:14px;
-  font-weight:700;
-  line-height:1.7;
-}
-
-.lessonBadge{
-  position:relative;
-  z-index:2;
-  width:max-content;
-  max-width:100%;
-  margin:13px auto 0 auto;
-  padding:8px 14px;
-  border-radius:999px;
-  background:rgba(255,255,255,0.18);
-  border:1px solid rgba(255,255,255,0.35);
-  font-size:13px;
-  font-weight:900;
-}
-
-/* =========================
-   LESSON MENU
-========================= */
-.lessonMenu{
-  display:none;
-  width:100%;
-  background:white;
-  border-radius:28px;
-  padding:15px;
-  box-shadow:0 10px 28px rgba(0,0,0,0.12);
-  margin-bottom:14px;
-}
-
-.lessonMenu.show{
-  display:block;
-}
-
-.menuTitle{
-  font-size:21px;
-  font-weight:900;
-  text-align:center;
-  margin-bottom:12px;
-}
-
-.lessonGrid{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.lessonBtn{
-  width:100%;
-  border:1px solid #e5e7eb;
-  background:#f9fafb;
-  border-radius:22px;
-  padding:13px;
-  text-align:right;
-  cursor:pointer;
-}
-
-.lessonBtn.active{
-  background:#ecfdf5;
-  border-color:#16a34a;
-}
-
-.lessonName{
-  font-size:17px;
-  font-weight:900;
-  color:#111;
-}
-
-.lessonDesc{
-  margin-top:4px;
-  font-size:13px;
-  font-weight:600;
-  color:#666;
-  line-height:1.45;
-}
-
-/* =========================
-   STATS
-========================= */
-.statsRow{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:9px;
-  margin-bottom:14px;
-}
-
-.statCard{
-  background:white;
-  border-radius:20px;
-  padding:11px 6px;
-  text-align:center;
-  box-shadow:0 6px 18px rgba(0,0,0,0.08);
-}
-
-.statLabel{
-  font-size:12px;
-  font-weight:800;
-  color:#666;
-}
-
-.statValue{
-  margin-top:4px;
-  font-size:20px;
-  font-weight:900;
-  color:#111;
-}
-
-/* =========================
-   QUESTION CARD
-========================= */
-.questionCard{
-  width:100%;
-  background:white;
-  border-radius:30px;
-  padding:17px;
-  box-shadow:0 10px 28px rgba(0,0,0,0.12);
-  margin-bottom:14px;
-}
-
-.questionTop{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-  margin-bottom:13px;
-}
-
-.pill{
-  padding:7px 12px;
-  border-radius:999px;
-  font-size:13px;
-  font-weight:900;
-}
-
-.bluePill{
-  background:#eff6ff;
-  color:#1d4ed8;
-}
-
-.greenPill{
-  background:#ecfdf5;
-  color:#047857;
-}
-
-.questionText{
-  font-size:21px;
-  font-weight:900;
-  color:#111;
-  text-align:center;
-  line-height:1.55;
-  margin-bottom:15px;
-}
-
-.displayBox{
-  width:100%;
-  min-height:155px;
-  border-radius:28px;
-  background:linear-gradient(180deg,#fff7ed,#ffffff);
-  border:2px solid #fed7aa;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:14px;
-  position:relative;
-  margin-bottom:16px;
-}
-
-.bigArabic{
-  direction:rtl;
-  font-family:"Times New Roman","Amiri","Scheherazade New",serif;
-  font-size:72px;
-  font-weight:900;
-  line-height:1.18;
-  color:#111;
-}
-
-.bigArabic.small{
-  font-size:42px;
-  line-height:1.45;
-}
-
-.hintPill{
-  position:absolute;
-  bottom:10px;
-  left:12px;
-  background:#ffedd5;
-  color:#9a3412;
-  padding:5px 10px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:900;
-}
-
-/* =========================
-   YES NO OPTIONS
-========================= */
-.optionsGrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.optionBtn{
-  border:none;
-  border-radius:24px;
-  background:#f3f4f6;
-  color:#111;
-  min-height:70px;
-  padding:8px;
-  font-size:25px;
-  font-weight:900;
-  box-shadow:inset 0 -2px 0 rgba(0,0,0,0.06);
-  cursor:pointer;
-}
-
-.optionBtn:active{
-  transform:scale(0.97);
-}
-
-.optionBtn.correct{
-  background:#dcfce7;
-  color:#166534;
-  border:2px solid #22c55e;
-}
-
-.optionBtn.wrong{
-  background:#fee2e2;
-  color:#991b1b;
-  border:2px solid #ef4444;
-}
-
-.optionBtn.disabled{
-  pointer-events:none;
-  opacity:0.88;
-}
-
-/* =========================
-   EXPLANATION
-========================= */
-.explainCard{
-  display:none;
-  border-radius:24px;
-  padding:15px;
-  margin-bottom:14px;
-  line-height:1.75;
-  box-shadow:0 6px 18px rgba(0,0,0,0.08);
-}
-
-.explainCard.show{
-  display:block;
-}
-
-.explainCard.good{
-  background:#dcfce7;
-  border:1px solid #86efac;
-  color:#14532d;
-}
-
-.explainCard.bad{
-  background:#fff7ed;
-  border:1px solid #fdba74;
-  color:#7c2d12;
-}
-
-.resultLine{
-  font-size:20px;
-  font-weight:900;
-  text-align:center;
-  margin-bottom:8px;
-}
-
-.infoLine{
-  font-size:15px;
-  font-weight:800;
-  margin-top:7px;
-}
-
-.infoLine span{
-  color:#111;
-  font-weight:900;
-}
-
-/* =========================
-   ACTION BUTTONS
-========================= */
-.actionRow{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:11px;
-}
-
-.actionBtn{
-  min-height:56px;
-  border:none;
-  border-radius:20px;
-  font-size:17px;
-  font-weight:900;
-  cursor:pointer;
-}
-
-.primaryBtn{
-  background:#16a34a;
-  color:white;
-  box-shadow:0 8px 18px rgba(22,163,74,0.24);
-}
-
-.secondaryBtn{
-  background:white;
-  color:#111;
-  box-shadow:0 6px 18px rgba(0,0,0,0.10);
-}
-
-/* =========================
-   NOTE
-========================= */
-.noteCard{
-  margin-top:15px;
-  background:#fffbeb;
-  border:1px solid #fde68a;
-  color:#92400e;
-  border-radius:22px;
-  padding:13px;
-  font-size:13px;
-  font-weight:700;
-  line-height:1.65;
-}
-
-/* =========================
-   FINISH POPUP
-========================= */
-.finishOverlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  background:rgba(0,0,0,0.45);
-  padding:18px;
-  align-items:center;
-  justify-content:center;
-}
-
-.finishOverlay.show{
-  display:flex;
-}
-
-.finishCard{
-  width:100%;
-  max-width:420px;
-  background:white;
-  border-radius:32px;
-  padding:22px;
-  text-align:center;
-  box-shadow:0 18px 40px rgba(0,0,0,0.25);
-}
-
-.finishIcon{
-  font-size:54px;
-  margin-bottom:8px;
-}
-
-.finishTitle{
-  font-size:25px;
-  font-weight:900;
-  color:#111;
-}
-
-.finishScore{
-  font-size:42px;
-  font-weight:900;
-  color:#16a34a;
-  margin:10px 0;
-}
-
-.finishMsg{
-  font-size:15px;
-  font-weight:700;
-  color:#555;
-  line-height:1.6;
-  margin-bottom:16px;
-}
-
-@media(max-width:390px){
-  .bigArabic{
-    font-size:58px;
-  }
-
-  .bigArabic.small{
-    font-size:34px;
-  }
-
-  .questionText{
-    font-size:19px;
-  }
-
-  .optionBtn{
-    font-size:23px;
-  }
-}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;width:100%;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Arial,sans-serif;background:#e9e9ee;color:#111;overflow-x:hidden;touch-action:manipulation;user-select:none;-webkit-user-select:none;}
+button{font-family:inherit;}
+.app{width:100%;min-height:100vh;padding:14px 4% 30px 4%;background:radial-gradient(circle at top,#ffffff 0%,#f7f7fb 40%,#e9e9ee 100%);}
+.topBar{width:100%;height:58px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:14px;}
+.roundBtn{width:44px;height:44px;border:none;border-radius:50%;background:white;color:#111;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,0.10);position:absolute;top:7px;cursor:pointer;}
+.backBtn{left:0;}.menuBtn{right:0;}
+.topTitleWrap{text-align:center;max-width:70%;}.topTitle{font-size:22px;font-weight:900;color:#111;letter-spacing:-0.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}.topSub{font-size:12px;font-weight:700;color:#666;margin-top:2px;}
+.heroCard{width:100%;background:linear-gradient(135deg,#064e3b,#16a34a);color:white;border-radius:32px;padding:20px 5%;text-align:center;box-shadow:0 14px 32px rgba(6,78,59,0.26);margin-bottom:14px;position:relative;overflow:hidden;}
+.heroCard:before{content:"";position:absolute;width:190px;height:190px;border-radius:50%;background:rgba(255,255,255,0.13);top:-70px;left:-70px;}
+.bismillah{font-family:"Times New Roman",serif;position:relative;z-index:2;font-size:25px;font-weight:900;margin-bottom:8px;}.heroText{position:relative;z-index:2;font-size:14px;font-weight:700;line-height:1.7;}.lessonBadge{position:relative;z-index:2;width:max-content;max-width:100%;margin:13px auto 0 auto;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.35);font-size:13px;font-weight:900;}
+.lessonMenu{display:none;width:100%;background:white;border-radius:28px;padding:15px;box-shadow:0 10px 28px rgba(0,0,0,0.12);margin-bottom:14px;}.lessonMenu.show{display:block;}.menuTitle{font-size:21px;font-weight:900;text-align:center;margin-bottom:12px;}.lessonGrid{display:flex;flex-direction:column;gap:10px;}.lessonBtn{width:100%;border:1px solid #e5e7eb;background:#f9fafb;border-radius:22px;padding:13px;text-align:right;cursor:pointer;}.lessonBtn.active{background:#ecfdf5;border-color:#16a34a;}.lessonName{font-size:17px;font-weight:900;color:#111;}.lessonDesc{margin-top:4px;font-size:13px;font-weight:600;color:#666;line-height:1.45;}
+.statsRow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:14px;}.statCard{background:white;border-radius:20px;padding:11px 6px;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,0.08);}.statLabel{font-size:12px;font-weight:800;color:#666;}.statValue{margin-top:4px;font-size:20px;font-weight:900;color:#111;}
+.questionCard{width:100%;background:white;border-radius:30px;padding:17px;box-shadow:0 10px 28px rgba(0,0,0,0.12);margin-bottom:14px;}.questionTop{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:13px;}.pill{padding:7px 12px;border-radius:999px;font-size:13px;font-weight:900;}.bluePill{background:#eff6ff;color:#1d4ed8;}.greenPill{background:#ecfdf5;color:#047857;}
+.questionText{font-size:21px;font-weight:900;color:#111;text-align:center;line-height:1.55;margin-bottom:15px;}.displayBox{width:100%;min-height:155px;border-radius:28px;background:linear-gradient(180deg,#fff7ed,#ffffff);border:2px solid #fed7aa;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;position:relative;margin-bottom:16px;}.bigArabic{direction:rtl;font-family:"Times New Roman","Amiri","Scheherazade New",serif;font-size:72px;font-weight:900;line-height:1.18;color:#111;}.bigArabic.small{font-size:42px;line-height:1.45;}.hintPill{position:absolute;bottom:10px;left:12px;background:#ffedd5;color:#9a3412;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:900;}
+.optionsGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}.optionBtn{border:none;border-radius:24px;background:#f3f4f6;color:#111;min-height:70px;padding:8px;font-size:25px;font-weight:900;box-shadow:inset 0 -2px 0 rgba(0,0,0,0.06);cursor:pointer;}.optionBtn:active{transform:scale(0.97);}.optionBtn.correct{background:#dcfce7;color:#166534;border:2px solid #22c55e;}.optionBtn.wrong{background:#fee2e2;color:#991b1b;border:2px solid #ef4444;}.optionBtn.disabled{pointer-events:none;opacity:0.88;}
+.explainCard{display:none;border-radius:24px;padding:15px;margin-bottom:14px;line-height:1.75;box-shadow:0 6px 18px rgba(0,0,0,0.08);}.explainCard.show{display:block;}.explainCard.good{background:#dcfce7;border:1px solid #86efac;color:#14532d;}.explainCard.bad{background:#fff7ed;border:1px solid #fdba74;color:#7c2d12;}.resultLine{font-size:20px;font-weight:900;text-align:center;margin-bottom:8px;}.infoLine{font-size:15px;font-weight:800;margin-top:7px;}.infoLine span{color:#111;font-weight:900;}
+.actionRow{display:grid;grid-template-columns:1fr 1fr;gap:11px;}.actionBtn{min-height:56px;border:none;border-radius:20px;font-size:17px;font-weight:900;cursor:pointer;}.primaryBtn{background:#16a34a;color:white;box-shadow:0 8px 18px rgba(22,163,74,0.24);}.secondaryBtn{background:white;color:#111;box-shadow:0 6px 18px rgba(0,0,0,0.10);}.noteCard{margin-top:15px;background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:22px;padding:13px;font-size:13px;font-weight:700;line-height:1.65;}
+.finishOverlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.45);padding:18px;align-items:center;justify-content:center;}.finishOverlay.show{display:flex;}.finishCard{width:100%;max-width:420px;background:white;border-radius:32px;padding:22px;text-align:center;box-shadow:0 18px 40px rgba(0,0,0,0.25);}.finishIcon{font-size:54px;margin-bottom:8px;}.finishTitle{font-size:25px;font-weight:900;color:#111;}.finishScore{font-size:42px;font-weight:900;color:#16a34a;margin:10px 0;}.finishMsg{font-size:15px;font-weight:700;color:#555;line-height:1.6;margin-bottom:16px;}
+@media(max-width:390px){.bigArabic{font-size:58px;}.bigArabic.small{font-size:34px;}.questionText{font-size:19px;}.optionBtn{font-size:23px;}}
 </style>
 </head>
-
 <body>
-
 <div class="app">
-
-  <!-- =========================
-       TOP BAR
-  ========================= -->
-  <div class="topBar">
-    <button class="roundBtn backBtn" onclick="goBackToQaida()">←</button>
-
-    <div class="topTitleWrap">
-      <div class="topTitle">ہاں / نہیں Quiz</div>
-      <div class="topSub">غنہ • قلقله • اظہار • ادغام</div>
-    </div>
-
-    <button class="roundBtn menuBtn" onclick="toggleLessonMenu()">☰</button>
-  </div>
-
-  <!-- =========================
-       HERO
-  ========================= -->
-  <div class="heroCard">
-    <div class="bismillah">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
-    <div class="heroText">
-      پہلے صرف ہاں یا نہیں جواب دیں۔ جواب کے بعد نیچے rule، وجہ، اور پڑھنے کا طریقہ آئے گا۔
-    </div>
-    <div class="lessonBadge" id="lessonBadge">ملا جلا ہاں / نہیں Test</div>
-  </div>
-
-  <!-- =========================
-       LESSON MENU
-  ========================= -->
-  <div class="lessonMenu" id="lessonMenu">
-    <div class="menuTitle">Rule منتخب کریں</div>
-    <div class="lessonGrid" id="lessonGrid"></div>
-  </div>
-
-  <!-- =========================
-       STATS
-  ========================= -->
-  <div class="statsRow">
-    <div class="statCard">
-      <div class="statLabel">Score</div>
-      <div class="statValue" id="scoreText">0</div>
-    </div>
-
-    <div class="statCard">
-      <div class="statLabel">Question</div>
-      <div class="statValue" id="countText">1/10</div>
-    </div>
-
-    <div class="statCard">
-      <div class="statLabel">Best</div>
-      <div class="statValue" id="bestText">0</div>
-    </div>
-  </div>
-
-  <!-- =========================
-       QUESTION
-  ========================= -->
-  <div class="questionCard">
-
-    <div class="questionTop">
-      <div class="pill bluePill" id="questionNo">سوال 1</div>
-      <div class="pill greenPill" id="questionType">Rule</div>
-    </div>
-
-    <div class="questionText" id="questionText">Question</div>
-
-    <div class="displayBox">
-      <div class="bigArabic" id="bigArabic">ا</div>
-      <div class="hintPill" id="hintPill">ہاں یا نہیں</div>
-    </div>
-
-    <div class="optionsGrid" id="optionsGrid"></div>
-
-  </div>
-
-  <!-- =========================
-       EXPLANATION
-  ========================= -->
+  <div class="topBar"><button class="roundBtn backBtn" onclick="goBackToQaida()">←</button><div class="topTitleWrap"><div class="topTitle">ہاں / نہیں Quiz</div><div class="topSub">غنہ • قلقله • اظہار • ادغام</div></div><button class="roundBtn menuBtn" onclick="toggleLessonMenu()">☰</button></div>
+  <div class="heroCard"><div class="bismillah">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div><div class="heroText">ہر round میں 20 random سوالات آئیں گے۔ جواب کے بعد نیچے قاعدہ، وجہ، ہدایات، اور مثالیں آئیں گی۔</div><div class="lessonBadge" id="lessonBadge">ملا جلا ہاں / نہیں Test</div></div>
+  <div class="lessonMenu" id="lessonMenu"><div class="menuTitle">قاعدہ منتخب کریں</div><div class="lessonGrid" id="lessonGrid"></div></div>
+  <div class="statsRow"><div class="statCard"><div class="statLabel">Score</div><div class="statValue" id="scoreText">0</div></div><div class="statCard"><div class="statLabel">Question</div><div class="statValue" id="countText">1/20</div></div><div class="statCard"><div class="statLabel">Best</div><div class="statValue" id="bestText">0</div></div></div>
+  <div class="questionCard"><div class="questionTop"><div class="pill bluePill" id="questionNo">سوال 1</div><div class="pill greenPill" id="questionType">قاعدہ</div></div><div class="questionText" id="questionText">سوال</div><div class="displayBox"><div class="bigArabic" id="bigArabic">ا</div><div class="hintPill" id="hintPill">ہاں یا نہیں</div></div><div class="optionsGrid" id="optionsGrid"></div></div>
   <div class="explainCard" id="explainCard"></div>
-
-  <!-- =========================
-       ACTION BUTTONS
-  ========================= -->
-  <div class="actionRow">
-    <button class="actionBtn secondaryBtn" onclick="restartQuiz()">Restart</button>
-    <button class="actionBtn primaryBtn" onclick="nextQuestion()">Next</button>
-  </div>
-
-  <div class="noteCard">
-    یہ quiz اب ہاں / نہیں style میں ہے۔ مثال: تنوین کے بعد ع آئے تو غنہ ہوگا؟ جواب: نہیں۔ پھر نیچے وجہ آئے گی کہ یہ اظہار ہے۔
-  </div>
-
+  <div class="actionRow"><button class="actionBtn secondaryBtn" onclick="restartQuiz()">دوبارہ شروع</button><button class="actionBtn primaryBtn" onclick="nextQuestion()">اگلا</button></div>
+  <div class="noteCard">اس quiz میں 347 محفوظ questions ہیں۔ ہر round میں 20 random questions آئیں گے۔</div>
 </div>
-
-<!-- =========================
-     FINISH POPUP
-========================= -->
-<div class="finishOverlay" id="finishOverlay">
-  <div class="finishCard">
-    <div class="finishIcon">🌟</div>
-    <div class="finishTitle">Mashallah!</div>
-    <div class="finishScore" id="finishScore">0/10</div>
-    <div class="finishMsg" id="finishMsg">Quiz complete ho gaya.</div>
-
-    <div class="actionRow">
-      <button class="actionBtn secondaryBtn" onclick="closeFinish()">Close</button>
-      <button class="actionBtn primaryBtn" onclick="restartQuiz()">Again</button>
-    </div>
-  </div>
-</div>
-
+<div class="finishOverlay" id="finishOverlay"><div class="finishCard"><div class="finishIcon">🌟</div><div class="finishTitle">ماشاءاللہ!</div><div class="finishScore" id="finishScore">0/20</div><div class="finishMsg" id="finishMsg">Quiz مکمل ہو گیا۔</div><div class="actionRow"><button class="actionBtn secondaryBtn" onclick="closeFinish()">بند</button><button class="actionBtn primaryBtn" onclick="restartQuiz()">دوبارہ</button></div></div></div>
 <script>
-/* =========================
-   LESSONS
-========================= */
 const lessons = [
   {
-    id:"mixed",
-    name:"ملا جلا ہاں / نہیں Test",
-    desc:"غنہ، قلقله، اظہار، ادغام، اقلاب، اخفاء سب کی مشق۔",
-    badge:"ملا جلا ہاں / نہیں Test"
+    "id": "mixed",
+    "name": "ملا جلا ہاں / نہیں Test",
+    "desc": "غنہ، قلقله، اظہار، ادغام، اقلاب، اخفاء سب کی مشق۔",
+    "badge": "ملا جلا ہاں / نہیں Test"
   },
   {
-    id:"ghunna",
-    name:"غنہ ہوگا؟",
-    desc:"کہاں غنہ ہوگا اور کہاں نہیں۔",
-    badge:"غنہ ہوگا؟"
+    "id": "ghunna",
+    "name": "غنہ ہوگا؟",
+    "desc": "کہاں غنہ ہوگا اور کہاں نہیں۔",
+    "badge": "غنہ ہوگا؟"
   },
   {
-    id:"qalqala",
-    name:"قلقله ہوگا؟",
-    desc:"ق ط ب ج د ساکن ہوں تو قلقله۔",
-    badge:"قلقله ہوگا؟"
+    "id": "qalqala",
+    "name": "قلقله ہوگا؟",
+    "desc": "ق ط ب ج د ساکن ہوں تو قلقله۔",
+    "badge": "قلقله ہوگا؟"
   },
   {
-    id:"izhar",
-    name:"اظہار ہوگا؟",
-    desc:"حلقی حروف کے ساتھ نون صاف پڑھنا۔",
-    badge:"اظہار ہوگا؟"
+    "id": "izhar",
+    "name": "اظہار ہوگا؟",
+    "desc": "حلقی حروف کے ساتھ نون صاف پڑھنا۔",
+    "badge": "اظہار ہوگا؟"
   },
   {
-    id:"idgham",
-    name:"ادغام ہوگا؟",
-    desc:"یرملون کے ساتھ ادغام۔",
-    badge:"ادغام ہوگا؟"
+    "id": "idgham",
+    "name": "ادغام ہوگا؟",
+    "desc": "یرملون کے ساتھ ادغام۔",
+    "badge": "ادغام ہوگا؟"
   },
   {
-    id:"iqlab",
-    name:"اقلاب ہوگا؟",
-    desc:"ب کے ساتھ اقلاب۔",
-    badge:"اقلاب ہوگا؟"
+    "id": "iqlab",
+    "name": "اقلاب ہوگا؟",
+    "desc": "ب کے ساتھ اقلاب۔",
+    "badge": "اقلاب ہوگا؟"
   },
   {
-    id:"ikhfa",
-    name:"اخفاء ہوگا؟",
-    desc:"نون کو چھپا کر غنہ کرنا۔",
-    badge:"اخفاء ہوگا؟"
+    "id": "ikhfa",
+    "name": "اخفاء ہوگا؟",
+    "desc": "نون کو چھپا کر غنہ کرنا۔",
+    "badge": "اخفاء ہوگا؟"
   },
   {
-    id:"groups",
-    name:"حروف کے گروپ",
-    desc:"نرم، سیٹی، قلقله، حلقی، موٹے، یرملون۔",
-    badge:"حروف کے گروپ"
+    "id": "groups",
+    "name": "حروف کے گروپ",
+    "desc": "نرم، سیٹی، قلقله، حلقی، موٹے، یرملون۔",
+    "badge": "حروف کے گروپ"
   }
 ];
-
-/* =========================
-   YES / NO QUIZ DATA
-   a must be: "ہاں" or "نہیں"
-========================= */
 const questions = [
-
-  /* =========================
-     GHUNNA QUESTIONS
-  ========================= */
   {
-    lesson:"ghunna",
-    type:"غنہ",
-    q:"تنوین کے بعد ع آئے تو غنہ ہوگا؟",
-    display:"ــً + ع",
-    a:"نہیں",
-    rule:"اظہار",
-    why:"ع حلقی حرف ہے۔ تنوین میں نون ساکن کی چھپی ہوئی آواز ہوتی ہے۔ تنوین کے بعد حلقی حرف آئے تو اظہار ہوتا ہے، غنہ نہیں ہوتا۔",
-    hidayat:"حلقی حروف: ء ہ ع ح غ خ۔ ان کے ساتھ نون صاف پڑھنا ہے۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ظ نرم حرف ہے؟",
+    "display": "ظ",
+    "a": "ہاں",
+    "rule": "نرم حروف",
+    "why": "ظ نرم حروف ظ ذ ث میں شامل ہے۔",
+    "hidayat": "نرم حروف: ظ ذ ث۔"
   },
   {
-    lesson:"ghunna",
-    type:"غنہ",
-    q:"تنوین کے بعد ب آئے تو غنہ ہوگا؟",
-    display:"ــً + ب",
-    a:"ہاں",
-    rule:"اقلاب مع غنہ",
-    why:"تنوین کے بعد ب آئے تو اقلاب ہوتا ہے۔ اقلاب میں نون کی آواز میم میں بدلتی ہے اور غنہ کیا جاتا ہے۔",
-    hidayat:"تنوین + ب = اقلاب، اور اقلاب میں غنہ ہوتا ہے۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ذ نرم حرف ہے؟",
+    "display": "ذ",
+    "a": "ہاں",
+    "rule": "نرم حروف",
+    "why": "ذ نرم حروف ظ ذ ث میں شامل ہے۔",
+    "hidayat": "نرم حروف: ظ ذ ث۔"
   },
   {
-    lesson:"ghunna",
-    type:"غنہ",
-    q:"نون ساکن کے بعد م آئے تو غنہ ہوگا؟",
-    display:"نْ + م",
-    a:"ہاں",
-    rule:"ادغام بغنہ",
-    why:"م یرملون میں سے ہے اور ادغام بغنہ کے حروف میں شامل ہے، اس لئے غنہ ہوگا۔",
-    hidayat:"ادغام بغنہ کے حروف: ی ن م و۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ث نرم حرف ہے؟",
+    "display": "ث",
+    "a": "ہاں",
+    "rule": "نرم حروف",
+    "why": "ث نرم حروف ظ ذ ث میں شامل ہے۔",
+    "hidayat": "نرم حروف: ظ ذ ث۔"
   },
   {
-    lesson:"ghunna",
-    type:"غنہ",
-    q:"نون ساکن کے بعد ل آئے تو غنہ ہوگا؟",
-    display:"نْ + ل",
-    a:"نہیں",
-    rule:"ادغام بلا غنہ",
-    why:"ل کے ساتھ ادغام ہوتا ہے مگر غنہ نہیں ہوتا۔ اسے ادغام بلا غنہ کہتے ہیں۔",
-    hidayat:"ادغام بلا غنہ کے حروف: ل ر۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ب نرم حرف ہے؟",
+    "display": "ب",
+    "a": "نہیں",
+    "rule": "نرم حرف نہیں",
+    "why": "ب نرم حروف ظ ذ ث میں شامل نہیں ہے۔",
+    "hidayat": "نرم حروف صرف: ظ ذ ث۔"
   },
   {
-    lesson:"ghunna",
-    type:"غنہ",
-    q:"نون ساکن کے بعد ر آئے تو غنہ ہوگا؟",
-    display:"نْ + ر",
-    a:"نہیں",
-    rule:"ادغام بلا غنہ",
-    why:"ر کے ساتھ ادغام ہوتا ہے لیکن غنہ نہیں ہوتا۔",
-    hidayat:"ل اور ر کے ساتھ ادغام بلا غنہ ہوتا ہے۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ق نرم حرف ہے؟",
+    "display": "ق",
+    "a": "نہیں",
+    "rule": "نرم حرف نہیں",
+    "why": "ق نرم حروف ظ ذ ث میں شامل نہیں ہے۔",
+    "hidayat": "نرم حروف صرف: ظ ذ ث۔"
   },
   {
-    lesson:"ghunna",
-    type:"غنہ",
-    q:"نّ پر غنہ ہوگا؟",
-    display:"نّ",
-    a:"ہاں",
-    rule:"نون مشدد کا غنہ",
-    why:"نون پر تشدید ہو تو غنہ ہوتا ہے۔",
-    hidayat:"نّ کو ناک کی آواز کے ساتھ پڑھنا ہے۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "س نرم حرف ہے؟",
+    "display": "س",
+    "a": "نہیں",
+    "rule": "نرم حرف نہیں",
+    "why": "س نرم حروف ظ ذ ث میں شامل نہیں ہے۔",
+    "hidayat": "نرم حروف صرف: ظ ذ ث۔"
   },
   {
-    lesson:"ghunna",
-    type:"غنہ",
-    q:"مّ پر غنہ ہوگا؟",
-    display:"مّ",
-    a:"ہاں",
-    rule:"میم مشدد کا غنہ",
-    why:"میم پر تشدید ہو تو غنہ ہوتا ہے۔",
-    hidayat:"مّ کو ناک کی آواز کے ساتھ پڑھنا ہے۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "م نرم حرف ہے؟",
+    "display": "م",
+    "a": "نہیں",
+    "rule": "نرم حرف نہیں",
+    "why": "م نرم حروف ظ ذ ث میں شامل نہیں ہے۔",
+    "hidayat": "نرم حروف صرف: ظ ذ ث۔"
   },
   {
-    lesson:"ghunna",
-    type:"غنہ",
-    q:"نون ساکن کے بعد خ آئے تو غنہ ہوگا؟",
-    display:"نْ + خ",
-    a:"نہیں",
-    rule:"اظہار",
-    why:"خ حلقی حرف ہے۔ نون ساکن کے بعد حلقی حرف آئے تو نون صاف پڑھا جاتا ہے۔",
-    hidayat:"خ حلقی حرف ہے، اس لئے اظہار ہوگا، غنہ نہیں۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ل نرم حرف ہے؟",
+    "display": "ل",
+    "a": "نہیں",
+    "rule": "نرم حرف نہیں",
+    "why": "ل نرم حروف ظ ذ ث میں شامل نہیں ہے۔",
+    "hidayat": "نرم حروف صرف: ظ ذ ث۔"
   },
   {
-    lesson:"ghunna",
-    type:"غنہ",
-    q:"نون ساکن کے بعد ت آئے تو غنہ ہوگا؟",
-    display:"نْ + ت",
-    a:"ہاں",
-    rule:"اخفاء",
-    why:"ت اخفاء والے حروف میں آتا ہے۔ اخفاء میں نون کو چھپا کر غنہ کیا جاتا ہے۔",
-    hidayat:"اخفاء = نون کو چھپا کر غنہ کرنا۔"
-  },
-
-  /* =========================
-     QALQALA QUESTIONS
-  ========================= */
-  {
-    lesson:"qalqala",
-    type:"قلقله",
-    q:"قْ پر قلقله ہوگا؟",
-    display:"قْ",
-    a:"ہاں",
-    rule:"قلقله",
-    why:"ق حروف قلقله میں ہے اور یہاں ساکن ہے، اس لئے قلقله ہوگا۔",
-    hidayat:"حروف قلقله: ق ط ب ج د۔ یہ ساکن ہوں تو ہلکا جھٹکا آتا ہے۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ر نرم حرف ہے؟",
+    "display": "ر",
+    "a": "نہیں",
+    "rule": "نرم حرف نہیں",
+    "why": "ر نرم حروف ظ ذ ث میں شامل نہیں ہے۔",
+    "hidayat": "نرم حروف صرف: ظ ذ ث۔"
   },
   {
-    lesson:"qalqala",
-    type:"قلقله",
-    q:"بْ پر قلقله ہوگا؟",
-    display:"بْ",
-    a:"ہاں",
-    rule:"قلقله",
-    why:"ب حروف قلقله میں ہے اور ساکن ہے، اس لئے قلقله ہوگا۔",
-    hidayat:"بْ پر ہلکا جھٹکا آئے گا۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ک نرم حرف ہے؟",
+    "display": "ک",
+    "a": "نہیں",
+    "rule": "نرم حرف نہیں",
+    "why": "ک نرم حروف ظ ذ ث میں شامل نہیں ہے۔",
+    "hidayat": "نرم حروف صرف: ظ ذ ث۔"
   },
   {
-    lesson:"qalqala",
-    type:"قلقله",
-    q:"دْ پر قلقله ہوگا؟",
-    display:"دْ",
-    a:"ہاں",
-    rule:"قلقله",
-    why:"د حروف قلقله میں ہے اور ساکن ہے، اس لئے قلقله ہوگا۔",
-    hidayat:"ق ط ب ج د ساکن ہوں تو قلقله ہوتا ہے۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ص سیٹی والا حرف ہے؟",
+    "display": "ص",
+    "a": "ہاں",
+    "rule": "سیٹی والے حروف",
+    "why": "ص سیٹی والے حروف ص س ز میں شامل ہے۔",
+    "hidayat": "سیٹی والے حروف: ص س ز۔"
   },
   {
-    lesson:"qalqala",
-    type:"قلقله",
-    q:"سْ پر قلقله ہوگا؟",
-    display:"سْ",
-    a:"نہیں",
-    rule:"قلقله نہیں",
-    why:"س حروف قلقله میں شامل نہیں ہے، اس لئے سْ پر قلقله نہیں ہوگا۔",
-    hidayat:"حروف قلقله صرف ق ط ب ج د ہیں۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "س سیٹی والا حرف ہے؟",
+    "display": "س",
+    "a": "ہاں",
+    "rule": "سیٹی والے حروف",
+    "why": "س سیٹی والے حروف ص س ز میں شامل ہے۔",
+    "hidayat": "سیٹی والے حروف: ص س ز۔"
   },
   {
-    lesson:"qalqala",
-    type:"قلقله",
-    q:"مْ پر قلقله ہوگا؟",
-    display:"مْ",
-    a:"نہیں",
-    rule:"قلقله نہیں",
-    why:"م حروف قلقله میں شامل نہیں ہے۔",
-    hidayat:"قلقله کے لئے حرف کا ق ط ب ج د میں سے ہونا ضروری ہے۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ز سیٹی والا حرف ہے؟",
+    "display": "ز",
+    "a": "ہاں",
+    "rule": "سیٹی والے حروف",
+    "why": "ز سیٹی والے حروف ص س ز میں شامل ہے۔",
+    "hidayat": "سیٹی والے حروف: ص س ز۔"
   },
   {
-    lesson:"qalqala",
-    type:"قلقله",
-    q:"ج پر زبر ہو تو قلقله ہوگا؟",
-    display:"جَ",
-    a:"نہیں",
-    rule:"قلقله نہیں",
-    why:"ج حروف قلقله میں ہے، لیکن یہاں ساکن نہیں ہے۔ قلقله تب ہوتا ہے جب حرف ساکن ہو۔",
-    hidayat:"قلقله کے لئے سکون ضروری ہے۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ب سیٹی والا حرف ہے؟",
+    "display": "ب",
+    "a": "نہیں",
+    "rule": "سیٹی والا حرف نہیں",
+    "why": "ب سیٹی والے حروف ص س ز میں شامل نہیں ہے۔",
+    "hidayat": "سیٹی والے حروف صرف: ص س ز۔"
   },
   {
-    lesson:"qalqala",
-    type:"قلقله",
-    q:"طْ پر قلقله ہوگا؟",
-    display:"طْ",
-    a:"ہاں",
-    rule:"قلقله",
-    why:"ط حروف قلقله میں ہے اور ساکن ہے۔",
-    hidayat:"طْ پر ہلکا جھٹکا آئے گا۔"
-  },
-
-  /* =========================
-     IZHAR QUESTIONS
-  ========================= */
-  {
-    lesson:"izhar",
-    type:"اظہار",
-    q:"نون ساکن کے بعد خ آئے تو اظہار ہوگا؟",
-    display:"نْ + خ",
-    a:"ہاں",
-    rule:"اظہار",
-    why:"خ حلقی حرف ہے۔ نون ساکن کے بعد حلقی حرف آئے تو اظہار ہوتا ہے۔",
-    hidayat:"اظہار میں نون کو صاف پڑھنا ہے۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "م سیٹی والا حرف ہے؟",
+    "display": "م",
+    "a": "نہیں",
+    "rule": "سیٹی والا حرف نہیں",
+    "why": "م سیٹی والے حروف ص س ز میں شامل نہیں ہے۔",
+    "hidayat": "سیٹی والے حروف صرف: ص س ز۔"
   },
   {
-    lesson:"izhar",
-    type:"اظہار",
-    q:"تنوین کے بعد ع آئے تو اظہار ہوگا؟",
-    display:"ــً + ع",
-    a:"ہاں",
-    rule:"اظہار",
-    why:"ع حلقی حرف ہے۔ تنوین کے بعد حلقی حرف آئے تو نون کی آواز صاف پڑھی جاتی ہے۔",
-    hidayat:"حلقی حروف: ء ہ ع ح غ خ۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ل سیٹی والا حرف ہے؟",
+    "display": "ل",
+    "a": "نہیں",
+    "rule": "سیٹی والا حرف نہیں",
+    "why": "ل سیٹی والے حروف ص س ز میں شامل نہیں ہے۔",
+    "hidayat": "سیٹی والے حروف صرف: ص س ز۔"
   },
   {
-    lesson:"izhar",
-    type:"اظہار",
-    q:"نون ساکن کے بعد ب آئے تو اظہار ہوگا؟",
-    display:"نْ + ب",
-    a:"نہیں",
-    rule:"اقلاب",
-    why:"ب کے ساتھ اظہار نہیں ہوتا، ب کے ساتھ اقلاب ہوتا ہے۔",
-    hidayat:"نون ساکن یا تنوین + ب = اقلاب۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ق سیٹی والا حرف ہے؟",
+    "display": "ق",
+    "a": "نہیں",
+    "rule": "سیٹی والا حرف نہیں",
+    "why": "ق سیٹی والے حروف ص س ز میں شامل نہیں ہے۔",
+    "hidayat": "سیٹی والے حروف صرف: ص س ز۔"
   },
   {
-    lesson:"izhar",
-    type:"اظہار",
-    q:"نون ساکن کے بعد ی آئے تو اظہار ہوگا؟",
-    display:"نْ + ی",
-    a:"نہیں",
-    rule:"ادغام بغنہ",
-    why:"ی یرملون میں ہے، اس لئے ادغام ہوگا، اظہار نہیں۔",
-    hidayat:"ی کے ساتھ ادغام بغنہ ہوتا ہے۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ع سیٹی والا حرف ہے؟",
+    "display": "ع",
+    "a": "نہیں",
+    "rule": "سیٹی والا حرف نہیں",
+    "why": "ع سیٹی والے حروف ص س ز میں شامل نہیں ہے۔",
+    "hidayat": "سیٹی والے حروف صرف: ص س ز۔"
   },
   {
-    lesson:"izhar",
-    type:"اظہار",
-    q:"تنوین کے بعد ح آئے تو اظہار ہوگا؟",
-    display:"ــً + ح",
-    a:"ہاں",
-    rule:"اظہار",
-    why:"ح حلقی حرف ہے، اس لئے تنوین کے بعد اظہار ہوگا۔",
-    hidayat:"حلقی حروف کے ساتھ نون صاف پڑھا جاتا ہے۔"
-  },
-
-  /* =========================
-     IDGHAM QUESTIONS
-  ========================= */
-  {
-    lesson:"idgham",
-    type:"ادغام",
-    q:"نون ساکن کے بعد ی آئے تو ادغام ہوگا؟",
-    display:"نْ + ی",
-    a:"ہاں",
-    rule:"ادغام بغنہ",
-    why:"ی حروف یرملون میں ہے، اس لئے ادغام ہوگا، اور ی کے ساتھ غنہ بھی ہوگا۔",
-    hidayat:"ی ن م و کے ساتھ ادغام بغنہ ہوتا ہے۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ح سیٹی والا حرف ہے؟",
+    "display": "ح",
+    "a": "نہیں",
+    "rule": "سیٹی والا حرف نہیں",
+    "why": "ح سیٹی والے حروف ص س ز میں شامل نہیں ہے۔",
+    "hidayat": "سیٹی والے حروف صرف: ص س ز۔"
   },
   {
-    lesson:"idgham",
-    type:"ادغام",
-    q:"نون ساکن کے بعد و آئے تو ادغام ہوگا؟",
-    display:"نْ + و",
-    a:"ہاں",
-    rule:"ادغام بغنہ",
-    why:"و یرملون میں ہے اور غنہ والے ادغام کے حروف میں شامل ہے۔",
-    hidayat:"ی ن م و = ادغام بغنہ۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ت سیٹی والا حرف ہے؟",
+    "display": "ت",
+    "a": "نہیں",
+    "rule": "سیٹی والا حرف نہیں",
+    "why": "ت سیٹی والے حروف ص س ز میں شامل نہیں ہے۔",
+    "hidayat": "سیٹی والے حروف صرف: ص س ز۔"
   },
   {
-    lesson:"idgham",
-    type:"ادغام",
-    q:"نون ساکن کے بعد ل آئے تو ادغام ہوگا؟",
-    display:"نْ + ل",
-    a:"ہاں",
-    rule:"ادغام بلا غنہ",
-    why:"ل یرملون میں ہے، اس لئے ادغام ہوگا، لیکن غنہ نہیں ہوگا۔",
-    hidayat:"ل ر = ادغام بلا غنہ۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ص موٹا حرف ہے؟",
+    "display": "ص",
+    "a": "ہاں",
+    "rule": "موٹے حروف",
+    "why": "ص موٹے حروف ص ض ط ظ خ غ ق میں شامل ہے۔",
+    "hidayat": "موٹے حروف کو پُر آواز سے پڑھنا ہے۔"
   },
   {
-    lesson:"idgham",
-    type:"ادغام",
-    q:"نون ساکن کے بعد خ آئے تو ادغام ہوگا؟",
-    display:"نْ + خ",
-    a:"نہیں",
-    rule:"اظہار",
-    why:"خ حلقی حرف ہے، اس لئے ادغام نہیں بلکہ اظہار ہوگا۔",
-    hidayat:"حلقی حرف کے ساتھ نون صاف پڑھتے ہیں۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ض موٹا حرف ہے؟",
+    "display": "ض",
+    "a": "ہاں",
+    "rule": "موٹے حروف",
+    "why": "ض موٹے حروف ص ض ط ظ خ غ ق میں شامل ہے۔",
+    "hidayat": "موٹے حروف کو پُر آواز سے پڑھنا ہے۔"
   },
   {
-    lesson:"idgham",
-    type:"ادغام",
-    q:"تنوین کے بعد م آئے تو ادغام ہوگا؟",
-    display:"ــً + م",
-    a:"ہاں",
-    rule:"ادغام بغنہ",
-    why:"م یرملون میں ہے اور ادغام بغنہ کے حروف میں شامل ہے۔",
-    hidayat:"تنوین + م = ادغام بغنہ۔"
-  },
-
-  /* =========================
-     IQLAB QUESTIONS
-  ========================= */
-  {
-    lesson:"iqlab",
-    type:"اقلاب",
-    q:"نون ساکن کے بعد ب آئے تو اقلاب ہوگا؟",
-    display:"نْ + ب",
-    a:"ہاں",
-    rule:"اقلاب",
-    why:"ب کے ساتھ نون کی آواز میم میں بدلتی ہے، اس کو اقلاب کہتے ہیں۔",
-    hidayat:"اقلاب میں غنہ بھی ہوتا ہے۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ط موٹا حرف ہے؟",
+    "display": "ط",
+    "a": "ہاں",
+    "rule": "موٹے حروف",
+    "why": "ط موٹے حروف ص ض ط ظ خ غ ق میں شامل ہے۔",
+    "hidayat": "موٹے حروف کو پُر آواز سے پڑھنا ہے۔"
   },
   {
-    lesson:"iqlab",
-    type:"اقلاب",
-    q:"تنوین کے بعد ب آئے تو اقلاب ہوگا؟",
-    display:"ــً + ب",
-    a:"ہاں",
-    rule:"اقلاب",
-    why:"تنوین میں نون ساکن کی چھپی ہوئی آواز ہوتی ہے۔ ب کے بعد اقلاب ہوتا ہے۔",
-    hidayat:"تنوین + ب = اقلاب مع غنہ۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ظ موٹا حرف ہے؟",
+    "display": "ظ",
+    "a": "ہاں",
+    "rule": "موٹے حروف",
+    "why": "ظ موٹے حروف ص ض ط ظ خ غ ق میں شامل ہے۔",
+    "hidayat": "موٹے حروف کو پُر آواز سے پڑھنا ہے۔"
   },
   {
-    lesson:"iqlab",
-    type:"اقلاب",
-    q:"نون ساکن کے بعد م آئے تو اقلاب ہوگا؟",
-    display:"نْ + م",
-    a:"نہیں",
-    rule:"ادغام بغنہ",
-    why:"م کے ساتھ اقلاب نہیں ہوتا، م کے ساتھ ادغام بغنہ ہوتا ہے۔",
-    hidayat:"اقلاب صرف ب کے ساتھ ہوتا ہے۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "خ موٹا حرف ہے؟",
+    "display": "خ",
+    "a": "ہاں",
+    "rule": "موٹے حروف",
+    "why": "خ موٹے حروف ص ض ط ظ خ غ ق میں شامل ہے۔",
+    "hidayat": "موٹے حروف کو پُر آواز سے پڑھنا ہے۔"
   },
   {
-    lesson:"iqlab",
-    type:"اقلاب",
-    q:"نون ساکن کے بعد ع آئے تو اقلاب ہوگا؟",
-    display:"نْ + ع",
-    a:"نہیں",
-    rule:"اظہار",
-    why:"ع حلقی حرف ہے، اس کے ساتھ اظہار ہوتا ہے، اقلاب نہیں۔",
-    hidayat:"اقلاب صرف ب کے ساتھ ہوتا ہے۔"
-  },
-
-  /* =========================
-     IKHFA QUESTIONS
-  ========================= */
-  {
-    lesson:"ikhfa",
-    type:"اخفاء",
-    q:"نون ساکن کے بعد ت آئے تو اخفاء ہوگا؟",
-    display:"نْ + ت",
-    a:"ہاں",
-    rule:"اخفاء",
-    why:"ت اخفاء والے حروف میں آتا ہے۔ نون کو چھپا کر غنہ کیا جائے گا۔",
-    hidayat:"اخفاء = نون کو چھپا کر غنہ کرنا۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "غ موٹا حرف ہے؟",
+    "display": "غ",
+    "a": "ہاں",
+    "rule": "موٹے حروف",
+    "why": "غ موٹے حروف ص ض ط ظ خ غ ق میں شامل ہے۔",
+    "hidayat": "موٹے حروف کو پُر آواز سے پڑھنا ہے۔"
   },
   {
-    lesson:"ikhfa",
-    type:"اخفاء",
-    q:"تنوین کے بعد ک آئے تو اخفاء ہوگا؟",
-    display:"ــً + ک",
-    a:"ہاں",
-    rule:"اخفاء",
-    why:"ک کے ساتھ اخفاء ہوتا ہے۔ تنوین کی نون آواز کو چھپا کر غنہ کیا جائے گا۔",
-    hidayat:"تنوین + اخفاء حرف = اخفاء مع غنہ۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ق موٹا حرف ہے؟",
+    "display": "ق",
+    "a": "ہاں",
+    "rule": "موٹے حروف",
+    "why": "ق موٹے حروف ص ض ط ظ خ غ ق میں شامل ہے۔",
+    "hidayat": "موٹے حروف کو پُر آواز سے پڑھنا ہے۔"
   },
   {
-    lesson:"ikhfa",
-    type:"اخفاء",
-    q:"نون ساکن کے بعد ب آئے تو اخفاء ہوگا؟",
-    display:"نْ + ب",
-    a:"نہیں",
-    rule:"اقلاب",
-    why:"ب کے ساتھ اخفاء نہیں، اقلاب ہوتا ہے۔",
-    hidayat:"نون ساکن + ب = اقلاب۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ب موٹا حرف ہے؟",
+    "display": "ب",
+    "a": "نہیں",
+    "rule": "موٹا حرف نہیں",
+    "why": "ب موٹے حروف ص ض ط ظ خ غ ق میں شامل نہیں ہے۔",
+    "hidayat": "موٹے حروف: ص ض ط ظ خ غ ق۔"
   },
   {
-    lesson:"ikhfa",
-    type:"اخفاء",
-    q:"نون ساکن کے بعد ح آئے تو اخفاء ہوگا؟",
-    display:"نْ + ح",
-    a:"نہیں",
-    rule:"اظہار",
-    why:"ح حلقی حرف ہے، اس کے ساتھ اظہار ہوتا ہے۔",
-    hidayat:"حلقی حرف کے ساتھ نون صاف پڑھنا ہے۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ت موٹا حرف ہے؟",
+    "display": "ت",
+    "a": "نہیں",
+    "rule": "موٹا حرف نہیں",
+    "why": "ت موٹے حروف ص ض ط ظ خ غ ق میں شامل نہیں ہے۔",
+    "hidayat": "موٹے حروف: ص ض ط ظ خ غ ق۔"
   },
   {
-    lesson:"ikhfa",
-    type:"اخفاء",
-    q:"نون ساکن کے بعد ص آئے تو اخفاء ہوگا؟",
-    display:"نْ + ص",
-    a:"ہاں",
-    rule:"اخفاء",
-    why:"ص کے ساتھ اخفاء ہوتا ہے۔",
-    hidayat:"یہاں نون صاف نہیں پڑھنا، غنہ کے ساتھ چھپانا ہے۔"
-  },
-
-  /* =========================
-     GROUP QUESTIONS
-  ========================= */
-  {
-    lesson:"groups",
-    type:"حروف کا گروپ",
-    q:"ز سیٹی والا حرف ہے؟",
-    display:"ز",
-    a:"ہاں",
-    rule:"سیٹی والے حروف",
-    why:"ز سیٹی والے حروف ص، س، ز میں شامل ہے۔",
-    hidayat:"سیٹی والے حروف: ص س ز۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ث موٹا حرف ہے؟",
+    "display": "ث",
+    "a": "نہیں",
+    "rule": "موٹا حرف نہیں",
+    "why": "ث موٹے حروف ص ض ط ظ خ غ ق میں شامل نہیں ہے۔",
+    "hidayat": "موٹے حروف: ص ض ط ظ خ غ ق۔"
   },
   {
-    lesson:"groups",
-    type:"حروف کا گروپ",
-    q:"ص موٹا حرف ہے؟",
-    display:"ص",
-    a:"ہاں",
-    rule:"موٹے حروف",
-    why:"ص موٹے حروف میں شامل ہے اور سیٹی والے حروف میں بھی شامل ہے۔",
-    hidayat:"موٹے حروف: ص ض ط ظ خ غ ق۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ج موٹا حرف ہے؟",
+    "display": "ج",
+    "a": "نہیں",
+    "rule": "موٹا حرف نہیں",
+    "why": "ج موٹے حروف ص ض ط ظ خ غ ق میں شامل نہیں ہے۔",
+    "hidayat": "موٹے حروف: ص ض ط ظ خ غ ق۔"
   },
   {
-    lesson:"groups",
-    type:"حروف کا گروپ",
-    q:"ع حلقی حرف ہے؟",
-    display:"ع",
-    a:"ہاں",
-    rule:"حلقی حروف",
-    why:"ع حلقی حروف میں شامل ہے۔",
-    hidayat:"حلقی حروف: ء ہ ع ح غ خ۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "د موٹا حرف ہے؟",
+    "display": "د",
+    "a": "نہیں",
+    "rule": "موٹا حرف نہیں",
+    "why": "د موٹے حروف ص ض ط ظ خ غ ق میں شامل نہیں ہے۔",
+    "hidayat": "موٹے حروف: ص ض ط ظ خ غ ق۔"
   },
   {
-    lesson:"groups",
-    type:"حروف کا گروپ",
-    q:"ب حلقی حرف ہے؟",
-    display:"ب",
-    a:"نہیں",
-    rule:"حلقی حرف نہیں",
-    why:"ب حلقی حروف میں شامل نہیں ہے۔",
-    hidayat:"حلقی حروف صرف: ء ہ ع ح غ خ۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ر موٹا حرف ہے؟",
+    "display": "ر",
+    "a": "نہیں",
+    "rule": "موٹا حرف نہیں",
+    "why": "ر موٹے حروف ص ض ط ظ خ غ ق میں شامل نہیں ہے۔",
+    "hidayat": "موٹے حروف: ص ض ط ظ خ غ ق۔"
   },
   {
-    lesson:"groups",
-    type:"حروف کا گروپ",
-    q:"ذ نرم حرف ہے؟",
-    display:"ذ",
-    a:"ہاں",
-    rule:"نرم حروف",
-    why:"ذ نرم حروف ظ، ذ، ث میں شامل ہے۔",
-    hidayat:"نرم حروف: ظ ذ ث۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ز موٹا حرف ہے؟",
+    "display": "ز",
+    "a": "نہیں",
+    "rule": "موٹا حرف نہیں",
+    "why": "ز موٹے حروف ص ض ط ظ خ غ ق میں شامل نہیں ہے۔",
+    "hidayat": "موٹے حروف: ص ض ط ظ خ غ ق۔"
   },
   {
-    lesson:"groups",
-    type:"حروف کا گروپ",
-    q:"ق قلقله حرف ہے؟",
-    display:"ق",
-    a:"ہاں",
-    rule:"حروف قلقله",
-    why:"ق حروف قلقله ق، ط، ب، ج، د میں شامل ہے۔",
-    hidayat:"ق ساکن ہو تو قلقله ہوگا۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "س موٹا حرف ہے؟",
+    "display": "س",
+    "a": "نہیں",
+    "rule": "موٹا حرف نہیں",
+    "why": "س موٹے حروف ص ض ط ظ خ غ ق میں شامل نہیں ہے۔",
+    "hidayat": "موٹے حروف: ص ض ط ظ خ غ ق۔"
   },
   {
-    lesson:"groups",
-    type:"حروف کا گروپ",
-    q:"س قلقله حرف ہے؟",
-    display:"س",
-    a:"نہیں",
-    rule:"قلقله حرف نہیں",
-    why:"س حروف قلقله میں شامل نہیں ہے۔",
-    hidayat:"حروف قلقله: ق ط ب ج د۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ع موٹا حرف ہے؟",
+    "display": "ع",
+    "a": "نہیں",
+    "rule": "موٹا حرف نہیں",
+    "why": "ع موٹے حروف ص ض ط ظ خ غ ق میں شامل نہیں ہے۔",
+    "hidayat": "موٹے حروف: ص ض ط ظ خ غ ق۔"
   },
   {
-    lesson:"groups",
-    type:"حروف کا گروپ",
-    q:"خ موٹا حرف بھی ہے اور حلقی حرف بھی؟",
-    display:"خ",
-    a:"ہاں",
-    rule:"حلقی + موٹا حرف",
-    why:"خ حلقی حروف میں بھی شامل ہے اور موٹے حروف میں بھی شامل ہے۔",
-    hidayat:"خ کو گلے سے اور پُر آواز کے ساتھ ادا کریں۔"
-  },
-
-  /* =========================
-     MIXED EXTRA
-  ========================= */
-  {
-    lesson:"mixed",
-    type:"ملا جلا",
-    q:"تنوین کے بعد م آئے تو غنہ ہوگا؟",
-    display:"ــً + م",
-    a:"ہاں",
-    rule:"ادغام بغنہ",
-    why:"م یرملون میں ہے اور ادغام بغنہ کے حروف میں شامل ہے۔",
-    hidayat:"ی ن م و کے ساتھ غنہ ہوتا ہے۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "م موٹا حرف ہے؟",
+    "display": "م",
+    "a": "نہیں",
+    "rule": "موٹا حرف نہیں",
+    "why": "م موٹے حروف ص ض ط ظ خ غ ق میں شامل نہیں ہے۔",
+    "hidayat": "موٹے حروف: ص ض ط ظ خ غ ق۔"
   },
   {
-    lesson:"mixed",
-    type:"ملا جلا",
-    q:"تنوین کے بعد ر آئے تو غنہ ہوگا؟",
-    display:"ــً + ر",
-    a:"نہیں",
-    rule:"ادغام بلا غنہ",
-    why:"ر کے ساتھ ادغام ہوتا ہے مگر غنہ نہیں ہوتا۔",
-    hidayat:"ل ر = ادغام بلا غنہ۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ن موٹا حرف ہے؟",
+    "display": "ن",
+    "a": "نہیں",
+    "rule": "موٹا حرف نہیں",
+    "why": "ن موٹے حروف ص ض ط ظ خ غ ق میں شامل نہیں ہے۔",
+    "hidayat": "موٹے حروف: ص ض ط ظ خ غ ق۔"
   },
   {
-    lesson:"mixed",
-    type:"ملا جلا",
-    q:"تنوین کے بعد غ آئے تو غنہ ہوگا؟",
-    display:"ــً + غ",
-    a:"نہیں",
-    rule:"اظہار",
-    why:"غ حلقی حرف ہے۔ حلقی حرف کے ساتھ نون صاف پڑھتے ہیں۔",
-    hidayat:"غ حلقی حرف ہے، اس لئے اظہار ہوگا۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "و موٹا حرف ہے؟",
+    "display": "و",
+    "a": "نہیں",
+    "rule": "موٹا حرف نہیں",
+    "why": "و موٹے حروف ص ض ط ظ خ غ ق میں شامل نہیں ہے۔",
+    "hidayat": "موٹے حروف: ص ض ط ظ خ غ ق۔"
   },
   {
-    lesson:"mixed",
-    type:"ملا جلا",
-    q:"دْ پر قلقله ہوگا؟",
-    display:"دْ",
-    a:"ہاں",
-    rule:"قلقله",
-    why:"د حروف قلقله میں ہے اور ساکن ہے۔",
-    hidayat:"دْ پر ہلکا جھٹکا آئے گا۔"
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ی موٹا حرف ہے؟",
+    "display": "ی",
+    "a": "نہیں",
+    "rule": "موٹا حرف نہیں",
+    "why": "ی موٹے حروف ص ض ط ظ خ غ ق میں شامل نہیں ہے۔",
+    "hidayat": "موٹے حروف: ص ض ط ظ خ غ ق۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ء حلقی حرف ہے؟",
+    "display": "ء",
+    "a": "ہاں",
+    "rule": "حلقی حروف",
+    "why": "ء حلقی حروف ء ہ ع ح غ خ میں شامل ہے۔",
+    "hidayat": "حلقی حروف گلے سے ادا ہوتے ہیں۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ہ حلقی حرف ہے؟",
+    "display": "ہ",
+    "a": "ہاں",
+    "rule": "حلقی حروف",
+    "why": "ہ حلقی حروف ء ہ ع ح غ خ میں شامل ہے۔",
+    "hidayat": "حلقی حروف گلے سے ادا ہوتے ہیں۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ع حلقی حرف ہے؟",
+    "display": "ع",
+    "a": "ہاں",
+    "rule": "حلقی حروف",
+    "why": "ع حلقی حروف ء ہ ع ح غ خ میں شامل ہے۔",
+    "hidayat": "حلقی حروف گلے سے ادا ہوتے ہیں۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ح حلقی حرف ہے؟",
+    "display": "ح",
+    "a": "ہاں",
+    "rule": "حلقی حروف",
+    "why": "ح حلقی حروف ء ہ ع ح غ خ میں شامل ہے۔",
+    "hidayat": "حلقی حروف گلے سے ادا ہوتے ہیں۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "غ حلقی حرف ہے؟",
+    "display": "غ",
+    "a": "ہاں",
+    "rule": "حلقی حروف",
+    "why": "غ حلقی حروف ء ہ ع ح غ خ میں شامل ہے۔",
+    "hidayat": "حلقی حروف گلے سے ادا ہوتے ہیں۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "خ حلقی حرف ہے؟",
+    "display": "خ",
+    "a": "ہاں",
+    "rule": "حلقی حروف",
+    "why": "خ حلقی حروف ء ہ ع ح غ خ میں شامل ہے۔",
+    "hidayat": "حلقی حروف گلے سے ادا ہوتے ہیں۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ب حلقی حرف ہے؟",
+    "display": "ب",
+    "a": "نہیں",
+    "rule": "حلقی حرف نہیں",
+    "why": "ب حلقی حروف ء ہ ع ح غ خ میں شامل نہیں ہے۔",
+    "hidayat": "حلقی حروف: ء ہ ع ح غ خ۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ت حلقی حرف ہے؟",
+    "display": "ت",
+    "a": "نہیں",
+    "rule": "حلقی حرف نہیں",
+    "why": "ت حلقی حروف ء ہ ع ح غ خ میں شامل نہیں ہے۔",
+    "hidayat": "حلقی حروف: ء ہ ع ح غ خ۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ث حلقی حرف ہے؟",
+    "display": "ث",
+    "a": "نہیں",
+    "rule": "حلقی حرف نہیں",
+    "why": "ث حلقی حروف ء ہ ع ح غ خ میں شامل نہیں ہے۔",
+    "hidayat": "حلقی حروف: ء ہ ع ح غ خ۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ج حلقی حرف ہے؟",
+    "display": "ج",
+    "a": "نہیں",
+    "rule": "حلقی حرف نہیں",
+    "why": "ج حلقی حروف ء ہ ع ح غ خ میں شامل نہیں ہے۔",
+    "hidayat": "حلقی حروف: ء ہ ع ح غ خ۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "د حلقی حرف ہے؟",
+    "display": "د",
+    "a": "نہیں",
+    "rule": "حلقی حرف نہیں",
+    "why": "د حلقی حروف ء ہ ع ح غ خ میں شامل نہیں ہے۔",
+    "hidayat": "حلقی حروف: ء ہ ع ح غ خ۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ر حلقی حرف ہے؟",
+    "display": "ر",
+    "a": "نہیں",
+    "rule": "حلقی حرف نہیں",
+    "why": "ر حلقی حروف ء ہ ع ح غ خ میں شامل نہیں ہے۔",
+    "hidayat": "حلقی حروف: ء ہ ع ح غ خ۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ز حلقی حرف ہے؟",
+    "display": "ز",
+    "a": "نہیں",
+    "rule": "حلقی حرف نہیں",
+    "why": "ز حلقی حروف ء ہ ع ح غ خ میں شامل نہیں ہے۔",
+    "hidayat": "حلقی حروف: ء ہ ع ح غ خ۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "س حلقی حرف ہے؟",
+    "display": "س",
+    "a": "نہیں",
+    "rule": "حلقی حرف نہیں",
+    "why": "س حلقی حروف ء ہ ع ح غ خ میں شامل نہیں ہے۔",
+    "hidayat": "حلقی حروف: ء ہ ع ح غ خ۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ص حلقی حرف ہے؟",
+    "display": "ص",
+    "a": "نہیں",
+    "rule": "حلقی حرف نہیں",
+    "why": "ص حلقی حروف ء ہ ع ح غ خ میں شامل نہیں ہے۔",
+    "hidayat": "حلقی حروف: ء ہ ع ح غ خ۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ط حلقی حرف ہے؟",
+    "display": "ط",
+    "a": "نہیں",
+    "rule": "حلقی حرف نہیں",
+    "why": "ط حلقی حروف ء ہ ع ح غ خ میں شامل نہیں ہے۔",
+    "hidayat": "حلقی حروف: ء ہ ع ح غ خ۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ق حلقی حرف ہے؟",
+    "display": "ق",
+    "a": "نہیں",
+    "rule": "حلقی حرف نہیں",
+    "why": "ق حلقی حروف ء ہ ع ح غ خ میں شامل نہیں ہے۔",
+    "hidayat": "حلقی حروف: ء ہ ع ح غ خ۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ک حلقی حرف ہے؟",
+    "display": "ک",
+    "a": "نہیں",
+    "rule": "حلقی حرف نہیں",
+    "why": "ک حلقی حروف ء ہ ع ح غ خ میں شامل نہیں ہے۔",
+    "hidayat": "حلقی حروف: ء ہ ع ح غ خ۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "م حلقی حرف ہے؟",
+    "display": "م",
+    "a": "نہیں",
+    "rule": "حلقی حرف نہیں",
+    "why": "م حلقی حروف ء ہ ع ح غ خ میں شامل نہیں ہے۔",
+    "hidayat": "حلقی حروف: ء ہ ع ح غ خ۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ن حلقی حرف ہے؟",
+    "display": "ن",
+    "a": "نہیں",
+    "rule": "حلقی حرف نہیں",
+    "why": "ن حلقی حروف ء ہ ع ح غ خ میں شامل نہیں ہے۔",
+    "hidayat": "حلقی حروف: ء ہ ع ح غ خ۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "و حلقی حرف ہے؟",
+    "display": "و",
+    "a": "نہیں",
+    "rule": "حلقی حرف نہیں",
+    "why": "و حلقی حروف ء ہ ع ح غ خ میں شامل نہیں ہے۔",
+    "hidayat": "حلقی حروف: ء ہ ع ح غ خ۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ی حلقی حرف ہے؟",
+    "display": "ی",
+    "a": "نہیں",
+    "rule": "حلقی حرف نہیں",
+    "why": "ی حلقی حروف ء ہ ع ح غ خ میں شامل نہیں ہے۔",
+    "hidayat": "حلقی حروف: ء ہ ع ح غ خ۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ق قلقله حرف ہے؟",
+    "display": "ق",
+    "a": "ہاں",
+    "rule": "حروف قلقله",
+    "why": "ق حروف قلقله ق ط ب ج د میں شامل ہے۔",
+    "hidayat": "یہ حروف ساکن ہوں تو قلقله ہوگا۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ط قلقله حرف ہے؟",
+    "display": "ط",
+    "a": "ہاں",
+    "rule": "حروف قلقله",
+    "why": "ط حروف قلقله ق ط ب ج د میں شامل ہے۔",
+    "hidayat": "یہ حروف ساکن ہوں تو قلقله ہوگا۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ب قلقله حرف ہے؟",
+    "display": "ب",
+    "a": "ہاں",
+    "rule": "حروف قلقله",
+    "why": "ب حروف قلقله ق ط ب ج د میں شامل ہے۔",
+    "hidayat": "یہ حروف ساکن ہوں تو قلقله ہوگا۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ج قلقله حرف ہے؟",
+    "display": "ج",
+    "a": "ہاں",
+    "rule": "حروف قلقله",
+    "why": "ج حروف قلقله ق ط ب ج د میں شامل ہے۔",
+    "hidayat": "یہ حروف ساکن ہوں تو قلقله ہوگا۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "د قلقله حرف ہے؟",
+    "display": "د",
+    "a": "ہاں",
+    "rule": "حروف قلقله",
+    "why": "د حروف قلقله ق ط ب ج د میں شامل ہے۔",
+    "hidayat": "یہ حروف ساکن ہوں تو قلقله ہوگا۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "س قلقله حرف ہے؟",
+    "display": "س",
+    "a": "نہیں",
+    "rule": "قلقله حرف نہیں",
+    "why": "س حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "حروف قلقله صرف: ق ط ب ج د۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "م قلقله حرف ہے؟",
+    "display": "م",
+    "a": "نہیں",
+    "rule": "قلقله حرف نہیں",
+    "why": "م حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "حروف قلقله صرف: ق ط ب ج د۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ل قلقله حرف ہے؟",
+    "display": "ل",
+    "a": "نہیں",
+    "rule": "قلقله حرف نہیں",
+    "why": "ل حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "حروف قلقله صرف: ق ط ب ج د۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ر قلقله حرف ہے؟",
+    "display": "ر",
+    "a": "نہیں",
+    "rule": "قلقله حرف نہیں",
+    "why": "ر حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "حروف قلقله صرف: ق ط ب ج د۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ن قلقله حرف ہے؟",
+    "display": "ن",
+    "a": "نہیں",
+    "rule": "قلقله حرف نہیں",
+    "why": "ن حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "حروف قلقله صرف: ق ط ب ج د۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ی قلقله حرف ہے؟",
+    "display": "ی",
+    "a": "نہیں",
+    "rule": "قلقله حرف نہیں",
+    "why": "ی حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "حروف قلقله صرف: ق ط ب ج د۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "و قلقله حرف ہے؟",
+    "display": "و",
+    "a": "نہیں",
+    "rule": "قلقله حرف نہیں",
+    "why": "و حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "حروف قلقله صرف: ق ط ب ج د۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ع قلقله حرف ہے؟",
+    "display": "ع",
+    "a": "نہیں",
+    "rule": "قلقله حرف نہیں",
+    "why": "ع حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "حروف قلقله صرف: ق ط ب ج د۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ح قلقله حرف ہے؟",
+    "display": "ح",
+    "a": "نہیں",
+    "rule": "قلقله حرف نہیں",
+    "why": "ح حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "حروف قلقله صرف: ق ط ب ج د۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "خ قلقله حرف ہے؟",
+    "display": "خ",
+    "a": "نہیں",
+    "rule": "قلقله حرف نہیں",
+    "why": "خ حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "حروف قلقله صرف: ق ط ب ج د۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ص قلقله حرف ہے؟",
+    "display": "ص",
+    "a": "نہیں",
+    "rule": "قلقله حرف نہیں",
+    "why": "ص حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "حروف قلقله صرف: ق ط ب ج د۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ض قلقله حرف ہے؟",
+    "display": "ض",
+    "a": "نہیں",
+    "rule": "قلقله حرف نہیں",
+    "why": "ض حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "حروف قلقله صرف: ق ط ب ج د۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ظ قلقله حرف ہے؟",
+    "display": "ظ",
+    "a": "نہیں",
+    "rule": "قلقله حرف نہیں",
+    "why": "ظ حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "حروف قلقله صرف: ق ط ب ج د۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ف قلقله حرف ہے؟",
+    "display": "ف",
+    "a": "نہیں",
+    "rule": "قلقله حرف نہیں",
+    "why": "ف حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "حروف قلقله صرف: ق ط ب ج د۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ک قلقله حرف ہے؟",
+    "display": "ک",
+    "a": "نہیں",
+    "rule": "قلقله حرف نہیں",
+    "why": "ک حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "حروف قلقله صرف: ق ط ب ج د۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ی حروفِ یرملون میں شامل ہے؟",
+    "display": "ی",
+    "a": "ہاں",
+    "rule": "حروف یرملون",
+    "why": "ی حروفِ یرملون ی ر م ل و ن میں شامل ہے۔",
+    "hidayat": "نون ساکن یا تنوین کے بعد یرملون آئے تو ادغام ہوتا ہے۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ر حروفِ یرملون میں شامل ہے؟",
+    "display": "ر",
+    "a": "ہاں",
+    "rule": "حروف یرملون",
+    "why": "ر حروفِ یرملون ی ر م ل و ن میں شامل ہے۔",
+    "hidayat": "نون ساکن یا تنوین کے بعد یرملون آئے تو ادغام ہوتا ہے۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "م حروفِ یرملون میں شامل ہے؟",
+    "display": "م",
+    "a": "ہاں",
+    "rule": "حروف یرملون",
+    "why": "م حروفِ یرملون ی ر م ل و ن میں شامل ہے۔",
+    "hidayat": "نون ساکن یا تنوین کے بعد یرملون آئے تو ادغام ہوتا ہے۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ل حروفِ یرملون میں شامل ہے؟",
+    "display": "ل",
+    "a": "ہاں",
+    "rule": "حروف یرملون",
+    "why": "ل حروفِ یرملون ی ر م ل و ن میں شامل ہے۔",
+    "hidayat": "نون ساکن یا تنوین کے بعد یرملون آئے تو ادغام ہوتا ہے۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "و حروفِ یرملون میں شامل ہے؟",
+    "display": "و",
+    "a": "ہاں",
+    "rule": "حروف یرملون",
+    "why": "و حروفِ یرملون ی ر م ل و ن میں شامل ہے۔",
+    "hidayat": "نون ساکن یا تنوین کے بعد یرملون آئے تو ادغام ہوتا ہے۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ن حروفِ یرملون میں شامل ہے؟",
+    "display": "ن",
+    "a": "ہاں",
+    "rule": "حروف یرملون",
+    "why": "ن حروفِ یرملون ی ر م ل و ن میں شامل ہے۔",
+    "hidayat": "نون ساکن یا تنوین کے بعد یرملون آئے تو ادغام ہوتا ہے۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ب حروفِ یرملون میں شامل ہے؟",
+    "display": "ب",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "ب حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ت حروفِ یرملون میں شامل ہے؟",
+    "display": "ت",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "ت حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ث حروفِ یرملون میں شامل ہے؟",
+    "display": "ث",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "ث حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ج حروفِ یرملون میں شامل ہے؟",
+    "display": "ج",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "ج حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ح حروفِ یرملون میں شامل ہے؟",
+    "display": "ح",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "ح حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "خ حروفِ یرملون میں شامل ہے؟",
+    "display": "خ",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "خ حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "د حروفِ یرملون میں شامل ہے؟",
+    "display": "د",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "د حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ذ حروفِ یرملون میں شامل ہے؟",
+    "display": "ذ",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "ذ حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ز حروفِ یرملون میں شامل ہے؟",
+    "display": "ز",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "ز حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "س حروفِ یرملون میں شامل ہے؟",
+    "display": "س",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "س حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ص حروفِ یرملون میں شامل ہے؟",
+    "display": "ص",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "ص حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ض حروفِ یرملون میں شامل ہے؟",
+    "display": "ض",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "ض حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ط حروفِ یرملون میں شامل ہے؟",
+    "display": "ط",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "ط حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ظ حروفِ یرملون میں شامل ہے؟",
+    "display": "ظ",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "ظ حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ف حروفِ یرملون میں شامل ہے؟",
+    "display": "ف",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "ف حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ق حروفِ یرملون میں شامل ہے؟",
+    "display": "ق",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "ق حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ک حروفِ یرملون میں شامل ہے؟",
+    "display": "ک",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "ک حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ء حروفِ یرملون میں شامل ہے؟",
+    "display": "ء",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "ء حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ہ حروفِ یرملون میں شامل ہے؟",
+    "display": "ہ",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "ہ حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "ع حروفِ یرملون میں شامل ہے؟",
+    "display": "ع",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "ع حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "groups",
+    "type": "حروف کا گروپ",
+    "q": "غ حروفِ یرملون میں شامل ہے؟",
+    "display": "غ",
+    "a": "نہیں",
+    "rule": "یرملون میں شامل نہیں",
+    "why": "غ حروفِ یرملون ی ر م ل و ن میں شامل نہیں ہے۔",
+    "hidayat": "حروف یرملون: ی ر م ل و ن۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "نون ساکن کے بعد ء آئے تو اظہار ہوگا؟",
+    "display": "نْ + ء",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "ء حلقی حرف ہے۔ نون ساکن کے بعد حلقی حرف آئے تو اظہار ہوتا ہے۔",
+    "hidayat": "اظہار میں نون صاف پڑھنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ء آئے تو غنہ ہوگا؟",
+    "display": "نْ + ء",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "ء حلقی حرف ہے، اس لئے نون صاف پڑھا جائے گا، غنہ نہیں ہوگا۔",
+    "hidayat": "حلقی حروف کے ساتھ اظہار ہوتا ہے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "تنوین کے بعد ء آئے تو اظہار ہوگا؟",
+    "display": "ــً + ء",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "تنوین کے بعد ء آیا ہے، اور ء حلقی حرف ہے۔",
+    "hidayat": "تنوین + حلقی حرف = اظہار۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "تنوین کے بعد ء آئے تو غنہ ہوگا؟",
+    "display": "ــً + ء",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "ء حلقی حرف ہے۔ تنوین کے بعد حلقی حرف آئے تو نون صاف ہوتا ہے۔",
+    "hidayat": "اظہار میں غنہ چھپا کر نہیں کرتے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "نون ساکن کے بعد ہ آئے تو اظہار ہوگا؟",
+    "display": "نْ + ہ",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "ہ حلقی حرف ہے۔ نون ساکن کے بعد حلقی حرف آئے تو اظہار ہوتا ہے۔",
+    "hidayat": "اظہار میں نون صاف پڑھنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ہ آئے تو غنہ ہوگا؟",
+    "display": "نْ + ہ",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "ہ حلقی حرف ہے، اس لئے نون صاف پڑھا جائے گا، غنہ نہیں ہوگا۔",
+    "hidayat": "حلقی حروف کے ساتھ اظہار ہوتا ہے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "تنوین کے بعد ہ آئے تو اظہار ہوگا؟",
+    "display": "ــً + ہ",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "تنوین کے بعد ہ آیا ہے، اور ہ حلقی حرف ہے۔",
+    "hidayat": "تنوین + حلقی حرف = اظہار۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "تنوین کے بعد ہ آئے تو غنہ ہوگا؟",
+    "display": "ــً + ہ",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "ہ حلقی حرف ہے۔ تنوین کے بعد حلقی حرف آئے تو نون صاف ہوتا ہے۔",
+    "hidayat": "اظہار میں غنہ چھپا کر نہیں کرتے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "نون ساکن کے بعد ع آئے تو اظہار ہوگا؟",
+    "display": "نْ + ع",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "ع حلقی حرف ہے۔ نون ساکن کے بعد حلقی حرف آئے تو اظہار ہوتا ہے۔",
+    "hidayat": "اظہار میں نون صاف پڑھنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ع آئے تو غنہ ہوگا؟",
+    "display": "نْ + ع",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "ع حلقی حرف ہے، اس لئے نون صاف پڑھا جائے گا، غنہ نہیں ہوگا۔",
+    "hidayat": "حلقی حروف کے ساتھ اظہار ہوتا ہے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "تنوین کے بعد ع آئے تو اظہار ہوگا؟",
+    "display": "ــً + ع",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "تنوین کے بعد ع آیا ہے، اور ع حلقی حرف ہے۔",
+    "hidayat": "تنوین + حلقی حرف = اظہار۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "تنوین کے بعد ع آئے تو غنہ ہوگا؟",
+    "display": "ــً + ع",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "ع حلقی حرف ہے۔ تنوین کے بعد حلقی حرف آئے تو نون صاف ہوتا ہے۔",
+    "hidayat": "اظہار میں غنہ چھپا کر نہیں کرتے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "نون ساکن کے بعد ح آئے تو اظہار ہوگا؟",
+    "display": "نْ + ح",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "ح حلقی حرف ہے۔ نون ساکن کے بعد حلقی حرف آئے تو اظہار ہوتا ہے۔",
+    "hidayat": "اظہار میں نون صاف پڑھنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ح آئے تو غنہ ہوگا؟",
+    "display": "نْ + ح",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "ح حلقی حرف ہے، اس لئے نون صاف پڑھا جائے گا، غنہ نہیں ہوگا۔",
+    "hidayat": "حلقی حروف کے ساتھ اظہار ہوتا ہے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "تنوین کے بعد ح آئے تو اظہار ہوگا؟",
+    "display": "ــً + ح",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "تنوین کے بعد ح آیا ہے، اور ح حلقی حرف ہے۔",
+    "hidayat": "تنوین + حلقی حرف = اظہار۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "تنوین کے بعد ح آئے تو غنہ ہوگا؟",
+    "display": "ــً + ح",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "ح حلقی حرف ہے۔ تنوین کے بعد حلقی حرف آئے تو نون صاف ہوتا ہے۔",
+    "hidayat": "اظہار میں غنہ چھپا کر نہیں کرتے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "نون ساکن کے بعد غ آئے تو اظہار ہوگا؟",
+    "display": "نْ + غ",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "غ حلقی حرف ہے۔ نون ساکن کے بعد حلقی حرف آئے تو اظہار ہوتا ہے۔",
+    "hidayat": "اظہار میں نون صاف پڑھنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد غ آئے تو غنہ ہوگا؟",
+    "display": "نْ + غ",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "غ حلقی حرف ہے، اس لئے نون صاف پڑھا جائے گا، غنہ نہیں ہوگا۔",
+    "hidayat": "حلقی حروف کے ساتھ اظہار ہوتا ہے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "تنوین کے بعد غ آئے تو اظہار ہوگا؟",
+    "display": "ــً + غ",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "تنوین کے بعد غ آیا ہے، اور غ حلقی حرف ہے۔",
+    "hidayat": "تنوین + حلقی حرف = اظہار۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "تنوین کے بعد غ آئے تو غنہ ہوگا؟",
+    "display": "ــً + غ",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "غ حلقی حرف ہے۔ تنوین کے بعد حلقی حرف آئے تو نون صاف ہوتا ہے۔",
+    "hidayat": "اظہار میں غنہ چھپا کر نہیں کرتے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "نون ساکن کے بعد خ آئے تو اظہار ہوگا؟",
+    "display": "نْ + خ",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "خ حلقی حرف ہے۔ نون ساکن کے بعد حلقی حرف آئے تو اظہار ہوتا ہے۔",
+    "hidayat": "اظہار میں نون صاف پڑھنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد خ آئے تو غنہ ہوگا؟",
+    "display": "نْ + خ",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "خ حلقی حرف ہے، اس لئے نون صاف پڑھا جائے گا، غنہ نہیں ہوگا۔",
+    "hidayat": "حلقی حروف کے ساتھ اظہار ہوتا ہے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "تنوین کے بعد خ آئے تو اظہار ہوگا؟",
+    "display": "ــً + خ",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "تنوین کے بعد خ آیا ہے، اور خ حلقی حرف ہے۔",
+    "hidayat": "تنوین + حلقی حرف = اظہار۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "تنوین کے بعد خ آئے تو غنہ ہوگا؟",
+    "display": "ــً + خ",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "خ حلقی حرف ہے۔ تنوین کے بعد حلقی حرف آئے تو نون صاف ہوتا ہے۔",
+    "hidayat": "اظہار میں غنہ چھپا کر نہیں کرتے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "نون ساکن کے بعد ب آئے تو اظہار ہوگا؟",
+    "display": "نْ + ب",
+    "a": "نہیں",
+    "rule": "اقلاب",
+    "why": "ب حلقی حرف نہیں ہے، اس لئے یہاں اظہار نہیں ہوگا۔",
+    "hidayat": "اظہار صرف حلقی حروف ء ہ ع ح غ خ کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "نون ساکن کے بعد ی آئے تو اظہار ہوگا؟",
+    "display": "نْ + ی",
+    "a": "نہیں",
+    "rule": "ادغام بغنہ",
+    "why": "ی حلقی حرف نہیں ہے، اس لئے یہاں اظہار نہیں ہوگا۔",
+    "hidayat": "اظہار صرف حلقی حروف ء ہ ع ح غ خ کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "نون ساکن کے بعد م آئے تو اظہار ہوگا؟",
+    "display": "نْ + م",
+    "a": "نہیں",
+    "rule": "ادغام بغنہ",
+    "why": "م حلقی حرف نہیں ہے، اس لئے یہاں اظہار نہیں ہوگا۔",
+    "hidayat": "اظہار صرف حلقی حروف ء ہ ع ح غ خ کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "نون ساکن کے بعد ل آئے تو اظہار ہوگا؟",
+    "display": "نْ + ل",
+    "a": "نہیں",
+    "rule": "ادغام بلا غنہ",
+    "why": "ل حلقی حرف نہیں ہے، اس لئے یہاں اظہار نہیں ہوگا۔",
+    "hidayat": "اظہار صرف حلقی حروف ء ہ ع ح غ خ کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "نون ساکن کے بعد ر آئے تو اظہار ہوگا؟",
+    "display": "نْ + ر",
+    "a": "نہیں",
+    "rule": "ادغام بلا غنہ",
+    "why": "ر حلقی حرف نہیں ہے، اس لئے یہاں اظہار نہیں ہوگا۔",
+    "hidayat": "اظہار صرف حلقی حروف ء ہ ع ح غ خ کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "نون ساکن کے بعد ت آئے تو اظہار ہوگا؟",
+    "display": "نْ + ت",
+    "a": "نہیں",
+    "rule": "اخفاء",
+    "why": "ت حلقی حرف نہیں ہے، اس لئے یہاں اظہار نہیں ہوگا۔",
+    "hidayat": "اظہار صرف حلقی حروف ء ہ ع ح غ خ کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "نون ساکن کے بعد ص آئے تو اظہار ہوگا؟",
+    "display": "نْ + ص",
+    "a": "نہیں",
+    "rule": "اخفاء",
+    "why": "ص حلقی حرف نہیں ہے، اس لئے یہاں اظہار نہیں ہوگا۔",
+    "hidayat": "اظہار صرف حلقی حروف ء ہ ع ح غ خ کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "نون ساکن کے بعد ک آئے تو اظہار ہوگا؟",
+    "display": "نْ + ک",
+    "a": "نہیں",
+    "rule": "اخفاء",
+    "why": "ک حلقی حرف نہیں ہے، اس لئے یہاں اظہار نہیں ہوگا۔",
+    "hidayat": "اظہار صرف حلقی حروف ء ہ ع ح غ خ کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "نون ساکن کے بعد ف آئے تو اظہار ہوگا؟",
+    "display": "نْ + ف",
+    "a": "نہیں",
+    "rule": "اخفاء",
+    "why": "ف حلقی حرف نہیں ہے، اس لئے یہاں اظہار نہیں ہوگا۔",
+    "hidayat": "اظہار صرف حلقی حروف ء ہ ع ح غ خ کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "نون ساکن کے بعد ق آئے تو اظہار ہوگا؟",
+    "display": "نْ + ق",
+    "a": "نہیں",
+    "rule": "اخفاء",
+    "why": "ق حلقی حرف نہیں ہے، اس لئے یہاں اظہار نہیں ہوگا۔",
+    "hidayat": "اظہار صرف حلقی حروف ء ہ ع ح غ خ کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "iqlab",
+    "type": "اقلاب",
+    "q": "نون ساکن کے بعد ب آئے تو اقلاب ہوگا؟",
+    "display": "نْ + ب",
+    "a": "ہاں",
+    "rule": "اقلاب",
+    "why": "نون ساکن کے بعد ب آیا ہے، اس لئے اقلاب ہوگا۔",
+    "hidayat": "اقلاب میں نون کی آواز میم میں بدل کر غنہ کیا جاتا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ب آئے تو غنہ ہوگا؟",
+    "display": "نْ + ب",
+    "a": "ہاں",
+    "rule": "اقلاب مع غنہ",
+    "why": "نون ساکن کے بعد ب آئے تو اقلاب ہوتا ہے، اور اقلاب میں غنہ ہوتا ہے۔",
+    "hidayat": "نْ / تنوین + ب = اقلاب مع غنہ۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "نون ساکن کے بعد ب آئے تو اظہار ہوگا؟",
+    "display": "نْ + ب",
+    "a": "نہیں",
+    "rule": "اقلاب",
+    "why": "ب کے ساتھ اظہار نہیں، اقلاب ہوتا ہے۔",
+    "hidayat": "اقلاب صرف ب کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ب آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ب",
+    "a": "نہیں",
+    "rule": "اقلاب",
+    "why": "ب کے ساتھ اخفاء نہیں، اقلاب ہوتا ہے۔",
+    "hidayat": "ب خاص اقلاب کا حرف ہے۔"
+  },
+  {
+    "lesson": "iqlab",
+    "type": "اقلاب",
+    "q": "تنوین کے بعد ب آئے تو اقلاب ہوگا؟",
+    "display": "ــً + ب",
+    "a": "ہاں",
+    "rule": "اقلاب",
+    "why": "تنوین کے بعد ب آیا ہے، اس لئے اقلاب ہوگا۔",
+    "hidayat": "اقلاب میں نون کی آواز میم میں بدل کر غنہ کیا جاتا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "تنوین کے بعد ب آئے تو غنہ ہوگا؟",
+    "display": "ــً + ب",
+    "a": "ہاں",
+    "rule": "اقلاب مع غنہ",
+    "why": "تنوین کے بعد ب آئے تو اقلاب ہوتا ہے، اور اقلاب میں غنہ ہوتا ہے۔",
+    "hidayat": "نْ / تنوین + ب = اقلاب مع غنہ۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "تنوین کے بعد ب آئے تو اظہار ہوگا؟",
+    "display": "ــً + ب",
+    "a": "نہیں",
+    "rule": "اقلاب",
+    "why": "ب کے ساتھ اظہار نہیں، اقلاب ہوتا ہے۔",
+    "hidayat": "اقلاب صرف ب کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "تنوین کے بعد ب آئے تو اخفاء ہوگا؟",
+    "display": "ــً + ب",
+    "a": "نہیں",
+    "rule": "اقلاب",
+    "why": "ب کے ساتھ اخفاء نہیں، اقلاب ہوتا ہے۔",
+    "hidayat": "ب خاص اقلاب کا حرف ہے۔"
+  },
+  {
+    "lesson": "iqlab",
+    "type": "اقلاب",
+    "q": "دو زیر کے بعد ب آئے تو اقلاب ہوگا؟",
+    "display": "ــٍ + ب",
+    "a": "ہاں",
+    "rule": "اقلاب",
+    "why": "دو زیر کے بعد ب آیا ہے، اس لئے اقلاب ہوگا۔",
+    "hidayat": "اقلاب میں نون کی آواز میم میں بدل کر غنہ کیا جاتا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "دو زیر کے بعد ب آئے تو غنہ ہوگا؟",
+    "display": "ــٍ + ب",
+    "a": "ہاں",
+    "rule": "اقلاب مع غنہ",
+    "why": "دو زیر کے بعد ب آئے تو اقلاب ہوتا ہے، اور اقلاب میں غنہ ہوتا ہے۔",
+    "hidayat": "نْ / تنوین + ب = اقلاب مع غنہ۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "دو زیر کے بعد ب آئے تو اظہار ہوگا؟",
+    "display": "ــٍ + ب",
+    "a": "نہیں",
+    "rule": "اقلاب",
+    "why": "ب کے ساتھ اظہار نہیں، اقلاب ہوتا ہے۔",
+    "hidayat": "اقلاب صرف ب کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "دو زیر کے بعد ب آئے تو اخفاء ہوگا؟",
+    "display": "ــٍ + ب",
+    "a": "نہیں",
+    "rule": "اقلاب",
+    "why": "ب کے ساتھ اخفاء نہیں، اقلاب ہوتا ہے۔",
+    "hidayat": "ب خاص اقلاب کا حرف ہے۔"
+  },
+  {
+    "lesson": "iqlab",
+    "type": "اقلاب",
+    "q": "دو پیش کے بعد ب آئے تو اقلاب ہوگا؟",
+    "display": "ــٌ + ب",
+    "a": "ہاں",
+    "rule": "اقلاب",
+    "why": "دو پیش کے بعد ب آیا ہے، اس لئے اقلاب ہوگا۔",
+    "hidayat": "اقلاب میں نون کی آواز میم میں بدل کر غنہ کیا جاتا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "دو پیش کے بعد ب آئے تو غنہ ہوگا؟",
+    "display": "ــٌ + ب",
+    "a": "ہاں",
+    "rule": "اقلاب مع غنہ",
+    "why": "دو پیش کے بعد ب آئے تو اقلاب ہوتا ہے، اور اقلاب میں غنہ ہوتا ہے۔",
+    "hidayat": "نْ / تنوین + ب = اقلاب مع غنہ۔"
+  },
+  {
+    "lesson": "izhar",
+    "type": "اظہار",
+    "q": "دو پیش کے بعد ب آئے تو اظہار ہوگا؟",
+    "display": "ــٌ + ب",
+    "a": "نہیں",
+    "rule": "اقلاب",
+    "why": "ب کے ساتھ اظہار نہیں، اقلاب ہوتا ہے۔",
+    "hidayat": "اقلاب صرف ب کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "دو پیش کے بعد ب آئے تو اخفاء ہوگا؟",
+    "display": "ــٌ + ب",
+    "a": "نہیں",
+    "rule": "اقلاب",
+    "why": "ب کے ساتھ اخفاء نہیں، اقلاب ہوتا ہے۔",
+    "hidayat": "ب خاص اقلاب کا حرف ہے۔"
+  },
+  {
+    "lesson": "iqlab",
+    "type": "اقلاب",
+    "q": "نون ساکن کے بعد م آئے تو اقلاب ہوگا؟",
+    "display": "نْ + م",
+    "a": "نہیں",
+    "rule": "ادغام بغنہ",
+    "why": "اقلاب صرف ب کے ساتھ ہوتا ہے۔ م کے ساتھ ادغام بغنہ ہوگا۔",
+    "hidayat": "اقلاب کا حرف صرف ب ہے۔"
+  },
+  {
+    "lesson": "iqlab",
+    "type": "اقلاب",
+    "q": "نون ساکن کے بعد ی آئے تو اقلاب ہوگا؟",
+    "display": "نْ + ی",
+    "a": "نہیں",
+    "rule": "ادغام بغنہ",
+    "why": "اقلاب صرف ب کے ساتھ ہوتا ہے۔ ی کے ساتھ ادغام بغنہ ہوگا۔",
+    "hidayat": "اقلاب کا حرف صرف ب ہے۔"
+  },
+  {
+    "lesson": "iqlab",
+    "type": "اقلاب",
+    "q": "نون ساکن کے بعد ل آئے تو اقلاب ہوگا؟",
+    "display": "نْ + ل",
+    "a": "نہیں",
+    "rule": "ادغام بلا غنہ",
+    "why": "اقلاب صرف ب کے ساتھ ہوتا ہے۔ ل کے ساتھ ادغام بلا غنہ ہوگا۔",
+    "hidayat": "اقلاب کا حرف صرف ب ہے۔"
+  },
+  {
+    "lesson": "iqlab",
+    "type": "اقلاب",
+    "q": "نون ساکن کے بعد ر آئے تو اقلاب ہوگا؟",
+    "display": "نْ + ر",
+    "a": "نہیں",
+    "rule": "ادغام بلا غنہ",
+    "why": "اقلاب صرف ب کے ساتھ ہوتا ہے۔ ر کے ساتھ ادغام بلا غنہ ہوگا۔",
+    "hidayat": "اقلاب کا حرف صرف ب ہے۔"
+  },
+  {
+    "lesson": "iqlab",
+    "type": "اقلاب",
+    "q": "نون ساکن کے بعد ع آئے تو اقلاب ہوگا؟",
+    "display": "نْ + ع",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "اقلاب صرف ب کے ساتھ ہوتا ہے۔ ع کے ساتھ اظہار ہوگا۔",
+    "hidayat": "اقلاب کا حرف صرف ب ہے۔"
+  },
+  {
+    "lesson": "iqlab",
+    "type": "اقلاب",
+    "q": "نون ساکن کے بعد خ آئے تو اقلاب ہوگا؟",
+    "display": "نْ + خ",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "اقلاب صرف ب کے ساتھ ہوتا ہے۔ خ کے ساتھ اظہار ہوگا۔",
+    "hidayat": "اقلاب کا حرف صرف ب ہے۔"
+  },
+  {
+    "lesson": "iqlab",
+    "type": "اقلاب",
+    "q": "نون ساکن کے بعد ت آئے تو اقلاب ہوگا؟",
+    "display": "نْ + ت",
+    "a": "نہیں",
+    "rule": "اخفاء",
+    "why": "اقلاب صرف ب کے ساتھ ہوتا ہے۔ ت کے ساتھ اخفاء ہوگا۔",
+    "hidayat": "اقلاب کا حرف صرف ب ہے۔"
+  },
+  {
+    "lesson": "iqlab",
+    "type": "اقلاب",
+    "q": "نون ساکن کے بعد ک آئے تو اقلاب ہوگا؟",
+    "display": "نْ + ک",
+    "a": "نہیں",
+    "rule": "اخفاء",
+    "why": "اقلاب صرف ب کے ساتھ ہوتا ہے۔ ک کے ساتھ اخفاء ہوگا۔",
+    "hidayat": "اقلاب کا حرف صرف ب ہے۔"
+  },
+  {
+    "lesson": "iqlab",
+    "type": "اقلاب",
+    "q": "نون ساکن کے بعد ص آئے تو اقلاب ہوگا؟",
+    "display": "نْ + ص",
+    "a": "نہیں",
+    "rule": "اخفاء",
+    "why": "اقلاب صرف ب کے ساتھ ہوتا ہے۔ ص کے ساتھ اخفاء ہوگا۔",
+    "hidayat": "اقلاب کا حرف صرف ب ہے۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد ی آئے تو ادغام ہوگا؟",
+    "display": "نْ + ی",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "ی حروف یرملون میں ہے، اس لئے ادغام ہوگا۔",
+    "hidayat": "ی ن م و کے ساتھ ادغام بغنہ ہوتا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ی آئے تو غنہ ہوگا؟",
+    "display": "نْ + ی",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "ی ادغام بغنہ کے حروف میں ہے، اس لئے غنہ ہوگا۔",
+    "hidayat": "ادغام بغنہ کے حروف: ی ن م و۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "تنوین کے بعد ی آئے تو ادغام ہوگا؟",
+    "display": "ــً + ی",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "تنوین کے بعد ی آیا ہے، اور ی یرملون میں شامل ہے۔",
+    "hidayat": "تنوین + ی ن م و = ادغام بغنہ۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "تنوین کے بعد ی آئے تو غنہ ہوگا؟",
+    "display": "ــً + ی",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "ی کے ساتھ ادغام غنہ کے ساتھ ہوگا۔",
+    "hidayat": "یہاں نون اگلے حرف میں مل کر غنہ ہوگا۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد ن آئے تو ادغام ہوگا؟",
+    "display": "نْ + ن",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "ن حروف یرملون میں ہے، اس لئے ادغام ہوگا۔",
+    "hidayat": "ی ن م و کے ساتھ ادغام بغنہ ہوتا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ن آئے تو غنہ ہوگا؟",
+    "display": "نْ + ن",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "ن ادغام بغنہ کے حروف میں ہے، اس لئے غنہ ہوگا۔",
+    "hidayat": "ادغام بغنہ کے حروف: ی ن م و۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "تنوین کے بعد ن آئے تو ادغام ہوگا؟",
+    "display": "ــً + ن",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "تنوین کے بعد ن آیا ہے، اور ن یرملون میں شامل ہے۔",
+    "hidayat": "تنوین + ی ن م و = ادغام بغنہ۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "تنوین کے بعد ن آئے تو غنہ ہوگا؟",
+    "display": "ــً + ن",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "ن کے ساتھ ادغام غنہ کے ساتھ ہوگا۔",
+    "hidayat": "یہاں نون اگلے حرف میں مل کر غنہ ہوگا۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد م آئے تو ادغام ہوگا؟",
+    "display": "نْ + م",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "م حروف یرملون میں ہے، اس لئے ادغام ہوگا۔",
+    "hidayat": "ی ن م و کے ساتھ ادغام بغنہ ہوتا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد م آئے تو غنہ ہوگا؟",
+    "display": "نْ + م",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "م ادغام بغنہ کے حروف میں ہے، اس لئے غنہ ہوگا۔",
+    "hidayat": "ادغام بغنہ کے حروف: ی ن م و۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "تنوین کے بعد م آئے تو ادغام ہوگا؟",
+    "display": "ــً + م",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "تنوین کے بعد م آیا ہے، اور م یرملون میں شامل ہے۔",
+    "hidayat": "تنوین + ی ن م و = ادغام بغنہ۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "تنوین کے بعد م آئے تو غنہ ہوگا؟",
+    "display": "ــً + م",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "م کے ساتھ ادغام غنہ کے ساتھ ہوگا۔",
+    "hidayat": "یہاں نون اگلے حرف میں مل کر غنہ ہوگا۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد و آئے تو ادغام ہوگا؟",
+    "display": "نْ + و",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "و حروف یرملون میں ہے، اس لئے ادغام ہوگا۔",
+    "hidayat": "ی ن م و کے ساتھ ادغام بغنہ ہوتا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد و آئے تو غنہ ہوگا؟",
+    "display": "نْ + و",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "و ادغام بغنہ کے حروف میں ہے، اس لئے غنہ ہوگا۔",
+    "hidayat": "ادغام بغنہ کے حروف: ی ن م و۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "تنوین کے بعد و آئے تو ادغام ہوگا؟",
+    "display": "ــً + و",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "تنوین کے بعد و آیا ہے، اور و یرملون میں شامل ہے۔",
+    "hidayat": "تنوین + ی ن م و = ادغام بغنہ۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "تنوین کے بعد و آئے تو غنہ ہوگا؟",
+    "display": "ــً + و",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "و کے ساتھ ادغام غنہ کے ساتھ ہوگا۔",
+    "hidayat": "یہاں نون اگلے حرف میں مل کر غنہ ہوگا۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد ل آئے تو ادغام ہوگا؟",
+    "display": "نْ + ل",
+    "a": "ہاں",
+    "rule": "ادغام بلا غنہ",
+    "why": "ل حروف یرملون میں ہے، اس لئے ادغام ہوگا۔",
+    "hidayat": "ل ر کے ساتھ ادغام بلا غنہ ہوتا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ل آئے تو غنہ ہوگا؟",
+    "display": "نْ + ل",
+    "a": "نہیں",
+    "rule": "ادغام بلا غنہ",
+    "why": "ل کے ساتھ ادغام ہوتا ہے مگر غنہ نہیں ہوتا۔",
+    "hidayat": "ل ر = ادغام بلا غنہ۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "تنوین کے بعد ل آئے تو ادغام ہوگا؟",
+    "display": "ــً + ل",
+    "a": "ہاں",
+    "rule": "ادغام بلا غنہ",
+    "why": "تنوین کے بعد ل آیا ہے، اس لئے ادغام ہوگا۔",
+    "hidayat": "ل ر کے ساتھ غنہ نہیں ہوتا۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "تنوین کے بعد ل آئے تو غنہ ہوگا؟",
+    "display": "ــً + ل",
+    "a": "نہیں",
+    "rule": "ادغام بلا غنہ",
+    "why": "ل ادغام بلا غنہ کے حروف میں ہے۔",
+    "hidayat": "ل اور ر کے ساتھ غنہ نہیں کیا جاتا۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد ر آئے تو ادغام ہوگا؟",
+    "display": "نْ + ر",
+    "a": "ہاں",
+    "rule": "ادغام بلا غنہ",
+    "why": "ر حروف یرملون میں ہے، اس لئے ادغام ہوگا۔",
+    "hidayat": "ل ر کے ساتھ ادغام بلا غنہ ہوتا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ر آئے تو غنہ ہوگا؟",
+    "display": "نْ + ر",
+    "a": "نہیں",
+    "rule": "ادغام بلا غنہ",
+    "why": "ر کے ساتھ ادغام ہوتا ہے مگر غنہ نہیں ہوتا۔",
+    "hidayat": "ل ر = ادغام بلا غنہ۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "تنوین کے بعد ر آئے تو ادغام ہوگا؟",
+    "display": "ــً + ر",
+    "a": "ہاں",
+    "rule": "ادغام بلا غنہ",
+    "why": "تنوین کے بعد ر آیا ہے، اس لئے ادغام ہوگا۔",
+    "hidayat": "ل ر کے ساتھ غنہ نہیں ہوتا۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "تنوین کے بعد ر آئے تو غنہ ہوگا؟",
+    "display": "ــً + ر",
+    "a": "نہیں",
+    "rule": "ادغام بلا غنہ",
+    "why": "ر ادغام بلا غنہ کے حروف میں ہے۔",
+    "hidayat": "ل اور ر کے ساتھ غنہ نہیں کیا جاتا۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد ء آئے تو ادغام ہوگا؟",
+    "display": "نْ + ء",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "ء یرملون میں شامل نہیں ہے، اس لئے یہاں ادغام نہیں ہوگا۔",
+    "hidayat": "ادغام صرف ی ر م ل و ن کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد ہ آئے تو ادغام ہوگا؟",
+    "display": "نْ + ہ",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "ہ یرملون میں شامل نہیں ہے، اس لئے یہاں ادغام نہیں ہوگا۔",
+    "hidayat": "ادغام صرف ی ر م ل و ن کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد ع آئے تو ادغام ہوگا؟",
+    "display": "نْ + ع",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "ع یرملون میں شامل نہیں ہے، اس لئے یہاں ادغام نہیں ہوگا۔",
+    "hidayat": "ادغام صرف ی ر م ل و ن کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد ح آئے تو ادغام ہوگا؟",
+    "display": "نْ + ح",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "ح یرملون میں شامل نہیں ہے، اس لئے یہاں ادغام نہیں ہوگا۔",
+    "hidayat": "ادغام صرف ی ر م ل و ن کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد غ آئے تو ادغام ہوگا؟",
+    "display": "نْ + غ",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "غ یرملون میں شامل نہیں ہے، اس لئے یہاں ادغام نہیں ہوگا۔",
+    "hidayat": "ادغام صرف ی ر م ل و ن کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد خ آئے تو ادغام ہوگا؟",
+    "display": "نْ + خ",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "خ یرملون میں شامل نہیں ہے، اس لئے یہاں ادغام نہیں ہوگا۔",
+    "hidayat": "ادغام صرف ی ر م ل و ن کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد ب آئے تو ادغام ہوگا؟",
+    "display": "نْ + ب",
+    "a": "نہیں",
+    "rule": "اقلاب",
+    "why": "ب یرملون میں شامل نہیں ہے، اس لئے یہاں ادغام نہیں ہوگا۔",
+    "hidayat": "ادغام صرف ی ر م ل و ن کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد ت آئے تو ادغام ہوگا؟",
+    "display": "نْ + ت",
+    "a": "نہیں",
+    "rule": "اخفاء",
+    "why": "ت یرملون میں شامل نہیں ہے، اس لئے یہاں ادغام نہیں ہوگا۔",
+    "hidayat": "ادغام صرف ی ر م ل و ن کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد ث آئے تو ادغام ہوگا؟",
+    "display": "نْ + ث",
+    "a": "نہیں",
+    "rule": "اخفاء",
+    "why": "ث یرملون میں شامل نہیں ہے، اس لئے یہاں ادغام نہیں ہوگا۔",
+    "hidayat": "ادغام صرف ی ر م ل و ن کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد ج آئے تو ادغام ہوگا؟",
+    "display": "نْ + ج",
+    "a": "نہیں",
+    "rule": "اخفاء",
+    "why": "ج یرملون میں شامل نہیں ہے، اس لئے یہاں ادغام نہیں ہوگا۔",
+    "hidayat": "ادغام صرف ی ر م ل و ن کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد د آئے تو ادغام ہوگا؟",
+    "display": "نْ + د",
+    "a": "نہیں",
+    "rule": "اخفاء",
+    "why": "د یرملون میں شامل نہیں ہے، اس لئے یہاں ادغام نہیں ہوگا۔",
+    "hidayat": "ادغام صرف ی ر م ل و ن کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد ذ آئے تو ادغام ہوگا؟",
+    "display": "نْ + ذ",
+    "a": "نہیں",
+    "rule": "اخفاء",
+    "why": "ذ یرملون میں شامل نہیں ہے، اس لئے یہاں ادغام نہیں ہوگا۔",
+    "hidayat": "ادغام صرف ی ر م ل و ن کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد ز آئے تو ادغام ہوگا؟",
+    "display": "نْ + ز",
+    "a": "نہیں",
+    "rule": "اخفاء",
+    "why": "ز یرملون میں شامل نہیں ہے، اس لئے یہاں ادغام نہیں ہوگا۔",
+    "hidayat": "ادغام صرف ی ر م ل و ن کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد س آئے تو ادغام ہوگا؟",
+    "display": "نْ + س",
+    "a": "نہیں",
+    "rule": "اخفاء",
+    "why": "س یرملون میں شامل نہیں ہے، اس لئے یہاں ادغام نہیں ہوگا۔",
+    "hidayat": "ادغام صرف ی ر م ل و ن کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "idgham",
+    "type": "ادغام",
+    "q": "نون ساکن کے بعد ش آئے تو ادغام ہوگا؟",
+    "display": "نْ + ش",
+    "a": "نہیں",
+    "rule": "اخفاء",
+    "why": "ش یرملون میں شامل نہیں ہے، اس لئے یہاں ادغام نہیں ہوگا۔",
+    "hidayat": "ادغام صرف ی ر م ل و ن کے ساتھ ہوتا ہے۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ت آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ت",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ت اخفاء والے حروف میں آتا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "اخفاء میں نون کو چھپا کر غنہ کرنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ت آئے تو غنہ ہوگا؟",
+    "display": "نْ + ت",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ت کے ساتھ اخفاء ہوتا ہے، اور اخفاء میں غنہ ہوتا ہے۔",
+    "hidayat": "اخفاء = چھپا ہوا نون + غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "تنوین کے بعد ت آئے تو اخفاء ہوگا؟",
+    "display": "ــً + ت",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "تنوین کے بعد ت آیا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "تنوین + اخفاء حرف = اخفاء مع غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ث آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ث",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ث اخفاء والے حروف میں آتا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "اخفاء میں نون کو چھپا کر غنہ کرنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ث آئے تو غنہ ہوگا؟",
+    "display": "نْ + ث",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ث کے ساتھ اخفاء ہوتا ہے، اور اخفاء میں غنہ ہوتا ہے۔",
+    "hidayat": "اخفاء = چھپا ہوا نون + غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "تنوین کے بعد ث آئے تو اخفاء ہوگا؟",
+    "display": "ــً + ث",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "تنوین کے بعد ث آیا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "تنوین + اخفاء حرف = اخفاء مع غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ج آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ج",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ج اخفاء والے حروف میں آتا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "اخفاء میں نون کو چھپا کر غنہ کرنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ج آئے تو غنہ ہوگا؟",
+    "display": "نْ + ج",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ج کے ساتھ اخفاء ہوتا ہے، اور اخفاء میں غنہ ہوتا ہے۔",
+    "hidayat": "اخفاء = چھپا ہوا نون + غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "تنوین کے بعد ج آئے تو اخفاء ہوگا؟",
+    "display": "ــً + ج",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "تنوین کے بعد ج آیا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "تنوین + اخفاء حرف = اخفاء مع غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد د آئے تو اخفاء ہوگا؟",
+    "display": "نْ + د",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "د اخفاء والے حروف میں آتا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "اخفاء میں نون کو چھپا کر غنہ کرنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد د آئے تو غنہ ہوگا؟",
+    "display": "نْ + د",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "د کے ساتھ اخفاء ہوتا ہے، اور اخفاء میں غنہ ہوتا ہے۔",
+    "hidayat": "اخفاء = چھپا ہوا نون + غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "تنوین کے بعد د آئے تو اخفاء ہوگا؟",
+    "display": "ــً + د",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "تنوین کے بعد د آیا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "تنوین + اخفاء حرف = اخفاء مع غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ذ آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ذ",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ذ اخفاء والے حروف میں آتا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "اخفاء میں نون کو چھپا کر غنہ کرنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ذ آئے تو غنہ ہوگا؟",
+    "display": "نْ + ذ",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ذ کے ساتھ اخفاء ہوتا ہے، اور اخفاء میں غنہ ہوتا ہے۔",
+    "hidayat": "اخفاء = چھپا ہوا نون + غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "تنوین کے بعد ذ آئے تو اخفاء ہوگا؟",
+    "display": "ــً + ذ",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "تنوین کے بعد ذ آیا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "تنوین + اخفاء حرف = اخفاء مع غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ز آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ز",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ز اخفاء والے حروف میں آتا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "اخفاء میں نون کو چھپا کر غنہ کرنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ز آئے تو غنہ ہوگا؟",
+    "display": "نْ + ز",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ز کے ساتھ اخفاء ہوتا ہے، اور اخفاء میں غنہ ہوتا ہے۔",
+    "hidayat": "اخفاء = چھپا ہوا نون + غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "تنوین کے بعد ز آئے تو اخفاء ہوگا؟",
+    "display": "ــً + ز",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "تنوین کے بعد ز آیا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "تنوین + اخفاء حرف = اخفاء مع غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد س آئے تو اخفاء ہوگا؟",
+    "display": "نْ + س",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "س اخفاء والے حروف میں آتا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "اخفاء میں نون کو چھپا کر غنہ کرنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد س آئے تو غنہ ہوگا؟",
+    "display": "نْ + س",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "س کے ساتھ اخفاء ہوتا ہے، اور اخفاء میں غنہ ہوتا ہے۔",
+    "hidayat": "اخفاء = چھپا ہوا نون + غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "تنوین کے بعد س آئے تو اخفاء ہوگا؟",
+    "display": "ــً + س",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "تنوین کے بعد س آیا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "تنوین + اخفاء حرف = اخفاء مع غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ش آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ش",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ش اخفاء والے حروف میں آتا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "اخفاء میں نون کو چھپا کر غنہ کرنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ش آئے تو غنہ ہوگا؟",
+    "display": "نْ + ش",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ش کے ساتھ اخفاء ہوتا ہے، اور اخفاء میں غنہ ہوتا ہے۔",
+    "hidayat": "اخفاء = چھپا ہوا نون + غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "تنوین کے بعد ش آئے تو اخفاء ہوگا؟",
+    "display": "ــً + ش",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "تنوین کے بعد ش آیا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "تنوین + اخفاء حرف = اخفاء مع غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ص آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ص",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ص اخفاء والے حروف میں آتا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "اخفاء میں نون کو چھپا کر غنہ کرنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ص آئے تو غنہ ہوگا؟",
+    "display": "نْ + ص",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ص کے ساتھ اخفاء ہوتا ہے، اور اخفاء میں غنہ ہوتا ہے۔",
+    "hidayat": "اخفاء = چھپا ہوا نون + غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "تنوین کے بعد ص آئے تو اخفاء ہوگا؟",
+    "display": "ــً + ص",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "تنوین کے بعد ص آیا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "تنوین + اخفاء حرف = اخفاء مع غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ض آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ض",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ض اخفاء والے حروف میں آتا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "اخفاء میں نون کو چھپا کر غنہ کرنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ض آئے تو غنہ ہوگا؟",
+    "display": "نْ + ض",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ض کے ساتھ اخفاء ہوتا ہے، اور اخفاء میں غنہ ہوتا ہے۔",
+    "hidayat": "اخفاء = چھپا ہوا نون + غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "تنوین کے بعد ض آئے تو اخفاء ہوگا؟",
+    "display": "ــً + ض",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "تنوین کے بعد ض آیا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "تنوین + اخفاء حرف = اخفاء مع غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ط آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ط",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ط اخفاء والے حروف میں آتا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "اخفاء میں نون کو چھپا کر غنہ کرنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ط آئے تو غنہ ہوگا؟",
+    "display": "نْ + ط",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ط کے ساتھ اخفاء ہوتا ہے، اور اخفاء میں غنہ ہوتا ہے۔",
+    "hidayat": "اخفاء = چھپا ہوا نون + غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "تنوین کے بعد ط آئے تو اخفاء ہوگا؟",
+    "display": "ــً + ط",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "تنوین کے بعد ط آیا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "تنوین + اخفاء حرف = اخفاء مع غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ظ آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ظ",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ظ اخفاء والے حروف میں آتا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "اخفاء میں نون کو چھپا کر غنہ کرنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ظ آئے تو غنہ ہوگا؟",
+    "display": "نْ + ظ",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ظ کے ساتھ اخفاء ہوتا ہے، اور اخفاء میں غنہ ہوتا ہے۔",
+    "hidayat": "اخفاء = چھپا ہوا نون + غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "تنوین کے بعد ظ آئے تو اخفاء ہوگا؟",
+    "display": "ــً + ظ",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "تنوین کے بعد ظ آیا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "تنوین + اخفاء حرف = اخفاء مع غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ف آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ف",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ف اخفاء والے حروف میں آتا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "اخفاء میں نون کو چھپا کر غنہ کرنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ف آئے تو غنہ ہوگا؟",
+    "display": "نْ + ف",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ف کے ساتھ اخفاء ہوتا ہے، اور اخفاء میں غنہ ہوتا ہے۔",
+    "hidayat": "اخفاء = چھپا ہوا نون + غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "تنوین کے بعد ف آئے تو اخفاء ہوگا؟",
+    "display": "ــً + ف",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "تنوین کے بعد ف آیا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "تنوین + اخفاء حرف = اخفاء مع غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ق آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ق",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ق اخفاء والے حروف میں آتا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "اخفاء میں نون کو چھپا کر غنہ کرنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ق آئے تو غنہ ہوگا؟",
+    "display": "نْ + ق",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ق کے ساتھ اخفاء ہوتا ہے، اور اخفاء میں غنہ ہوتا ہے۔",
+    "hidayat": "اخفاء = چھپا ہوا نون + غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "تنوین کے بعد ق آئے تو اخفاء ہوگا؟",
+    "display": "ــً + ق",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "تنوین کے بعد ق آیا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "تنوین + اخفاء حرف = اخفاء مع غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ک آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ک",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ک اخفاء والے حروف میں آتا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "اخفاء میں نون کو چھپا کر غنہ کرنا ہے۔"
+  },
+  {
+    "lesson": "ghunna",
+    "type": "غنہ",
+    "q": "نون ساکن کے بعد ک آئے تو غنہ ہوگا؟",
+    "display": "نْ + ک",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ک کے ساتھ اخفاء ہوتا ہے، اور اخفاء میں غنہ ہوتا ہے۔",
+    "hidayat": "اخفاء = چھپا ہوا نون + غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "تنوین کے بعد ک آئے تو اخفاء ہوگا؟",
+    "display": "ــً + ک",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "تنوین کے بعد ک آیا ہے، اس لئے اخفاء ہوگا۔",
+    "hidayat": "تنوین + اخفاء حرف = اخفاء مع غنہ۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ء آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ء",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "ء اخفاء والا حرف نہیں ہے، اس کے ساتھ اظہار ہوگا۔",
+    "hidayat": "اخفاء ان حروف کے ساتھ نہیں ہوتا جو اظہار، اقلاب یا ادغام کے ہیں۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ہ آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ہ",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "ہ اخفاء والا حرف نہیں ہے، اس کے ساتھ اظہار ہوگا۔",
+    "hidayat": "اخفاء ان حروف کے ساتھ نہیں ہوتا جو اظہار، اقلاب یا ادغام کے ہیں۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ع آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ع",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "ع اخفاء والا حرف نہیں ہے، اس کے ساتھ اظہار ہوگا۔",
+    "hidayat": "اخفاء ان حروف کے ساتھ نہیں ہوتا جو اظہار، اقلاب یا ادغام کے ہیں۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ح آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ح",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "ح اخفاء والا حرف نہیں ہے، اس کے ساتھ اظہار ہوگا۔",
+    "hidayat": "اخفاء ان حروف کے ساتھ نہیں ہوتا جو اظہار، اقلاب یا ادغام کے ہیں۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد غ آئے تو اخفاء ہوگا؟",
+    "display": "نْ + غ",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "غ اخفاء والا حرف نہیں ہے، اس کے ساتھ اظہار ہوگا۔",
+    "hidayat": "اخفاء ان حروف کے ساتھ نہیں ہوتا جو اظہار، اقلاب یا ادغام کے ہیں۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد خ آئے تو اخفاء ہوگا؟",
+    "display": "نْ + خ",
+    "a": "نہیں",
+    "rule": "اظہار",
+    "why": "خ اخفاء والا حرف نہیں ہے، اس کے ساتھ اظہار ہوگا۔",
+    "hidayat": "اخفاء ان حروف کے ساتھ نہیں ہوتا جو اظہار، اقلاب یا ادغام کے ہیں۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ب آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ب",
+    "a": "نہیں",
+    "rule": "اقلاب",
+    "why": "ب اخفاء والا حرف نہیں ہے، اس کے ساتھ اقلاب ہوگا۔",
+    "hidayat": "اخفاء ان حروف کے ساتھ نہیں ہوتا جو اظہار، اقلاب یا ادغام کے ہیں۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ی آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ی",
+    "a": "نہیں",
+    "rule": "ادغام بغنہ",
+    "why": "ی اخفاء والا حرف نہیں ہے، اس کے ساتھ ادغام بغنہ ہوگا۔",
+    "hidayat": "اخفاء ان حروف کے ساتھ نہیں ہوتا جو اظہار، اقلاب یا ادغام کے ہیں۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ر آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ر",
+    "a": "نہیں",
+    "rule": "ادغام بلا غنہ",
+    "why": "ر اخفاء والا حرف نہیں ہے، اس کے ساتھ ادغام بلا غنہ ہوگا۔",
+    "hidayat": "اخفاء ان حروف کے ساتھ نہیں ہوتا جو اظہار، اقلاب یا ادغام کے ہیں۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد م آئے تو اخفاء ہوگا؟",
+    "display": "نْ + م",
+    "a": "نہیں",
+    "rule": "ادغام بغنہ",
+    "why": "م اخفاء والا حرف نہیں ہے، اس کے ساتھ ادغام بغنہ ہوگا۔",
+    "hidayat": "اخفاء ان حروف کے ساتھ نہیں ہوتا جو اظہار، اقلاب یا ادغام کے ہیں۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ل آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ل",
+    "a": "نہیں",
+    "rule": "ادغام بلا غنہ",
+    "why": "ل اخفاء والا حرف نہیں ہے، اس کے ساتھ ادغام بلا غنہ ہوگا۔",
+    "hidayat": "اخفاء ان حروف کے ساتھ نہیں ہوتا جو اظہار، اقلاب یا ادغام کے ہیں۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد و آئے تو اخفاء ہوگا؟",
+    "display": "نْ + و",
+    "a": "نہیں",
+    "rule": "ادغام بغنہ",
+    "why": "و اخفاء والا حرف نہیں ہے، اس کے ساتھ ادغام بغنہ ہوگا۔",
+    "hidayat": "اخفاء ان حروف کے ساتھ نہیں ہوتا جو اظہار، اقلاب یا ادغام کے ہیں۔"
+  },
+  {
+    "lesson": "ikhfa",
+    "type": "اخفاء",
+    "q": "نون ساکن کے بعد ن آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ن",
+    "a": "نہیں",
+    "rule": "ادغام بغنہ",
+    "why": "ن اخفاء والا حرف نہیں ہے، اس کے ساتھ ادغام بغنہ ہوگا۔",
+    "hidayat": "اخفاء ان حروف کے ساتھ نہیں ہوتا جو اظہار، اقلاب یا ادغام کے ہیں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "قْ پر قلقله ہوگا؟",
+    "display": "قْ",
+    "a": "ہاں",
+    "rule": "قلقله",
+    "why": "ق حروف قلقله میں ہے اور ساکن ہے، اس لئے قلقله ہوگا۔",
+    "hidayat": "ق ط ب ج د ساکن ہوں تو ہلکا جھٹکا آتا ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "قَ پر قلقله ہوگا؟",
+    "display": "قَ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ق حروف قلقله میں ہے، لیکن یہاں ساکن نہیں ہے۔",
+    "hidayat": "قلقله کے لئے سکون ضروری ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "قِ پر قلقله ہوگا؟",
+    "display": "قِ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ق پر زیر ہے، سکون نہیں، اس لئے قلقله نہیں ہوگا۔",
+    "hidayat": "قلقله صرف ساکن حالت میں ہوتا ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "قُ پر قلقله ہوگا؟",
+    "display": "قُ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ق پر پیش ہے، سکون نہیں، اس لئے قلقله نہیں ہوگا۔",
+    "hidayat": "حرف قلقله بھی ہو تو سکون دیکھنا ضروری ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "طْ پر قلقله ہوگا؟",
+    "display": "طْ",
+    "a": "ہاں",
+    "rule": "قلقله",
+    "why": "ط حروف قلقله میں ہے اور ساکن ہے، اس لئے قلقله ہوگا۔",
+    "hidayat": "ق ط ب ج د ساکن ہوں تو ہلکا جھٹکا آتا ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "طَ پر قلقله ہوگا؟",
+    "display": "طَ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ط حروف قلقله میں ہے، لیکن یہاں ساکن نہیں ہے۔",
+    "hidayat": "قلقله کے لئے سکون ضروری ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "طِ پر قلقله ہوگا؟",
+    "display": "طِ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ط پر زیر ہے، سکون نہیں، اس لئے قلقله نہیں ہوگا۔",
+    "hidayat": "قلقله صرف ساکن حالت میں ہوتا ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "طُ پر قلقله ہوگا؟",
+    "display": "طُ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ط پر پیش ہے، سکون نہیں، اس لئے قلقله نہیں ہوگا۔",
+    "hidayat": "حرف قلقله بھی ہو تو سکون دیکھنا ضروری ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "بْ پر قلقله ہوگا؟",
+    "display": "بْ",
+    "a": "ہاں",
+    "rule": "قلقله",
+    "why": "ب حروف قلقله میں ہے اور ساکن ہے، اس لئے قلقله ہوگا۔",
+    "hidayat": "ق ط ب ج د ساکن ہوں تو ہلکا جھٹکا آتا ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "بَ پر قلقله ہوگا؟",
+    "display": "بَ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ب حروف قلقله میں ہے، لیکن یہاں ساکن نہیں ہے۔",
+    "hidayat": "قلقله کے لئے سکون ضروری ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "بِ پر قلقله ہوگا؟",
+    "display": "بِ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ب پر زیر ہے، سکون نہیں، اس لئے قلقله نہیں ہوگا۔",
+    "hidayat": "قلقله صرف ساکن حالت میں ہوتا ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "بُ پر قلقله ہوگا؟",
+    "display": "بُ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ب پر پیش ہے، سکون نہیں، اس لئے قلقله نہیں ہوگا۔",
+    "hidayat": "حرف قلقله بھی ہو تو سکون دیکھنا ضروری ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "جْ پر قلقله ہوگا؟",
+    "display": "جْ",
+    "a": "ہاں",
+    "rule": "قلقله",
+    "why": "ج حروف قلقله میں ہے اور ساکن ہے، اس لئے قلقله ہوگا۔",
+    "hidayat": "ق ط ب ج د ساکن ہوں تو ہلکا جھٹکا آتا ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "جَ پر قلقله ہوگا؟",
+    "display": "جَ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ج حروف قلقله میں ہے، لیکن یہاں ساکن نہیں ہے۔",
+    "hidayat": "قلقله کے لئے سکون ضروری ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "جِ پر قلقله ہوگا؟",
+    "display": "جِ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ج پر زیر ہے، سکون نہیں، اس لئے قلقله نہیں ہوگا۔",
+    "hidayat": "قلقله صرف ساکن حالت میں ہوتا ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "جُ پر قلقله ہوگا؟",
+    "display": "جُ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ج پر پیش ہے، سکون نہیں، اس لئے قلقله نہیں ہوگا۔",
+    "hidayat": "حرف قلقله بھی ہو تو سکون دیکھنا ضروری ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "دْ پر قلقله ہوگا؟",
+    "display": "دْ",
+    "a": "ہاں",
+    "rule": "قلقله",
+    "why": "د حروف قلقله میں ہے اور ساکن ہے، اس لئے قلقله ہوگا۔",
+    "hidayat": "ق ط ب ج د ساکن ہوں تو ہلکا جھٹکا آتا ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "دَ پر قلقله ہوگا؟",
+    "display": "دَ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "د حروف قلقله میں ہے، لیکن یہاں ساکن نہیں ہے۔",
+    "hidayat": "قلقله کے لئے سکون ضروری ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "دِ پر قلقله ہوگا؟",
+    "display": "دِ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "د پر زیر ہے، سکون نہیں، اس لئے قلقله نہیں ہوگا۔",
+    "hidayat": "قلقله صرف ساکن حالت میں ہوتا ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "دُ پر قلقله ہوگا؟",
+    "display": "دُ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "د پر پیش ہے، سکون نہیں، اس لئے قلقله نہیں ہوگا۔",
+    "hidayat": "حرف قلقله بھی ہو تو سکون دیکھنا ضروری ہے۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "سْ پر قلقله ہوگا؟",
+    "display": "سْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "س حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "مْ پر قلقله ہوگا؟",
+    "display": "مْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "م حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "نْ پر قلقله ہوگا؟",
+    "display": "نْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ن حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "لْ پر قلقله ہوگا؟",
+    "display": "لْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ل حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "رْ پر قلقله ہوگا؟",
+    "display": "رْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ر حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "وْ پر قلقله ہوگا؟",
+    "display": "وْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "و حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "یْ پر قلقله ہوگا؟",
+    "display": "یْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ی حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "حْ پر قلقله ہوگا؟",
+    "display": "حْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ح حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "خْ پر قلقله ہوگا؟",
+    "display": "خْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "خ حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "عْ پر قلقله ہوگا؟",
+    "display": "عْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ع حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "غْ پر قلقله ہوگا؟",
+    "display": "غْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "غ حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "صْ پر قلقله ہوگا؟",
+    "display": "صْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ص حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "ضْ پر قلقله ہوگا؟",
+    "display": "ضْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ض حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "ظْ پر قلقله ہوگا؟",
+    "display": "ظْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ظ حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "فْ پر قلقله ہوگا؟",
+    "display": "فْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ف حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "کْ پر قلقله ہوگا؟",
+    "display": "کْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ک حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "تْ پر قلقله ہوگا؟",
+    "display": "تْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ت حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "ثْ پر قلقله ہوگا؟",
+    "display": "ثْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ث حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "ذْ پر قلقله ہوگا؟",
+    "display": "ذْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ذ حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "زْ پر قلقله ہوگا؟",
+    "display": "زْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ز حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "qalqala",
+    "type": "قلقله",
+    "q": "شْ پر قلقله ہوگا؟",
+    "display": "شْ",
+    "a": "نہیں",
+    "rule": "قلقله نہیں",
+    "why": "ش حروف قلقله ق ط ب ج د میں شامل نہیں ہے۔",
+    "hidayat": "قلقله صرف ق ط ب ج د پر ہوتا ہے جب وہ ساکن ہوں۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ء آئے تو نون صاف پڑھنا ہے؟",
+    "display": "ــً + ء",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "ء حلقی حرف ہے، اس لئے نون صاف پڑھیں گے۔",
+    "hidayat": "یہ اظہار ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ہ آئے تو نون صاف پڑھنا ہے؟",
+    "display": "ــً + ہ",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "ہ حلقی حرف ہے، اس لئے نون صاف پڑھیں گے۔",
+    "hidayat": "یہ اظہار ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ع آئے تو نون صاف پڑھنا ہے؟",
+    "display": "ــً + ع",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "ع حلقی حرف ہے، اس لئے نون صاف پڑھیں گے۔",
+    "hidayat": "یہ اظہار ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ح آئے تو نون صاف پڑھنا ہے؟",
+    "display": "ــً + ح",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "ح حلقی حرف ہے، اس لئے نون صاف پڑھیں گے۔",
+    "hidayat": "یہ اظہار ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد غ آئے تو نون صاف پڑھنا ہے؟",
+    "display": "ــً + غ",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "غ حلقی حرف ہے، اس لئے نون صاف پڑھیں گے۔",
+    "hidayat": "یہ اظہار ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد خ آئے تو نون صاف پڑھنا ہے؟",
+    "display": "ــً + خ",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "خ حلقی حرف ہے، اس لئے نون صاف پڑھیں گے۔",
+    "hidayat": "یہ اظہار ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ی آئے تو نون اگلے حرف میں مل کر غنہ ہوگا؟",
+    "display": "ــً + ی",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "ی ادغام بغنہ کے حروف میں شامل ہے۔",
+    "hidayat": "ی ن م و کے ساتھ غنہ ہوتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ن آئے تو نون اگلے حرف میں مل کر غنہ ہوگا؟",
+    "display": "ــً + ن",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "ن ادغام بغنہ کے حروف میں شامل ہے۔",
+    "hidayat": "ی ن م و کے ساتھ غنہ ہوتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد م آئے تو نون اگلے حرف میں مل کر غنہ ہوگا؟",
+    "display": "ــً + م",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "م ادغام بغنہ کے حروف میں شامل ہے۔",
+    "hidayat": "ی ن م و کے ساتھ غنہ ہوتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد و آئے تو نون اگلے حرف میں مل کر غنہ ہوگا؟",
+    "display": "ــً + و",
+    "a": "ہاں",
+    "rule": "ادغام بغنہ",
+    "why": "و ادغام بغنہ کے حروف میں شامل ہے۔",
+    "hidayat": "ی ن م و کے ساتھ غنہ ہوتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ل آئے تو نون اگلے حرف میں ملے گا مگر غنہ نہیں ہوگا؟",
+    "display": "ــً + ل",
+    "a": "ہاں",
+    "rule": "ادغام بلا غنہ",
+    "why": "ل کے ساتھ ادغام بلا غنہ ہوتا ہے۔",
+    "hidayat": "ل ر کے ساتھ غنہ نہیں ہوتا۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ر آئے تو نون اگلے حرف میں ملے گا مگر غنہ نہیں ہوگا؟",
+    "display": "ــً + ر",
+    "a": "ہاں",
+    "rule": "ادغام بلا غنہ",
+    "why": "ر کے ساتھ ادغام بلا غنہ ہوتا ہے۔",
+    "hidayat": "ل ر کے ساتھ غنہ نہیں ہوتا۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ب آئے تو نون میم کی آواز میں بدل جائے گا؟",
+    "display": "ــً + ب",
+    "a": "ہاں",
+    "rule": "اقلاب",
+    "why": "ب اقلاب کا حرف ہے۔",
+    "hidayat": "اقلاب میں نون میم کی آواز میں بدلتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ت آئے تو نون کو چھپا کر پڑھنا ہے؟",
+    "display": "ــً + ت",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ت اخفاء والے حروف میں ہے۔",
+    "hidayat": "اخفاء میں نون چھپا کر غنہ کیا جاتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ث آئے تو نون کو چھپا کر پڑھنا ہے؟",
+    "display": "ــً + ث",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ث اخفاء والے حروف میں ہے۔",
+    "hidayat": "اخفاء میں نون چھپا کر غنہ کیا جاتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ج آئے تو نون کو چھپا کر پڑھنا ہے؟",
+    "display": "ــً + ج",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ج اخفاء والے حروف میں ہے۔",
+    "hidayat": "اخفاء میں نون چھپا کر غنہ کیا جاتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد د آئے تو نون کو چھپا کر پڑھنا ہے؟",
+    "display": "ــً + د",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "د اخفاء والے حروف میں ہے۔",
+    "hidayat": "اخفاء میں نون چھپا کر غنہ کیا جاتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ذ آئے تو نون کو چھپا کر پڑھنا ہے؟",
+    "display": "ــً + ذ",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ذ اخفاء والے حروف میں ہے۔",
+    "hidayat": "اخفاء میں نون چھپا کر غنہ کیا جاتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ز آئے تو نون کو چھپا کر پڑھنا ہے؟",
+    "display": "ــً + ز",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ز اخفاء والے حروف میں ہے۔",
+    "hidayat": "اخفاء میں نون چھپا کر غنہ کیا جاتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد س آئے تو نون کو چھپا کر پڑھنا ہے؟",
+    "display": "ــً + س",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "س اخفاء والے حروف میں ہے۔",
+    "hidayat": "اخفاء میں نون چھپا کر غنہ کیا جاتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ش آئے تو نون کو چھپا کر پڑھنا ہے؟",
+    "display": "ــً + ش",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ش اخفاء والے حروف میں ہے۔",
+    "hidayat": "اخفاء میں نون چھپا کر غنہ کیا جاتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ص آئے تو نون کو چھپا کر پڑھنا ہے؟",
+    "display": "ــً + ص",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ص اخفاء والے حروف میں ہے۔",
+    "hidayat": "اخفاء میں نون چھپا کر غنہ کیا جاتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ض آئے تو نون کو چھپا کر پڑھنا ہے؟",
+    "display": "ــً + ض",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ض اخفاء والے حروف میں ہے۔",
+    "hidayat": "اخفاء میں نون چھپا کر غنہ کیا جاتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ط آئے تو نون کو چھپا کر پڑھنا ہے؟",
+    "display": "ــً + ط",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ط اخفاء والے حروف میں ہے۔",
+    "hidayat": "اخفاء میں نون چھپا کر غنہ کیا جاتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "تنوین کے بعد ظ آئے تو نون کو چھپا کر پڑھنا ہے؟",
+    "display": "ــً + ظ",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ظ اخفاء والے حروف میں ہے۔",
+    "hidayat": "اخفاء میں نون چھپا کر غنہ کیا جاتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "کیا ء کے ساتھ اظہار کا قاعدہ یاد رکھنا ضروری ہے؟",
+    "display": "ء",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "ء حلقی حرف ہے، اس کے ساتھ اظہار سمجھنا ضروری ہے۔",
+    "hidayat": "حلقی حروف کے ساتھ نون صاف پڑھتے ہیں۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "کیا ہ کے ساتھ اظہار کا قاعدہ یاد رکھنا ضروری ہے؟",
+    "display": "ہ",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "ہ حلقی حرف ہے، اس کے ساتھ اظہار سمجھنا ضروری ہے۔",
+    "hidayat": "حلقی حروف کے ساتھ نون صاف پڑھتے ہیں۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "کیا ع کے ساتھ اظہار کا قاعدہ یاد رکھنا ضروری ہے؟",
+    "display": "ع",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "ع حلقی حرف ہے، اس کے ساتھ اظہار سمجھنا ضروری ہے۔",
+    "hidayat": "حلقی حروف کے ساتھ نون صاف پڑھتے ہیں۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "کیا ح کے ساتھ اظہار کا قاعدہ یاد رکھنا ضروری ہے؟",
+    "display": "ح",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "ح حلقی حرف ہے، اس کے ساتھ اظہار سمجھنا ضروری ہے۔",
+    "hidayat": "حلقی حروف کے ساتھ نون صاف پڑھتے ہیں۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "کیا غ کے ساتھ اظہار کا قاعدہ یاد رکھنا ضروری ہے؟",
+    "display": "غ",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "غ حلقی حرف ہے، اس کے ساتھ اظہار سمجھنا ضروری ہے۔",
+    "hidayat": "حلقی حروف کے ساتھ نون صاف پڑھتے ہیں۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "کیا خ کے ساتھ اظہار کا قاعدہ یاد رکھنا ضروری ہے؟",
+    "display": "خ",
+    "a": "ہاں",
+    "rule": "اظہار",
+    "why": "خ حلقی حرف ہے، اس کے ساتھ اظہار سمجھنا ضروری ہے۔",
+    "hidayat": "حلقی حروف کے ساتھ نون صاف پڑھتے ہیں۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "کیا ی حروف یرملون میں ہے؟",
+    "display": "ی",
+    "a": "ہاں",
+    "rule": "ادغام",
+    "why": "ی یرملون میں شامل ہے۔",
+    "hidayat": "یرملون کے ساتھ ادغام ہوتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "کیا ر حروف یرملون میں ہے؟",
+    "display": "ر",
+    "a": "ہاں",
+    "rule": "ادغام",
+    "why": "ر یرملون میں شامل ہے۔",
+    "hidayat": "یرملون کے ساتھ ادغام ہوتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "کیا م حروف یرملون میں ہے؟",
+    "display": "م",
+    "a": "ہاں",
+    "rule": "ادغام",
+    "why": "م یرملون میں شامل ہے۔",
+    "hidayat": "یرملون کے ساتھ ادغام ہوتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "کیا ل حروف یرملون میں ہے؟",
+    "display": "ل",
+    "a": "ہاں",
+    "rule": "ادغام",
+    "why": "ل یرملون میں شامل ہے۔",
+    "hidayat": "یرملون کے ساتھ ادغام ہوتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "کیا و حروف یرملون میں ہے؟",
+    "display": "و",
+    "a": "ہاں",
+    "rule": "ادغام",
+    "why": "و یرملون میں شامل ہے۔",
+    "hidayat": "یرملون کے ساتھ ادغام ہوتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "کیا ن حروف یرملون میں ہے؟",
+    "display": "ن",
+    "a": "ہاں",
+    "rule": "ادغام",
+    "why": "ن یرملون میں شامل ہے۔",
+    "hidayat": "یرملون کے ساتھ ادغام ہوتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "کیا نون ساکن کے بعد ت آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ت",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ت اخفاء والے حروف میں آتا ہے۔",
+    "hidayat": "اخفاء میں غنہ ہوتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "کیا نون ساکن کے بعد ث آئے تو اخفاء ہوگا؟",
+    "display": "نْ + ث",
+    "a": "ہاں",
+    "rule": "اخفاء",
+    "why": "ث اخفاء والے حروف میں آتا ہے۔",
+    "hidayat": "اخفاء میں غنہ ہوتا ہے۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "کیا ج ساکن ہو تو قلقله ہو سکتا ہے؟",
+    "display": "جْ",
+    "a": "ہاں",
+    "rule": "قلقله",
+    "why": "ج حروف قلقله میں ہے۔",
+    "hidayat": "حرف ساکن ہو تو قلقله ہوگا۔"
+  },
+  {
+    "lesson": "mixed",
+    "type": "ملا جلا",
+    "q": "کیا د ساکن ہو تو قلقله ہو سکتا ہے؟",
+    "display": "دْ",
+    "a": "ہاں",
+    "rule": "قلقله",
+    "why": "د حروف قلقله میں ہے۔",
+    "hidayat": "حرف ساکن ہو تو قلقله ہوگا۔"
   }
 ];
 
-/* =========================
-   STATE
-========================= */
+function getRuleExtraDetail(rule){
+  if(!rule){return "";}
+  if(rule.includes("اظہار")){return `<div class="infoLine">مزید تفصیل: <span>اظہار کا مطلب ہے نون کو صاف پڑھنا۔ نون ساکن یا تنوین کے بعد حلقی حروف آئیں تو اظہار ہوتا ہے۔</span></div><div class="infoLine">مثال 1: <span>مِنْ خَيْرٍ — نْ کے بعد خ ہے، اس لئے اظہار ہوگا۔</span></div><div class="infoLine">مثال 2: <span>مِنْ عِلْمٍ — نْ کے بعد ع ہے، اس لئے نون صاف پڑھیں گے۔</span></div>`;}
+  if(rule.includes("اقلاب")){return `<div class="infoLine">مزید تفصیل: <span>اقلاب کا مطلب ہے نون کو میم کی آواز میں بدل کر غنہ کرنا۔ نون ساکن یا تنوین کے بعد ب آئے تو اقلاب ہوتا ہے۔</span></div><div class="infoLine">مثال 1: <span>مِنْ بَعْدِ — نْ کے بعد ب ہے، اس لئے اقلاب ہوگا۔</span></div><div class="infoLine">مثال 2: <span>سَمِيعٌ بَصِيرٌ — تنوین کے بعد ب ہے، اس لئے اقلاب ہوگا۔</span></div>`;}
+  if(rule.includes("ادغام")){return `<div class="infoLine">مزید تفصیل: <span>ادغام کا مطلب ہے نون کو اگلے حرف میں ملا دینا۔ نون ساکن یا تنوین کے بعد یرملون آئے تو ادغام ہوتا ہے۔</span></div><div class="infoLine">مثال 1: <span>مَنْ يَقُولُ — نْ کے بعد ی ہے، اس لئے ادغام بغنہ ہوگا۔</span></div><div class="infoLine">مثال 2: <span>مِنْ رَبِّهِمْ — نْ کے بعد ر ہے، اس لئے ادغام بلا غنہ ہوگا۔</span></div>`;}
+  if(rule.includes("اخفاء")){return `<div class="infoLine">مزید تفصیل: <span>اخفاء کا مطلب ہے نون کو چھپا کر غنہ کرنا۔ نون صاف بھی نہیں پڑھتے، میم بھی نہیں بناتے، بلکہ غنہ کے ساتھ چھپا کر پڑھتے ہیں۔</span></div><div class="infoLine">مثال 1: <span>مِنْ تَحْتِهَا — نْ کے بعد ت ہے، اس لئے اخفاء ہوگا۔</span></div><div class="infoLine">مثال 2: <span>أَنْفُسَكُمْ — نْ کے بعد ف ہے، اس لئے اخفاء ہوگا۔</span></div>`;}
+  if(rule.includes("قلقله")){return `<div class="infoLine">مزید تفصیل: <span>قلقله کا مطلب ہے ساکن حرف پر ہلکا جھٹکا دینا۔ یہ صرف ق ط ب ج د میں ہوتا ہے جب یہ ساکن ہوں۔</span></div><div class="infoLine">مثال 1: <span>اَبْ — بْ ساکن ہے، اس لئے قلقله ہوگا۔</span></div><div class="infoLine">مثال 2: <span>اَقْ — قْ ساکن ہے، اس لئے قلقله ہوگا۔</span></div>`;}
+  if(rule.includes("غنہ")){return `<div class="infoLine">مزید تفصیل: <span>غنہ ناک سے آواز نکالنے کو کہتے ہیں۔ نّ، مّ، اقلاب، اخفاء، اور ادغام بغنہ میں غنہ ہوتا ہے۔</span></div><div class="infoLine">مثال 1: <span>إِنَّ — نّ پر غنہ ہوگا۔</span></div><div class="infoLine">مثال 2: <span>ثُمَّ — مّ پر غنہ ہوگا۔</span></div>`;}
+  return "";
+}
 let currentLesson = "mixed";
 let quizQuestions = [];
 let currentIndex = 0;
 let score = 0;
 let answered = false;
-let totalQuestions = 10;
-
-/* =========================
-   START
-========================= */
-document.addEventListener("DOMContentLoaded", function(){
-  buildLessonMenu();
-  startQuiz();
-});
-
-/* =========================
-   GO BACK TO QAIDA MAIN
-========================= */
-function goBackToQaida(){
-  window.location.href = "../";
-}
-
-/* =========================
-   BUILD LESSON MENU
-========================= */
-function buildLessonMenu(){
-
-  const lessonGrid = document.getElementById("lessonGrid");
-  lessonGrid.innerHTML = "";
-
-  lessons.forEach(function(lesson){
-
-    const btn = document.createElement("button");
-    btn.className = "lessonBtn";
-    btn.id = "lessonBtn_" + lesson.id;
-
-    btn.onclick = function(){
-      selectLesson(lesson.id);
-    };
-
-    btn.innerHTML = `
-      <div class="lessonName">${lesson.name}</div>
-      <div class="lessonDesc">${lesson.desc}</div>
-    `;
-
-    lessonGrid.appendChild(btn);
-
-  });
-
-  updateActiveLessonButton();
-
-}
-
-/* =========================
-   TOGGLE LESSON MENU
-========================= */
-function toggleLessonMenu(){
-  const menu = document.getElementById("lessonMenu");
-  menu.classList.toggle("show");
-}
-
-/* =========================
-   SELECT LESSON
-========================= */
-function selectLesson(id){
-
-  currentLesson = id;
-
-  const lesson = lessons.find(function(item){
-    return item.id === id;
-  });
-
-  if(lesson){
-    document.getElementById("lessonBadge").innerText = lesson.badge;
-  }
-
-  document.getElementById("lessonMenu").classList.remove("show");
-
-  updateActiveLessonButton();
-  restartQuiz();
-
-}
-
-/* =========================
-   UPDATE ACTIVE LESSON BUTTON
-========================= */
-function updateActiveLessonButton(){
-
-  lessons.forEach(function(lesson){
-
-    const btn = document.getElementById("lessonBtn_" + lesson.id);
-    if(!btn) return;
-
-    if(lesson.id === currentLesson){
-      btn.classList.add("active");
-    }else{
-      btn.classList.remove("active");
-    }
-
-  });
-
-}
-
-/* =========================
-   START QUIZ
-========================= */
-function startQuiz(){
-
-  score = 0;
-  currentIndex = 0;
-  answered = false;
-
-  let baseData = [];
-
-  if(currentLesson === "mixed"){
-    baseData = questions.slice();
-  }else{
-    baseData = questions.filter(function(item){
-      return item.lesson === currentLesson || item.lesson === "mixed";
-    });
-  }
-
-  if(baseData.length === 0){
-    baseData = questions.slice();
-  }
-
-  quizQuestions = shuffleArray(baseData).slice(0, Math.min(totalQuestions, baseData.length));
-
-  loadBestScore();
-  updateStats();
-  showQuestion();
-
-}
-
-/* =========================
-   SHOW QUESTION
-========================= */
-function showQuestion(){
-
-  answered = false;
-
-  const explainCard = document.getElementById("explainCard");
-  explainCard.className = "explainCard";
-  explainCard.innerHTML = "";
-
-  const q = quizQuestions[currentIndex];
-
-  document.getElementById("questionNo").innerText = "سوال " + (currentIndex + 1);
-  document.getElementById("questionType").innerText = q.type;
-  document.getElementById("questionText").innerText = q.q;
-  document.getElementById("bigArabic").innerText = q.display;
-  document.getElementById("hintPill").innerText = "ہاں یا نہیں";
-
-  const bigArabic = document.getElementById("bigArabic");
-
-  if(String(q.display).length > 5){
-    bigArabic.classList.add("small");
-  }else{
-    bigArabic.classList.remove("small");
-  }
-
-  const optionsGrid = document.getElementById("optionsGrid");
-  optionsGrid.innerHTML = "";
-
-  const options = ["ہاں","نہیں"];
-
-  options.forEach(function(option){
-
-    const btn = document.createElement("button");
-    btn.className = "optionBtn";
-    btn.dataset.answerValue = option;
-    btn.innerText = option;
-
-    btn.onclick = function(){
-      checkAnswer(option, btn);
-    };
-
-    optionsGrid.appendChild(btn);
-
-  });
-
-  updateStats();
-
-}
-
-/* =========================
-   CHECK ANSWER
-========================= */
-function checkAnswer(selected, clickedBtn){
-
-  if(answered) return;
-
-  answered = true;
-
-  const q = quizQuestions[currentIndex];
-  const allBtns = document.querySelectorAll(".optionBtn");
-  const explainCard = document.getElementById("explainCard");
-
-  allBtns.forEach(function(btn){
-
-    btn.classList.add("disabled");
-
-    if(btn.dataset.answerValue === q.a){
-      btn.classList.add("correct");
-    }
-
-  });
-
-  if(selected === q.a){
-
-    score++;
-    clickedBtn.classList.add("correct");
-
-    explainCard.className = "explainCard show good";
-    explainCard.innerHTML = `
-      <div class="resultLine">درست جواب ✅</div>
-      <div class="infoLine">صحیح جواب: <span>${q.a}</span></div>
-      <div class="infoLine">Rule: <span>${q.rule}</span></div>
-      <div class="infoLine">کیوں صحیح ہے: <span>${q.why}</span></div>
-      <div class="infoLine">ہدایات: <span>${q.hidayat}</span></div>
-    `;
-
-  }else{
-
-    clickedBtn.classList.add("wrong");
-
-    explainCard.className = "explainCard show bad";
-    explainCard.innerHTML = `
-      <div class="resultLine">غلط جواب ❌</div>
-      <div class="infoLine">صحیح جواب: <span>${q.a}</span></div>
-      <div class="infoLine">Rule: <span>${q.rule}</span></div>
-      <div class="infoLine">کیوں صحیح ہے: <span>${q.why}</span></div>
-      <div class="infoLine">ہدایات: <span>${q.hidayat}</span></div>
-    `;
-
-  }
-
-  updateStats();
-
-}
-
-/* =========================
-   NEXT QUESTION
-========================= */
-function nextQuestion(){
-
-  if(!answered){
-
-    const explainCard = document.getElementById("explainCard");
-    explainCard.className = "explainCard show bad";
-    explainCard.innerHTML = `
-      <div class="resultLine">پہلے جواب منتخب کریں</div>
-      <div class="infoLine">اگلے سوال پر جانے سے پہلے ہاں یا نہیں select کریں۔</div>
-    `;
-
-    return;
-
-  }
-
-  if(currentIndex < quizQuestions.length - 1){
-    currentIndex++;
-    showQuestion();
-  }else{
-    finishQuiz();
-  }
-
-}
-
-/* =========================
-   FINISH QUIZ
-========================= */
-function finishQuiz(){
-
-  const bestKey = getBestKey();
-  const oldBest = Number(localStorage.getItem(bestKey) || "0");
-
-  if(score > oldBest){
-    localStorage.setItem(bestKey, String(score));
-  }
-
-  loadBestScore();
-
-  document.getElementById("finishScore").innerText = score + "/" + quizQuestions.length;
-
-  let msg = "آپ نے quiz مکمل کر لیا۔";
-
-  if(score === quizQuestions.length){
-    msg = "بہت خوب! سب answers درست ہیں۔";
-  }else if(score >= Math.ceil(quizQuestions.length * 0.7)){
-    msg = "اچھا score ہے۔ جو answers غلط ہوئے، ان کی tafseel دوبارہ پڑھیں۔";
-  }else{
-    msg = "کوئی بات نہیں۔ غلط answers کے نیچے tafseel پڑھ کر دوبارہ practice کریں۔";
-  }
-
-  document.getElementById("finishMsg").innerText = msg;
-  document.getElementById("finishOverlay").classList.add("show");
-
-}
-
-/* =========================
-   RESTART QUIZ
-========================= */
-function restartQuiz(){
-  document.getElementById("finishOverlay").classList.remove("show");
-  startQuiz();
-}
-
-/* =========================
-   CLOSE FINISH
-========================= */
-function closeFinish(){
-  document.getElementById("finishOverlay").classList.remove("show");
-}
-
-/* =========================
-   UPDATE STATS
-========================= */
-function updateStats(){
-
-  document.getElementById("scoreText").innerText = score;
-
-  if(quizQuestions.length){
-    document.getElementById("countText").innerText = (currentIndex + 1) + "/" + quizQuestions.length;
-  }else{
-    document.getElementById("countText").innerText = "0/0";
-  }
-
-}
-
-/* =========================
-   BEST SCORE
-========================= */
-function getBestKey(){
-  return "nooraniQaidaYesNoQuizBest_" + currentLesson;
-}
-
-function loadBestScore(){
-  const best = Number(localStorage.getItem(getBestKey()) || "0");
-  document.getElementById("bestText").innerText = best;
-}
-
-/* =========================
-   SHUFFLE ARRAY
-========================= */
-function shuffleArray(array){
-
-  const copied = array.slice();
-
-  for(let i = copied.length - 1; i > 0; i--){
-
-    const j = Math.floor(Math.random() * (i + 1));
-    const temp = copied[i];
-
-    copied[i] = copied[j];
-    copied[j] = temp;
-
-  }
-
-  return copied;
-
-}
+let totalQuestions = 20;
+document.addEventListener("DOMContentLoaded", function(){buildLessonMenu();startQuiz();});
+function goBackToQaida(){window.location.href = "../";}
+function buildLessonMenu(){const lessonGrid=document.getElementById("lessonGrid");lessonGrid.innerHTML="";lessons.forEach(function(lesson){const btn=document.createElement("button");btn.className="lessonBtn";btn.id="lessonBtn_"+lesson.id;btn.onclick=function(){selectLesson(lesson.id);};btn.innerHTML=`<div class="lessonName">${lesson.name}</div><div class="lessonDesc">${lesson.desc}</div>`;lessonGrid.appendChild(btn);});updateActiveLessonButton();}
+function toggleLessonMenu(){document.getElementById("lessonMenu").classList.toggle("show");}
+function selectLesson(id){currentLesson=id;const lesson=lessons.find(function(item){return item.id===id;});if(lesson){document.getElementById("lessonBadge").innerText=lesson.badge;}document.getElementById("lessonMenu").classList.remove("show");updateActiveLessonButton();restartQuiz();}
+function updateActiveLessonButton(){lessons.forEach(function(lesson){const btn=document.getElementById("lessonBtn_"+lesson.id);if(!btn)return;if(lesson.id===currentLesson){btn.classList.add("active");}else{btn.classList.remove("active");}});}
+function startQuiz(){score=0;currentIndex=0;answered=false;let baseData=[];if(currentLesson==="mixed"){baseData=questions.slice();}else{baseData=questions.filter(function(item){return item.lesson===currentLesson || item.lesson==="mixed";});}if(baseData.length===0){baseData=questions.slice();}quizQuestions=shuffleArray(baseData).slice(0,Math.min(totalQuestions,baseData.length));loadBestScore();updateStats();showQuestion();}
+function showQuestion(){answered=false;const explainCard=document.getElementById("explainCard");explainCard.className="explainCard";explainCard.innerHTML="";const q=quizQuestions[currentIndex];document.getElementById("questionNo").innerText="سوال "+(currentIndex+1);document.getElementById("questionType").innerText=q.type;document.getElementById("questionText").innerText=q.q;document.getElementById("bigArabic").innerText=q.display;document.getElementById("hintPill").innerText="ہاں یا نہیں";const bigArabic=document.getElementById("bigArabic");if(String(q.display).length>5){bigArabic.classList.add("small");}else{bigArabic.classList.remove("small");}const optionsGrid=document.getElementById("optionsGrid");optionsGrid.innerHTML="";["ہاں","نہیں"].forEach(function(option){const btn=document.createElement("button");btn.className="optionBtn";btn.dataset.answerValue=option;btn.innerText=option;btn.onclick=function(){checkAnswer(option,btn);};optionsGrid.appendChild(btn);});updateStats();}
+function checkAnswer(selected,clickedBtn){if(answered)return;answered=true;const q=quizQuestions[currentIndex];const allBtns=document.querySelectorAll(".optionBtn");const explainCard=document.getElementById("explainCard");allBtns.forEach(function(btn){btn.classList.add("disabled");if(btn.dataset.answerValue===q.a){btn.classList.add("correct");}});if(selected===q.a){score++;clickedBtn.classList.add("correct");explainCard.className="explainCard show good";explainCard.innerHTML=`<div class="resultLine">درست جواب ✅</div><div class="infoLine">صحیح جواب: <span>${q.a}</span></div><div class="infoLine">قاعدہ: <span>${q.rule}</span></div><div class="infoLine">کیوں صحیح ہے: <span>${q.why}</span></div><div class="infoLine">ہدایات: <span>${q.hidayat}</span></div>${getRuleExtraDetail(q.rule)}`;}else{clickedBtn.classList.add("wrong");explainCard.className="explainCard show bad";explainCard.innerHTML=`<div class="resultLine">غلط جواب ❌</div><div class="infoLine">صحیح جواب: <span>${q.a}</span></div><div class="infoLine">قاعدہ: <span>${q.rule}</span></div><div class="infoLine">کیوں صحیح ہے: <span>${q.why}</span></div><div class="infoLine">ہدایات: <span>${q.hidayat}</span></div>${getRuleExtraDetail(q.rule)}`;}updateStats();}
+function nextQuestion(){if(!answered){const explainCard=document.getElementById("explainCard");explainCard.className="explainCard show bad";explainCard.innerHTML=`<div class="resultLine">پہلے جواب منتخب کریں</div><div class="infoLine">اگلے سوال پر جانے سے پہلے ہاں یا نہیں select کریں۔</div>`;return;}if(currentIndex<quizQuestions.length-1){currentIndex++;showQuestion();}else{finishQuiz();}}
+function finishQuiz(){const bestKey=getBestKey();const oldBest=Number(localStorage.getItem(bestKey)||"0");if(score>oldBest){localStorage.setItem(bestKey,String(score));}loadBestScore();document.getElementById("finishScore").innerText=score+"/"+quizQuestions.length;let msg="آپ نے quiz مکمل کر لیا۔";if(score===quizQuestions.length){msg="بہت خوب! سب answers درست ہیں۔";}else if(score>=Math.ceil(quizQuestions.length*0.7)){msg="اچھا score ہے۔ جو answers غلط ہوئے، ان کی تفصیل دوبارہ پڑھیں۔";}else{msg="کوئی بات نہیں۔ غلط answers کے نیچے تفصیل پڑھ کر دوبارہ practice کریں۔";}document.getElementById("finishMsg").innerText=msg;document.getElementById("finishOverlay").classList.add("show");}
+function restartQuiz(){document.getElementById("finishOverlay").classList.remove("show");startQuiz();}
+function closeFinish(){document.getElementById("finishOverlay").classList.remove("show");}
+function updateStats(){document.getElementById("scoreText").innerText=score;if(quizQuestions.length){document.getElementById("countText").innerText=(currentIndex+1)+"/"+quizQuestions.length;}else{document.getElementById("countText").innerText="0/0";}}
+function getBestKey(){return "nooraniQaidaYesNoQuizBest_"+currentLesson;}
+function loadBestScore(){const best=Number(localStorage.getItem(getBestKey())||"0");document.getElementById("bestText").innerText=best;}
+function shuffleArray(array){const copied=array.slice();for(let i=copied.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const temp=copied[i];copied[i]=copied[j];copied[j]=temp;}return copied;}
 </script>
-
 </body>
 </html>
