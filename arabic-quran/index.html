@@ -5,7 +5,7 @@
 <!-- =========================
      QURAN WITH AUDIO & URDU FOLDER PAGE
      File: arabic-quran/index.html
-     Features: Indo-Pak font support, reader audio, optional Urdu translation
+     Features: Quran.com Indo-Pak Arabic text, reader audio, optional Urdu translation
 ========================= -->
 
 <meta charset="UTF-8">
@@ -298,12 +298,16 @@ button{
 }
 
 .surahArabic{
-  font-family:"IndoPakQuran", "Scheherazade New", "Noto Nastaliq Urdu", "Noto Naskh Arabic", serif;
+  font-family:"Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
   direction:rtl;
-  font-size:24px;
+  font-size:25px;
   font-weight:700;
-  color:#555;
-  line-height:1.55;
+  color:#333;
+  line-height:1.7;
+  letter-spacing:0;
+  word-spacing:2px;
+  font-feature-settings:"liga" 1, "calt" 1, "kern" 1;
+  text-rendering:optimizeLegibility;
 }
 
 .surahMeta{
@@ -574,13 +578,17 @@ body.quran-audio-compact .compactAudioRow{
 }
 
 .readingArabicTitle{
-  font-family:"IndoPakQuran", "Scheherazade New", "Noto Nastaliq Urdu", "Noto Naskh Arabic", serif;
+  font-family:"Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
   direction:rtl;
-  font-size:36px;
+  font-size:37px;
   font-weight:700;
   color:#111;
-  line-height:1.7;
+  line-height:1.85;
   margin-bottom:6px;
+  letter-spacing:0;
+  word-spacing:3px;
+  font-feature-settings:"liga" 1, "calt" 1, "kern" 1;
+  text-rendering:optimizeLegibility;
 }
 
 .readingEnglishTitle{
@@ -778,14 +786,55 @@ body.quran-audio-compact .compactAudioRow{
   flex:1;
 }
 
+.ayahVerseTitle{
+  font-size:15px;
+  font-weight:900;
+  color:#374151;
+  margin-bottom:12px;
+  letter-spacing:-0.2px;
+}
+
 .ayahArabic{
-  font-family:"IndoPakQuran", "Scheherazade New", "Noto Nastaliq Urdu", "Noto Naskh Arabic", serif;
+  font-family:"Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
   direction:rtl;
   text-align:right;
-  font-size:33px;
+  font-size:34px;
   line-height:2.15;
-  color:#111;
+  color:#050505;
   font-weight:700;
+  letter-spacing:0;
+  word-spacing:3px;
+  font-feature-settings:"liga" 1, "calt" 1, "kern" 1;
+  text-rendering:optimizeLegibility;
+}
+
+.ayahEndNumber{
+  display:inline-block;
+  font-family:"Noto Naskh Arabic", "Scheherazade New", serif;
+  font-size:0.72em;
+  font-weight:900;
+  color:#111;
+  margin-right:8px;
+  vertical-align:baseline;
+}
+
+.ayahEnglish{
+  margin-top:18px;
+  padding-top:16px;
+  border-top:1px solid #ececf1;
+  color:#374151;
+  font-size:17px;
+  line-height:1.75;
+  font-weight:600;
+  text-align:left;
+}
+
+.ayahEnglishSource{
+  margin-top:6px;
+  color:#6b7280;
+  font-size:14px;
+  font-weight:800;
+  text-align:left;
 }
 
 .ayahUrdu{
@@ -833,9 +882,10 @@ body.urdu-on .ayahUrdu{
 @media(max-width:390px){
   .heroTitle{ font-size:28px; }
   .optionTitle{ font-size:19px; }
-  .ayahArabic{ font-size:29px; line-height:2.1; }
-  .readingArabicTitle{ font-size:32px; }
+  .ayahArabic{ font-size:31px; line-height:2.1; }
+  .readingArabicTitle{ font-size:33px; line-height:1.8; }
   .ayahUrdu{ font-size:17px; line-height:2.05; }
+  .ayahEnglish{ font-size:16px; line-height:1.65; }
   .compactAudioTitle{ font-size:13px; }
   .compactAudioBtn{ min-width:40px; padding:0 10px; }
 }
@@ -1179,6 +1229,7 @@ let audioPaused = true;
 let ayahAudioUrlCache = {};
 
 const QURAN_API_BASE = "https://api.alquran.cloud/v1";
+const QURAN_COM_API_BASE = "https://api.quran.com/api/v4";
 
 const audioReciters = {
   afs: {
@@ -1309,6 +1360,60 @@ async function loadOnlineSurahList(){
   }catch(error){
     renderSurahList();
   }
+}
+
+/* =========================
+   FETCH QURAN.COM STYLE VERSES
+   Direct Indo-Pak Arabic + T. Usmani English translation.
+   Translation ID 85 is T. Usmani on Quran.com.
+========================= */
+async function fetchQuranComIndopakAyahs(chapterNumber){
+  let allVerses = [];
+  let page = 1;
+  let totalPages = 1;
+
+  while(page <= totalPages){
+    let url = QURAN_COM_API_BASE +
+      "/verses/by_chapter/" + chapterNumber +
+      "?language=en&words=false&per_page=50&page=" + page +
+      "&fields=text_indopak" +
+      "&translations=85" +
+      "&translation_fields=resource_name,language_name";
+
+    let response = await fetch(url);
+    let result = await response.json();
+
+    if(!result || !Array.isArray(result.verses)){
+      throw new Error("Quran.com direct Indo-Pak text not found");
+    }
+
+    result.verses.forEach(function(verse){
+      let englishTranslation = "";
+      let englishSource = "T. Usmani";
+
+      if(verse.translations && verse.translations[0]){
+        englishTranslation = stripHtml(verse.translations[0].text || "");
+
+        if(verse.translations[0].resource_name){
+          englishSource = "T. Usmani";
+        }
+      }
+
+      allVerses.push({
+        number: verse.id,
+        numberInSurah: verse.verse_number,
+        text: verse.text_indopak || "",
+        verseKey: verse.verse_key || (chapterNumber + ":" + verse.verse_number),
+        english: englishTranslation,
+        englishSource: englishSource
+      });
+    });
+
+    totalPages = result.pagination && result.pagination.total_pages ? Number(result.pagination.total_pages) : 1;
+    page++;
+  }
+
+  return allVerses;
 }
 
 /* =========================
@@ -1502,20 +1607,22 @@ async function openArabicReadingPage(surahNumber, backPage){
   }
 
   try{
-    let arabicUrl = QURAN_API_BASE + "/surah/" + surah.num + "/quran-uthmani";
     let urduUrl = QURAN_API_BASE + "/surah/" + surah.num + "/ur.jalandhry";
 
-    let arabicResponse = await fetch(arabicUrl);
-    let urduResponse = await fetch(urduUrl);
+    let arabicPromise = fetchQuranComIndopakAyahs(surah.num);
+    let urduPromise = fetch(urduUrl).then(function(response){
+      return response.json();
+    });
 
-    let arabicResult = await arabicResponse.json();
-    let urduResult = await urduResponse.json();
+    let results = await Promise.all([arabicPromise, urduPromise]);
+    let arabicAyahs = results[0];
+    let urduResult = results[1];
 
-    if(!arabicResult || !arabicResult.data || !arabicResult.data.ayahs){
-      throw new Error("Arabic Surah data not found");
+    if(!arabicAyahs || !arabicAyahs.length){
+      throw new Error("Quran.com direct Indo-Pak Arabic Surah data not found");
     }
 
-    currentArabicAyahs = arabicResult.data.ayahs || [];
+    currentArabicAyahs = arabicAyahs;
     currentUrduAyahs = (urduResult && urduResult.data && urduResult.data.ayahs) ? urduResult.data.ayahs : [];
 
     renderArabicAyahs();
@@ -1546,6 +1653,10 @@ function renderArabicAyahs(){
     let card = document.createElement("div");
     card.className = "ayahCard";
 
+    let verseTitle = getQuranComVerseTitle(ayah);
+    let englishText = ayah.english || "";
+    let englishSource = ayah.englishSource || "T. Usmani";
+
     card.innerHTML = `
       <div class="ayahTopRow">
         <div class="ayahNumberTools">
@@ -1554,7 +1665,10 @@ function renderArabicAyahs(){
           <button id="ayahRepeatBtn_${index}" class="ayahRepeatBtn" onclick="toggleAyahRepeat(event, ${index})" title="Repeat this ayah">🔁</button>
         </div>
         <div class="ayahTextWrap">
-          <div class="ayahArabic">${escapeHtml(ayah.text)}</div>
+          <div class="ayahVerseTitle">${escapeHtml(verseTitle)}</div>
+          <div class="ayahArabic">${escapeHtml(ayah.text)} <span class="ayahEndNumber">${toArabicIndicNumber(ayah.numberInSurah)}</span></div>
+          <div class="ayahEnglish">${escapeHtml(englishText)}</div>
+          <div class="ayahEnglishSource">— ${escapeHtml(englishSource)}</div>
           <div class="ayahUrdu">${escapeHtml(urduText)}</div>
         </div>
       </div>
@@ -2136,6 +2250,148 @@ function setupAudioEndedListener(){
 
 function padSurahNumber(num){
   return String(num).padStart(3, "0");
+}
+
+/* =========================
+   QURAN.COM STYLE DISPLAY HELPERS
+========================= */
+function getQuranComVerseTitle(ayah){
+  let surahTitle = getQuranComSurahDisplayName(currentArabicSurahNumber);
+  return surahTitle + " (" + currentArabicSurahNumber + ":" + ayah.numberInSurah + ")";
+}
+
+function getQuranComSurahDisplayName(surahNumber){
+  const quranComNames = {
+    1:"The Opener",
+    2:"The Cow",
+    3:"Family of Imran",
+    4:"The Women",
+    5:"The Table Spread",
+    6:"The Cattle",
+    7:"The Heights",
+    8:"The Spoils of War",
+    9:"The Repentance",
+    10:"Jonah",
+    11:"Hud",
+    12:"Joseph",
+    13:"The Thunder",
+    14:"Abraham",
+    15:"The Rocky Tract",
+    16:"The Bee",
+    17:"The Night Journey",
+    18:"The Cave",
+    19:"Mary",
+    20:"Ta-Ha",
+    21:"The Prophets",
+    22:"The Pilgrimage",
+    23:"The Believers",
+    24:"The Light",
+    25:"The Criterion",
+    26:"The Poets",
+    27:"The Ant",
+    28:"The Stories",
+    29:"The Spider",
+    30:"The Romans",
+    31:"Luqman",
+    32:"The Prostration",
+    33:"The Combined Forces",
+    34:"Sheba",
+    35:"The Originator",
+    36:"Ya-Sin",
+    37:"Those who set the Ranks",
+    38:"Sad",
+    39:"The Groups",
+    40:"The Forgiver",
+    41:"Explained in Detail",
+    42:"The Consultation",
+    43:"The Ornaments of Gold",
+    44:"The Smoke",
+    45:"The Crouching",
+    46:"The Wind-Curved Sandhills",
+    47:"Muhammad",
+    48:"The Victory",
+    49:"The Rooms",
+    50:"Qaf",
+    51:"The Winnowing Winds",
+    52:"The Mount",
+    53:"The Star",
+    54:"The Moon",
+    55:"The Beneficent",
+    56:"The Inevitable",
+    57:"The Iron",
+    58:"The Pleading Woman",
+    59:"The Exile",
+    60:"She that is to be examined",
+    61:"The Ranks",
+    62:"The Congregation",
+    63:"The Hypocrites",
+    64:"The Mutual Disillusion",
+    65:"The Divorce",
+    66:"The Prohibition",
+    67:"The Sovereignty",
+    68:"The Pen",
+    69:"The Reality",
+    70:"The Ascending Stairways",
+    71:"Noah",
+    72:"The Jinn",
+    73:"The Enshrouded One",
+    74:"The Cloaked One",
+    75:"The Resurrection",
+    76:"Man",
+    77:"The Emissaries",
+    78:"The Tidings",
+    79:"Those who drag forth",
+    80:"He Frowned",
+    81:"The Overthrowing",
+    82:"The Cleaving",
+    83:"The Defrauding",
+    84:"The Sundering",
+    85:"The Mansions of the Stars",
+    86:"The Nightcomer",
+    87:"The Most High",
+    88:"The Overwhelming",
+    89:"The Dawn",
+    90:"The City",
+    91:"The Sun",
+    92:"The Night",
+    93:"The Morning Hours",
+    94:"The Relief",
+    95:"The Fig",
+    96:"The Clot",
+    97:"The Power",
+    98:"The Clear Proof",
+    99:"The Earthquake",
+    100:"The Courser",
+    101:"The Calamity",
+    102:"The Rivalry in world increase",
+    103:"The Declining Day",
+    104:"The Traducer",
+    105:"The Elephant",
+    106:"Quraysh",
+    107:"The Small Kindnesses",
+    108:"The Abundance",
+    109:"The Disbelievers",
+    110:"The Divine Support",
+    111:"The Palm Fiber",
+    112:"The Sincerity",
+    113:"The Daybreak",
+    114:"Mankind"
+  };
+
+  return quranComNames[Number(surahNumber)] || currentArabicSurahEnglish || "Quran";
+}
+
+function toArabicIndicNumber(value){
+  const digits = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
+  return String(value).replace(/[0-9]/g, function(digit){
+    return digits[Number(digit)];
+  });
+}
+
+function stripHtml(value){
+  let temp = document.createElement("div");
+  temp.innerHTML = String(value || "");
+  return temp.textContent || temp.innerText || "";
 }
 
 /* =========================
