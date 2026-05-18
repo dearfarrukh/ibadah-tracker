@@ -833,6 +833,125 @@ body.urdu-on .ayahUrdu{
   display:block;
 }
 
+
+/* =========================
+   BISMILLAH CARD
+========================= */
+.bismillahCard{
+  width:100%;
+  background:white;
+  border-radius:28px;
+  padding:24px 5%;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  text-align:center;
+}
+
+.bismillahArabic{
+  font-family:"Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  direction:rtl;
+  text-align:center;
+  font-size:35px;
+  line-height:2;
+  color:#050505;
+  font-weight:700;
+  letter-spacing:0;
+  word-spacing:3px;
+  font-feature-settings:"liga" 1, "calt" 1, "kern" 1;
+  text-rendering:optimizeLegibility;
+}
+
+.bismillahUrdu{
+  direction:rtl;
+  text-align:center;
+  font-family:"Noto Nastaliq Urdu", "Noto Naskh Arabic", serif;
+  margin-top:10px;
+  color:#374151;
+  font-size:18px;
+  line-height:2.05;
+  font-weight:600;
+}
+
+.bismillahEnglish{
+  margin-top:8px;
+  color:#374151;
+  font-size:16px;
+  line-height:1.65;
+  font-weight:600;
+  text-align:center;
+}
+
+/* =========================
+   GLOBAL MINI AUDIO PLAYER
+========================= */
+.globalQuranMiniPlayer{
+  display:none;
+  position:fixed;
+  left:4%;
+  right:4%;
+  bottom:calc(14px + env(safe-area-inset-bottom));
+  z-index:8500;
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-radius:24px;
+  padding:10px 12px;
+  box-shadow:0 12px 34px rgba(0,0,0,0.18);
+  border:1px solid rgba(255,255,255,0.75);
+  align-items:center;
+  gap:10px;
+}
+
+body.quran-global-mini-on .globalQuranMiniPlayer{
+  display:flex;
+}
+
+.globalMiniPlayBtn,
+.globalMiniStopBtn{
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:50%;
+  background:#111827;
+  color:white;
+  font-size:16px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+
+.globalMiniStopBtn{
+  background:#f2f2f7;
+  color:#111;
+}
+
+.globalMiniText{
+  min-width:0;
+  flex:1;
+}
+
+.globalMiniTitle{
+  font-size:15px;
+  font-weight:900;
+  color:#111;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  letter-spacing:-0.2px;
+}
+
+.globalMiniSub{
+  font-size:12px;
+  font-weight:700;
+  color:#666;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  margin-top:2px;
+}
+
 /* =========================
    TOAST
 ========================= */
@@ -1059,6 +1178,18 @@ body.urdu-on .ayahUrdu{
 ========================= -->
 <div id="toast">Saved</div>
 
+<!-- =========================
+     GLOBAL MINI AUDIO PLAYER
+========================= -->
+<div id="globalQuranMiniPlayer" class="globalQuranMiniPlayer" onclick="openCurrentPlayingSurahFromMini()">
+  <button id="globalMiniPlayBtn" class="globalMiniPlayBtn" onclick="toggleCurrentAudioPlayback(event)">▶</button>
+  <div class="globalMiniText">
+    <div id="globalMiniTitle" class="globalMiniTitle">Quran Audio</div>
+    <div id="globalMiniSub" class="globalMiniSub">Playing in background</div>
+  </div>
+  <button class="globalMiniStopBtn" onclick="stopGlobalQuranAudio(event)">×</button>
+</div>
+
 <script>
 
 /* =========================
@@ -1197,6 +1328,11 @@ let englishTranslationOn = localStorage.getItem("arabicQuranEnglishTranslation")
 let currentAudioMode = "none";
 let currentPlayingAyahIndex = -1;
 let repeatAyahIndex = -1;
+let repeatRangeStartIndex = -1;
+let repeatRangeEndIndex = -1;
+let playBismillahBeforeSurah = false;
+let arabicReadingPageIsOpen = false;
+let backgroundAudioAllowed = true;
 let autoContinueAyahs = false;
 let audioWithTranslationMode = false;
 let audioPaused = true;
@@ -1567,9 +1703,15 @@ async function openArabicReadingPage(surahNumber, backPage, targetAyahNumber){
     readingPage.style.display = "block";
   }
 
+  arabicReadingPageIsOpen = true;
+  document.body.classList.remove("quran-global-mini-on");
+
   resetArabicReaderTopBar();
   stopCurrentSurahAudio();
   repeatAyahIndex = -1;
+  repeatRangeStartIndex = -1;
+  repeatRangeEndIndex = -1;
+  playBismillahBeforeSurah = false;
   autoContinueAyahs = false;
   audioWithTranslationMode = false;
   updateUrduToggleUI();
@@ -1638,6 +1780,17 @@ function renderArabicAyahs(){
   if(!ayahList) return;
 
   ayahList.innerHTML = "";
+
+  if(shouldShowBismillahCard()){
+    let bismillahCard = document.createElement("div");
+    bismillahCard.className = "bismillahCard";
+    bismillahCard.innerHTML = `
+      <div class="bismillahArabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+      <div class="bismillahUrdu">شروع اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے</div>
+      <div class="bismillahEnglish">In the name of Allah, the Most Compassionate, the Most Merciful.</div>
+    `;
+    ayahList.appendChild(bismillahCard);
+  }
 
   currentArabicAyahs.forEach(function(ayah, index){
     let urduAyah = currentUrduAyahs[index] || {};
@@ -1766,15 +1919,17 @@ function closeArabicReadingPage(event){
     event.stopPropagation();
   }
 
-  stopCurrentSurahAudio();
+  updateGlobalMiniPlayerUI();
 
   let readingPage = document.getElementById("arabicReadingPage");
   if(readingPage){
     readingPage.style.display = "none";
   }
 
+  arabicReadingPageIsOpen = false;
   resetArabicReaderTopBar();
   document.body.classList.remove("quran-audio-compact");
+  updateGlobalMiniPlayerUI();
 
   if(arabicReadingBackPage === "bookmark"){
     openBookmarkPage();
@@ -1993,12 +2148,21 @@ function playCurrentSurahAudio(){
 
 function startSurahAudioFromBeginning(){
   repeatAyahIndex = -1;
+  repeatRangeStartIndex = -1;
+  repeatRangeEndIndex = -1;
   autoContinueAyahs = true;
   audioWithTranslationMode = false;
+  playBismillahBeforeSurah = shouldShowBismillahCard();
   clearAyahAudioButtonStates();
   refreshAyahRepeatButtons();
-  updateAudioStatus("Starting Surah " + currentArabicSurahEnglish + "...");
-  playAyahAudioByIndex(0);
+
+  if(playBismillahBeforeSurah){
+    updateAudioStatus("Starting with Bismillah...");
+    playBismillahAudioThenAyahOne();
+  }else{
+    updateAudioStatus("Starting Surah " + currentArabicSurahEnglish + "...");
+    playAyahAudioByIndex(0);
+  }
 }
 
 function toggleSurahAudioMainButton(){
@@ -2064,7 +2228,14 @@ function toggleAyahAudio(event, index){
 
   audioWithTranslationMode = false;
   autoContinueAyahs = true;
-  playAyahAudioByIndex(index);
+
+  if(index === 0 && shouldShowBismillahCard()){
+    playBismillahBeforeSurah = true;
+    playBismillahAudioThenAyahOne();
+  }else{
+    playBismillahBeforeSurah = false;
+    playAyahAudioByIndex(index);
+  }
 }
 
 async function playAyahAudioByIndex(index){
@@ -2101,6 +2272,7 @@ async function playAyahAudioByIndex(index){
   audio.play().then(function(){
     audioPaused = false;
     updateAudioStatus("Playing Ayah " + ayah.numberInSurah + " • " + reciter.name);
+    updateMediaSessionInfo("Ayah " + ayah.numberInSurah + " • " + currentArabicSurahEnglish, reciter.name);
     scrollAyahNearMiddle(index);
     refreshAyahAudioButtons();
     refreshAyahRepeatButtons();
@@ -2117,32 +2289,78 @@ function toggleAyahRepeat(event, index){
     event.stopPropagation();
   }
 
-  if(repeatAyahIndex === index){
-    repeatAyahIndex = -1;
-    updateAudioStatus("Repeat OFF.");
-  }else{
+  if(!currentArabicAyahs[index]) return;
+
+  if(repeatRangeStartIndex === -1 || repeatRangeEndIndex === -1){
+    repeatRangeStartIndex = index;
+    repeatRangeEndIndex = index;
     repeatAyahIndex = index;
     autoContinueAyahs = true;
+    playBismillahBeforeSurah = false;
     updateAudioStatus("Repeat ON for Ayah " + currentArabicAyahs[index].numberInSurah + ".");
-
-    if(currentPlayingAyahIndex !== index){
-      playAyahAudioByIndex(index);
-    }
+    playAyahAudioByIndex(index);
+    refreshAyahRepeatButtons();
+    updateCompactAudioUI();
+    return;
   }
 
+  let start = Math.min(repeatRangeStartIndex, repeatRangeEndIndex);
+  let end = Math.max(repeatRangeStartIndex, repeatRangeEndIndex);
+
+  if(start === end && index === start){
+    clearRepeatRange();
+    updateAudioStatus("Repeat OFF.");
+    refreshAyahRepeatButtons();
+    updateCompactAudioUI();
+    return;
+  }
+
+  if(index >= start && index <= end){
+    clearRepeatRange();
+    updateAudioStatus("Repeat OFF.");
+    refreshAyahRepeatButtons();
+    updateCompactAudioUI();
+    return;
+  }
+
+  repeatRangeStartIndex = Math.min(start, index);
+  repeatRangeEndIndex = Math.max(end, index);
+  repeatAyahIndex = repeatRangeStartIndex;
+  autoContinueAyahs = true;
+  playBismillahBeforeSurah = false;
+
+  let startAyah = currentArabicAyahs[repeatRangeStartIndex].numberInSurah;
+  let endAyah = currentArabicAyahs[repeatRangeEndIndex].numberInSurah;
+
+  updateAudioStatus("Repeat Ayah " + startAyah + "–" + endAyah + ".");
+  playAyahAudioByIndex(repeatRangeStartIndex);
   refreshAyahRepeatButtons();
   updateCompactAudioUI();
 }
 
 function handleQuranAudioEnded(){
-  if(currentAudioMode !== "ayah"){
-    audioPaused = true;
-    updateCompactAudioUI();
+  if(currentAudioMode === "bismillah"){
+    playBismillahBeforeSurah = false;
+    playAyahAudioByIndex(0);
     return;
   }
 
-  if(repeatAyahIndex === currentPlayingAyahIndex){
-    playAyahAudioByIndex(currentPlayingAyahIndex);
+  if(currentAudioMode !== "ayah"){
+    audioPaused = true;
+    updateCompactAudioUI();
+    updateGlobalMiniPlayerUI();
+    return;
+  }
+
+  if(isRepeatRangeActive()){
+    let start = Math.min(repeatRangeStartIndex, repeatRangeEndIndex);
+    let end = Math.max(repeatRangeStartIndex, repeatRangeEndIndex);
+
+    if(currentPlayingAyahIndex < end){
+      playAyahAudioByIndex(currentPlayingAyahIndex + 1);
+    }else{
+      playAyahAudioByIndex(start);
+    }
     return;
   }
 
@@ -2152,10 +2370,15 @@ function handleQuranAudioEnded(){
     audioPaused = true;
     refreshAyahAudioButtons();
     updateCompactAudioUI();
+    updateGlobalMiniPlayerUI();
   }
 }
 
-function toggleCurrentAudioPlayback(){
+function toggleCurrentAudioPlayback(event){
+  if(event){
+    event.stopPropagation();
+  }
+
   let audio = document.getElementById("quranAudioPlayer");
   if(!audio) return;
 
@@ -2203,12 +2426,18 @@ function stopCurrentSurahAudio(){
 
   currentAudioMode = "none";
   currentPlayingAyahIndex = -1;
+  repeatAyahIndex = -1;
+  repeatRangeStartIndex = -1;
+  repeatRangeEndIndex = -1;
+  playBismillahBeforeSurah = false;
   autoContinueAyahs = false;
   audioWithTranslationMode = false;
   audioPaused = true;
 
   clearAyahAudioButtonStates();
+  refreshAyahRepeatButtons();
   updateCompactAudioUI();
+  updateGlobalMiniPlayerUI();
 }
 
 function updateAudioStatus(text){
@@ -2245,11 +2474,10 @@ function updateCompactAudioUI(){
   }
 
   let compactTitle = document.getElementById("compactAudioTitle");
-  if(compactTitle && currentAudioMode === "ayah" && currentPlayingAyahIndex >= 0){
-    let ayah = currentArabicAyahs[currentPlayingAyahIndex];
-    if(ayah){
-      compactTitle.innerText = "Ayah " + ayah.numberInSurah + (repeatAyahIndex === currentPlayingAyahIndex ? " • Repeat" : "");
-    }
+  if(compactTitle && currentAudioMode === "bismillah"){
+    compactTitle.innerText = "Bismillah • " + currentArabicSurahEnglish;
+  }else if(compactTitle && currentAudioMode === "ayah" && currentPlayingAyahIndex >= 0){
+    compactTitle.innerText = getCurrentAudioDisplayTitle();
   }else if(compactTitle && currentAudioMode === "surah"){
     compactTitle.innerText = "Full Surah • " + currentArabicSurahEnglish;
   }else if(compactTitle && currentAudioMode === "none"){
@@ -2257,6 +2485,7 @@ function updateCompactAudioUI(){
   }
 
   updateUrduToggleUI();
+  updateGlobalMiniPlayerUI();
 }
 
 function refreshAyahAudioButtons(){
@@ -2290,7 +2519,17 @@ function refreshAyahRepeatButtons(){
     btn.classList.remove("active");
   });
 
-  if(repeatAyahIndex >= 0){
+  if(isRepeatRangeActive()){
+    let start = Math.min(repeatRangeStartIndex, repeatRangeEndIndex);
+    let end = Math.max(repeatRangeStartIndex, repeatRangeEndIndex);
+
+    for(let i = start; i <= end; i++){
+      let btn = document.getElementById("ayahRepeatBtn_" + i);
+      if(btn){
+        btn.classList.add("active");
+      }
+    }
+  }else if(repeatAyahIndex >= 0){
     let btn = document.getElementById("ayahRepeatBtn_" + repeatAyahIndex);
     if(btn){
       btn.classList.add("active");
@@ -2342,11 +2581,13 @@ function setupAudioEndedListener(){
   audio.addEventListener("pause", function(){
     audioPaused = true;
     updateCompactAudioUI();
+    updateGlobalMiniPlayerUI();
     refreshAyahAudioButtons();
   });
   audio.addEventListener("play", function(){
     audioPaused = false;
     updateCompactAudioUI();
+    updateGlobalMiniPlayerUI();
     refreshAyahAudioButtons();
   });
 
@@ -2356,6 +2597,158 @@ function setupAudioEndedListener(){
 function padSurahNumber(num){
   return String(num).padStart(3, "0");
 }
+
+
+/* =========================
+   BISMILLAH + REPEAT RANGE + MINI PLAYER HELPERS
+========================= */
+function shouldShowBismillahCard(){
+  return Number(currentArabicSurahNumber) !== 1 && Number(currentArabicSurahNumber) !== 9;
+}
+
+async function playBismillahAudioThenAyahOne(){
+  let audio = document.getElementById("quranAudioPlayer");
+  if(!audio) return;
+
+  let reciter = getSelectedReciter();
+  let url = await getBismillahAudioUrl(reciter);
+
+  if(!url){
+    playBismillahBeforeSurah = false;
+    playAyahAudioByIndex(0);
+    return;
+  }
+
+  currentAudioMode = "bismillah";
+  currentPlayingAyahIndex = -1;
+  audio.src = url;
+  audio.style.display = "block";
+
+  audio.play().then(function(){
+    audioPaused = false;
+    updateAudioStatus("Playing Bismillah • " + reciter.name);
+    clearAyahAudioButtonStates();
+    updateCompactAudioUI();
+    updateMediaSessionInfo("Bismillah", currentArabicSurahEnglish);
+  }).catch(function(){
+    audioPaused = true;
+    updateAudioStatus("Bismillah audio could not start. Starting Ayah 1...");
+    updateCompactAudioUI();
+    playAyahAudioByIndex(0);
+  });
+}
+
+async function getBismillahAudioUrl(reciter){
+  return getAyahAudioUrl(1, reciter);
+}
+
+function isRepeatRangeActive(){
+  return repeatRangeStartIndex >= 0 && repeatRangeEndIndex >= 0;
+}
+
+function clearRepeatRange(){
+  repeatAyahIndex = -1;
+  repeatRangeStartIndex = -1;
+  repeatRangeEndIndex = -1;
+}
+
+function getCurrentAudioDisplayTitle(){
+  if(currentAudioMode === "bismillah"){
+    return "Bismillah • " + currentArabicSurahEnglish;
+  }
+
+  if(isRepeatRangeActive()){
+    let start = Math.min(repeatRangeStartIndex, repeatRangeEndIndex);
+    let end = Math.max(repeatRangeStartIndex, repeatRangeEndIndex);
+
+    if(currentArabicAyahs[start] && currentArabicAyahs[end]){
+      if(start === end){
+        return "Repeat Ayah " + currentArabicAyahs[start].numberInSurah;
+      }
+
+      return "Repeat Ayah " + currentArabicAyahs[start].numberInSurah + "–" + currentArabicAyahs[end].numberInSurah;
+    }
+  }
+
+  if(currentAudioMode === "ayah" && currentPlayingAyahIndex >= 0 && currentArabicAyahs[currentPlayingAyahIndex]){
+    return "Ayah " + currentArabicAyahs[currentPlayingAyahIndex].numberInSurah + " • " + currentArabicSurahEnglish;
+  }
+
+  return "Quran Audio";
+}
+
+function updateGlobalMiniPlayerUI(){
+  let audio = document.getElementById("quranAudioPlayer");
+  let miniTitle = document.getElementById("globalMiniTitle");
+  let miniSub = document.getElementById("globalMiniSub");
+  let miniPlay = document.getElementById("globalMiniPlayBtn");
+
+  let hasAudio = audio && audio.src;
+  let shouldShowMini = hasAudio && !arabicReadingPageIsOpen && backgroundAudioAllowed;
+
+  document.body.classList.toggle("quran-global-mini-on", !!shouldShowMini);
+
+  if(miniTitle){
+    miniTitle.innerText = getCurrentAudioDisplayTitle();
+  }
+
+  if(miniSub){
+    miniSub.innerText = audio && !audio.paused ? "Playing in background" : "Paused";
+  }
+
+  if(miniPlay){
+    miniPlay.innerText = audio && !audio.paused ? "⏸" : "▶";
+  }
+}
+
+function openCurrentPlayingSurahFromMini(){
+  if(!currentArabicSurahNumber) return;
+
+  hideAllArabicPages();
+
+  let readingPage = document.getElementById("arabicReadingPage");
+  if(readingPage){
+    readingPage.style.display = "block";
+  }
+
+  arabicReadingPageIsOpen = true;
+  document.body.classList.remove("quran-global-mini-on");
+  updateCompactAudioUI();
+}
+
+function stopGlobalQuranAudio(event){
+  if(event){
+    event.stopPropagation();
+  }
+
+  stopCurrentSurahAudio();
+  document.body.classList.remove("quran-global-mini-on");
+}
+
+function updateMediaSessionInfo(title, subtitle){
+  if(!("mediaSession" in navigator)) return;
+
+  try{
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title:title || getCurrentAudioDisplayTitle(),
+      artist:subtitle || currentArabicSurahEnglish || "Quran",
+      album:"Quran with Audio & Urdu"
+    });
+
+    navigator.mediaSession.setActionHandler("play", function(){
+      toggleCurrentAudioPlayback();
+    });
+
+    navigator.mediaSession.setActionHandler("pause", function(){
+      pauseCurrentSurahAudio();
+    });
+
+    navigator.mediaSession.setActionHandler("stop", function(){
+      stopCurrentSurahAudio();
+    });
+  }catch(error){}
+}
+
 
 /* =========================
    QURAN.COM STYLE DISPLAY HELPERS
