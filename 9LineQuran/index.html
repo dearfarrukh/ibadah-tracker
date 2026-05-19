@@ -3,8 +3,8 @@
 <head>
 
 <!-- =========================
-     9 Line Quran FOLDER PAGE
-     File: QuranPages/index.html
+     9 LINE QURAN FOLDER PAGE
+     File: 9LineQuran/index.html
 ========================= -->
 
 <meta charset="UTF-8">
@@ -217,37 +217,125 @@ body{
 }
 
 /* =========================
-   SEARCH
+   iOS BOTTOM SHEET
 ========================= */
-.searchBox{
+#sheetOverlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:8000;
+  background:rgba(0,0,0,0.28);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  align-items:flex-end;
+}
+
+#sheetOverlay.show{
+  display:flex;
+}
+
+#bottomSheet{
+  width:100%;
+  max-height:84%;
+  background:rgba(248,248,251,0.96);
+  border-radius:34px 34px 0 0;
+  box-shadow:0 -20px 45px rgba(0,0,0,0.22);
+  transform:translateY(100%);
+  animation:sheetSlideUp 0.25s ease forwards;
+  overflow:hidden;
+  border-top:1px solid rgba(255,255,255,0.85);
+}
+
+@keyframes sheetSlideUp{
+  from{
+    transform:translateY(100%);
+  }
+  to{
+    transform:translateY(0);
+  }
+}
+
+.sheetTop{
+  position:sticky;
+  top:0;
+  z-index:5;
+  background:rgba(248,248,251,0.96);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  padding:12px 4% 12px 4%;
+  border-bottom:1px solid rgba(0,0,0,0.06);
+}
+
+.sheetHandle{
+  width:42px;
+  height:5px;
+  background:#c9c9cf;
+  border-radius:99px;
+  margin:0 auto 12px auto;
+}
+
+.sheetTitleRow{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.sheetTitle{
+  font-size:22px;
+  font-weight:900;
+  color:#111;
+  letter-spacing:-0.5px;
+}
+
+.sheetCloseBtn{
+  width:38px;
+  height:38px;
+  border:none;
+  border-radius:50%;
+  background:#e9e9ee;
+  color:#111;
+  font-size:22px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+
+.sheetSearch{
   width:100%;
   background:white;
   border:none;
   outline:none;
-  border-radius:22px;
-  padding:17px 18px;
-  font-size:18px;
+  border-radius:18px;
+  padding:15px 16px;
+  font-size:17px;
   font-weight:700;
   color:#111;
-  box-shadow:0 8px 22px rgba(0,0,0,0.07);
-  margin-bottom:14px;
+  box-shadow:0 6px 16px rgba(0,0,0,0.06);
+  margin-top:14px;
 }
 
-/* =========================
-   LISTS
-========================= */
-.listWrap{
+.sheetBody{
+  max-height:calc(84vh - 92px);
+  overflow:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:14px 4% calc(env(safe-area-inset-bottom) + 24px) 4%;
+}
+
+.sheetList{
   display:flex;
   flex-direction:column;
   gap:12px;
-  padding-bottom:30px;
 }
 
-.listCard{
+.sheetCard{
   width:100%;
   background:white;
   border-radius:26px;
-  padding:17px 4%;
+  padding:16px 4%;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -257,9 +345,9 @@ body{
   cursor:pointer;
 }
 
-.numberBadge{
-  width:50px;
-  height:50px;
+.sheetBadge{
+  width:52px;
+  height:52px;
   border-radius:18px;
   background:#f2f2f7;
   color:#111;
@@ -271,12 +359,12 @@ body{
   flex-shrink:0;
 }
 
-.listNames{
+.sheetNames{
   min-width:0;
   flex:1;
 }
 
-.listTitle{
+.sheetMainTitle{
   font-size:18px;
   font-weight:900;
   color:#111;
@@ -284,7 +372,7 @@ body{
   letter-spacing:-0.3px;
 }
 
-.listArabic{
+.sheetArabic{
   font-family:"Amiri","Noto Naskh Arabic",serif;
   direction:rtl;
   font-size:24px;
@@ -293,12 +381,32 @@ body{
   line-height:1.35;
 }
 
-.listMeta{
+.sheetSmallText{
+  font-size:14px;
+  font-weight:700;
+  color:#666;
+  line-height:1.4;
+}
+
+.sheetMeta{
   font-size:13px;
-  font-weight:800;
+  font-weight:900;
   color:#888;
   white-space:nowrap;
   text-align:right;
+}
+
+.sheetDeleteBtn{
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:50%;
+  background:#fff1f1;
+  color:#ff3b30;
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+  flex-shrink:0;
 }
 
 .emptyCard{
@@ -311,6 +419,43 @@ body{
   font-weight:700;
   color:#666;
   box-shadow:0 8px 22px rgba(0,0,0,0.07);
+}
+
+/* =========================
+   GO TO PAGE SHEET
+========================= */
+.gotoBox{
+  width:100%;
+  background:white;
+  border-radius:28px;
+  padding:22px 5%;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+}
+
+.gotoInput{
+  width:100%;
+  border:none;
+  outline:none;
+  background:#f2f2f7;
+  border-radius:22px;
+  padding:18px;
+  font-size:26px;
+  font-weight:900;
+  text-align:center;
+  color:#111;
+  margin-bottom:14px;
+}
+
+.gotoBtn{
+  width:100%;
+  border:none;
+  border-radius:22px;
+  padding:17px;
+  font-size:18px;
+  font-weight:900;
+  background:#111;
+  color:white;
+  cursor:pointer;
 }
 
 /* =========================
@@ -468,7 +613,7 @@ body{
   width:100%;
   height:100%;
   transform:translateX(0%);
- transition:transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+  transition:transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
   will-change:transform;
   background:#000;
 }
@@ -575,11 +720,11 @@ body{
     font-size:19px;
   }
 
-  .listTitle{
+  .sheetMainTitle{
     font-size:17px;
   }
 
-  .listArabic{
+  .sheetArabic{
     font-size:22px;
   }
 }
@@ -590,7 +735,7 @@ body{
 <body>
 
 <!-- =========================
-     9 Line Quran HOME PAGE
+     9 LINE QURAN HOME PAGE
 ========================= -->
 <div id="homePage" class="appPage active">
 
@@ -626,7 +771,7 @@ body{
     <!-- =========================
          SURAH INDEX CARD
     ========================= -->
-    <div class="optionCard" onclick="openSurahPage()">
+    <div class="optionCard" onclick="openSurahSheet()">
       <div class="optionLeft">
         <div class="optionIcon">📚</div>
         <div>
@@ -640,7 +785,7 @@ body{
     <!-- =========================
          JUZ INDEX CARD
     ========================= -->
-    <div class="optionCard" onclick="openJuzPage()">
+    <div class="optionCard" onclick="openJuzSheet()">
       <div class="optionLeft">
         <div class="optionIcon">🕌</div>
         <div>
@@ -654,7 +799,7 @@ body{
     <!-- =========================
          BOOKMARKS CARD
     ========================= -->
-    <div class="optionCard" onclick="openBookmarkPage()">
+    <div class="optionCard" onclick="openBookmarkSheet()">
       <div class="optionLeft">
         <div class="optionIcon">🔖</div>
         <div>
@@ -668,12 +813,12 @@ body{
     <!-- =========================
          GO TO PAGE CARD
     ========================= -->
-    <div class="optionCard" onclick="openGoToPagePrompt()">
+    <div class="optionCard" onclick="openGoToPageSheet()">
       <div class="optionLeft">
         <div class="optionIcon">🔢</div>
         <div>
           <div class="optionTitle">Go To Page</div>
-          <div class="optionSub">Open page number 1 to 1891</div>
+          <div class="optionSub">Open page number 1 to 1890</div>
         </div>
       </div>
       <div class="optionArrow">›</div>
@@ -685,57 +830,27 @@ body{
 
 
 <!-- =========================
-     SURAH INDEX PAGE
+     iOS BOTTOM SHEET
 ========================= -->
-<div id="surahPage" class="appPage">
+<div id="sheetOverlay" onclick="closeBottomSheetFromOverlay(event)">
+  <div id="bottomSheet" onclick="event.stopPropagation();">
 
-  <div class="simpleTopBar">
-    <button class="roundBackBtn" onclick="openHomePage()">←</button>
-    <div class="simpleTitle">Surah Index</div>
-  </div>
+    <div class="sheetTop">
+      <div class="sheetHandle"></div>
 
-  <input id="surahSearchInput" class="searchBox" placeholder="Search Surah..." oninput="renderSurahList()">
+      <div class="sheetTitleRow">
+        <div id="sheetTitle" class="sheetTitle">Select</div>
+        <button class="sheetCloseBtn" onclick="closeBottomSheet()">×</button>
+      </div>
 
-  <div id="surahList" class="listWrap"></div>
-
-</div>
-
-
-<!-- =========================
-     JUZ INDEX PAGE
-========================= -->
-<div id="juzPage" class="appPage">
-
-  <div class="simpleTopBar">
-    <button class="roundBackBtn" onclick="openHomePage()">←</button>
-    <div class="simpleTitle">Juz Index</div>
-  </div>
-
-  <div id="juzList" class="listWrap"></div>
-
-</div>
-
-
-<!-- =========================
-     BOOKMARK PAGE
-========================= -->
-<div id="bookmarkPage" class="appPage">
-
-  <div class="simpleTopBar">
-    <button class="roundBackBtn" onclick="openHomePage()">←</button>
-    <div class="simpleTitle">Bookmarks</div>
-  </div>
-
-  <div class="heroCard">
-    <div class="heroIcon">🔖</div>
-    <div class="heroTitle">Bookmarks</div>
-    <div class="heroSub">
-      Your saved 9 Line Quran pages.
+      <input id="sheetSearch" class="sheetSearch" placeholder="Search..." oninput="handleSheetSearch()" style="display:none;">
     </div>
+
+    <div class="sheetBody">
+      <div id="sheetContent" class="sheetList"></div>
+    </div>
+
   </div>
-
-  <div id="bookmarkList" class="listWrap"></div>
-
 </div>
 
 
@@ -798,12 +913,13 @@ body{
 <script>
 
 /* =========================
-   9 Line Quran GLOBAL VARIABLES
+   9 LINE QURAN GLOBAL VARIABLES
 ========================= */
 let currentPage = 1;
 let totalPages = 1890;
 let readingBackPage = "home";
 let readerTopBarVisible = false;
+let activeSheetType = "";
 
 /* =========================
    REAL JUZ PAGE COUNTS
@@ -842,8 +958,7 @@ const juzPageCounts = {
 };
 
 /* =========================
-   SURAH TO 15 LINE PAGE MAP
-   FIXED USER PAGE MAP
+   SURAH TO 9 LINE PAGE MAP
 ========================= */
 const surahToPageMap = {
 
@@ -964,10 +1079,8 @@ const surahToPageMap = {
 
 };
 
-
-     
 /* =========================
-   15 LINE SURAH DATA
+   9 LINE SURAH DATA
 ========================= */
 const surahData = [
   {num:1,en:"Al-Fatihah",ar:"الفاتحة"},
@@ -1092,10 +1205,7 @@ const surahData = [
 function hideAllPages(){
 
   let pages = [
-    "homePage",
-    "surahPage",
-    "juzPage",
-    "bookmarkPage"
+    "homePage"
   ];
 
   pages.forEach(function(id){
@@ -1113,6 +1223,7 @@ function hideAllPages(){
 function openHomePage(){
 
   hideAllPages();
+  closeBottomSheet();
 
   let page = document.getElementById("homePage");
   if(page){
@@ -1135,84 +1246,143 @@ function goBackToMainApp(){
 }
 
 /* =========================
-   GET REAL JUZ INFO FROM PAGE
+   OPEN BOTTOM SHEET
 ========================= */
-function getRealJuzInfoFromPage(page){
+function openBottomSheet(title, showSearch){
 
-  let runningTotal = 0;
+  let overlay = document.getElementById("sheetOverlay");
+  let sheetTitle = document.getElementById("sheetTitle");
+  let search = document.getElementById("sheetSearch");
+  let content = document.getElementById("sheetContent");
 
-  for(let juzNumber = 1; juzNumber <= 30; juzNumber++){
-
-    let juzCount = juzPageCounts[juzNumber];
-    let juzStart = runningTotal + 1;
-    let juzEnd = runningTotal + juzCount;
-
-    if(page >= juzStart && page <= juzEnd){
-      return {
-        juzNumber: juzNumber,
-        pageInsideJuz: page - runningTotal,
-        juzStart: juzStart,
-        juzEnd: juzEnd
-      };
-    }
-
-    runningTotal += juzCount;
+  if(sheetTitle){
+    sheetTitle.innerText = title;
   }
 
-  return {
-    juzNumber:1,
-    pageInsideJuz:1,
-    juzStart:1,
-    juzEnd:27
-  };
+  if(search){
+    search.value = "";
+    search.style.display = showSearch ? "block" : "none";
+  }
+
+  if(content){
+    content.innerHTML = "";
+  }
+
+  if(overlay){
+    overlay.classList.add("show");
+  }
 
 }
 
 /* =========================
-   BUILD MUSHAF IMAGE PATH
-   IMPORTANT:
-   This file is inside QuranPages folder,
-   so path starts with juz1, not QuranPages/juz1.
+   CLOSE BOTTOM SHEET
 ========================= */
-function buildMushafImagePath(page){
+function closeBottomSheet(){
 
-  let imagePage = page + 1;
+  let overlay = document.getElementById("sheetOverlay");
 
-  // Pages 1001+
-  if(imagePage >= 1001){
-
-    return "Images2/page-" +
-      imagePage +
-      ".png";
-
+  if(overlay){
+    overlay.classList.remove("show");
   }
 
-  // Pages 1-1000
-  return "Images/page-" +
-    String(imagePage).padStart(3,"0") +
-    ".png";
+  activeSheetType = "";
 
 }
 
 /* =========================
-   GET SURAH INFO FROM PAGE
+   CLOSE BOTTOM SHEET FROM OVERLAY
 ========================= */
-function getSurahInfoFromPage(page){
+function closeBottomSheetFromOverlay(event){
 
-  let matchedSurah = surahData[0];
-
-  for(let i = 0; i < surahData.length; i++){
-
-    let surah = surahData[i];
-    let startPage = surahToPageMap[surah.num] || 1;
-
-    if(page >= startPage){
-      matchedSurah = surah;
-    }
-
+  if(event.target && event.target.id === "sheetOverlay"){
+    closeBottomSheet();
   }
 
-  return matchedSurah;
+}
+
+/* =========================
+   HANDLE SHEET SEARCH
+========================= */
+function handleSheetSearch(){
+
+  if(activeSheetType === "surah"){
+    renderSurahSheetList();
+  }
+
+}
+
+/* =========================
+   OPEN SURAH SHEET
+========================= */
+function openSurahSheet(){
+
+  activeSheetType = "surah";
+  openBottomSheet("Surah Index", true);
+  renderSurahSheetList();
+
+}
+
+/* =========================
+   RENDER SURAH SHEET LIST
+========================= */
+function renderSurahSheetList(){
+
+  let container = document.getElementById("sheetContent");
+  let searchInput = document.getElementById("sheetSearch");
+
+  if(!container) return;
+
+  let query = searchInput ? searchInput.value.trim().toLowerCase() : "";
+
+  container.innerHTML = "";
+
+  surahData.forEach(function(surah){
+
+    let page = surahToPageMap[surah.num] || 1;
+
+    let searchText = (
+      surah.num + " " +
+      surah.en + " " +
+      surah.ar
+    ).toLowerCase();
+
+    if(query && !searchText.includes(query)){
+      return;
+    }
+
+    let card = document.createElement("div");
+    card.className = "sheetCard";
+
+    card.onclick = function(){
+      closeBottomSheet();
+      openReadingPage(page, "home");
+    };
+
+    card.innerHTML = `
+      <div class="sheetBadge">${surah.num}</div>
+
+      <div class="sheetNames">
+        <div class="sheetMainTitle">${surah.en}</div>
+        <div class="sheetArabic">${surah.ar}</div>
+      </div>
+
+      <div class="sheetMeta">Page<br>${page}</div>
+    `;
+
+    container.appendChild(card);
+
+  });
+
+}
+
+/* =========================
+   OPEN JUZ SHEET
+========================= */
+function openJuzSheet(){
+
+  activeSheetType = "juz";
+  openBottomSheet("Juz Index", false);
+  renderJuzSheetList();
 
 }
 
@@ -1260,100 +1430,12 @@ function getJuzStartPage(juzNumber){
 
 }
 
-
-     
 /* =========================
-   OPEN SURAH PAGE
+   RENDER JUZ SHEET LIST
 ========================= */
-function openSurahPage(){
+function renderJuzSheetList(){
 
-  hideAllPages();
-
-  let page = document.getElementById("surahPage");
-  if(page){
-    page.classList.add("active");
-  }
-
-  renderSurahList();
-  window.scrollTo(0,0);
-
-}
-
-/* =========================
-   RENDER SURAH LIST
-========================= */
-function renderSurahList(){
-
-  let container = document.getElementById("surahList");
-  let searchInput = document.getElementById("surahSearchInput");
-
-  if(!container) return;
-
-  let query = searchInput ? searchInput.value.trim().toLowerCase() : "";
-
-  container.innerHTML = "";
-
-  surahData.forEach(function(surah){
-
-    let page = surahToPageMap[surah.num] || 1;
-
-    let searchText = (
-      surah.num + " " +
-      surah.en + " " +
-      surah.ar
-    ).toLowerCase();
-
-    if(query && !searchText.includes(query)){
-      return;
-    }
-
-    let card = document.createElement("div");
-    card.className = "listCard";
-
-    card.onclick = function(){
-      openReadingPage(page, "surah");
-    };
-
-    card.innerHTML = `
-      <div class="numberBadge">${surah.num}</div>
-
-      <div class="listNames">
-        <div class="listTitle">${surah.en}</div>
-        <div class="listArabic">${surah.ar}</div>
-      </div>
-
-      <div class="listMeta">Page<br>${page}</div>
-    `;
-
-    container.appendChild(card);
-
-  });
-
-}
-
-/* =========================
-   OPEN JUZ PAGE
-========================= */
-function openJuzPage(){
-
-  hideAllPages();
-
-  let page = document.getElementById("juzPage");
-  if(page){
-    page.classList.add("active");
-  }
-
-  renderJuzList();
-  window.scrollTo(0,0);
-
-}
-
-/* =========================
-   RENDER JUZ LIST
-========================= */
-function renderJuzList(){
-
-  let container = document.getElementById("juzList");
+  let container = document.getElementById("sheetContent");
   if(!container) return;
 
   container.innerHTML = "";
@@ -1361,24 +1443,25 @@ function renderJuzList(){
   for(let juzNumber = 1; juzNumber <= 30; juzNumber++){
 
     let startPage = getJuzStartPage(juzNumber);
-    let pageCount = juzPageCounts[juzNumber] || 0;
 
     let card = document.createElement("div");
-    card.className = "listCard";
+    card.className = "sheetCard";
 
     card.onclick = function(){
-      openReadingPage(startPage, "juz");
+      closeBottomSheet();
+      openReadingPage(startPage, "home");
     };
 
     card.innerHTML = `
-      <div class="numberBadge">${juzNumber}</div>
+      <div class="sheetBadge">${juzNumber}</div>
 
-      <div class="listNames">
-        <div class="listTitle">Juz ${juzNumber}</div>
-        <div class="listArabic">الجزء ${juzNumber}</div>
+      <div class="sheetNames">
+        <div class="sheetMainTitle">Juz ${juzNumber}</div>
+        <div class="sheetArabic">الجزء ${juzNumber}</div>
+        <div class="sheetSmallText">Open Juz ${juzNumber}</div>
       </div>
 
-      <div class="listMeta">Page<br>${startPage}</div>
+      <div class="sheetMeta">Page<br>${startPage}</div>
     `;
 
     container.appendChild(card);
@@ -1388,19 +1471,13 @@ function renderJuzList(){
 }
 
 /* =========================
-   OPEN BOOKMARK PAGE
+   OPEN BOOKMARK SHEET
 ========================= */
-function openBookmarkPage(){
+function openBookmarkSheet(){
 
-  hideAllPages();
-
-  let page = document.getElementById("bookmarkPage");
-  if(page){
-    page.classList.add("active");
-  }
-
-  loadBookmarks();
-  window.scrollTo(0,0);
+  activeSheetType = "bookmark";
+  openBottomSheet("Bookmarks", false);
+  renderBookmarkSheetList();
 
 }
 
@@ -1427,17 +1504,17 @@ function saveAllBookmarks(bookmarks){
 }
 
 /* =========================
-   LOAD BOOKMARKS
+   RENDER BOOKMARK SHEET LIST
 ========================= */
-function loadBookmarks(){
+function renderBookmarkSheetList(){
 
-  let container = document.getElementById("bookmarkList");
+  let container = document.getElementById("sheetContent");
   if(!container) return;
 
   let allBookmarks = getAllBookmarks();
 
   let bookmarks = allBookmarks.filter(function(item){
-    return item.type === "15line";
+    return item.type === "9line";
   });
 
   container.innerHTML = "";
@@ -1454,32 +1531,23 @@ function loadBookmarks(){
   bookmarks.forEach(function(bookmark){
 
     let card = document.createElement("div");
-    card.className = "listCard";
+    card.className = "sheetCard";
 
     card.onclick = function(){
-      openReadingPage(Number(bookmark.page), "bookmark");
+      closeBottomSheet();
+      openReadingPage(Number(bookmark.page), "home");
     };
 
     card.innerHTML = `
-      <div class="numberBadge">🔖</div>
+      <div class="sheetBadge">🔖</div>
 
-      <div class="listNames">
-        <div class="listTitle">${bookmark.name || "Bookmark"}</div>
-        <div class="listArabic" style="font-size:18px;color:#666;">${bookmark.surah || "9 Line Quran"}</div>
+      <div class="sheetNames">
+        <div class="sheetMainTitle">${bookmark.name || "Bookmark"}</div>
+        <div class="sheetSmallText">${bookmark.surah || "9 Line Quran"} • ${bookmark.juz || ""}</div>
+        <div class="sheetSmallText">Page ${bookmark.page}</div>
       </div>
 
-      <button onclick="deleteBookmark(event, '${bookmark.id}')" style="
-      width:42px;
-      height:42px;
-      border:none;
-      border-radius:50%;
-      background:#fff1f1;
-      color:#ff3b30;
-      font-size:18px;
-      font-weight:900;
-      cursor:pointer;
-      flex-shrink:0;
-      ">
+      <button class="sheetDeleteBtn" onclick="deleteBookmarkFromSheet(event, '${bookmark.id}')">
         🗑
       </button>
     `;
@@ -1491,9 +1559,9 @@ function loadBookmarks(){
 }
 
 /* =========================
-   DELETE BOOKMARK
+   DELETE BOOKMARK FROM SHEET
 ========================= */
-function deleteBookmark(event, bookmarkId){
+function deleteBookmarkFromSheet(event, bookmarkId){
 
   event.stopPropagation();
 
@@ -1507,28 +1575,121 @@ function deleteBookmark(event, bookmarkId){
   });
 
   saveAllBookmarks(allBookmarks);
-  loadBookmarks();
+  renderBookmarkSheetList();
   showToast("Bookmark deleted");
 
 }
 
 /* =========================
-   OPEN GO TO PAGE PROMPT
+   OPEN GO TO PAGE SHEET
 ========================= */
-function openGoToPagePrompt(){
+function openGoToPageSheet(){
 
-  let page = prompt("Enter page number 1 to 1891")
+  activeSheetType = "goto";
+  openBottomSheet("Go To Page", false);
 
-  if(page === null) return;
+  let container = document.getElementById("sheetContent");
+  if(!container) return;
 
-  page = parseInt(page, 10);
+  container.innerHTML = `
+    <div class="gotoBox">
+      <input id="goToPageInput" class="gotoInput" type="number" min="1" max="1890" placeholder="1 - 1890">
+      <button class="gotoBtn" onclick="openTypedPage()">Open Page</button>
+    </div>
+  `;
+
+  setTimeout(function(){
+    let input = document.getElementById("goToPageInput");
+    if(input){
+      input.focus();
+    }
+  }, 250);
+
+}
+
+/* =========================
+   OPEN TYPED PAGE
+========================= */
+function openTypedPage(){
+
+  let input = document.getElementById("goToPageInput");
+  if(!input) return;
+
+  let page = parseInt(input.value, 10);
 
   if(!page || page < 1 || page > totalPages){
-    alert("Please enter page number 1 to 847");
+    showToast("Please enter page number 1 to 1890");
     return;
   }
 
+  closeBottomSheet();
   openReadingPage(page, "home");
+
+}
+
+/* =========================
+   GET REAL JUZ INFO FROM PAGE
+========================= */
+function getRealJuzInfoFromPage(page){
+
+  let juzNumber = 1;
+
+  for(let i = 1; i <= 30; i++){
+    let startPage = getJuzStartPage(i);
+    let nextStartPage = i < 30 ? getJuzStartPage(i + 1) : totalPages + 1;
+
+    if(page >= startPage && page < nextStartPage){
+      juzNumber = i;
+      break;
+    }
+  }
+
+  return {
+    juzNumber:juzNumber
+  };
+
+}
+
+/* =========================
+   BUILD MUSHAF IMAGE PATH
+========================= */
+function buildMushafImagePath(page){
+
+  let imagePage = page + 1;
+
+  if(imagePage <= 1000){
+
+    return "Images/page-" +
+    String(imagePage).padStart(3,"0") +
+    ".png";
+
+  }
+
+  return "Images2/page-" +
+  imagePage +
+  ".png";
+
+}
+
+/* =========================
+   GET SURAH INFO FROM PAGE
+========================= */
+function getSurahInfoFromPage(page){
+
+  let matchedSurah = surahData[0];
+
+  for(let i = 0; i < surahData.length; i++){
+
+    let surah = surahData[i];
+    let startPage = surahToPageMap[surah.num] || 1;
+
+    if(page >= startPage){
+      matchedSurah = surah;
+    }
+
+  }
+
+  return matchedSurah;
 
 }
 
@@ -1544,6 +1705,7 @@ function openReadingPage(page, backPage){
   readingBackPage = backPage || "home";
 
   hideAllPages();
+  closeBottomSheet();
 
   let readingPage = document.getElementById("readingPage");
   if(readingPage){
@@ -1593,16 +1755,7 @@ function closeReadingPage(event){
   }
 
   resetReaderTopBar();
-
-  if(readingBackPage === "surah"){
-    openSurahPage();
-  }else if(readingBackPage === "juz"){
-    openJuzPage();
-  }else if(readingBackPage === "bookmark"){
-    openBookmarkPage();
-  }else{
-    openHomePage();
-  }
+  openHomePage();
 
 }
 
@@ -1640,8 +1793,8 @@ function loadPage(page){
     readerTopSubTitle.innerText = "Page " + page + " • Juz " + juzInfo.juzNumber;
   }
 
-  localStorage.setItem("lastMushafPage", String(page));
-  localStorage.setItem("lastQuranReadingSource", "quran15");
+  localStorage.setItem("last9LineMushafPage", String(page));
+  localStorage.setItem("lastQuranReadingSource", "quran9");
 
 }
 
@@ -1694,7 +1847,7 @@ function getPreviousImageSrc(){
 ========================= */
 function resumeReading(){
 
-  let lastPage = parseInt(localStorage.getItem("lastMushafPage") || "0", 10);
+  let lastPage = parseInt(localStorage.getItem("last9LineMushafPage") || "0", 10);
 
   if(!lastPage || lastPage < 1 || lastPage > totalPages){
     alert("No previous 9 Line Quran reading found");
@@ -1713,7 +1866,7 @@ function updateResumeText(){
   let resumeSubText = document.getElementById("resumeSubText");
   if(!resumeSubText) return;
 
-  let lastPage = parseInt(localStorage.getItem("lastMushafPage") || "0", 10);
+  let lastPage = parseInt(localStorage.getItem("last9LineMushafPage") || "0", 10);
 
   if(lastPage && lastPage >= 1 && lastPage <= totalPages){
     let surahInfo = getSurahInfoFromPage(lastPage);
@@ -1795,7 +1948,7 @@ function saveCurrentBookmark(event){
 
   let duplicate = allBookmarks.some(function(item){
     return (
-      item.type === "15line" &&
+      item.type === "9line" &&
       Number(item.page) === Number(currentPage)
     );
   });
@@ -1809,7 +1962,7 @@ function saveCurrentBookmark(event){
 
   let bookmark = {
     id: Date.now(),
-    type: "15line",
+    type: "9line",
     name: surahInfo.en + " - Page " + currentPage,
     surah: surahInfo.en,
     arabicName: surahInfo.ar,
@@ -1950,9 +2103,9 @@ function handleQuranFlipMove(e){
     dragPercent = -quranFlipState.maxDragPercent;
   }
 
- if(Math.abs(quranFlipState.deltaX) > 2){
-  e.preventDefault();
-}
+  if(Math.abs(quranFlipState.deltaX) > 2){
+    e.preventDefault();
+  }
 
   if(quranFlipState.deltaX < 0){
     let nextSrc = quranFlipState.getNextImageSrc ? quranFlipState.getNextImageSrc() : "";
@@ -2066,7 +2219,7 @@ function animateQuranFlipNext(){
       }
     }, 30);
 
- }, 380);
+  }, 380);
 
 }
 
@@ -2100,7 +2253,7 @@ function animateQuranFlipPrev(){
       }
     }, 30);
 
- }, 380);
+  }, 380);
 
 }
 
@@ -2129,8 +2282,6 @@ function resetQuranFlipPosition(){
 document.addEventListener("DOMContentLoaded", function(){
 
   updateResumeText();
-  renderSurahList();
-  renderJuzList();
 
 });
 
