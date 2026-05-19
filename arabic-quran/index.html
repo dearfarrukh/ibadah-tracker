@@ -378,6 +378,201 @@ button{
   flex-shrink:0;
 }
 
+
+/* =========================
+   iOS BOTTOM SHEET
+========================= */
+#sheetOverlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:8000;
+  background:rgba(0,0,0,0.28);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  align-items:flex-end;
+}
+
+#sheetOverlay.show{
+  display:flex;
+}
+
+#bottomSheet{
+  width:100%;
+  max-height:84%;
+  background:rgba(248,248,251,0.96);
+  border-radius:34px 34px 0 0;
+  box-shadow:0 -20px 45px rgba(0,0,0,0.22);
+  transform:translateY(100%);
+  animation:sheetSlideUp 0.25s ease forwards;
+  overflow:hidden;
+  border-top:1px solid rgba(255,255,255,0.85);
+}
+
+@keyframes sheetSlideUp{
+  from{
+    transform:translateY(100%);
+  }
+  to{
+    transform:translateY(0);
+  }
+}
+
+.sheetTop{
+  position:sticky;
+  top:0;
+  z-index:5;
+  background:rgba(248,248,251,0.96);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  padding:12px 4% 12px 4%;
+  border-bottom:1px solid rgba(0,0,0,0.06);
+}
+
+.sheetHandle{
+  width:42px;
+  height:5px;
+  background:#c9c9cf;
+  border-radius:99px;
+  margin:0 auto 12px auto;
+}
+
+.sheetTitleRow{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.sheetTitle{
+  font-size:22px;
+  font-weight:900;
+  color:#111;
+  letter-spacing:-0.5px;
+}
+
+.sheetCloseBtn{
+  width:38px;
+  height:38px;
+  border:none;
+  border-radius:50%;
+  background:#e9e9ee;
+  color:#111;
+  font-size:22px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+
+.sheetSearch{
+  width:100%;
+  background:white;
+  border:none;
+  outline:none;
+  border-radius:18px;
+  padding:15px 16px;
+  font-size:17px;
+  font-weight:700;
+  color:#111;
+  box-shadow:0 6px 16px rgba(0,0,0,0.06);
+  margin-top:14px;
+}
+
+.sheetBody{
+  max-height:calc(84vh - 92px);
+  overflow:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:14px 4% calc(env(safe-area-inset-bottom) + 24px) 4%;
+}
+
+.sheetList{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.sheetCard{
+  width:100%;
+  background:white;
+  border-radius:26px;
+  padding:16px 4%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.03);
+  cursor:pointer;
+}
+
+.sheetBadge{
+  width:52px;
+  height:52px;
+  border-radius:18px;
+  background:#f2f2f7;
+  color:#111;
+  font-size:17px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+
+.sheetNames{
+  min-width:0;
+  flex:1;
+}
+
+.sheetMainTitle{
+  font-size:18px;
+  font-weight:900;
+  color:#111;
+  margin-bottom:4px;
+  letter-spacing:-0.3px;
+}
+
+.sheetArabic{
+  font-family:"Amiri", "Scheherazade New", "Noto Naskh Arabic", serif;
+  direction:rtl;
+  font-size:25px;
+  font-weight:700;
+  color:#333;
+  line-height:1.7;
+  word-spacing:2px;
+}
+
+.sheetSmallText{
+  font-size:14px;
+  font-weight:700;
+  color:#666;
+  line-height:1.4;
+}
+
+.sheetMeta{
+  font-size:13px;
+  font-weight:900;
+  color:#888;
+  white-space:nowrap;
+  text-align:right;
+}
+
+.sheetDeleteBtn{
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:50%;
+  background:#fff1f1;
+  color:#ff3b30;
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+  flex-shrink:0;
+}
+
 /* =========================
    ARABIC READING PAGE
 ========================= */
@@ -1023,7 +1218,7 @@ body.quran-global-mini-on .globalQuranMiniPlayer{
       <div class="optionArrow">›</div>
     </div>
 
-    <div class="optionCard" onclick="openSurahIndexPage()">
+    <div class="optionCard" onclick="openSurahSheet()">
       <div class="optionLeft">
         <div class="optionIcon">📚</div>
         <div>
@@ -1034,7 +1229,7 @@ body.quran-global-mini-on .globalQuranMiniPlayer{
       <div class="optionArrow">›</div>
     </div>
 
-    <div class="optionCard" onclick="openBookmarkPage()">
+    <div class="optionCard" onclick="openBookmarkSheet()">
       <div class="optionLeft">
         <div class="optionIcon">🔖</div>
         <div>
@@ -1047,6 +1242,31 @@ body.quran-global-mini-on .globalQuranMiniPlayer{
 
   </div>
 
+</div>
+
+
+<!-- =========================
+     iOS BOTTOM SHEET
+========================= -->
+<div id="sheetOverlay" onclick="closeBottomSheetFromOverlay(event)">
+  <div id="bottomSheet" onclick="event.stopPropagation();">
+
+    <div class="sheetTop">
+      <div class="sheetHandle"></div>
+
+      <div class="sheetTitleRow">
+        <div id="sheetTitle" class="sheetTitle">Select</div>
+        <button class="sheetCloseBtn" onclick="closeBottomSheet()">×</button>
+      </div>
+
+      <input id="sheetSearch" class="sheetSearch" placeholder="Search..." oninput="handleSheetSearch()" style="display:none;">
+    </div>
+
+    <div class="sheetBody">
+      <div id="sheetContent" class="sheetList"></div>
+    </div>
+
+  </div>
 </div>
 
 <!-- =========================
@@ -1337,6 +1557,7 @@ let autoContinueAyahs = false;
 let audioWithTranslationMode = false;
 let audioPaused = true;
 let ayahAudioUrlCache = {};
+let activeSheetType = "";
 
 const QURAN_API_BASE = "https://api.alquran.cloud/v1";
 const QURAN_COM_API_BASE = "https://api.quran.com/api/v4";
@@ -1411,6 +1632,7 @@ function hideAllArabicPages(){
 ========================= */
 function openArabicHomePage(){
   hideAllArabicPages();
+  closeBottomSheet();
 
   let page = document.getElementById("arabicHomePage");
   if(page){
@@ -1419,6 +1641,210 @@ function openArabicHomePage(){
 
   updateResumeText();
   window.scrollTo(0,0);
+}
+
+
+/* =========================
+   OPEN BOTTOM SHEET
+========================= */
+function openBottomSheet(title, showSearch){
+  let overlay = document.getElementById("sheetOverlay");
+  let sheetTitle = document.getElementById("sheetTitle");
+  let search = document.getElementById("sheetSearch");
+  let content = document.getElementById("sheetContent");
+
+  if(sheetTitle){
+    sheetTitle.innerText = title;
+  }
+
+  if(search){
+    search.value = "";
+    search.style.display = showSearch ? "block" : "none";
+  }
+
+  if(content){
+    content.innerHTML = "";
+  }
+
+  if(overlay){
+    overlay.classList.add("show");
+  }
+}
+
+/* =========================
+   CLOSE BOTTOM SHEET
+========================= */
+function closeBottomSheet(){
+  let overlay = document.getElementById("sheetOverlay");
+
+  if(overlay){
+    overlay.classList.remove("show");
+  }
+
+  activeSheetType = "";
+}
+
+/* =========================
+   CLOSE BOTTOM SHEET FROM OVERLAY
+========================= */
+function closeBottomSheetFromOverlay(event){
+  if(event.target && event.target.id === "sheetOverlay"){
+    closeBottomSheet();
+  }
+}
+
+/* =========================
+   HANDLE SHEET SEARCH
+========================= */
+function handleSheetSearch(){
+  if(activeSheetType === "surah"){
+    renderSurahSheetList();
+  }
+}
+
+/* =========================
+   OPEN SURAH SHEET
+========================= */
+function openSurahSheet(){
+  activeSheetType = "surah";
+  openBottomSheet("Surah Index", true);
+  renderSurahSheetList();
+}
+
+/* =========================
+   RENDER SURAH SHEET LIST
+========================= */
+function renderSurahSheetList(){
+  let container = document.getElementById("sheetContent");
+  let searchInput = document.getElementById("sheetSearch");
+
+  if(!container) return;
+
+  let query = searchInput ? searchInput.value.trim().toLowerCase() : "";
+  container.innerHTML = "";
+
+  surahData.forEach(function(surah){
+    let searchText = (surah.num + " " + surah.en + " " + surah.ar + " " + surah.type).toLowerCase();
+
+    if(query && !searchText.includes(query)){
+      return;
+    }
+
+    let card = document.createElement("div");
+    card.className = "sheetCard";
+
+    card.onclick = function(){
+      closeBottomSheet();
+      openArabicReadingPage(surah.num, "home");
+    };
+
+    card.innerHTML = `
+      <div class="sheetBadge">${surah.num}</div>
+
+      <div class="sheetNames">
+        <div class="sheetMainTitle">${escapeHtml(surah.en)}</div>
+        <div class="sheetArabic">${escapeHtml(surah.ar)}</div>
+      </div>
+
+      <div class="sheetMeta">${surah.ayahs}<br>Ayahs</div>
+    `;
+
+    container.appendChild(card);
+  });
+
+  if(!container.innerHTML){
+    container.innerHTML = `<div class="emptyCard">No Surah found.</div>`;
+  }
+}
+
+/* =========================
+   OPEN BOOKMARK SHEET
+========================= */
+function openBookmarkSheet(){
+  activeSheetType = "bookmark";
+  openBottomSheet("Bookmarks", false);
+  renderBookmarkSheetList();
+}
+
+/* =========================
+   RENDER BOOKMARK SHEET LIST
+========================= */
+function renderBookmarkSheetList(){
+  let container = document.getElementById("sheetContent");
+  if(!container) return;
+
+  let allBookmarks = getAllQuranBookmarks();
+  let bookmarks = allBookmarks.filter(function(item){
+    return item.type === "arabic" || item.type === "arabic-ayah";
+  });
+
+  container.innerHTML = "";
+
+  if(!bookmarks.length){
+    container.innerHTML = `<div class="emptyCard">No Quran bookmarks saved yet.</div>`;
+    return;
+  }
+
+  bookmarks.forEach(function(bookmark){
+    let card = document.createElement("div");
+    card.className = "sheetCard";
+
+    card.onclick = function(){
+      closeBottomSheet();
+
+      if(bookmark.type === "arabic-ayah"){
+        openArabicReadingPage(Number(bookmark.surahNumber), "home", Number(bookmark.ayahNumber));
+      }else{
+        openArabicReadingPage(Number(bookmark.surahNumber), "home");
+      }
+    };
+
+    let bookmarkTitle = bookmark.type === "arabic-ayah"
+      ? ((bookmark.surah || "Quran") + " — Ayah " + bookmark.ayahNumber)
+      : (bookmark.name || bookmark.surah || "Bookmark");
+
+    let bookmarkSub = bookmark.type === "arabic-ayah"
+      ? (bookmark.arabicText || "Ayah bookmark")
+      : (bookmark.surah || "Quran with Audio & Urdu");
+
+    let subDirection = bookmark.type === "arabic-ayah" ? "rtl" : "ltr";
+    let subAlign = bookmark.type === "arabic-ayah" ? "right" : "left";
+    let subFont = bookmark.type === "arabic-ayah" ? "'Amiri','Scheherazade New','Noto Naskh Arabic',serif" : "inherit";
+
+    card.innerHTML = `
+      <div class="sheetBadge">🔖</div>
+
+      <div class="sheetNames">
+        <div class="sheetMainTitle">${escapeHtml(bookmarkTitle)}</div>
+        <div class="sheetSmallText" style="direction:${subDirection};text-align:${subAlign};font-family:${subFont};">${escapeHtml(bookmarkSub)}</div>
+        <div class="sheetSmallText">${escapeHtml(bookmark.createdAtText || "")}</div>
+      </div>
+
+      <button class="sheetDeleteBtn" onclick="deleteArabicBookmarkFromSheet(event, '${escapeHtml(bookmark.id)}')">🗑</button>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+/* =========================
+   DELETE ARABIC BOOKMARK FROM SHEET
+========================= */
+function deleteArabicBookmarkFromSheet(event, bookmarkId){
+  event.stopPropagation();
+
+  let ok = confirm("Delete this bookmark?");
+  if(!ok) return;
+
+  let allBookmarks = getAllQuranBookmarks();
+  allBookmarks = allBookmarks.filter(function(item){
+    return String(item.id) !== String(bookmarkId);
+  });
+
+  saveAllQuranBookmarks(allBookmarks);
+  renderBookmarkSheetList();
+  refreshAyahBookmarkButtons();
+  showToast("Bookmark deleted");
 }
 
 /* =========================
@@ -1467,8 +1893,16 @@ async function loadOnlineSurahList(){
     });
 
     renderSurahList();
+
+    if(activeSheetType === "surah"){
+      renderSurahSheetList();
+    }
   }catch(error){
     renderSurahList();
+
+    if(activeSheetType === "surah"){
+      renderSurahSheetList();
+    }
   }
 }
 
@@ -1670,6 +2104,11 @@ function deleteArabicBookmark(event, bookmarkId){
 
   saveAllQuranBookmarks(allBookmarks);
   loadArabicBookmarks();
+
+  if(activeSheetType === "bookmark"){
+    renderBookmarkSheetList();
+  }
+
   refreshAyahBookmarkButtons();
   showToast("Bookmark deleted");
 }
@@ -1697,6 +2136,7 @@ async function openArabicReadingPage(surahNumber, backPage, targetAyahNumber){
   localStorage.setItem("lastArabicQuranArabicName", surah.ar);
 
   hideAllArabicPages();
+  closeBottomSheet();
 
   let readingPage = document.getElementById("arabicReadingPage");
   if(readingPage){
